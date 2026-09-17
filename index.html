@@ -192,6 +192,17 @@ sup,sub{font-size:var(--s-klein); line-height:0}
 #szenarioWohnenEckwerte .feld{grid-template-columns:minmax(0,1fr) 300px minmax(52px,max-content)}
 #szenarioWohnenEckwerte .feld select{width:100%}
 #szenarioWohnenEckwerte .feld input{width:100%}
+/* Kleine Meldung in der Fusszeile der Reiterleiste: "neues Update vNNN".
+   Sie sieht aus wie ein Hinweis, ist aber anklickbar und fuehrt auf die
+   Seite des Verzeichnisses. Sie erscheint nur, wenn dort wirklich eine
+   neuere Fassung liegt. */
+#updateHinweis{
+  border:1px solid var(--warnung); background:var(--warnung-weich);
+  color:var(--warnung); font-family:inherit; font-size:var(--s-klein);
+  font-weight:700; padding:2px 9px; border-radius:999px; cursor:pointer;
+  margin-right:12px; line-height:1.5;
+}
+#updateHinweis:hover{filter:brightness(.95)}
 .knopf.offen{position:relative}
 .knopf.offen::after{content:""; position:absolute; top:-3px; right:-3px;
   width:9px; height:9px; border-radius:50%; background:var(--warnung);
@@ -789,7 +800,7 @@ table.dicht tbody td{padding:3px 4px}
 
   <div class="leistenfuss">
     <span>Budget- und Rentenberechnung &middot; Kanton St. Gallen, Gemeinde Gommiswald</span>
-    <span class="rechtsbuendig">Fassung <span class="chip" id="chipVersion">v221</span></span>
+    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v222</span></span>
   </div>
   <p class="merker" id="fassungHinweis" style="margin:8px 0 0" hidden></p>
   <!-- Band fuer die Aktualisierung. Es erscheint nur, wenn es etwas zu melden
@@ -1736,6 +1747,26 @@ table.dicht tbody td{padding:3px 4px}
           50 000 Franken verschieben; <strong>mittel</strong> zwischen etwa 5 000 und
           50 000 Franken; <strong>klein</strong> darunter. Die Einstufung ist eine
           Abschätzung, keine gerechnete Grösse.</p>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v222 — Update-Meldung neben der Fassungsnummer</h3>
+        <ul class="liste">
+          <li><strong>Neu in der Fusszeile der Reiterleiste</strong>, links neben «Fassung
+            vNNN»: die Meldung <strong>«neues Update vNNN vorhanden»</strong>. Sie erscheint
+            nur, wenn im Verzeichnis wirklich eine neuere Fassung liegt, und ist anklickbar —
+            sie öffnet die Seite des Verzeichnisses.</li>
+          <li><strong>Die selbsttätige Suche ist neu eingeschaltet</strong>, sonst bliebe die
+            Meldung aus, bis jemand von Hand danach sucht. Genau das tut ein Anwender nicht.
+            Abgefragt wird <strong>höchstens einmal in vierundzwanzig Stunden</strong>.</li>
+          <li>Das Ergebnis der letzten Abfrage wird im Browser gemerkt und beim nächsten
+            Start <em>sofort</em> angezeigt, noch bevor überhaupt etwas gefragt wird. Wer
+            das Programm mehrmals täglich öffnet, löst also nicht jedes Mal eine Abfrage
+            aus.</li>
+          <li>Der Schalter im Reiter Grundlagen heisst entsprechend «Selbst nach Updates
+            suchen, höchstens einmal am Tag». Ausgeschaltet fragt das Programm nirgends nach
+            und sendet nichts — dann erscheint eine neue Fassung erst bei der Suche von
+            Hand.</li>
+        </ul>
       </div>
       <div class="karte breit">
         <h3>Änderungen in v221 — Adresse des Verzeichnisses eingetragen</h3>
@@ -21845,9 +21876,26 @@ function entwicklerModus() {
 function entwicklerModusSetzen(an) {
   try { localStorage.setItem("kapitalverzehr:entwickler", an ? "1" : "0"); } catch (e) { }
 }
+// Vorgabe: eingeschaltet. Ohne selbsttaetige Abfrage bliebe die Meldung
+// "neues Update" aus, bis jemand von Hand danach sucht - und genau das tut
+// ein Anwender nicht. Abgefragt wird hoechstens einmal am Tag; das Ergebnis
+// wird gemerkt und beim naechsten Start sofort angezeigt.
 function autoPruefung() {
-  try { return localStorage.getItem("kapitalverzehr:autopruefung") === "1"; }
-  catch (e) { return false; }
+  try {
+    const w = localStorage.getItem("kapitalverzehr:autopruefung");
+    return w == null ? true : w === "1";
+  } catch (e) { return false; }
+}
+const AKT_ABSTAND = 24 * 60 * 60 * 1000;   // einmal am Tag genuegt
+function aktGemerkt() {
+  try { return JSON.parse(localStorage.getItem("kapitalverzehr:aktstand") || "null"); }
+  catch (e) { return null; }
+}
+function aktMerken(dort) {
+  try {
+    localStorage.setItem("kapitalverzehr:aktstand",
+      JSON.stringify({ dort, zeit: Date.now() }));
+  } catch (e) { }
 }
 function autoPruefungSetzen(an) {
   try { localStorage.setItem("kapitalverzehr:autopruefung", an ? "1" : "0"); } catch (e) { }
@@ -21874,6 +21922,7 @@ async function aktualisierungPruefen(vonHand) {
     aktStand.dort = await fassungAusVerzeichnis();
     aktStand.zeit = new Date();
     aktStand.gesucht = true;
+    aktMerken(aktStand.dort);
   } catch (e) {
     aktStand.fehler = (e && e.message) ? e.message : String(e);
     aktStand.dort = null;
@@ -21923,6 +21972,25 @@ function aktualisierungZeichnen() {
     }
   }
 
+  // ---- Kleine Meldung in der Fusszeile der Reiterleiste ----------------
+  // Sie steht dort, wo der Anwender ohnehin hinschaut: neben der
+  // Fassungsnummer. Sichtbar nur, wenn im Verzeichnis wirklich eine neuere
+  // Fassung liegt.
+  {
+    const m = document.getElementById("updateHinweis");
+    if (m) {
+      const neu = (dort != null && hier != null && dort > hier);
+      m.hidden = !neu;
+      if (neu) {
+        m.textContent = "neues Update " + aktStand.dort + " vorhanden";
+        m.title = "Im Verzeichnis liegt Fassung " + aktStand.dort + ", hier läuft "
+          + VERSION + ". Zum Aktualisieren im Programmordner «Aktualisieren.cmd» "
+          + "starten. Anklicken öffnet das Verzeichnis im Browser.";
+        m.onclick = () => window.open(GH_RELEASE(), "_blank", "noopener");
+      }
+    }
+  }
+
   // ---- Karte im Reiter Grundlagen --------------------------------------
   const chip = document.getElementById("aktChip");
   const text = document.getElementById("aktText");
@@ -21959,11 +22027,14 @@ function aktualisierungZeichnen() {
       schalter.appendChild(e);
     }
   };
-  schalten("Beim Start selbst nach Updates suchen", autoPruefung(), autoPruefungSetzen,
-    "Ausgeschaltet fragt das Programm nirgends nach und sendet nichts. Eingeschaltet "
-    + "ruft es beim Start eine Datei von github.com ab; dabei werden die IP-Adresse und "
-    + "der Zeitpunkt dort sichtbar, wie bei jedem Aufruf einer Webseite. Eingaben werden "
-    + "in keinem Fall übertragen.");
+  schalten("Selbst nach Updates suchen, höchstens einmal am Tag", autoPruefung(), autoPruefungSetzen,
+    "Eingeschaltet — so erscheint die Meldung «neues Update» von selbst, oben rechts neben "
+    + "der Fassungsnummer. Abgefragt wird eine kleine Datei von github.com, höchstens "
+    + "einmal in vierundzwanzig Stunden; das Ergebnis wird gemerkt und beim nächsten Start "
+    + "sofort angezeigt. Dabei werden dort die IP-Adresse und der Zeitpunkt sichtbar, wie "
+    + "bei jedem Aufruf einer Webseite. Eingaben werden in keinem Fall übertragen. "
+    + "Ausgeschaltet fragt das Programm nirgends nach und sendet nichts; dann erscheint "
+    + "eine neue Fassung erst, wenn man hier von Hand sucht.");
   schalten("Entwicklermodus", entwicklerModus(), entwicklerModusSetzen,
     "Zeigt zusätzlich den Knopf zum Veröffentlichen, sobald die Fassung hier neuer ist "
     + "als die veröffentlichte. Die Einstellung steckt im Browser dieses Geräts und wird "
@@ -22666,9 +22737,21 @@ $("#btnAktSuchen").addEventListener("click",
   mitArbeit($("#btnAktSuchen"), () => aktualisierungPruefen(true)));
 $("#btnAktSeite").addEventListener("click",
   () => window.open(GH_SEITE(), "_blank", "noopener"));
-// Nur auf ausdruecklichen Wunsch. Ohne diese Einstellung fragt das Programm
-// nirgends nach und sendet nichts.
-if (autoPruefung()) setTimeout(() => aktualisierungPruefen(false), 1200);
+// Der zuletzt gemerkte Stand wird sofort angezeigt - ohne Abfrage. So steht
+// die Meldung schon da, bevor ueberhaupt etwas gefragt wird.
+{
+  const g = aktGemerkt();
+  if (g && g.dort) {
+    aktStand.dort = g.dort;
+    aktStand.zeit = new Date(g.zeit);
+    aktStand.gesucht = true;
+    try { aktualisierungZeichnen(); } catch (e) { }
+  }
+  // Nachfragen nur, wenn die selbsttaetige Suche eingeschaltet ist und die
+  // letzte Abfrage mehr als einen Tag zurueckliegt.
+  if (autoPruefung() && (!g || !g.zeit || Date.now() - g.zeit > AKT_ABSTAND))
+    setTimeout(() => aktualisierungPruefen(false), 1500);
+}
   ablageArt = null; ablageAnzeigen();
   try { dbNs = await window.claude?.use?.("db"); } catch (e) { dbNs = null; }
   if (dbNs) { ablageArt = "konto"; ablageAnzeigen(); }
