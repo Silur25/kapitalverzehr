@@ -1,0 +1,3147 @@
+{
+ "amortisationskonto": {
+  "aktiv": true,
+  "amortisiert_hypothek": "H5",
+  "anteile": {
+   "P1": 0.5,
+   "P2": 0.5
+  },
+  "auszahlung_jahr": 2034,
+  "bezeichnung": "Amortisationskonto Hypothek",
+  "einzahlung_bis": 2033,
+  "einzahlung_person": {
+   "P1": 1000,
+   "P2": 1000
+  },
+  "einzahlung_pro_monat_und_person": 1000,
+  "einzahlung_von": 2023,
+  "startbetrag": 12000,
+  "startjahr": 2024,
+  "verteilung": {
+   "H5": 1
+  },
+  "zins": 0.025
+ },
+ "bezeichnung": "Beispielhaushalt (Uebernahme aus Excel-Mappe BM 28)",
+ "budget2": {
+  "aktiv": false,
+  "ab_jahr": {
+   "P1": 2036,
+   "P2": 2034
+  },
+  "positionen": [
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "basisjahr": 2026,
+    "betrag": 3985,
+    "bezeichnung": "Strom, Wasser, Abwasser, Kehricht",
+    "entfaellt_bei_heim": true,
+    "gruppe": "Liegenschaft",
+    "id": "NK_STROM",
+    "teuerung": 0
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "basisjahr": 2026,
+    "betrag": 2000,
+    "bezeichnung": "Reparaturen und kleiner Unterhalt",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Liegenschaft",
+    "id": "REPARATUREN",
+    "teuerung": 0.005,
+    "umlage_bei_tod": true,
+    "von": null
+   },
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "basisjahr": 2026,
+    "betrag": 6995,
+    "bezeichnung": "Uebrige Nebenkosten (TV, Internet, Garten, Strassenkooperation)",
+    "gruppe": "Liegenschaft",
+    "id": "NK_SONSTIGE"
+   },
+   {
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 2500,
+    "bezeichnung": "Pacht Stall",
+    "bis": 2040,
+    "entfaellt_bei_heim": true,
+    "gruppe": "Stall",
+    "id": "STALL_PACHT",
+    "von": 2026
+   },
+   {
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 15000,
+    "bezeichnung": "Betriebskosten Stall",
+    "bis": 2035,
+    "entfaellt_bei_heim": true,
+    "gruppe": "Stall",
+    "id": "STALL_BETRIEB",
+    "von": 2026
+   },
+   {
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 2500,
+    "bezeichnung": "Betriebskosten Stall, reduziert",
+    "bis": 2040,
+    "entfaellt_bei_heim": true,
+    "gruppe": "Stall",
+    "id": "STALL_BETRIEB_RED",
+    "von": 2036
+   },
+   {
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 10498.33,
+    "bezeichnung": "Betriebskosten Fahrzeug 1",
+    "bis": 2033,
+    "entfaellt_bei_heim": true,
+    "gruppe": "Fahrzeuge",
+    "id": "AUTO_BETRIEB_1"
+   },
+   {
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 11182,
+    "bezeichnung": "Betriebskosten Fahrzeug 2",
+    "bis": 2028,
+    "entfaellt_bei_heim": true,
+    "gruppe": "Fahrzeuge",
+    "id": "AUTO_BETRIEB_2"
+   },
+   {
+    "anteile": {
+     "P1": 0.25,
+     "P2": 0.75
+    },
+    "betrag": 50000,
+    "bezeichnung": "Kauf Ersatzfahrzeug",
+    "bis": 2034,
+    "entfaellt_bei_heim": true,
+    "gruppe": "Fahrzeuge",
+    "id": "AUTO_KAUF_NEU",
+    "von": 2034
+   },
+   {
+    "anteile": {
+     "P1": 0.25,
+     "P2": 0.75
+    },
+    "betrag": 8280,
+    "bezeichnung": "Betriebskosten Ersatzfahrzeug",
+    "bis": 2045,
+    "entfaellt_bei_heim": true,
+    "gruppe": "Fahrzeuge",
+    "id": "AUTO_BETRIEB_NEU",
+    "von": 2034
+   },
+   {
+    "id": "AUTO_VERS_NEU",
+    "bezeichnung": "Versicherung Ersatzfahrzeug",
+    "gruppe": "Fahrzeuge",
+    "fluss": "ausgabe",
+    "betrag": 0,
+    "teuerung": 0,
+    "basisjahr": null,
+    "von": 2034,
+    "bis": 2045,
+    "konto": null,
+    "abzugsart": "keine",
+    "entfaellt_bei_heim": true,
+    "umlage_bei_tod": false,
+    "anteile": {
+     "P2": 1
+    }
+   },
+   {
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 240,
+    "bezeichnung": "Pferdeanhaenger, Vignette und Verkehrsabgaben",
+    "bis": 2035,
+    "entfaellt_bei_heim": true,
+    "gruppe": "Fahrzeuge",
+    "id": "ANHAENGER_1"
+   },
+   {
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 160,
+    "bezeichnung": "Transportanhaenger, Vignette und Verkehrsabgaben",
+    "bis": 2045,
+    "entfaellt_bei_heim": true,
+    "gruppe": "Fahrzeuge",
+    "id": "ANHAENGER_2"
+   },
+   {
+    "abzugsart": "krankenversicherung",
+    "anteile": {
+     "P1": 1
+    },
+    "basisjahr": 2025,
+    "betrag": 8784,
+    "bezeichnung": "Krankenversicherung Person 1",
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Versicherungen Person 1",
+    "id": "KRANKENKASSE_P1",
+    "teuerung": 0.005,
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "krankheitskosten",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 1500,
+    "bezeichnung": "Selbstbehalt Krankenversicherung Person 1",
+    "fluss": "ausgabe",
+    "gruppe": "Versicherungen Person 1",
+    "id": "SELBSTBEHALT_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "krankenversicherung",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": 2025,
+    "betrag": 0,
+    "bezeichnung": "Krankenversicherung Person 2",
+    "fluss": "ausgabe",
+    "gruppe": "Versicherungen Person 2",
+    "id": "KRANKENKASSE_P2",
+    "teuerung": 0.01,
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "krankheitskosten",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Selbstbehalt Krankenversicherung Person 2",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Versicherungen Person 2",
+    "id": "SELBSTBEHALT_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Hausrat- und Unfallversicherung",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Versicherungen Liegenschaft",
+    "id": "HAUSRAT_UNFALL",
+    "teuerung": 0,
+    "umlage_bei_tod": true,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Rechtsschutzversicherung",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Versicherungen Liegenschaft",
+    "id": "RECHTSSCHUTZVERSICHERUNG",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Selbstbehalt Versicherungen",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Versicherungen Liegenschaft",
+    "id": "SELBSTBEHALT_SACH",
+    "teuerung": 0,
+    "umlage_bei_tod": true,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Fahrzeugversicherung",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Fahrzeuge",
+    "id": "FAHRZEUGVERSICHERUNG",
+    "teuerung": 0,
+    "umlage_bei_tod": true,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 744,
+    "bezeichnung": "Mietkosten Kellerabteil",
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "KELLER_MIETE",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 7200,
+    "bezeichnung": "Verpflegung",
+    "entfaellt_bei_heim": true,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "ESSEN_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 1500,
+    "bezeichnung": "Coiffeur und persoenliche Auslagen",
+    "entfaellt_bei_heim": true,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "COIFFEUR_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "krankheitskosten",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 1000,
+    "bezeichnung": "Zahnarzt und Arzt",
+    "entfaellt_bei_heim": true,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "ZAHNARZT_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 1500,
+    "bezeichnung": "Kleider",
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "KLEIDER_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 1500,
+    "bezeichnung": "Skiabonnement",
+    "bis": 2035,
+    "entfaellt_bei_heim": true,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "SKIABO_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 8000,
+    "bezeichnung": "Ferien",
+    "entfaellt_bei_heim": true,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "URLAUB_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 400,
+    "bezeichnung": "Zeitschriften",
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "ZEITSCHRIFTEN_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 600,
+    "bezeichnung": "Parkplatzmiete",
+    "bis": 2045,
+    "entfaellt_bei_heim": true,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "PARKPLATZ_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "krankheitskosten",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 750,
+    "bezeichnung": "Hoergeraete und Hilfsmittel",
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "HOERGERAETE_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 2500,
+    "bezeichnung": "Steuerberatung",
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "STEUERBERATER_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 5000,
+    "bezeichnung": "Private Investitionen",
+    "entfaellt_bei_heim": true,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "INV_PRIVAT_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 600,
+    "bezeichnung": "Digitale Abonnemente",
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "ABOS_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Haushaltshilfe",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "LH_HAUSHALTSHILFE_P1",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Gartenunterhalt",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "LH_GARTEN_P1",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Unterstuetzung Angehoerige",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "LH_ANGEHOERIGE_P1",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Anteilige Zahlung Fahrzeugkosten",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "einnahme",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "FAHRZEUG_ZAHLUNG_P1",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 10000,
+    "bezeichnung": "Diverses",
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "DIVERSES_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 1000,
+    "bezeichnung": "Zusaetzliche Ausgaben",
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "ZUSATZ_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Mietkosten Kellerabteil",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "LH_KELLER_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "betrag": 0,
+    "bezeichnung": "Verpflegung",
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "ESSEN_P2",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "betrag": 0,
+    "bezeichnung": "Coiffeur und persoenliche Auslagen",
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "COIFFEUR_P2",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "krankheitskosten",
+    "anteile": {
+     "P2": 1
+    },
+    "betrag": 0,
+    "bezeichnung": "Zahnarzt und Arzt",
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "ZAHNARZT_P2",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "betrag": 0,
+    "bezeichnung": "Kleider",
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "KLEIDER_P2",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Skiabonnement",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "LH_SKIABO_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "betrag": 0,
+    "bezeichnung": "Ferien",
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "URLAUB_P2",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Zeitschriften",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "LH_ZEITSCHRIFTEN_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Parkplatzmiete",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "LH_PARKPLATZ_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "krankheitskosten",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Hoergeraete und Hilfsmittel",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "LH_HILFSMITTEL_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Steuerberatung",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "LH_STEUERBERATUNG_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Private Investitionen",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "LH_INV_PRIVAT_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Digitale Abonnemente",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "LH_ABOS_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "betrag": 36000,
+    "bezeichnung": "Haushaltshilfe",
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "HAUSHALTSHILFE_P2",
+    "umlage_bei_tod": false,
+    "von": 2043
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "betrag": 3600,
+    "bezeichnung": "Gartenunterhalt",
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "GAERTNER_P2",
+    "umlage_bei_tod": false,
+    "von": 2043
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "betrag": 15000,
+    "bezeichnung": "Unterstuetzung Angehoerige",
+    "bis": 2026,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "KOSTEN_ANGEHOERIGE_1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Anteilige Zahlung Fahrzeugkosten",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "FAHRZEUG_ZAHLUNG_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Diverses",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "LH_DIVERSES_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Zusaetzliche Ausgaben",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 2",
+    "id": "LH_ZUSATZ_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "erwerb",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 60000,
+    "bezeichnung": "Nettolohn Person 1",
+    "bis": 2026,
+    "fluss": "einnahme",
+    "gruppe": "Einnahmen Person 1",
+    "id": "LOHN_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "erwerb",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 5000,
+    "bezeichnung": "Nebenerwerb Person 1",
+    "bis": 2026,
+    "fluss": "einnahme",
+    "gruppe": "Einnahmen Person 1",
+    "id": "NEBENERWERB_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "erwerb",
+    "anteile": {
+     "P1": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Nebenerwerb 2 Person 1",
+    "bis": 2026,
+    "entfaellt_bei_heim": false,
+    "fluss": "einnahme",
+    "gruppe": "Einnahmen Person 1",
+    "id": "NEBENERWERB2_P1",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "erwerb",
+    "anteile": {
+     "P1": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Nebenerwerb 3 Person 1",
+    "bis": 2026,
+    "entfaellt_bei_heim": false,
+    "fluss": "einnahme",
+    "gruppe": "Einnahmen Person 1",
+    "id": "NEBENERWERB3_P1",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "erwerb",
+    "anteile": {
+     "P1": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Nebenerwerb 4 Person 1",
+    "bis": 2026,
+    "entfaellt_bei_heim": false,
+    "fluss": "einnahme",
+    "gruppe": "Einnahmen Person 1",
+    "id": "NEBENERWERB4_P1",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "basisjahr": 2025,
+    "betrag": 30240,
+    "bezeichnung": "AHV-Rente Person 1",
+    "fluss": "einnahme",
+    "gruppe": "Einnahmen Person 1",
+    "id": "AHV_P1",
+    "ohne_13": true,
+    "teuerung": 0.008,
+    "umlage_bei_tod": false,
+    "von": 2025
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "basisjahr": 2025,
+    "betrag": 2520,
+    "bezeichnung": "13. AHV-Rente Person 1",
+    "bis": null,
+    "fluss": "einnahme",
+    "gruppe": "Einnahmen Person 1",
+    "id": "AHV13_P1",
+    "teuerung": 0.008,
+    "umlage_bei_tod": false,
+    "von": 2026
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "betrag": 8400,
+    "bezeichnung": "Uebrige Einnahmen Person 1",
+    "bis": 2033,
+    "fluss": "einnahme",
+    "gruppe": "Einnahmen Person 1",
+    "id": "UEBRIGE_EINNAHMEN_P1",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "erwerb",
+    "anteile": {
+     "P2": 1
+    },
+    "betrag": 220000,
+    "bezeichnung": "Nettolohn Person 2",
+    "bis": 2033,
+    "fluss": "einnahme",
+    "gruppe": "Einnahmen Person 2",
+    "id": "LOHN_P2",
+    "umlage_bei_tod": false
+   },
+   {
+    "abzugsart": "erwerb",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Nebenerwerb Person 2",
+    "bis": 2033,
+    "entfaellt_bei_heim": false,
+    "fluss": "einnahme",
+    "gruppe": "Einnahmen Person 2",
+    "id": "NEBENERWERB_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "erwerb",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Nebenerwerb 2 Person 2",
+    "bis": 2033,
+    "entfaellt_bei_heim": false,
+    "fluss": "einnahme",
+    "gruppe": "Einnahmen Person 2",
+    "id": "NEBENERWERB2_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "erwerb",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Nebenerwerb 3 Person 2",
+    "bis": 2033,
+    "entfaellt_bei_heim": false,
+    "fluss": "einnahme",
+    "gruppe": "Einnahmen Person 2",
+    "id": "NEBENERWERB3_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "erwerb",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Nebenerwerb 4 Person 2",
+    "bis": 2033,
+    "entfaellt_bei_heim": false,
+    "fluss": "einnahme",
+    "gruppe": "Einnahmen Person 2",
+    "id": "NEBENERWERB4_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": 2026,
+    "betrag": 30240,
+    "bezeichnung": "AHV-Rente Person 2",
+    "fluss": "einnahme",
+    "gruppe": "Einnahmen Person 2",
+    "id": "AHV_P2",
+    "ohne_13": true,
+    "teuerung": 0.008,
+    "umlage_bei_tod": false,
+    "von": 2034
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": 2026,
+    "betrag": 2520,
+    "bezeichnung": "13. AHV-Rente Person 2",
+    "bis": null,
+    "fluss": "einnahme",
+    "gruppe": "Einnahmen Person 2",
+    "id": "AHV13_P2",
+    "teuerung": 0.008,
+    "umlage_bei_tod": false,
+    "von": 2034
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Uebrige Einnahmen Person 2",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "einnahme",
+    "gruppe": "Einnahmen Person 2",
+    "id": "UEBRIGE_EINNAHMEN_P2",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "hypozins",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Hypothekarkosten Ferienwohnung",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Ferienwohnung Flims",
+    "id": "FLIMS_HYPOTHEK",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": 2026,
+    "betrag": 0,
+    "bezeichnung": "Nebenkosten Ferienwohnung",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Ferienwohnung Flims",
+    "id": "FLIMS_NEBENKOSTEN",
+    "teuerung": 0.0005,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Zusaetzliche Ausgaben Ferienwohnung",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Ferienwohnung Flims",
+    "id": "FLIMS_ZUSATZ",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P2": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Steuern Ferienwohnung",
+    "bis": null,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Ferienwohnung Flims",
+    "id": "FLIMS_STEUERN",
+    "teuerung": 0,
+    "umlage_bei_tod": false,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Neue Position",
+    "bis": null,
+    "eigen": true,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "EIGEN_1",
+    "teuerung": 0,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Neue Position",
+    "bis": null,
+    "eigen": true,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "EIGEN_2",
+    "teuerung": 0,
+    "von": null
+   },
+   {
+    "abzugsart": "keine",
+    "anteile": {
+     "P1": 1
+    },
+    "basisjahr": null,
+    "betrag": 0,
+    "bezeichnung": "Neue Position",
+    "bis": null,
+    "eigen": true,
+    "entfaellt_bei_heim": false,
+    "fluss": "ausgabe",
+    "gruppe": "Lebenshaltung Person 1",
+    "id": "EIGEN_3",
+    "teuerung": 0,
+    "von": null
+   }
+  ]
+ },
+ "hypotheken": [
+  {
+   "ablauf": "2039-09-30",
+   "ablauf_jahr": 2039,
+   "anteile": {
+    "P1": 0.5,
+    "P2": 0.5
+   },
+   "beginn": "2024-09-30",
+   "beginn_jahr": 2024,
+   "betrag": 150000,
+   "bezeichnung": "Saron-Hypothek, variabel",
+   "folgeperioden": [
+    {
+     "bis": 2060,
+     "satz": 0.025,
+     "von": 2039
+    }
+   ],
+   "id": "H1",
+   "satz": 0.0175
+  },
+  {
+   "ablauf": "2033-07-06",
+   "ablauf_jahr": 2033,
+   "anteile": {
+    "P1": 0.5,
+    "P2": 0.5
+   },
+   "beginn": "2023-07-06",
+   "beginn_jahr": 2023,
+   "betrag": 100000,
+   "bezeichnung": "Festhypothek 2",
+   "folgeperioden": [
+    {
+     "bis": 2060,
+     "satz": 0.025,
+     "von": 2033
+    }
+   ],
+   "id": "H2",
+   "satz": 0.0287
+  },
+  {
+   "ablauf": "2032-05-18",
+   "ablauf_jahr": 2032,
+   "anteile": {
+    "P1": 0.5,
+    "P2": 0.5
+   },
+   "beginn": "2023-05-17",
+   "beginn_jahr": 2023,
+   "betrag": 100000,
+   "bezeichnung": "Festhypothek 3",
+   "folgeperioden": [
+    {
+     "bis": 2060,
+     "satz": 0.025,
+     "von": 2032
+    }
+   ],
+   "id": "H3",
+   "satz": 0.0277
+  },
+  {
+   "ablauf_jahr": 2032,
+   "anteile": {
+    "P1": 0.5,
+    "P2": 0.5
+   },
+   "beginn_jahr": 2023,
+   "betrag": 100000,
+   "bezeichnung": "Festhypothek 4",
+   "folgeperioden": [
+    {
+     "bis": 2060,
+     "satz": 0.025,
+     "von": 2033
+    }
+   ],
+   "id": "H4",
+   "satz": 0.0283
+  },
+  {
+   "ablauf": "2037-01-12",
+   "ablauf_jahr": 2037,
+   "anteile": {
+    "P1": 0.5,
+    "P2": 0.5
+   },
+   "beginn": "2022-01-19",
+   "beginn_jahr": 2022,
+   "betrag": 732000,
+   "bezeichnung": "Festhypothek 5 (Haupttranche)",
+   "folgeperioden": [
+    {
+     "bis": 2060,
+     "satz": 0.025,
+     "von": 2037
+    }
+   ],
+   "id": "H5",
+   "satz": 0.011
+  },
+  {
+   "ablauf": "2040-01-10",
+   "ablauf_jahr": 2040,
+   "anteile": {
+    "P1": 0.5,
+    "P2": 0.5
+   },
+   "beginn": "2025-01-10",
+   "beginn_jahr": 2025,
+   "betrag": 358000,
+   "bezeichnung": "Festhypothek 6",
+   "folgeperioden": [
+    {
+     "bis": 2060,
+     "satz": 0.025,
+     "von": 2040
+    }
+   ],
+   "id": "H6",
+   "satz": 0.0174
+  },
+  {
+   "ablauf": "2031-01-19",
+   "ablauf_jahr": 2031,
+   "anteile": {
+    "P1": 0.5,
+    "P2": 0.5
+   },
+   "beginn": "2022-01-19",
+   "beginn_jahr": 2022,
+   "betrag": 60000,
+   "bezeichnung": "Festhypothek 7",
+   "folgeperioden": [
+    {
+     "bis": 2060,
+     "satz": 0.025,
+     "von": 2031
+    }
+   ],
+   "id": "H7",
+   "satz": 0.0085
+  }
+ ],
+ "investitionskonto": {
+  "aktiv": true,
+  "bezeichnung": "Rückstellungen Investitionen",
+  "startbetrag": 14823,
+  "startjahr": 2026,
+  "zins": 0.008,
+  "anteile": {
+   "P1": 0.5,
+   "P2": 0.5
+  },
+  "einzahlung_perioden": [
+   {
+    "betraege": {
+     "P1": 7200,
+     "P2": 7200
+    },
+    "bis": 2033,
+    "von": 2025
+   },
+   {
+    "betraege": {
+     "P1": 1200,
+     "P2": 1200
+    },
+    "bis": 2040,
+    "von": 2034
+   },
+   {
+    "betraege": {
+     "P1": 1200,
+     "P2": 1200
+    },
+    "bis": 2050,
+    "von": 2041
+   }
+  ]
+ },
+ "jahr_bis": 2060,
+ "jahr_von": 2025,
+ "korrekturen": {
+  "ahv_dreizehn": true,
+  "inv_position_weg": true,
+  "nk_versicherung_weg": true,
+  "reparaturpauschale": true,
+  "vers_ersatzfahrzeug": true,
+  "emw_abschaffung_2029": true,
+  "liegenschaftswerte": true
+ },
+ "personen": [
+  {
+   "bezeichnung": "Person 1",
+   "geburtsjahr": 1960,
+   "heim_umlage_anteil": 0.2,
+   "heimeintritt_ab": null,
+   "heimkosten_pro_monat": 0,
+   "id": "P1",
+   "kinder": 0,
+   "lebenserwartung_bis": 2047,
+   "pensionierung": 2025
+  },
+  {
+   "bezeichnung": "Person 2",
+   "geburtsjahr": 1969,
+   "heimeintritt_ab": null,
+   "heimkosten_pro_monat": 0,
+   "id": "P2",
+   "kinder": 0,
+   "lebenserwartung_bis": 2060,
+   "pensionierung": 2034
+  }
+ ],
+ "positionen": [
+  {
+   "anteile": {
+    "P1": 0.5,
+    "P2": 0.5
+   },
+   "basisjahr": 2026,
+   "betrag": 3985,
+   "bezeichnung": "Strom, Wasser, Abwasser, Kehricht",
+   "entfaellt_bei_heim": true,
+   "gruppe": "Liegenschaft",
+   "id": "NK_STROM",
+   "teuerung": 0.01
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 0.5,
+    "P2": 0.5
+   },
+   "basisjahr": 2026,
+   "betrag": 2000,
+   "bezeichnung": "Reparaturen und kleiner Unterhalt",
+   "bis": null,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Liegenschaft",
+   "id": "REPARATUREN",
+   "teuerung": 0.005,
+   "umlage_bei_tod": true,
+   "von": null
+  },
+  {
+   "anteile": {
+    "P1": 0.5,
+    "P2": 0.5
+   },
+   "basisjahr": 2026,
+   "betrag": 6995,
+   "bezeichnung": "Uebrige Nebenkosten (TV, Internet, Garten, Strassenkooperation)",
+   "gruppe": "Liegenschaft",
+   "id": "NK_SONSTIGE",
+   "teuerung": 0.01
+  },
+  {
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 2500,
+   "bezeichnung": "Pacht Stall",
+   "bis": 2040,
+   "entfaellt_bei_heim": true,
+   "gruppe": "Stall",
+   "id": "STALL_PACHT",
+   "von": 2026
+  },
+  {
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 15000,
+   "bezeichnung": "Betriebskosten Stall",
+   "bis": 2033,
+   "entfaellt_bei_heim": true,
+   "gruppe": "Stall",
+   "id": "STALL_BETRIEB",
+   "von": 2026
+  },
+  {
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 2500,
+   "bezeichnung": "Betriebskosten Stall, reduziert",
+   "bis": 2040,
+   "entfaellt_bei_heim": true,
+   "gruppe": "Stall",
+   "id": "STALL_BETRIEB_RED",
+   "von": 2034
+  },
+  {
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 10498.33,
+   "bezeichnung": "Betriebskosten Fahrzeug 1",
+   "bis": 2033,
+   "entfaellt_bei_heim": true,
+   "gruppe": "Fahrzeuge",
+   "id": "AUTO_BETRIEB_1",
+   "teuerung": 0.01
+  },
+  {
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 11182,
+   "bezeichnung": "Betriebskosten Fahrzeug 2",
+   "bis": 2030,
+   "entfaellt_bei_heim": true,
+   "gruppe": "Fahrzeuge",
+   "id": "AUTO_BETRIEB_2",
+   "teuerung": 0.01
+  },
+  {
+   "anteile": {
+    "P2": 1
+   },
+   "betrag": 50000,
+   "bezeichnung": "Kauf Ersatzfahrzeug",
+   "bis": 2034,
+   "entfaellt_bei_heim": true,
+   "gruppe": "Fahrzeuge",
+   "id": "AUTO_KAUF_NEU",
+   "von": 2034
+  },
+  {
+   "anteile": {
+    "P2": 1
+   },
+   "betrag": 8280,
+   "bezeichnung": "Betriebskosten Ersatzfahrzeug",
+   "bis": 2045,
+   "entfaellt_bei_heim": true,
+   "gruppe": "Fahrzeuge",
+   "id": "AUTO_BETRIEB_NEU",
+   "von": 2034
+  },
+  {
+   "id": "AUTO_VERS_NEU",
+   "bezeichnung": "Versicherung Ersatzfahrzeug",
+   "gruppe": "Fahrzeuge",
+   "fluss": "ausgabe",
+   "betrag": 2500,
+   "teuerung": 0,
+   "basisjahr": null,
+   "von": 2034,
+   "bis": 2045,
+   "konto": null,
+   "abzugsart": "keine",
+   "entfaellt_bei_heim": true,
+   "umlage_bei_tod": false,
+   "anteile": {
+    "P2": 1
+   }
+  },
+  {
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 240,
+   "bezeichnung": "Pferdeanhaenger, Vignette und Verkehrsabgaben",
+   "bis": 2035,
+   "entfaellt_bei_heim": true,
+   "gruppe": "Fahrzeuge",
+   "id": "ANHAENGER_1",
+   "teuerung": 0.005
+  },
+  {
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 160,
+   "bezeichnung": "Transportanhaenger, Vignette und Verkehrsabgaben",
+   "bis": 2045,
+   "entfaellt_bei_heim": true,
+   "gruppe": "Fahrzeuge",
+   "id": "ANHAENGER_2",
+   "teuerung": 0.005
+  },
+  {
+   "abzugsart": "krankenversicherung",
+   "anteile": {
+    "P1": 1
+   },
+   "basisjahr": 2025,
+   "betrag": 8784,
+   "bezeichnung": "Krankenversicherung Person 1",
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Versicherungen Person 1",
+   "id": "KRANKENKASSE_P1",
+   "teuerung": 0.008,
+   "umlage_bei_tod": false,
+   "von": 2027
+  },
+  {
+   "abzugsart": "krankheitskosten",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 1000,
+   "bezeichnung": "Selbstbehalt Krankenversicherung Person 1",
+   "fluss": "ausgabe",
+   "gruppe": "Versicherungen Person 1",
+   "id": "SELBSTBEHALT_P1",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "krankenversicherung",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": 2025,
+   "betrag": 8200,
+   "bezeichnung": "Krankenversicherung Person 2",
+   "fluss": "ausgabe",
+   "gruppe": "Versicherungen Person 2",
+   "id": "KRANKENKASSE_P2",
+   "teuerung": 0.01,
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "krankheitskosten",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 1500,
+   "bezeichnung": "Selbstbehalt Krankenversicherung Person 2",
+   "bis": null,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Versicherungen Person 2",
+   "id": "SELBSTBEHALT_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 0.5,
+    "P2": 0.5
+   },
+   "basisjahr": null,
+   "betrag": 2800,
+   "bezeichnung": "Hausrat- und Unfallversicherung",
+   "bis": null,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Versicherungen Liegenschaft",
+   "id": "HAUSRAT_UNFALL",
+   "teuerung": 0.01,
+   "umlage_bei_tod": true,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 0.5,
+    "P2": 0.5
+   },
+   "basisjahr": null,
+   "betrag": 400,
+   "bezeichnung": "Rechtsschutzversicherung",
+   "bis": 2045,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Versicherungen Liegenschaft",
+   "id": "RECHTSSCHUTZVERSICHERUNG",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 0.5,
+    "P1": 0.5
+   },
+   "basisjahr": null,
+   "betrag": 500,
+   "bezeichnung": "Selbstbehalt Versicherungen",
+   "bis": 2030,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Versicherungen Liegenschaft",
+   "id": "SELBSTBEHALT_SACH",
+   "teuerung": 0,
+   "umlage_bei_tod": true,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "basisjahr": null,
+   "betrag": 3400,
+   "bezeichnung": "Fahrzeugversicherung",
+   "bis": 2035,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Fahrzeuge",
+   "id": "FAHRZEUGVERSICHERUNG",
+   "teuerung": 0,
+   "umlage_bei_tod": true,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 744,
+   "bezeichnung": "Mietkosten Kellerabteil",
+   "bis": 2030,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "KELLER_MIETE",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 7200,
+   "bezeichnung": "Verpflegung",
+   "entfaellt_bei_heim": true,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "ESSEN_P1",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 2000,
+   "bezeichnung": "Coiffeur und persoenliche Auslagen",
+   "entfaellt_bei_heim": true,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "COIFFEUR_P1",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "krankheitskosten",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 1000,
+   "bezeichnung": "Zahnarzt und Arzt",
+   "entfaellt_bei_heim": true,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "ZAHNARZT_P1",
+   "teuerung": 0.01,
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 1500,
+   "bezeichnung": "Kleider",
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "KLEIDER_P1",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 1500,
+   "bezeichnung": "Skiabonnement",
+   "bis": 2037,
+   "entfaellt_bei_heim": true,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "SKIABO_P1",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 6000,
+   "bezeichnung": "Ferien",
+   "entfaellt_bei_heim": true,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "URLAUB_P1",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 400,
+   "bezeichnung": "Zeitschriften",
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "ZEITSCHRIFTEN_P1",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 600,
+   "bezeichnung": "Parkplatzmiete",
+   "bis": 2040,
+   "entfaellt_bei_heim": true,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "PARKPLATZ_P1",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "krankheitskosten",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 750,
+   "bezeichnung": "Hoergeraete und Hilfsmittel",
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "HOERGERAETE_P1",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 2500,
+   "bezeichnung": "Steuerberatung",
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "STEUERBERATER_P1",
+   "umlage_bei_tod": false,
+   "von": 2026
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 5000,
+   "bezeichnung": "Private Investitionen",
+   "entfaellt_bei_heim": true,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "INV_PRIVAT_P1",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 600,
+   "bezeichnung": "Digitale Abonnemente",
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "ABOS_P1",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "basisjahr": null,
+   "betrag": 12000,
+   "bezeichnung": "Haushaltshilfe",
+   "bis": 2045,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "LH_HAUSHALTSHILFE_P1",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": 2042
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "basisjahr": null,
+   "betrag": 1000,
+   "bezeichnung": "Gartenunterhalt",
+   "bis": null,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "LH_GARTEN_P1",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "basisjahr": null,
+   "betrag": 0,
+   "bezeichnung": "Unterstuetzung Angehoerige",
+   "bis": null,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "LH_ANGEHOERIGE_P1",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "basisjahr": null,
+   "betrag": 4500,
+   "bezeichnung": "Anteilige Zahlung Fahrzeugkosten",
+   "bis": null,
+   "entfaellt_bei_heim": false,
+   "fluss": "einnahme",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "FAHRZEUG_ZAHLUNG_P1",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": 2034
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 10000,
+   "bezeichnung": "Diverses",
+   "bis": 2038,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "DIVERSES_P1",
+   "umlage_bei_tod": false,
+   "von": 2027
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 0,
+   "bezeichnung": "Zusaetzliche Ausgaben",
+   "bis": null,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "ZUSATZ_P1",
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 0,
+   "bezeichnung": "Mietkosten Kellerabteil",
+   "bis": null,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "LH_KELLER_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "betrag": 7200,
+   "bezeichnung": "Verpflegung",
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "ESSEN_P2",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "betrag": 4800,
+   "bezeichnung": "Coiffeur und persoenliche Auslagen",
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "COIFFEUR_P2",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "krankheitskosten",
+   "anteile": {
+    "P2": 1
+   },
+   "betrag": 1500,
+   "bezeichnung": "Zahnarzt und Arzt",
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "ZAHNARZT_P2",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "betrag": 1500,
+   "bezeichnung": "Kleider",
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "KLEIDER_P2",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 1500,
+   "bezeichnung": "Skiabonnement",
+   "bis": 2037,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "LH_SKIABO_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "betrag": 6000,
+   "bezeichnung": "Ferien",
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "URLAUB_P2",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 150,
+   "bezeichnung": "Zeitschriften",
+   "bis": null,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "LH_ZEITSCHRIFTEN_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 0,
+   "bezeichnung": "Parkplatzmiete",
+   "bis": null,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "LH_PARKPLATZ_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "krankheitskosten",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 0,
+   "bezeichnung": "Hoergeraete und Hilfsmittel",
+   "bis": null,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "LH_HILFSMITTEL_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 2000,
+   "bezeichnung": "Steuerberatung",
+   "bis": null,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "LH_STEUERBERATUNG_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 2000,
+   "bezeichnung": "Private Investitionen",
+   "bis": null,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "LH_INV_PRIVAT_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 400,
+   "bezeichnung": "Digitale Abonnemente",
+   "bis": null,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "LH_ABOS_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "betrag": 1200,
+   "bezeichnung": "Haushaltshilfe",
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "HAUSHALTSHILFE_P2",
+   "umlage_bei_tod": false,
+   "von": 2026
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "betrag": 1500,
+   "bezeichnung": "Gartenunterhalt",
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "GAERTNER_P2",
+   "umlage_bei_tod": false,
+   "von": 2043
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "betrag": 0,
+   "bezeichnung": "Unterstuetzung Angehoerige",
+   "bis": 2026,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "KOSTEN_ANGEHOERIGE_1",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 700,
+   "bezeichnung": "Anteilige Zahlung Fahrzeugkosten",
+   "bis": 2033,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "FAHRZEUG_ZAHLUNG_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 8000,
+   "bezeichnung": "Diverses",
+   "bis": 2032,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "LH_DIVERSES_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 0,
+   "bezeichnung": "Zusaetzliche Ausgaben",
+   "bis": null,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 2",
+   "id": "LH_ZUSATZ_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "erwerb",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 60000,
+   "bezeichnung": "Nettolohn Person 1",
+   "bis": 2025,
+   "fluss": "einnahme",
+   "gruppe": "Einnahmen Person 1",
+   "id": "LOHN_P1",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "erwerb",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 40000,
+   "bezeichnung": "Nebenerwerb 1 Person 1",
+   "bis": 2026,
+   "fluss": "einnahme",
+   "gruppe": "Einnahmen Person 1",
+   "id": "NEBENERWERB_P1",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "erwerb",
+   "anteile": {
+    "P1": 1
+   },
+   "basisjahr": null,
+   "betrag": 25000,
+   "bezeichnung": "Nebenerwerb 2 Person 1",
+   "bis": 2027,
+   "entfaellt_bei_heim": false,
+   "fluss": "einnahme",
+   "gruppe": "Einnahmen Person 1",
+   "id": "NEBENERWERB2_P1",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": 2027
+  },
+  {
+   "abzugsart": "erwerb",
+   "anteile": {
+    "P1": 1
+   },
+   "basisjahr": null,
+   "betrag": 0,
+   "bezeichnung": "Nebenerwerb 3 Person 1",
+   "bis": 2026,
+   "entfaellt_bei_heim": false,
+   "fluss": "einnahme",
+   "gruppe": "Einnahmen Person 1",
+   "id": "NEBENERWERB3_P1",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "erwerb",
+   "anteile": {
+    "P1": 1
+   },
+   "basisjahr": null,
+   "betrag": 0,
+   "bezeichnung": "Nebenerwerb 4 Person 1",
+   "bis": 2026,
+   "entfaellt_bei_heim": false,
+   "fluss": "einnahme",
+   "gruppe": "Einnahmen Person 1",
+   "id": "NEBENERWERB4_P1",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "basisjahr": 2025,
+   "betrag": 30240,
+   "bezeichnung": "AHV-Rente Person 1",
+   "fluss": "einnahme",
+   "gruppe": "Einnahmen Person 1",
+   "id": "AHV_P1",
+   "ohne_13": true,
+   "teuerung": 0.008,
+   "umlage_bei_tod": false,
+   "von": 2025
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "basisjahr": 2025,
+   "betrag": 2520,
+   "bezeichnung": "13. AHV-Rente Person 1",
+   "bis": null,
+   "fluss": "einnahme",
+   "gruppe": "Einnahmen Person 1",
+   "id": "AHV13_P1",
+   "teuerung": 0.008,
+   "umlage_bei_tod": false,
+   "von": 2026
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 8400,
+   "bezeichnung": "Uebrige Einnahmen Person 1",
+   "bis": 2033,
+   "fluss": "einnahme",
+   "gruppe": "Einnahmen Person 1",
+   "id": "UEBRIGE_EINNAHMEN_P1",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "erwerb",
+   "anteile": {
+    "P2": 1
+   },
+   "betrag": 220000,
+   "bezeichnung": "Nettolohn Person 2",
+   "bis": 2033,
+   "fluss": "einnahme",
+   "gruppe": "Einnahmen Person 2",
+   "id": "LOHN_P2",
+   "umlage_bei_tod": false
+  },
+  {
+   "abzugsart": "erwerb",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 0,
+   "bezeichnung": "Nebenerwerb 1 Person 2",
+   "bis": 2033,
+   "entfaellt_bei_heim": false,
+   "fluss": "einnahme",
+   "gruppe": "Einnahmen Person 2",
+   "id": "NEBENERWERB_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "erwerb",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 0,
+   "bezeichnung": "Nebenerwerb 2 Person 2",
+   "bis": 2033,
+   "entfaellt_bei_heim": false,
+   "fluss": "einnahme",
+   "gruppe": "Einnahmen Person 2",
+   "id": "NEBENERWERB2_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "erwerb",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 0,
+   "bezeichnung": "Nebenerwerb 3 Person 2",
+   "bis": 2033,
+   "entfaellt_bei_heim": false,
+   "fluss": "einnahme",
+   "gruppe": "Einnahmen Person 2",
+   "id": "NEBENERWERB3_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "erwerb",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 0,
+   "bezeichnung": "Nebenerwerb 4 Person 2",
+   "bis": 2033,
+   "entfaellt_bei_heim": false,
+   "fluss": "einnahme",
+   "gruppe": "Einnahmen Person 2",
+   "id": "NEBENERWERB4_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": 2034,
+   "betrag": 30240,
+   "bezeichnung": "AHV-Rente Person 2",
+   "bis": 2060,
+   "fluss": "einnahme",
+   "gruppe": "Einnahmen Person 2",
+   "id": "AHV_P2",
+   "ohne_13": true,
+   "teuerung": 0.008,
+   "umlage_bei_tod": false,
+   "von": 2034
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": 2034,
+   "betrag": 2520,
+   "bezeichnung": "13. AHV-Rente Person 2",
+   "bis": 2060,
+   "fluss": "einnahme",
+   "gruppe": "Einnahmen Person 2",
+   "id": "AHV13_P2",
+   "teuerung": 0.008,
+   "umlage_bei_tod": false,
+   "von": 2034
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 4500,
+   "bezeichnung": "Uebrige Einnahmen Person 2",
+   "bis": 2044,
+   "entfaellt_bei_heim": false,
+   "fluss": "einnahme",
+   "gruppe": "Einnahmen Person 2",
+   "id": "UEBRIGE_EINNAHMEN_P2",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": 2035
+  },
+  {
+   "abzugsart": "uebrige",
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 4000,
+   "bezeichnung": "Uebrige Steuerabzuege Person 1",
+   "gruppe": "Steuerabzüge",
+   "id": "ABZUG_DIVERSES_P1"
+  },
+  {
+   "abzugsart": "uebrige",
+   "anteile": {
+    "P2": 1
+   },
+   "betrag": 4000,
+   "bezeichnung": "Uebrige Steuerabzuege Person 2",
+   "gruppe": "Steuerabzüge",
+   "id": "ABZUG_DIVERSES_P2"
+  },
+  {
+   "abzugsart": "hypozins",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 1500,
+   "bezeichnung": "Hypothekarkosten Ferienwohnung",
+   "bis": 2047,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Ferienwohnung Flims",
+   "id": "FLIMS_HYPOTHEK",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": 2026,
+   "betrag": 5000,
+   "bezeichnung": "Nebenkosten Ferienwohnung",
+   "bis": 2047,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Ferienwohnung Flims",
+   "id": "FLIMS_NEBENKOSTEN",
+   "teuerung": 0.005,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 1500,
+   "bezeichnung": "Zusaetzliche Ausgaben Ferienwohnung",
+   "bis": 2047,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Ferienwohnung Flims",
+   "id": "FLIMS_ZUSATZ",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P2": 1
+   },
+   "basisjahr": null,
+   "betrag": 1600,
+   "bezeichnung": "Steuern Ferienwohnung",
+   "bis": 2047,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Ferienwohnung Flims",
+   "id": "FLIMS_STEUERN",
+   "teuerung": 0,
+   "umlage_bei_tod": false,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "basisjahr": null,
+   "betrag": 0,
+   "bezeichnung": "Neue Position",
+   "bis": null,
+   "eigen": true,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "EIGEN_1",
+   "teuerung": 0,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "basisjahr": null,
+   "betrag": 0,
+   "bezeichnung": "Neue Position",
+   "bis": null,
+   "eigen": true,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "EIGEN_2",
+   "teuerung": 0,
+   "von": null
+  },
+  {
+   "abzugsart": "keine",
+   "anteile": {
+    "P1": 1
+   },
+   "basisjahr": null,
+   "betrag": 0,
+   "bezeichnung": "Neue Position",
+   "bis": null,
+   "eigen": true,
+   "entfaellt_bei_heim": false,
+   "fluss": "ausgabe",
+   "gruppe": "Lebenshaltung Person 1",
+   "id": "EIGEN_3",
+   "teuerung": 0,
+   "von": null
+  }
+ ],
+ "rueckstellungskonto": {
+  "aktiv": true,
+  "anteile": {
+   "P1": 0.5,
+   "P2": 0.5
+  },
+  "aufloesung_jahr": null,
+  "bezeichnung": "Rueckstellungen Erneuerung Liegenschaft",
+  "einzahlung_perioden": [
+   {
+    "betraege": {
+     "P1": 6600,
+     "P2": 6600
+    },
+    "bis": 2060,
+    "von": 2025
+   }
+  ],
+  "entnahmen": [
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "aus_konto": true,
+    "betrag": 9000,
+    "jahr": 2030,
+    "werterhaltend_anteil": 1,
+    "zweck": "Holzschutz Aussenfassade Obergeschoss"
+   },
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "aus_konto": true,
+    "betrag": 3000,
+    "jahr": 2033,
+    "werterhaltend_anteil": 1,
+    "zweck": "Kühlschrank, Gefrierer"
+   },
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "aus_konto": true,
+    "betrag": 15000,
+    "jahr": 2035,
+    "werterhaltend_anteil": 1,
+    "zweck": "Innenanstrich"
+   },
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "aus_konto": true,
+    "betrag": 9000,
+    "jahr": 2037,
+    "werterhaltend_anteil": 1,
+    "zweck": "Holzschutz Aussenfassade Obergeschoss"
+   },
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "aus_konto": true,
+    "betrag": 12000,
+    "jahr": 2038,
+    "werterhaltend_anteil": 1,
+    "zweck": "Herd, Backofen, Geschirrspüler, Waschmaschine, Tumbler"
+   },
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "aus_konto": true,
+    "betrag": 3500,
+    "jahr": 2038,
+    "werterhaltend_anteil": 1,
+    "zweck": "Wechselrichter Photovoltaik 15 kWp"
+   },
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "aus_konto": true,
+    "betrag": 11000,
+    "jahr": 2038,
+    "werterhaltend_anteil": 1,
+    "zweck": "Batteriespeicher"
+   },
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "aus_konto": true,
+    "betrag": 18000,
+    "jahr": 2038,
+    "werterhaltend_anteil": 1,
+    "zweck": "Storen und Beschattung"
+   },
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "aus_konto": true,
+    "betrag": 55000,
+    "jahr": 2043,
+    "werterhaltend_anteil": 1,
+    "zweck": "Wärmepumpe inklusive Boiler"
+   },
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "aus_konto": true,
+    "betrag": 3000,
+    "jahr": 2043,
+    "werterhaltend_anteil": 1,
+    "zweck": "Kühlschrank, Gefrierer"
+   },
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "aus_konto": true,
+    "betrag": 9000,
+    "jahr": 2044,
+    "werterhaltend_anteil": 1,
+    "zweck": "Holzschutz Aussenfassade Obergeschoss"
+   },
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "aus_konto": true,
+    "betrag": 9000,
+    "jahr": 2051,
+    "werterhaltend_anteil": 1,
+    "zweck": "Holzschutz Aussenfassade Obergeschoss"
+   },
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "aus_konto": true,
+    "betrag": 3500,
+    "jahr": 2052,
+    "werterhaltend_anteil": 1,
+    "zweck": "Wechselrichter Photovoltaik 15 kWp (zweiter Ersatz)"
+   },
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "aus_konto": true,
+    "betrag": 14000,
+    "jahr": 2053,
+    "werterhaltend_anteil": 1,
+    "zweck": "Solarmodule 15 kWp ersetzen (Ertragsinvestition, nicht zwingend)"
+   },
+   {
+    "anteile": {
+     "P1": 0.5,
+     "P2": 0.5
+    },
+    "aus_konto": true,
+    "betrag": 9000,
+    "jahr": 2058,
+    "werterhaltend_anteil": 1,
+    "zweck": "Holzschutz Aussenfassade Obergeschoss"
+   }
+  ],
+  "hypo_nutzung": {
+   "aktiv": false
+  },
+  "startbetrag": 0,
+  "startjahr": 2025,
+  "zins": 0.008
+ },
+ "steuer": {
+  "abzuege": {
+   "vers_pauschale_kanton": 3400,
+   "vers_zuschlag_ohne_vorsorge_kanton": 500,
+   "vers_pro_kind_kanton": 0,
+   "ohne_saeule_2_3a": true,
+   "vers_pauschale_bund": 1800,
+   "vers_pro_kind_bund": 0,
+   "krankheit_selbstbehalt_kanton": 0.02,
+   "krankheit_selbstbehalt_bund": 0.05,
+   "unterhalt_pauschale_kanton": 0.2,
+   "unterhalt_pauschale_bund": 0.2,
+   "vv_satz": 0.002,
+   "vv_satz2": 0.001,
+   "vv_stufe": 3000000,
+   "vv_max": 15000,
+   "vers_zuschlag_ohne_vorsorge_bund": 900,
+   "berufsauslagen_kanton_sockel": 700,
+   "berufsauslagen_kanton_satz": 0.1,
+   "berufsauslagen_kanton_max": 2400,
+   "katalog": {
+    "fahrkosten_bund": 3300,
+    "fahrkosten_kanton": 8000,
+    "gemeinnuetzig_anteil": 0.2,
+    "gemeinnuetzig_min": 100,
+    "parteien_bund": 10600,
+    "parteien_kanton": 10700,
+    "unterstuetzung_bund": 6800,
+    "verpflegung_max": 3200,
+    "weiterbildung_max": 13000
+   },
+   "saeule3a_aktiv": false,
+   "saeule3a_max": 7258,
+   "berufsauslagen_satz": 0.03,
+   "berufsauslagen_min": 2000,
+   "berufsauslagen_max": 4000,
+   "schuldzins_zuschlag": 50000,
+   "schuldzins_nach_abschaffung": false
+  },
+  "eigenmietwert_abschaffung_jahr": 2029,
+  "eigenmietwert_anteile": {
+   "P1": 0.5,
+   "P2": 0.5
+  },
+  "eigenmietwert_marktmiete_pro_monat": 0,
+  "eigenmietwert_pro_jahr": 35400,
+  "eigenmietwert_reduktionsfaktor": 0.75,
+  "faktor_bund": 1,
+  "gemeinde": "Gommiswald (vormals Rieden)",
+  "kanton": "SG",
+  "kapitalleistung": {
+   "satz_kanton": 0.022,
+   "faktor_bund": 0.2
+  },
+  "katalog": {
+   "P1": {},
+   "P2": {}
+  },
+  "reduktionsfaktor_werterhaltend": 0.75,
+  "steuerfuss_gemeinde": 1.03,
+  "steuerfuss_kanton": 1.05,
+  "steuerfuss_kirche": 0,
+  "tarif_bund": "bund_2026.yaml",
+  "tarif_kanton": "sg_2026.yaml",
+  "tarifjahr": 2026,
+  "eigenmietwert_abschaffung_datum": "01.01.2029",
+  "verkehrswert_liegenschaft": 1890000,
+  "verkehrswert_als_steuerwert": false
+ },
+ "todesfall": {
+  "aktiv": true,
+  "jahr": 2044,
+  "person_id": "P1",
+  "gaertner_pro_monat": 300,
+  "haushaltshilfe_pro_monat": 600,
+  "zusatz_ab_jahr": null,
+  "erbe_liegenschaft_anteil": 1,
+  "erbe_kapital_anteil": 0,
+  "erbe_vorsorge_anteil": 0,
+  "erbschaftssteuer": {
+   "verhaeltnis": "konkubinat",
+   "satz": 0.1,
+   "freibetrag": 25000
+  },
+  "nutzungsrecht": {
+   "aktiv": true,
+   "art": "nutzniessung",
+   "jahreswert": 0,
+   "faktor": 0,
+   "zins": 0.03
+  },
+  "umzug": {
+   "aktiv": false,
+   "jahr": 2046,
+   "miete_pro_monat": 2000,
+   "nebenkosten_pro_monat": 300
+  },
+  "verkauf": {
+   "aktiv": false,
+   "jahr": 2046,
+   "nettoerloes": 0,
+   "verwendung": "erben"
+  },
+  "vermietung": {
+   "aktiv": true,
+   "miete_pro_monat": 1200,
+   "ab_jahr": 2048,
+   "investition_betrag": 10000,
+   "investition_jahr": 2047,
+   "investition_werterhaltend": 0.75,
+   "emw_anteil": 0.2,
+   "flaeche_vermietet": 45,
+   "flaeche_total": 225
+  }
+ },
+ "vermoegen": [
+  {
+   "anteile": {
+    "P1": 0.5,
+    "P2": 0.5
+   },
+   "betrag": 1890000,
+   "bezeichnung": "Liegenschaft Rieden (Steuerwert, amtliche Schatzung)",
+   "id": "V_HAUS"
+  },
+  {
+   "anteile": {
+    "P1": 1
+   },
+   "betrag": 80000,
+   "bezeichnung": "Uebriges Vermoegen Person 1",
+   "id": "V_CASH_P1"
+  },
+  {
+   "anteile": {
+    "P2": 1
+   },
+   "betrag": 300000,
+   "bezeichnung": "Uebriges Vermoegen Person 2",
+   "id": "V_CASH_P2"
+  }
+ ],
+ "vermoegen_jahre": {
+  "P1": [
+   {
+    "jahr": 2025,
+    "kapital": 80000,
+    "liegenschaft": 945000
+   }
+  ],
+  "P2": [
+   {
+    "jahr": 2025,
+    "kapital": 300000,
+    "liegenschaft": 945000
+   }
+  ]
+ },
+ "vermoegen_person": [
+  {
+   "bezeichnung": "Pferdestall und Pferde",
+   "person_id": "P1",
+   "betrag": 60000,
+   "von": 2027,
+   "bis": 2034,
+   "entwertung": 0,
+   "entwertung_art": "proz",
+   "ertrag": 0,
+   "basisjahr": 2025,
+   "index": -0.01
+  },
+  {
+   "id": "VP_P2_2",
+   "person_id": "P2",
+   "bezeichnung": "Vermögenswert",
+   "modus": "index",
+   "betrag": 0,
+   "basisjahr": 2025,
+   "index": 0,
+   "ertrag": 0,
+   "werte": [],
+   "von": null,
+   "bis": null
+  },
+  {
+   "id": "VP_P1_3",
+   "person_id": "P1",
+   "bezeichnung": "Fahrzeuge",
+   "modus": "index",
+   "betrag": 30000,
+   "basisjahr": 2025,
+   "index": -0.01,
+   "ertrag": 0,
+   "werte": [],
+   "von": 2025,
+   "bis": 2034
+  }
+ ],
+ "vorsorge": [
+  {
+   "bezug_steuerbar": false,
+   "einlagen_liste": [
+    {
+     "betrag": 100000,
+     "jahr": 2027,
+     "zeitpunkt": "ende"
+    },
+    {
+     "betrag": 75000,
+     "jahr": 2028,
+     "zeitpunkt": "ende"
+    },
+    {
+     "betrag": 75000,
+     "jahr": 2029,
+     "zeitpunkt": "ende"
+    },
+    {
+     "betrag": 50000,
+     "jahr": 2030,
+     "zeitpunkt": "ende"
+    },
+    {
+     "betrag": 10000,
+     "jahr": 2031,
+     "zeitpunkt": "ende"
+    }
+   ],
+   "entnahmen_liste": [],
+   "entnahmezeitpunkt": "monatlich_anfang",
+   "ertrag_steuerbar": true,
+   "jahr_start": 2027,
+   "kapital_start": 850000,
+   "person_id": "P1",
+   "zins": 0.0225
+  },
+  {
+   "bezug_steuerbar": false,
+   "einlagen": {},
+   "einlagen_liste": [],
+   "entnahmen_liste": [],
+   "entnahmezeitpunkt": "monatlich_anfang",
+   "ertrag_steuerbar": true,
+   "jahr_start": 2034,
+   "kapital_start": 900000,
+   "person_id": "P2",
+   "zins": 0.0225
+  }
+ ]
+}

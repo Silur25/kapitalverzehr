@@ -1,0 +1,4 @@
+17.09.2026  8:34:02.41  aktuell, 1278347 Bytes  [Q:\kapitalverzehr]
+17.09.2026  8:40:03,24  aktuell, 1278347 Bytes  [Q:\kapitalverzehr]
+17.09.2026  8:44:02.09  version.txt von  auf v221 nachgefuehrt
+17.09.2026  8:44:02.28  aktuell, 1279025 Bytes  [Q:\kapitalverzehr]
