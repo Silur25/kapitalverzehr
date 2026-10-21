@@ -460,6 +460,27 @@ table.dicht{font-size:var(--s-tabelle)}
 table.dicht thead th{padding:7px 4px; font-size:var(--s-tabelle)}
 table.dicht tbody td{padding:3px 4px}
 
+/* ---- Zusatzkosten Gaertner und Haushaltshilfe ----
+   Feste Spaltenbreiten. Ohne sie verteilt der Browser die Breite nach dem
+   laengsten Zellinhalt; das Wahlfeld der Spalte «Monate im Jahr» zieht dann
+   so viel Platz an sich, dass die Betraege in den beiden Frankenspalten
+   abgeschnitten werden. Die Betragsspalten sind bewusst breit genug fuer
+   sechsstellige Zahlen mit Tausendertrennung. */
+table.zusatzkosten{width:100%; table-layout:fixed}
+table.zusatzkosten th:nth-child(1),
+table.zusatzkosten td:nth-child(1){width:auto; min-width:140px}
+table.zusatzkosten th:nth-child(2),
+table.zusatzkosten td:nth-child(2),
+table.zusatzkosten th:nth-child(3),
+table.zusatzkosten td:nth-child(3){width:84px}
+table.zusatzkosten th:nth-child(4),
+table.zusatzkosten td:nth-child(4),
+table.zusatzkosten th:nth-child(6),
+table.zusatzkosten td:nth-child(6){width:118px}
+table.zusatzkosten th:nth-child(5),
+table.zusatzkosten td:nth-child(5){width:164px}
+table.zusatzkosten td:nth-child(5) select{min-width:0; width:100%}
+
 /* ---------------------------------------------------------------- Karten */
 .gitter{display:grid; grid-template-columns:repeat(auto-fit,minmax(330px,1fr));
   gap:20px; align-items:start; margin-bottom:8px}
@@ -1067,7 +1088,7 @@ table.uebersicht tr.klein td.name{padding-left:22px}
 
   <div class="leistenfuss">
     <span>Budget- und Rentenberechnung &middot; Kanton St. Gallen, Gemeinde Gommiswald</span>
-    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v263</span></span>
+    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v264</span></span>
   </div>
   <p class="merker" id="fassungHinweis" style="margin:8px 0 0" hidden></p>
   <!-- Band fuer die Aktualisierung. Es erscheint nur, wenn es etwas zu melden
@@ -2197,6 +2218,30 @@ table.uebersicht tr.klein td.name{padding-left:22px}
           50 000 Franken verschieben; <strong>mittel</strong> zwischen etwa 5 000 und
           50 000 Franken; <strong>klein</strong> darunter. Die Einstufung ist eine
           Abschätzung, keine gerechnete Grösse.</p>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v264 — Zusatzkosten: Spalten breit genug für die Beträge</h3>
+        <ul class="liste">
+          <li><strong>Behoben.</strong> In der Tabelle «Zusatzkosten Gartenunterhalt und
+            Haushaltshilfe» waren die Spalten zu schmal: Die Jahreszahlen zeigten nur
+            «20» statt «2043», und die Frankenbeträge brachen nach drei Stellen ab —
+            «3'60» statt «3'600».</li>
+          <li><strong>Ursache.</strong> Die Tabelle hatte keine festen Spaltenbreiten. Der
+            Browser verteilt die Breite dann nach dem längsten Zellinhalt, und das
+            Auswahlfeld der Spalte «Monate im Jahr» zog mit seinen 178 Pixeln so viel
+            Platz an sich, dass für die übrigen Spalten zu wenig blieb.</li>
+          <li><strong>Neu</strong> hat die Tabelle feste Spaltenbreiten: 84 Pixel für die
+            beiden Jahresspalten, 118 Pixel für «CHF pro Monat» und «CHF pro Jahr»,
+            164 Pixel für die Monatswahl, der Rest für die Bezeichnung. Die
+            Betragsspalten fassen damit sechsstellige Zahlen mit Tausendertrennung —
+            geprüft mit 150'000 und 267'600 CHF.</li>
+          <li><strong>Die Monatswahl</strong> heisst neu «März–Oktober (8)» statt «März
+            bis Oktober (8)» und füllt die Spalte, statt eine eigene Mindestbreite
+            vorzugeben. Die ausführliche Erklärung steht weiterhin im Text unter der
+            Tabelle.</li>
+          <li><strong>Keine Änderung der Rechnung.</strong> Betroffen ist allein die
+            Darstellung.</li>
+        </ul>
       </div>
       <div class="karte breit">
         <h3>Änderungen in v263 — Szenario 3: Zurücksetzen vollständig, Erläuterung präzisiert</h3>
@@ -21653,7 +21698,7 @@ function zusatzkostenTabelle(vor, vorgabeJahr) {
   const w = el("div");
   const rahmen = el("div", "tabellenrahmen");
   const t = document.createElement("table");
-  t.className = "dicht";
+  t.className = "dicht zusatzkosten";
   const kz = t.createTHead().insertRow();
   ["Kosten", "ab Jahr", "bis Jahr", "CHF pro Monat", "Monate im Jahr", "CHF pro Jahr"]
     .forEach((x, i) => kz.appendChild(el("th", i === 0 ? "links" : null, x)));
@@ -21684,9 +21729,12 @@ function zusatzkostenTabelle(vor, vorgabeJahr) {
     {
       const c = el("td", "links");
       if (def.monate) {
-        const s2 = wahlFeld([["12", "ganzes Jahr (12)"], ["8", "März bis Oktober (8)"]],
+        // Kurze Beschriftung: die Spalte traegt die Erklaerung bereits im
+        // Titel, der ganze Satz stuende hier nur im Weg.
+        const s2 = wahlFeld([["12", "ganzes Jahr (12)"], ["8", "März–Oktober (8)"]],
           String(monate), x => { tf[vor + "gaertner_monate"] = Number(x) || 12; rechnen(); });
-        s2.style.minWidth = "178px";
+        s2.style.minWidth = "0";
+        s2.style.width = "100%";
         c.appendChild(s2);
       } else {
         c.textContent = "12"; c.style.color = "var(--gedaempft)";

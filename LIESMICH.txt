@@ -1,6 +1,6 @@
 KAPITALVERZEHR
 Budget- und Rentenberechnung fuer zwei Personen, Schweiz
-Fassung v263
+Fassung v264
 
 =====================================================================
 1  WAS DIESES PROGRAMM IST
