@@ -1,0 +1,168 @@
+KAPITALVERZEHR
+Budget- und Rentenberechnung fuer zwei Personen, Schweiz
+Fassung v262
+
+=====================================================================
+1  WAS DIESES PROGRAMM IST
+=====================================================================
+
+Eine einzige Datei, die im Browser laeuft. Es wird nichts installiert,
+nichts in der Registrierung eingetragen und nichts ins Internet
+gesendet. Die Eingaben bleiben auf dem eigenen Rechner.
+
+Gerechnet wird der Verzehr von Vorsorgekapital ueber die Jahre: wie
+lange das Kapital zweier Personen reicht, unter Beruecksichtigung von
+Budget, Teuerung, Hypotheken, Liegenschaft, Steuern und Todesfall.
+
+=====================================================================
+2  EINRICHTEN
+=====================================================================
+
+Schritt 1   Die ZIP-Datei ENTPACKEN.
+            Rechtsklick auf die Datei, dann "Alle extrahieren".
+
+            Das ist der haeufigste Stolperstein: Windows zeigt den
+            Inhalt einer ZIP-Datei an, ohne sie zu entpacken. Von
+            dieser Ansicht aus laesst sich nichts einrichten.
+
+Schritt 2   Im entpackten Ordner die Datei  Installieren.cmd
+            doppelklicken.
+
+            Windows meldet dabei unter Umstaenden "Der Computer wurde
+            durch Windows geschuetzt". Das ist kein Fehler, sondern
+            der uebliche Hinweis bei Dateien aus dem Internet:
+            "Weitere Informationen" anklicken, dann "Trotzdem
+            ausfuehren".
+
+Schritt 3   Fertig. Auf dem Schreibtisch liegt das Symbol
+            "Kapitalverzehr".
+
+Angelegt wird dabei im Profil des angemeldeten Nutzers:
+
+    Dokumente\Kapitalverzehr\           das Programm
+    Dokumente\Kapitalverzehr\daten\     fuer eigene Sicherungen
+    Dokumente\Kapitalverzehr\alt\       fruehere Fassungen
+
+Der entpackte Ordner wird danach nicht mehr gebraucht und kann
+geloescht werden.
+
+=====================================================================
+3  WO DIE EINGABEN LIEGEN
+=====================================================================
+
+Im Speicher des Browsers auf diesem Rechner. Sie verlassen den
+Rechner nicht und sind fuer niemanden sonst sichtbar.
+
+ZWEI DINGE, DIE MAN WISSEN MUSS:
+
+  - Wird der Zwischenspeicher des Browsers geloescht
+    ("Browserdaten loeschen"), sind die Eingaben weg. Es gibt keine
+    zweite Kopie.
+
+  - Ein anderer Browser oder ein anderer Rechner sieht die Eingaben
+    nicht. Jeder Browser fuehrt seinen eigenen Stand.
+
+SICHERUNG   Im Programm oben rechts auf "Exportieren". Es entsteht
+            eine JSON-Datei; sie gehoert in den Ordner "daten".
+            Mit "Importieren" laesst sie sich zurueckholen, auch auf
+            einem anderen Rechner.
+
+            Nach jeder groesseren Eingabe eine Sicherung erstellen.
+            Das ist die einzige Vorkehrung gegen Datenverlust.
+
+=====================================================================
+4  ERSTE SCHRITTE
+=====================================================================
+
+Beim ersten Start stehen Beispielwerte im Programm. Sie sind durch
+die eigenen zu ersetzen.
+
+  Reiter Personen        Geburtsjahr, Pensionierung, letztes
+                         Rechenjahr je Person
+  Reiter Vorsorge        Kapital zu Beginn, Zinssatz
+  Reiter Budget          Ausgaben und Einnahmen je Person.
+                         Das kleine "i" neben jedem Teuerungsfeld
+                         zeigt publizierte Werte des Bundesamtes fuer
+                         Statistik und setzt sie auf Wunsch ein.
+  Reiter Hypotheken      Tranchen, Saetze, Ablaufjahre
+  Reiter Liegenschaft    Eigenmietwert, Rueckstellungen
+  Reiter Steuern         Steuerfuss, Abzuege
+  Reiter Todesfall       Erbanfall, Erbschaftssteuer, Nutzniessung
+  Reiter Szenarien       sechs Durchrechnungen, darunter
+                         "erforderliches Kapital" und
+                         "Hausverkauf zu Lebzeiten"
+  Reiter Kapitalverzehr  Jahr fuer Jahr, was uebrig bleibt
+  Reiter Auswertungen    Berichte, Grafiken, Ausgabe nach Excel
+  Reiter Grundlagen      Rechtsgrundlagen, offene Punkte,
+                         Aenderungen, Aktualisierung
+
+=====================================================================
+5  AKTUALISIEREN
+=====================================================================
+
+Liegt eine neue Fassung vor, erscheint im Programm unten rechts in
+der Zeile unter den Reitern die Meldung
+
+    neues Update vNNN vorhanden
+
+neben der laufenden Fassungsnummer. Das Programm fragt dafuer
+hoechstens einmal am Tag beim Verzeichnis nach; abschalten laesst
+sich das im Reiter Grundlagen unter "Aktualisierung".
+
+ZUM AKTUALISIEREN im Ordner  Dokumente\Kapitalverzehr  die Datei
+Aktualisieren.cmd doppelklicken.
+
+Sie vergleicht die Fassung auf diesem Rechner mit jener im
+oeffentlichen Verzeichnis, holt nur bei Unterschied, prueft die
+geladene Datei und sichert die bisherige nach "alt".
+
+Die EINGABEN bleiben dabei unberuehrt: sie liegen im Browser, nicht
+in der Programmdatei.
+
+Danach im Browser einmal Strg + F5 druecken, sonst zeigt er die alte
+Fassung aus seinem Zwischenspeicher.
+
+=====================================================================
+6  WENN ETWAS NICHT GEHT
+=====================================================================
+
+Symbol startet nichts
+    Im Ordner Dokumente\Kapitalverzehr die Datei index.html
+    doppelklicken. Geht auch das nicht, ist die Datei unvollstaendig:
+    Aktualisieren.cmd starten oder das Paket neu entpacken.
+
+Seite bleibt weiss
+    Strg + F5 druecken. Bleibt sie weiss, einen anderen Browser
+    versuchen.
+
+"Das Programm ist auf einen Fehler gestossen"
+    Im roten Band steht die Fehlermeldung samt Fassungsnummer, dazu
+    eine Schaltflaeche "Fehlertext kopieren". Diesen Text
+    weitergeben - damit laesst sich der Fehler beheben.
+
+Alte Fassungsnummer unten rechts
+    Strg + F5.
+
+Aktualisieren.cmd meldet "Verzeichnis nicht erreichbar"
+    Keine Internetverbindung, oder das Verzeichnis ist vorueber-
+    gehend nicht erreichbar. Das Programm laeuft unveraendert
+    weiter; spaeter noch einmal versuchen.
+
+=====================================================================
+7  VORBEHALT
+=====================================================================
+
+Das Programm rechnet nach dem Steuergesetz des Kantons St. Gallen
+und dem Bundesgesetz ueber die direkte Bundessteuer. Es bildet die
+Lage zweier nicht verheirateter Personen mit Wohnsitz im Kanton
+St. Gallen ab. Fuer andere Kantone sind Steuerfuss und Abzuege
+anzupassen; die Tarife selbst gelten fuer St. Gallen.
+
+Es ist eine Abschaetzung und ersetzt keine Veranlagung, keine
+Steuerberatung und keine Vorsorgeberatung.
+
+Der Reiter Grundlagen fuehrt unter "Offene Punkte der Berechnung"
+saemtliche Annahmen, Grenzen des Modells und unsicheren
+Rechtsgrundlagen auf, jeweils mit der geschaetzten Wirkung auf das
+Ergebnis. Diese Liste ist vor jeder Verwendung der Ergebnisse zu
+lesen.

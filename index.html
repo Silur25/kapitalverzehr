@@ -766,6 +766,75 @@ table.dicht tbody td{padding:3px 4px}
 .unterinhalt .tabellenrahmen{overflow-x:auto}
 .unterfuss{margin-top:14px; padding-top:10px; border-top:1px solid var(--linie)}
 
+/* ---- Kapitel eines Blattes ----
+   Dasselbe Aussehen wie die Kapitel im Reiter Steuern: ein durchgehender
+   blauer Balken mit weisser Schrift. Damit sieht die oberste Gliederungsstufe
+   in allen Reitern gleich aus, und die Abschnitte darunter bleiben klar eine
+   Stufe tiefer. */
+.kapitel2{border:1px solid var(--akzent-kante); border-radius:var(--r);
+  background:var(--flaeche); margin-bottom:12px; overflow:hidden}
+.kapitelkopf2{margin:0; padding:11px 16px; width:100%; text-align:left;
+  background:var(--akzent); color:#fff; border:0;
+  font-family:Arial,Helvetica,sans-serif; font-size:var(--s-t1, 18px);
+  font-weight:700; cursor:pointer; user-select:none;
+  display:flex; align-items:baseline; gap:10px}
+.kapitelkopf2:hover{filter:brightness(1.12)}
+.kapitelkopf2:focus-visible{outline:2px solid var(--akzent-kante); outline-offset:2px}
+.kapitelkopf2 .k2pfeil{display:inline-block; width:14px; flex:none}
+.kapitelkopf2 .k2nr{flex:none}
+.kapitelkopf2 .k2titel{flex:none}
+.kapitelkopf2 .k2kurz{font-size:12px; font-weight:400; opacity:.85;
+  margin-left:auto; text-align:right}
+.kapitelinhalt2{padding:14px 16px 16px}
+.kapitelinhalt2[hidden]{display:none}
+.kapitelinhalt2 > .fuehrung:first-child{margin-top:0}
+.k2fuss{margin-top:18px; padding-top:12px; border-top:1px solid var(--linie)}
+h3.abschnitt2{font-size:var(--s-t3); margin:22px 0 8px; padding-bottom:6px;
+  border-bottom:1px solid var(--linie-stark); color:var(--band-tinte)}
+@media (max-width:700px){
+  .kapitelkopf2{flex-wrap:wrap; font-size:var(--s-t2)}
+  .kapitelkopf2 .k2kurz{margin-left:0; flex-basis:100%; text-align:left}
+}
+/* Der Reiter Todesfall fuehrt seine Szenarien und Auswertungen als oberste
+   Stufe. Sie erhalten deshalb denselben blauen Balken. */
+#todesfallEingaben > .karte, #todesfallTeile > .karte{
+  border-color:var(--akzent-kante)}
+#todesfallEingaben > .karte > h3, #todesfallTeile > .karte > h3{
+  background:var(--akzent); color:#fff; font-size:var(--s-t1, 18px);
+  border-left:0; padding:11px 16px}
+#todesfallEingaben > .karte > h3:hover,
+#todesfallTeile > .karte > h3:hover{filter:brightness(1.12)}
+
+/* ---- Aufklappbarer Teil in einer Karte ----
+   Eine Stufe unter dem Kapitelbalken: mittelblau hinterlegt, waehrend das
+   Kapitel dunkelblau ist. So ist die Hierarchie auf einen Blick erkennbar. */
+.teilordner{border:1px solid var(--rubrik-kante); border-radius:var(--r);
+  margin:14px 0 0; overflow:hidden; background:var(--flaeche)}
+.teilordner:first-child{margin-top:2px}
+.teilkopf{display:flex; align-items:center; gap:10px; width:100%; text-align:left;
+  background:var(--rubrik-band); color:var(--rubrik-tinte); cursor:pointer;
+  border:0; border-left:5px solid var(--rubrik-band); padding:9px 13px;
+  font-family:Arial,Helvetica,sans-serif; font-size:var(--s-t3); font-weight:700}
+.teilkopf:hover{filter:brightness(.96)}
+.teilkopf:focus-visible{outline:2px solid var(--akzent); outline-offset:-2px}
+.teilordner.offen > .teilkopf{border-left-color:var(--akzent)}
+.teilkopf .tpfeil{flex:none; width:12px; font-size:12px; opacity:.8}
+.teilkopf .ttitel{flex:none}
+.teilkopf .tkurz{margin-left:auto; font-weight:400; font-size:var(--s-klein);
+  opacity:.85; text-align:right}
+.teilinhalt2{padding:12px 13px 14px}
+.teilinhalt2[hidden]{display:none}
+@media (max-width:700px){
+  .teilkopf{flex-wrap:wrap}
+  .teilkopf .tkurz{margin-left:0; flex-basis:100%; text-align:left}
+}
+
+/* ---- Liste der Budgetpositionen beim Heimeintritt ---- */
+table.heimliste th.mitte{text-align:center}
+table.heimliste th{vertical-align:bottom; line-height:1.2}
+table.heimliste td.mitte{text-align:center; width:76px}
+table.heimliste td.mitte > input{margin:0}
+
 /* ---- Leiste «Berechnung starten» ---- */
 .startleiste{display:flex; align-items:center; gap:14px; flex-wrap:wrap;
   margin:18px 0 6px; padding:12px 14px; border-radius:var(--r);
@@ -774,6 +843,17 @@ table.dicht tbody td{padding:3px 4px}
 .startleiste .chip{font-size:13px}
 .startleiste .chip.offen{background:var(--warnung-weich); color:var(--warnung);
   border-color:var(--warnung)}
+
+/* ---- Ergebniskarte Szenario 3, rechte Spalte ---- */
+.ergebniskarte .ergZeile{padding:10px 0; border-top:1px solid var(--linie)}
+.ergebniskarte .ergZeile:first-of-type{border-top:0}
+.ergebniskarte .ergName{font-size:13px; color:var(--gedaempft); margin-bottom:2px}
+.ergebniskarte .ergWert{font-size:26px; font-weight:700; line-height:1.15;
+  font-family:Arial,Helvetica,sans-serif; letter-spacing:-0.2px}
+.ergebniskarte .ergWert .einh{font-size:15px; font-weight:600; color:var(--gedaempft);
+  margin-left:5px}
+.ergebniskarte .ergNeben{font-size:13px; margin-top:3px}
+.ergebniskarte .ergLeer{font-size:13px; color:var(--gedaempft); padding:6px 0 2px}
 
 /* ---- Entwicklung der Hypotheken, Anzeige im Programm ---- */
 .entwBlock table.hypoEntw{width:100%; border-collapse:collapse; font-size:12.5px;
@@ -987,7 +1067,7 @@ table.uebersicht tr.klein td.name{padding-left:22px}
 
   <div class="leistenfuss">
     <span>Budget- und Rentenberechnung &middot; Kanton St. Gallen, Gemeinde Gommiswald</span>
-    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v249</span></span>
+    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v262</span></span>
   </div>
   <p class="merker" id="fassungHinweis" style="margin:8px 0 0" hidden></p>
   <!-- Band fuer die Aktualisierung. Es erscheint nur, wenn es etwas zu melden
@@ -1127,96 +1207,146 @@ table.uebersicht tr.klein td.name{padding-left:22px}
   </section>
 
   <section class="blatt" id="blatt-liegenschaft" role="tabpanel">
-    <div class="blattkopf"><h2>Liegenschaftskosten</h2></div>
-    <p class="fuehrung">Laufende Kosten der Liegenschaft mit Aufteilung je Person sowie das
-      Konto <strong>Rückstellungen Nebenkosten</strong>. Aus diesem Konto werden die
-      laufenden Kosten bezahlt: sämtliche Positionen der Rubrik Liegenschaft sowie
-      Hausrat- und Unfallversicherung, Rechtsschutzversicherung und Selbstbehalt
-      Versicherungen. Diese Kosten belasten die Personen deshalb nicht unmittelbar; sie
-      zahlen jährlich ins Konto ein. <strong>Reicht der Bestand nicht</strong>, tragen sie
-      den Fehlbetrag im selben Jahr nach ihren Anteilen — nach einem Todesfall die
-      überlebende Person allein, ebenso den ganzen Einzahlungsbetrag. Konto und
-      werterhaltende Massnahmen betreffen ausschliesslich die
-      <strong>Liegenschaft in Rieden</strong>; die <strong>Ferienwohnung Flims</strong>
-      gehört einer Person allein und wird über ihre eigenen Positionen abgebildet.</p>
-    <p class="fuehrung"><strong>Liegenschaft in einem anderen Kanton.</strong> Ihre
-      laufenden Kosten stehen in der Tabelle unten unter ihrer eigenen Rubrik
-      (hier «Ferienwohnung Flims»); eine zusätzliche Rubrik mit dem Namen
-      «Liegenschaft in einem anderen Kanton» gibt es nicht. Steuerwert, Hypothek
-      und eine allfällige Schenkung an die Nachkommen werden im Reiter
-      <strong>Steuern</strong> in der gleichnamigen Karte erfasst — dort ist
-      anzugeben, welche Rubrik des Budgets die Kosten dieser Liegenschaft enthält.</p>
-    <p class="fuehrung"><strong>Dieselben Positionen wie im Reiter Budget.</strong> Die
-      Tabelle unten zeigt keine Kopie, sondern genau die Zeilen, die dort in den Blöcken
-      «Liegenschaft Rieden» und «Ferienwohnung Flims» stehen. Eine Änderung hier wirkt
-      sofort dort und umgekehrt — Betrag, Teuerung, Jahreszahlen, Kostenteiler und die
-      Zuordnung zu einem Konto. Auch der Knopf «+ Position» in der Rubrikzeile legt die
-      neue Zeile in beiden Ansichten an. Die <strong>Einzahlungen</strong> in die beiden
-      Konten dagegen sind keine Budgetpositionen: sie folgen den Einzahlungsperioden weiter
-      unten auf dieser Seite und erscheinen im Budget nur als Anzeige unter «Gemeinsame
-      Ausgaben».</p>
-    <div class="tabellenrahmen"><table id="tabLiegenschaft"></table></div>
+    <div class="blattkopf"><h2>Liegenschaft</h2></div>
+    <p class="fuehrung">Die Seite ist in vier Kapitel gegliedert. Sichtbar ist zunächst nur
+      der Titel jedes Kapitels mit einer kurzen Angabe; ein Klick öffnet es, der Befehl
+      «Zurück zur Übersicht» am Fuss schliesst es wieder. Offen ist immer nur ein
+      Kapitel.</p>
 
-    <h2 class="abschnitt">Werte der Liegenschaft</h2>
-    <p class="fuehrung">Diese beiden Werte betreffen die Besteuerung. Der
-      <strong>Eigenmietwert</strong> zählt bis zu seiner Abschaffung als Einkommen; der
-      <strong>Verkehrswert</strong> bestimmt danach, welcher Anteil der Schuldzinsen und des
-      Liegenschaftsunterhalts weiterhin abziehbar ist — nämlich im Verhältnis des vermieteten
-      Teils zum gesamten Vermögen. Der Steuerwert für die Vermögenssteuer steht davon
-      getrennt im Reiter Steuern.</p>
-    <div class="gitter" id="liegenschaftWerte"></div>
-
-    <div id="kontoKnoepfe" style="margin-top:26px"></div>
-
-    <div id="blockNk" hidden>
-      <h2 class="abschnitt">Rückstellungen Nebenkosten, Liegenschaft Rieden</h2>
-      <div class="gitter" id="rueckstellungen" style="grid-template-columns:minmax(280px,340px) 1fr"></div>
-
-      <h2 class="abschnitt">Kontoentwicklung Nebenkosten</h2>
-      <p class="fuehrung" id="rstSteuerhinweis"></p>
-      <div class="tabellenrahmen rollt" data-fest="1" style="max-height:520px; overflow-y:auto">
-        <table id="tabRstVerlauf"></table>
-      </div>
-
-      <div class="tafel" style="margin-top:22px">
-        <div class="tafel-kopf">
-          <h2>Bestand des Kontos Rückstellungen Nebenkosten</h2>
-          <span class="hinweis">Stand am Jahresende, in CHF</span>
-          <div class="legende" id="legendeRst"></div>
-        </div>
-        <div class="grafik" id="grafikRst"></div>
+    <!-- 1 ---------------------------------------------------------------- -->
+    <div class="kapitel2" id="kap-kosten">
+      <button class="kapitelkopf2" type="button">
+        <span class="k2pfeil">▸</span>
+        <span class="k2nr">1</span>
+        <span class="k2titel">Laufende Kosten der Liegenschaft</span>
+        <span class="k2kurz"></span>
+      </button>
+      <div class="kapitelinhalt2" hidden>
+        <p class="fuehrung">Laufende Kosten der Liegenschaft mit Aufteilung je Person. Aus
+          dem Konto <strong>Rückstellungen Nebenkosten</strong> (Kapitel 3) werden die
+          laufenden Kosten bezahlt: sämtliche Positionen der Rubrik Liegenschaft sowie
+          Hausrat- und Unfallversicherung, Rechtsschutzversicherung und Selbstbehalt
+          Versicherungen. Diese Kosten belasten die Personen deshalb nicht unmittelbar; sie
+          zahlen jährlich ins Konto ein. <strong>Reicht der Bestand nicht</strong>, tragen
+          sie den Fehlbetrag im selben Jahr nach ihren Anteilen — nach einem Todesfall die
+          überlebende Person allein, ebenso den ganzen Einzahlungsbetrag. Konto und
+          werterhaltende Massnahmen betreffen ausschliesslich die
+          <strong>Liegenschaft in Rieden</strong>; die <strong>Ferienwohnung Flims</strong>
+          gehört einer Person allein und wird über ihre eigenen Positionen abgebildet.</p>
+        <p class="fuehrung"><strong>Dieselben Positionen wie im Reiter Budget.</strong> Die
+          Tabelle zeigt keine Kopie, sondern genau die Zeilen, die dort in den Blöcken
+          «Liegenschaft Rieden» und «Ferienwohnung Flims» stehen. Eine Änderung hier wirkt
+          sofort dort und umgekehrt — Betrag, Teuerung, Jahreszahlen, Kostenteiler und die
+          Zuordnung zu einem Konto. Auch der Knopf «+ Position» in der Rubrikzeile legt die
+          neue Zeile in beiden Ansichten an. Die <strong>Einzahlungen</strong> in die beiden
+          Konten dagegen sind keine Budgetpositionen: sie folgen den Einzahlungsperioden in
+          den Kapiteln 3 und 4 und erscheinen im Budget nur als Anzeige unter «Gemeinsame
+          Ausgaben».</p>
+        <p class="fuehrung"><strong>Liegenschaft in einem anderen Kanton.</strong> Ihre
+          laufenden Kosten stehen in der Tabelle unter ihrer eigenen Rubrik
+          (hier «Ferienwohnung Flims»); eine zusätzliche Rubrik mit dem Namen
+          «Liegenschaft in einem anderen Kanton» gibt es nicht. Steuerwert, Hypothek
+          und eine allfällige Schenkung an die Nachkommen werden im Reiter
+          <strong>Steuern</strong> in der gleichnamigen Karte erfasst — dort ist
+          anzugeben, welche Rubrik des Budgets die Kosten dieser Liegenschaft enthält.</p>
+        <div class="tabellenrahmen"><table id="tabLiegenschaft"></table></div>
+        <div class="k2fuss"></div>
       </div>
     </div>
 
-    <div id="blockInv" hidden>
-      <h2 class="abschnitt">Rückstellungen für Investitionen, Liegenschaft Rieden</h2>
-      <p class="fuehrung">Zweites Konto, gleich aufgebaut wie jenes für die Nebenkosten.
-        Daraus werden die <strong>Investitionen</strong> bezahlt — die Positionen der Rubrik
-        Liegenschaft, deren Bezeichnung mit «Investition» beginnt, sowie alles, was in der
-        Spalte <strong>Konto</strong> auf «Investitionen» gesetzt ist, dazu die
-        werterhaltenden Massnahmen. Die Einzahlungen sind Ausgaben der beiden Personen;
-        reicht der Bestand im Jahr einer Investition nicht, tragen sie den Fehlbetrag nach
-        ihren Anteilen. Nach einem Todesfall zahlt die überlebende Person den ganzen
-        Betrag.</p>
-      <div class="gitter" id="investitionen" style="grid-template-columns:minmax(280px,340px) 1fr"></div>
-
-      <div class="gitter" id="massnahmen" style="grid-template-columns:1fr; margin-top:16px"></div>
-
-      <h2 class="abschnitt">Kontoentwicklung Investitionen</h2>
-      <p class="fuehrung" id="invHinweis"></p>
-      <div class="tabellenrahmen rollt" data-fest="1" style="max-height:520px; overflow-y:auto">
-        <table id="tabInvVerlauf"></table>
-      </div>
-
-      <div class="tafel" style="margin-top:22px">
-        <div class="tafel-kopf">
-          <h2>Bestand des Kontos Rückstellungen Investitionen</h2>
-          <span class="hinweis">Stand am Jahresende, in CHF</span>
-          <div class="legende" id="legendeInv"></div>
-        </div>
-        <div class="grafik" id="grafikInv"></div>
+    <!-- 2 ---------------------------------------------------------------- -->
+    <div class="kapitel2" id="kap-werte">
+      <button class="kapitelkopf2" type="button">
+        <span class="k2pfeil">▸</span>
+        <span class="k2nr">2</span>
+        <span class="k2titel">Werte der Liegenschaft</span>
+        <span class="k2kurz"></span>
+      </button>
+      <div class="kapitelinhalt2" hidden>
+        <p class="fuehrung">Diese beiden Werte betreffen die Besteuerung. Der
+          <strong>Eigenmietwert</strong> zählt bis zu seiner Abschaffung als Einkommen; der
+          <strong>Verkehrswert</strong> bestimmt danach, welcher Anteil der Schuldzinsen und
+          des Liegenschaftsunterhalts weiterhin abziehbar ist — nämlich im Verhältnis des
+          vermieteten Teils zum gesamten Vermögen. Der Steuerwert für die Vermögenssteuer
+          steht davon getrennt im Reiter Steuern.</p>
+        <div class="gitter" id="liegenschaftWerte"></div>
+        <div class="k2fuss"></div>
       </div>
     </div>
+
+    <!-- 3 ---------------------------------------------------------------- -->
+    <div class="kapitel2" id="kap-nk">
+      <button class="kapitelkopf2" type="button">
+        <span class="k2pfeil">▸</span>
+        <span class="k2nr">3</span>
+        <span class="k2titel">Rückstellungen Nebenkosten</span>
+        <span class="k2kurz"></span>
+      </button>
+      <div class="kapitelinhalt2" hidden>
+        <div id="blockNk">
+          <div class="gitter" id="rueckstellungen" style="grid-template-columns:minmax(280px,340px) 1fr"></div>
+
+          <h3 class="abschnitt2">Kontoentwicklung Nebenkosten</h3>
+          <p class="fuehrung" id="rstSteuerhinweis"></p>
+          <div class="tabellenrahmen rollt" data-fest="1" style="max-height:520px; overflow-y:auto">
+            <table id="tabRstVerlauf"></table>
+          </div>
+
+          <div class="tafel" style="margin-top:22px">
+            <div class="tafel-kopf">
+              <h2>Bestand des Kontos Rückstellungen Nebenkosten</h2>
+              <span class="hinweis">Stand am Jahresende, in CHF</span>
+              <div class="legende" id="legendeRst"></div>
+            </div>
+            <div class="grafik" id="grafikRst"></div>
+          </div>
+        </div>
+        <div class="k2fuss"></div>
+      </div>
+    </div>
+
+    <!-- 4 ---------------------------------------------------------------- -->
+    <div class="kapitel2" id="kap-inv">
+      <button class="kapitelkopf2" type="button">
+        <span class="k2pfeil">▸</span>
+        <span class="k2nr">4</span>
+        <span class="k2titel">Rückstellungen für Investitionen</span>
+        <span class="k2kurz"></span>
+      </button>
+      <div class="kapitelinhalt2" hidden>
+        <div id="blockInv">
+          <p class="fuehrung">Zweites Konto, gleich aufgebaut wie jenes für die Nebenkosten.
+            Daraus werden die <strong>Investitionen</strong> bezahlt — die Positionen der
+            Rubrik Liegenschaft, deren Bezeichnung mit «Investition» beginnt, sowie alles,
+            was in der Spalte <strong>Konto</strong> auf «Investitionen» gesetzt ist, dazu
+            die werterhaltenden Massnahmen. Die Einzahlungen sind Ausgaben der beiden
+            Personen; reicht der Bestand im Jahr einer Investition nicht, tragen sie den
+            Fehlbetrag nach ihren Anteilen. Nach einem Todesfall zahlt die überlebende
+            Person den ganzen Betrag.</p>
+          <div class="gitter" id="investitionen" style="grid-template-columns:minmax(280px,340px) 1fr"></div>
+
+          <div class="gitter" id="massnahmen" style="grid-template-columns:1fr; margin-top:16px"></div>
+
+          <h3 class="abschnitt2">Kontoentwicklung Investitionen</h3>
+          <p class="fuehrung" id="invHinweis"></p>
+          <div class="tabellenrahmen rollt" data-fest="1" style="max-height:520px; overflow-y:auto">
+            <table id="tabInvVerlauf"></table>
+          </div>
+
+          <div class="tafel" style="margin-top:22px">
+            <div class="tafel-kopf">
+              <h2>Bestand des Kontos Rückstellungen Investitionen</h2>
+              <span class="hinweis">Stand am Jahresende, in CHF</span>
+              <div class="legende" id="legendeInv"></div>
+            </div>
+            <div class="grafik" id="grafikInv"></div>
+          </div>
+        </div>
+        <div class="k2fuss"></div>
+      </div>
+    </div>
+
+    <div id="kontoKnoepfe" hidden></div>
   </section>
 
   <section class="blatt aktiv" id="blatt-personen" role="tabpanel">
@@ -1225,8 +1355,8 @@ table.uebersicht tr.klein td.name{padding-left:22px}
       verschiedene Aufgaben haben und sich nicht gegenseitig ersetzen:</p>
     <ul class="fuehrung" style="margin:0 0 16px; padding-left:22px">
       <li><strong>Pensionierung</strong> — nur ein Bezugspunkt. Ab diesem Jahr läuft die
-        AHV-Rente, und der Rechenbeginn unten wird daran gemessen. Auf die Rechnung selbst
-        wirkt das Feld nicht.</li>
+        AHV-Rente (erfasst im Reiter «Vorsorge und Vermögen»), und der Rechenbeginn unten
+        wird daran gemessen. Auf die Rechnung selbst wirkt das Feld nicht.</li>
       <li><strong>Betrachtung bis</strong> — das letzte Rechenjahr dieser Person. Danach
         erscheint sie in keiner Tabelle und keiner Grafik mehr. Ist im Reiter «Todesfall und
         Heimeintritt» kein Todesjahr gesetzt, gilt zugleich das frühere der beiden Jahre als
@@ -1237,21 +1367,51 @@ table.uebersicht tr.klein td.name{padding-left:22px}
         Jahre bleiben aussen vor, weil bis dahin das Erwerbseinkommen die Ausgaben
         deckt.</li>
     </ul>
-    <div class="gitter" id="kartenPersonen"></div>
+    <div class="kapitel2" id="kap-person">
+      <button class="kapitelkopf2" type="button">
+        <span class="k2pfeil">▸</span>
+        <span class="k2nr">1</span>
+        <span class="k2titel">Allgemeine Angaben zur Person</span>
+        <span class="k2kurz"></span>
+      </button>
+      <div class="kapitelinhalt2" hidden>
+        <div class="gitter paar" id="kartenPersonen"></div>
+        <div class="k2fuss"></div>
+      </div>
+    </div>
+
+    <div class="kapitel2" id="kap-heim">
+      <button class="kapitelkopf2" type="button">
+        <span class="k2pfeil">▸</span>
+        <span class="k2nr">2</span>
+        <span class="k2titel">Heim- und Spitalaufenthalt</span>
+        <span class="k2kurz"></span>
+      </button>
+      <div class="kapitelinhalt2" hidden>
+        <p class="fuehrung">Je Person: ob und ab wann ein Heim- oder Spitalaufenthalt
+          gerechnet wird, die Kosten und ihre Teuerung, was die andere Person übernimmt
+          und welche Budgetpositionen entfallen. Zuunterst die zusätzlichen Kosten, die
+          bei der Person <em>ausserhalb</em> des Heims anfallen — Haushaltshilfe und
+          Gartenunterhalt.</p>
+        <div class="gitter paar" id="kartenHeim"></div>
+        <div class="k2fuss"></div>
+      </div>
+    </div>
   </section>
 
   <section class="blatt" id="blatt-vorsorge" role="tabpanel">
     <div class="blattkopf"><h2>Vorsorge und Vermögen</h2></div>
     <p class="fuehrung">Je Person das Kapital, aus dem der Lebensbedarf gedeckt wird: das
       erste Rechenjahr, der Bestand in diesem Jahr, der Zinssatz und der Zeitpunkt der
-      Entnahme. Dazu die steuerliche Behandlung von Bezug und Ertrag, einmalige Einlagen und
-      zusätzliche Entnahmen sowie das übrige Vermögen, das nicht verzehrt wird.</p>
+      Entnahme. Dazu die AHV-Rente, die steuerliche Behandlung von Bezug und Ertrag,
+      einmalige Einlagen und zusätzliche Entnahmen sowie das übrige Vermögen, das nicht
+      verzehrt wird.</p>
     <p class="fuehrung">Nicht enthalten sind Liegenschaften — sie stehen im Reiter
       Liegenschaft — und die Personendaten selbst, die im Reiter Personen erfasst
       werden.</p>
     <p class="fuehrung">Die grossen Teilbereiche — Jahre vor dem Kapitalverzehr,
-      steuerliche Behandlung, Einlagen, zusätzliche Entnahmen, übriges Vermögen und
-      Policen — stehen als eigene Punkte in der Personenkarte. Sichtbar ist zunächst
+      AHV-Rente, steuerliche Behandlung, Einlagen, zusätzliche Entnahmen, übriges
+      Vermögen und Policen — stehen als eigene Punkte in der Personenkarte. Sichtbar ist zunächst
       nur der Titel mit einer kurzen Angabe; ein Klick öffnet den Punkt, der Befehl
       «Zurück zur Übersicht» am Fuss schliesst ihn wieder. Offen ist je Person immer
       nur ein Punkt.</p>
@@ -2037,6 +2197,440 @@ table.uebersicht tr.klein td.name{padding-left:22px}
           50 000 Franken verschieben; <strong>mittel</strong> zwischen etwa 5 000 und
           50 000 Franken; <strong>klein</strong> darunter. Die Einstufung ist eine
           Abschätzung, keine gerechnete Grösse.</p>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v262 — Szenario 3 «Erforderliches Kapital» umgebaut</h3>
+        <ul class="liste">
+          <li><strong>Gerechnet wird erst auf Knopfdruck.</strong> Bisher löste jede
+            Eingabe sofort einen Lauf aus — je Person rund dreissig vollständige
+            Durchläufe des Rechenkerns, auch für eine halb eingetippte Zahl. Neu merkt
+            sich die Seite die Eingaben; der Knopf <strong>«Berechnung starten»</strong>
+            führt den Lauf aus.</li>
+          <li><strong>Das Ergebnis steht rechts</strong>, in der bisher leeren zweiten
+            Spalte, und zeigt nur dieses: je Person den erforderlichen Betrag in grosser
+            Schrift, die Abweichung von der Eingabe und die gerechnete Laufzeit. Die
+            ausführliche Auswertung darunter bleibt unverändert stehen, bis neu gerechnet
+            wird.</li>
+          <li><strong>Hinweis bei veralteter Anzeige.</strong> Wird nach einem Lauf eine
+            Eingabe geändert, meldet die Leiste «Eingabe geändert» und die Ergebniskarte
+            weist darauf hin. Tabelle und Ergebnis zeigen weiterhin den Stand des letzten
+            Laufs und nicht eine Mischung aus beidem.</li>
+          <li><strong>Neu: Endalter je Person.</strong> Unter den Restkapital-Feldern
+            steht je Person ein Feld «Rechnen bis Alter». Vorgabe ist das Alter im
+            erfassten letzten Rechenjahr; ein leeres Feld stellt darauf zurück. Damit
+            lässt sich die Frage beantworten, wie viel Kapital bei einer höheren
+            Lebenserwartung nötig wäre.</li>
+          <li><strong>Fortschreibung der Eingaben.</strong> Ein höheres Alter verlängert
+            die Rechnung. Fortgeschrieben wird nur, was bisher bis zum Schluss lief:
+            <ul class="liste">
+              <li>Jahresangaben, die auf dem bisherigen letzten Rechenjahr der Person oder
+                auf dem Ende des Betrachtungszeitraums stehen — Budgetpositionen,
+                Anschlussperioden der Hypotheken, Einzahlungsstufen der
+                Rückstellungskonten, Einzahlungsende des Amortisationskontos</li>
+              <li>Angaben mit einem früheren Endjahr bleiben unverändert; ein Fahrzeug,
+                das bis 2034 erfasst ist, wird nicht länger gefahren, nur weil die Person
+                älter wird</li>
+              <li>Die Beträge selbst werden nicht neu gesetzt — sie wachsen mit den
+                erfassten Teuerungssätzen weiter; eine Position ohne Teuerung bleibt
+                nominal gleich</li>
+              <li>Ein <em>tieferes</em> Alter verkürzt nur die Laufzeit der betroffenen
+                Person; keine Angabe wird verkürzt, denn Positionen bis zum Ende des
+                Betrachtungszeitraums gehören auch der anderen Person</li>
+              <li>Gerechnet wird je Person einzeln: das Alter der einen ändert an den
+                Angaben der anderen nichts</li>
+            </ul></li>
+          <li><strong>Was die Fortschreibung bewirkt, wird ausgewiesen.</strong> Die
+            Ergebniskarte nennt, wie viele Jahresangaben verlängert wurden und wie viele
+            Ausgabepositionen vor dem neuen Endjahr auslaufen; der Hinweistext zählt sie
+            einzeln auf. In der Musterrechnung sind das zwölf Positionen — ohne diese
+            Angabe wäre nicht erkennbar, dass in den zusätzlichen Jahren weniger Ausgaben
+            anfallen.</li>
+          <li><strong>Neuer Knopf «Werte zurücksetzen».</strong> Er stellt Restkapital,
+            Endalter und Anschlusssatz auf die erfassten Eingaben zurück und rechnet damit
+            neu. Er ist gesperrt, solange nichts abweicht.</li>
+          <li><strong>Keine Änderung der Rechnung.</strong> Der Rechenkern bleibt
+            unberührt; die Musterrechnung liefert unverändert dieselben Werte.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v261 — Ersterwerberabzug: Abbau beginnt mit dem Systemwechsel</h3>
+        <ul class="liste">
+          <li><strong>Behoben — Rechenfehler.</strong> Der Abbau des Höchstbetrags lief
+            bisher ab dem <em>Jahr des Ersterwerbs</em>. Das ist falsch: Solange der
+            Eigenmietwert besteht, sind die Schuldzinsen ohnehin unbeschränkt abziehbar;
+            ein Höchstbetrag wirkt dort nicht und kann deshalb auch nicht abgebaut werden.
+            <strong>Neu</strong> ist das erste Jahr der Frist das Jahr der Abschaffung des
+            Eigenmietwerts — Vorgabe im Programm ist das Steuerjahr 2029.</li>
+          <li><strong>Die beiden Anwendungen rechnen jetzt gleich.</strong> Der Schalter
+            «Schuldzinsen nach der Abschaffung weiter abziehbar» rechnete schon bisher ab
+            dem Abschaffungsjahr, der Ersterwerberabzug ab dem Erwerbsjahr. Diese
+            Ungleichheit ist beseitigt; beide verwenden dieselbe Frist.</li>
+          <li><strong>Wirkung.</strong> Erwerb 2023, Abschaffung 2029, 5'000 CHF, Dauer
+            10 Jahre:
+            <ul class="liste">
+              <li>bisher: 2029 noch 2'000 CHF, ab 2033 nichts mehr</li>
+              <li>neu: 2029 volle 5'000 CHF, dann 4'500, 4'000 … bis 500 CHF im Jahr 2038</li>
+            </ul></li>
+          <li><strong>Das Jahr des Ersterwerbs</strong> entscheidet nur noch darüber, ob
+            der Abzug überhaupt zusteht. Liegt der Erwerb nach der Abschaffung, wirkt der
+            Abzug erst ab dem Erwerbsjahr; die Frist läuft aber vom Abschaffungsjahr an
+            und verkürzt sich dadurch. Beispiel Erwerb 2033, Abschaffung 2029: erster
+            Abzug 2033 mit 3'000 CHF, letzter 2038 mit 500 CHF.</li>
+          <li><strong>Erläuterungen ergänzt</strong> in Abschnitt 4.2 «Ersterwerber einer
+            Liegenschaft», in der Begrenzung des Schalters in Abschnitt 4.1 und in der
+            Zusammenstellung der Daten; dort steht jetzt «Erwerb 2023, 5'000 CHF im ersten
+            Jahr, linear abnehmend über 10 Jahre ab der Abschaffung 2029 auf 0 (letztes
+            Jahr 2038)».</li>
+          <li><strong>Musterrechnung unverändert</strong> — dort ist der
+            Ersterwerberabzug nicht gesetzt. Wer ihn angehakt hat, erhält neu eine höhere
+            Entlastung über eine längere Frist.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v260 — Ersterwerberabzug in der Zusammenstellung der Daten</h3>
+        <ul class="liste">
+          <li><strong>Bisher</strong> stand in der Zeile «Ersterwerber (Höchstbetrag im
+            ersten Jahr)» nur «ja, ab 2023, 5'000 CHF». Dass dieser Betrag nicht während
+            der ganzen Laufzeit gilt, sondern linear abgebaut wird, war der Zeile nicht zu
+            entnehmen.</li>
+          <li><strong>Neu</strong> heisst die Zeile «Ersterwerber einer Liegenschaft» und
+            zeigt den ganzen Verlauf: Erwerbsjahr, Betrag im ersten Jahr, Abbaudauer und
+            das letzte Jahr, in dem der Abzug noch etwas bewirkt — zum Beispiel «ja, ab
+            2023: 5'000 CHF im ersten Jahr, danach linear abnehmend über 10 Jahre auf 0
+            (letztes Jahr 2032)».</li>
+          <li><strong>Rechenregel unverändert.</strong> Der Höchstbetrag im Jahr n beträgt
+            <em>B</em> · (<em>d</em> − <em>n</em> + 1) / <em>d</em>, mit <em>B</em> als
+            Betrag im ersten Jahr und <em>d</em> als Abbaudauer. Im ersten Jahr ist er
+            voll, im zweiten neun Zehntel, im zehnten ein Zehntel, danach null. Die Dauer
+            ist im Reiter Steuern, Abschnitt 4.2, einstellbar; Vorgabe sind 10 Jahre.</li>
+          <li><strong>Keine Änderung der Rechnung.</strong> Betroffen ist allein die
+            Darstellung.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v259 — Heimangaben in der Zusammenstellung der Daten</h3>
+        <ul class="liste">
+          <li><strong>Ausgangslage.</strong> Der Reiter <em>Daten</em> soll alle Eingaben
+            zeigen, die in die Rechnung eingehen. Vom Heim- und Spitalaufenthalt erschien
+            dort bisher nur die erste Zeile (Eintrittsjahr und Monatsbetrag); die übrigen
+            Angaben fehlten und liessen sich damit nicht gegenlesen.</li>
+          <li><strong>Neu erscheinen im Abschnitt 1 «Personen»</strong> je Person:
+            <ul class="liste">
+              <li>Teuerung der Heimkosten mit Basisjahr — als Hinweis gekennzeichnet, weil
+                diese Teuerung von der allgemeinen Teuerung abweichen kann</li>
+              <li>höhere Pflegestufe ab Jahr mit dem dann gültigen Monatsbetrag</li>
+              <li>Übernahme durch die andere Person: Quote der Liegenschaftskosten und
+                Übernahmejahr</li>
+              <li>Budgetposten bei Heimaufenthalt: Anzahl der Positionen, die entfallen,
+                die die andere Person übernimmt und die unverändert bleiben</li>
+              <li>Zusatzkosten A ab Heimaufenthalt und Zusatzkosten B ab Todesfall, je mit
+                Monatsbetrag, Anzahl Monate und Jahresbetrag</li>
+            </ul></li>
+          <li><strong>Entfernt</strong> wurde die frühere Zeile «Zusatzkosten Gärtner und
+            Haushaltshilfe» im Abschnitt Todesfall. Sie rechnete stets mit zwölf Monaten
+            und kannte die Trennung nach Anlass (Heimeintritt / Todesfall) aus v255 nicht;
+            ihr Wert war deshalb veraltet und stand doppelt.</li>
+          <li><strong>Keine Änderung der Rechnung.</strong> Betroffen ist allein die
+            Darstellung; die Musterrechnung bleibt bei 82'456 / −493'783 CHF und
+            803'634 CHF Steuern.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v258 — Liegenschaftskosten gehen ab dem Todesjahr über</h3>
+        <ul class="liste">
+          <li><strong>Bisher</strong> übernahm die überlebende Person die Liegenschaft erst
+            im Jahr <em>nach</em> dem Tod vollständig; im Todesjahr selbst galt noch die
+            bisherige Verteilung beziehungsweise die Quote aus dem Heimaufenthalt.
+            <strong>Neu</strong> gilt die vollständige Übernahme ab dem Todesjahr.</li>
+          <li><strong>Betroffen sind die laufenden Kosten:</strong>
+            <ul class="liste">
+              <li>Hypothekarzinsen aller Tranchen</li>
+              <li>Positionen der Rubriken Liegenschaft, Versicherungen Liegenschaft und
+                Fahrzeuge</li>
+              <li>Einzahlungen in die Rückstellungskonten Nebenkosten und Investitionen</li>
+              <li>werterhaltende Massnahmen</li>
+            </ul></li>
+          <li><strong>Nicht betroffen sind die steuerliche Zurechnung und der Erbgang.</strong>
+            Eigenmietwert, Vermögen und Erbanfall bleiben beim bisherigen Schluss: Die
+            verstorbene Person ist für ihr Todesjahr noch zu veranlagen, und der Erbgang
+            findet am Ende des Todesjahres statt. Die Kosten trägt sie in jenem Jahr aber
+            nicht mehr.</li>
+          <li><strong>Gemessen</strong> — P1 im Heim ab 2040 mit Quote 50 %, Tod 2045.
+            Hypothekarzinsen je Person: 2044 noch 11'596 / 34'787, ab 2045 neu
+            0 / 46'382. Die Summe bleibt gleich; es wird nur verschoben.</li>
+          <li><strong>Die Rechnung ändert sich dadurch.</strong> In der Musterrechnung
+            steigt das Kapital der zuerst versterbenden Person am Ende von 60'181 auf
+            82'456 CHF, jenes der überlebenden sinkt von −470'357 auf −493'783 CHF, und
+            die Steuern über die ganze Laufzeit gehen von 805'055 auf 803'634 CHF
+            zurück.</li>
+          <li><strong>Neuer Hinweis</strong> im Abschnitt 2 «Übernahme»: dort steht jetzt,
+            dass die Quote nur gilt, solange beide Personen leben, und ab welchem Jahr die
+            vollständige Übernahme greift.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v257 — Die vier Abschnitte sind aufklappbar</h3>
+        <ul class="liste">
+          <li><strong>Aufklappbare Teile statt fester Zwischentitel.</strong> Die
+            Abschnitte 1 bis 4 im Kapitel «Heim- und Spitalaufenthalt» sind nun je ein
+            eigener Balken zum Aufklappen. Sichtbar ist zunächst nur der Titel; ein Klick
+            öffnet den Teil, ein zweiter schliesst ihn. Offen ist je Person immer nur
+            einer, und der geöffnete Teil bleibt nach einer Neurechnung offen.</li>
+          <li><strong>Drei Stufen, drei Farben.</strong> Der Reiter führt Kapitel in
+            dunklem Blau mit weisser Schrift, die Teile darin in mittlerem Blau mit
+            dunkler Schrift, der Inhalt steht auf weissem Grund. Der offene Teil trägt
+            zusätzlich eine dunkelblaue Kante links.</li>
+          <li><strong>Kurzangabe im Kopf</strong> jedes Teils, damit der Inhalt ohne
+            Öffnen erkennbar ist:
+            <ul class="liste">
+              <li>1 — «ab 2040, 9'000 CHF/Mt» oder «nicht gerechnet»</li>
+              <li>2 — «20.00 % ab 2040» oder «keine Übernahme»</li>
+              <li>4 — «A 0 · B 10'800 CHF pro Jahr»</li>
+            </ul></li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v256 — Kapitel Heim- und Spitalaufenthalt gegliedert</h3>
+        <ul class="liste">
+          <li><strong>Vier nummerierte Abschnitte</strong> mit grossem Titel und
+            Trennlinie, je mit einer Zeile, was darin steht:
+            <ul class="liste">
+              <li><strong>1 Aufenthalt und Kosten</strong> — Schalter, Eintrittsjahr,
+                Kosten pro Monat, Teuerung, Basisjahr, Pflegestufe</li>
+              <li><strong>2 Übernahme durch &lt;andere Person&gt;</strong> — Quote,
+                Übernahmejahr, Erläuterung und die gemessene Wirkung</li>
+              <li><strong>3 Budgetposten bei Heimaufenthalt</strong> — die Liste mit den
+                zwei Kästchen je Position</li>
+              <li><strong>4 Zusätzliche Kosten für &lt;andere Person&gt;</strong> — die
+                Blöcke A und B für Gartenunterhalt und Haushaltshilfe</li>
+            </ul></li>
+          <li><strong>Behoben — Text am falschen Ort.</strong> Die Erläuterung zur
+            Teuerung der Heimkosten stand unterhalb der Übernahme-Quote, also im falschen
+            Abschnitt. Sie steht jetzt bei den Kosten, auf die sie sich bezieht.</li>
+          <li>Die Titel der Abschnitte nennen den Namen der anderen Person, statt von
+            «der anderen Person» zu sprechen.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v255 — Zusatzkosten nach Anlass getrennt</h3>
+        <ul class="liste">
+          <li><strong>Der Grund.</strong> Gartenunterhalt und Haushaltshilfe fallen aus
+            zwei verschiedenen Anlässen an, und diese liegen in verschiedenen Jahren:
+            <ul class="liste">
+              <li>die andere Person tritt ins <strong>Heim</strong> ein — sie lebt, führt
+                den Haushalt aber nicht mehr mit;</li>
+              <li>die andere Person <strong>stirbt</strong> — der ganze Haushalt bleibt an
+                der überlebenden Person, der Aufwand ist in der Regel höher.</li>
+            </ul>
+            Bisher gab es einen Satz Beträge und einen Zeitraum für beide; nur die Vorgabe
+            des Beginnjahrs richtete sich nach dem, was zuerst eintrat. Wer ein Jahr
+            eintrug, setzte es damit unbeabsichtigt für beide Anlässe.</li>
+          <li><strong>Zwei getrennte Blöcke</strong>, je mit eigenem «ab Jahr», «bis Jahr»,
+            Monatsbetrag und — beim Gartenunterhalt — eigener Wahl zwischen ganzem Jahr
+            und März bis Oktober:
+            <ul class="liste">
+              <li><strong>A — ab Heim- oder Spitalaufenthalt</strong>, Vorgabe für den
+                Beginn: das Jahr des Eintritts</li>
+              <li><strong>B — ab Todesfall</strong>, Vorgabe: das Todesjahr selbst, nicht
+                das Jahr danach</li>
+            </ul></li>
+          <li><strong>B ersetzt A</strong> ab dem Todesjahr; die beiden werden nicht
+            zusammengezählt. Es ist dieselbe Arbeit, nur aus einem anderen Anlass und in
+            anderem Umfang.</li>
+          <li><strong>Gemessen</strong> am Beispiel — Heimeintritt 2043, Tod 2047, Block A
+            7'200 CHF, Block B 14'400 CHF pro Jahr:
+            2042 null · 2043 bis 2046 je 7'200 · ab 2047 je 14'400 CHF.</li>
+          <li><strong>Bestehende Rechnungen.</strong> Ist ein Heimeintritt erfasst, werden
+            die bisherigen Beträge einmalig auch in den Block A übernommen; am Block A
+            ändert sich dadurch nichts.</li>
+          <li><strong>Die Rechnung ändert sich — das ist beabsichtigt.</strong> Weil der
+            Todesfall-Block neu im Todesjahr selbst beginnt und nicht erst im Jahr darauf,
+            fällt ein Jahr Zusatzkosten mehr an. In der Musterrechnung sind das 10'800 CHF
+            im Jahr 2047; das Kapital der überlebenden Person am Ende sinkt von −459'408
+            auf −470'357 CHF, das Kapital ist 2052 statt 2053 aufgebraucht, und die Steuern
+            über die ganze Laufzeit sinken von 805'785 auf 805'055 CHF — weniger Vermögen
+            bedeutet weniger Vermögenssteuer.</li>
+          <li>Beide Blöcke stehen an denselben zwei Orten wie bisher — im Szenario 2 des
+            Reiters Todesfall und im Kapitel «Heim- und Spitalaufenthalt» des Reiters
+            Personen — und schreiben in dieselben Felder.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v254 — Einheitliche Kapitel und zusätzliche Kosten neu erfasst</h3>
+        <ul class="liste">
+          <li><strong>Gleiches Aussehen in allen Reitern.</strong> Die oberste
+            Gliederungsstufe ist überall derselbe blaue Balken mit weisser Schrift, wie er
+            im Reiter Steuern schon bestand. Umgestellt sind der Reiter Liegenschaft
+            (Kapitel 1–4) und der Reiter Todesfall (Szenarien 1–7 und Auswertungen
+            1–3).</li>
+          <li><strong>Reiter Personen in zwei Kapitel gegliedert:</strong>
+            <ul class="liste">
+              <li><strong>1 Allgemeine Angaben zur Person</strong> — Geburtsjahr,
+                Pensionierung, letztes Rechenjahr, Geschlecht, Lebenserwartung,
+                Zivilstand</li>
+              <li><strong>2 Heim- und Spitalaufenthalt</strong> — Eintrittsjahr, Kosten
+                und Teuerung, Pflegestufe, was die andere Person übernimmt, die Liste der
+                Budgetpositionen und neu die zusätzlichen Kosten</li>
+            </ul>
+            Je Kapitel stehen die beiden Personen nebeneinander.</li>
+          <li><strong>Zusätzliche Kosten — Gartenunterhalt und Haushaltshilfe.</strong>
+            Die Eingabe im Szenario 2 des Reiters Todesfall stand bisher nebeneinander in
+            einer Zeile und kannte nur einen Monatsbetrag und ein gemeinsames Beginnjahr.
+            Neu stehen die beiden untereinander in einer Tabelle, je mit
+            <ul class="liste">
+              <li>ab Jahr und bis Jahr</li>
+              <li>Betrag pro Monat und daraus gerechnetem Jahresbetrag</li>
+              <li>beim Gartenunterhalt: ganzes Jahr (12 Monate) oder nur von März bis und
+                mit Oktober (8 Monate)</li>
+            </ul></li>
+          <li><strong>Dieselbe Tabelle an zwei Orten.</strong> Sie steht im Szenario 2 und
+            im Kapitel «Heim- und Spitalaufenthalt» des Reiters Personen. Beide schreiben
+            in dieselben Felder — es gibt nur eine Eingabe, keine zweite Erfassung.</li>
+          <li><strong>Diese Eingabe geht vor.</strong> Sobald hier ein Betrag steht,
+            werden die gleichnamigen Positionen im Reiter Budget auf null gesetzt, und
+            eine Meldung nennt, welche das waren. Damit zählen dieselben Kosten nicht
+            zweimal. Bisher kamen die Budgetbeträge hinzu und mussten dort von Hand
+            gestrichen werden.</li>
+          <li><strong>Geändert — Vorgabe für das Beginnjahr.</strong> Bisher war es das
+            Jahr <em>nach</em> dem Tod der anderen Person; neu ist es das <strong>Todesjahr
+            selbst</strong>. Ohne Todesfall gilt weiterhin das Jahr des Heimeintritts. Die
+            Kosten fallen damit ein Jahr früher an.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v253 — Reiter Liegenschaft in vier Kapitel gegliedert</h3>
+        <ul class="liste">
+          <li><strong>Vier aufklappbare Kapitel</strong> mit grossem Titel, Nummer und
+            einer Kurzangabe:
+            <ul class="liste">
+              <li><strong>1 Laufende Kosten der Liegenschaft</strong> — die Positionstabelle;
+                Kurzangabe: Anzahl Positionen und Summe pro Jahr</li>
+              <li><strong>2 Werte der Liegenschaft</strong> — Eigenmietwert, Verkehrswert,
+                Abschaffung; Kurzangabe: beide Werte und das letzte Jahr mit
+                Eigenmietwert</li>
+              <li><strong>3 Rückstellungen Nebenkosten</strong> — Eckwerte, Einzahlungen,
+                Kontoentwicklung und Grafik; Kurzangabe: ob das Konto aktiv ist und der
+                Bestand am Ende</li>
+              <li><strong>4 Rückstellungen für Investitionen</strong> — gleich aufgebaut,
+                dazu die werterhaltenden Massnahmen</li>
+            </ul>
+            Sichtbar ist zunächst nur der Titel; ein Klick öffnet das Kapitel, der Befehl
+            «Zurück zur Übersicht» am Fuss schliesst es. Offen ist immer nur eines.</li>
+          <li><strong>Grafik am richtigen Ort.</strong> Die Kontoentwicklung und die Grafik
+            zum Bestand des Kontos Nebenkosten stehen jetzt innerhalb des Kapitels 3 und
+            erscheinen mit ihm; dasselbe gilt für die Investitionen im Kapitel 4. Bisher
+            standen sie unter zwei Schaltflächen, die getrennt zu bedienen waren.</li>
+          <li><strong>Die beiden Schaltflächen entfallen.</strong> «Eingabe Nebenkosten»
+            und «Eingabe Rückstellungen Investitionen» sind durch die Kapitel 3 und 4
+            selbst ersetzt.</li>
+          <li><strong>Behoben — Sprungziele.</strong> Ein Sprung aus dem Reiter «Daten für
+            Berechnung» in ein geschlossenes Kapitel öffnete dieses zwar, die Hervorhebung
+            ging aber verloren: das Öffnen zeichnet den Bereich neu, und das zuerst
+            gefundene Feld hing danach nicht mehr im Dokument. Es wird jetzt nach dem
+            Öffnen ein zweites Mal gesucht. Das betrifft auch die Punkte im Reiter
+            Vorsorge.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v252 — Heimeintritt: je Position entfallen oder übergehen</h3>
+        <ul class="liste">
+          <li><strong>Zwei Kästchen je Budgetposition.</strong> Die Liste im Reiter
+            Personen heisst neu «Budgetpositionen im Heim» und führt links zwei Kästchen:
+            <ul class="liste">
+              <li><strong>entfällt</strong> — die Ausgabe fällt ab dem Heimeintritt weg
+                und wird von niemandem getragen;</li>
+              <li><strong>&lt;andere Person&gt; übernimmt</strong> — der Anteil der Person
+                im Heim geht <em>ganz</em> auf die andere Person über, zu hundert Prozent
+                und nicht anteilig, ab dem eingestellten Übernahmejahr;</li>
+              <li><strong>kein Kästchen</strong> — die Ausgabe läuft bei der Person im
+                Heim unverändert weiter.</li>
+            </ul>
+            Beides zugleich ist ausgeschlossen: das Setzen des einen löscht das
+            andere.</li>
+          <li><strong>Spalte «Wirkung ab Heimeintritt»</strong> nennt je Zeile im Klartext,
+            was geschieht — «fällt weg», «&lt;Name&gt; trägt sie ganz», «läuft weiter bei
+            &lt;Name&gt;».</li>
+          <li><strong>Kopf und Fuss zählen mit:</strong> wie viele Positionen entfallen,
+            übergehen und bleiben, dazu die drei Summen in Franken.</li>
+          <li><strong>Liegenschaftskosten bleiben aussen vor.</strong> Hypothekarzinsen,
+            Nebenkosten, Rückstellungen und Versicherungen Liegenschaft stehen nicht in
+            der Liste: sie entfallen nie und gehen mit der Quote «andere Person übernimmt»
+            anteilig über. Das war schon so und bleibt so.</li>
+          <li><strong>Unterschied zur Quote.</strong> Die Quote oben wirkt anteilig auf die
+            Liegenschaft — 20 Prozent von einem hälftigen Anteil sind 10 Prozentpunkte.
+            Das Kästchen «übernimmt» wirkt auf eine einzelne Position und überträgt sie
+            vollständig. Beides lässt sich nebeneinander einsetzen.</li>
+          <li><strong>Geprüft.</strong> Wird «Verpflegung» (7'200 CHF) von «entfällt» auf
+            «Person 2 übernimmt» umgestellt, steigen die Ausgaben von Person 2 im ersten
+            Heimjahr um genau diesen Betrag, während jene von Person 1 unverändert
+            bleiben.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v251 — Heimeintritt: Übernahmejahr und Entfall der Ausgaben</h3>
+        <ul class="liste">
+          <li><strong>Übernahme ab Jahr.</strong> Bisher begann die Übernahme durch die
+            andere Person zwingend im Jahr des Heimeintritts. Neu steht daneben ein
+            eigenes Feld. Vorgabe ist das Jahr des Heimeintritts — das Feld bleibt dafür
+            leer und folgt einer Änderung des Eintrittsjahres von selbst; ein
+            eingetragenes Jahr geht vor. Darunter steht, ab welchem Jahr gerechnet
+            wird.</li>
+          <li><strong>Was übernommen wird.</strong> Neben der Rubrik Liegenschaft, den
+            Hypothekarzinsen und den Rückstellungskonten gehören neu auch die
+            <strong>Versicherungen Liegenschaft</strong> dazu — Hausrat, Unfall,
+            Rechtsschutz. Sie bestehen unabhängig vom Aufenthaltsort weiter und sind
+            deshalb eine Frage der Verteilung, nicht des Entfalls.</li>
+          <li><strong>Was bei der Person im Heim entfällt — neue Regel.</strong> Ab dem
+            Heimeintritt deckt das Heim den Lebensbedarf dieser Person. Ihre persönlichen
+            Ausgaben fallen deshalb weg: Fahrzeuge samt Fahrzeugversicherung, Stall,
+            Verpflegung, Kleider, Ferien, Abonnemente, Haushaltshilfe, Gartenunterhalt
+            und dergleichen. Weiter laufen nur Verpflichtungen, die vom Aufenthaltsort
+            unabhängig sind:
+            <ul class="liste">
+              <li>Krankenkasse und Krankheitskosten (Selbstbehalt, Zahnarzt, Hilfsmittel)</li>
+              <li>Steuern und Steuerberatung</li>
+              <li>die Sammelpositionen «Diverses» und «Zusätzliche Ausgaben»</li>
+            </ul>
+            Bisher entfiel nur, was je Position eigens gekennzeichnet war; die meisten
+            persönlichen Ausgaben liefen im Heim unverändert weiter.</li>
+          <li><strong>Neue Liste «Was im Heim entfällt».</strong> Im Reiter Personen, unter
+            den Heimangaben, steht jede Ausgabenposition dieser Person mit Rubrik, Betrag
+            und einem Häkchen «läuft im Heim weiter». Der Kopf nennt, wie viele Positionen
+            entfallen; der Fuss die Summen. Jede Zeile lässt sich einzeln umstellen, und
+            ein Knopf stellt die Vorgabe wieder her.</li>
+          <li><strong>Einmalige Umstellung.</strong> Beim ersten Öffnen einer bestehenden
+            Rechnung werden die Kennzeichen nach der neuen Regel gesetzt. Danach bleiben
+            eigene Korrekturen erhalten — die Umstellung läuft nur einmal.</li>
+          <li><strong>Geprüft.</strong> Im Beispiel entfallen 83'694 CHF pro Jahr,
+            29'534 CHF laufen weiter. Wird die Übernahme um drei Jahre verschoben, trägt
+            die Person im Heim in diesen Jahren 4'894 CHF mehr und die andere ebenso viel
+            weniger; die Summe beider bleibt gleich.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v250 — AHV-Rente als eigener Punkt im Reiter Vorsorge</h3>
+        <ul class="liste">
+          <li><strong>Verschoben.</strong> Die Eingabe der AHV-Rente — Monatsrente ohne
+            die 13. Rente und Teuerung — stand bisher im Reiter Personen zwischen den
+            Jahreszahlen. Sie steht neu im Reiter «Vorsorge und Vermögen» als eigener
+            aufklappbarer Punkt «AHV-Rente» in der Karte der jeweiligen Person, direkt
+            unter den Angaben zum Kapital.</li>
+          <li><strong>Begründung.</strong> Die AHV ist die Einnahme, aus der ein Teil des
+            Lebensbedarfs gedeckt wird; sie gehört sachlich zum Kapital, aus dem der Rest
+            gedeckt wird, und nicht zu den Jahreszahlen der Person. Der Reiter Personen
+            führt nur noch die drei Jahreszahlen und den Heimeintritt.</li>
+          <li><strong>Kurzangabe im Titel:</strong> Monatsrente und Teuerung, zum Beispiel
+            «2'520 CHF/Mt · Teuerung 0.80 %». So ist der Wert ohne Öffnen sichtbar.</li>
+          <li><strong>Hinweis im Reiter Personen.</strong> An der bisherigen Stelle steht
+            jetzt, wo die AHV erfasst wird, und dass der Beginn der Rente dem dort
+            erfassten Pensionierungsjahr selbsttätig folgt.</li>
+          <li><strong>Doppelte Erfassung benannt.</strong> Im Punkt steht neu, dass
+            dieselbe Grösse im Reiter Budget als Einnahme geführt wird und eine Änderung
+            an beiden Orten denselben Wert betrifft; die 13. Rente setzt das Programm
+            selbst.</li>
+          <li><strong>Sprung aus «Daten für Berechnung»</strong> führt neu an den neuen
+            Ort und öffnet den Punkt.</li>
+        </ul>
       </div>
       <div class="karte breit">
         <h3>Änderungen in v249 — Reiter Vorsorge und Vermögen neu gegliedert</h3>
@@ -7643,6 +8237,12 @@ function rechneEinmal(cfg, tarife, vorlauf) {
     return gesamt * q;
   };
   const nachTod = j => tfAktiv && j > tfTod;
+  // Fuer die Verteilung der LAUFENDEN KOSTEN gilt bereits das Todesjahr selbst:
+  // ab dem Tod traegt die ueberlebende Person die Liegenschaft allein. Fuer die
+  // steuerliche Zurechnung (Eigenmietwert, Vermoegen) und fuer den Erbgang
+  // bleibt es beim Jahr nach dem Tod - dort ist die verstorbene Person im
+  // Todesjahr noch zu veranlagen.
+  const abTod = j => tfAktiv && tfTod != null && j >= tfTod;
   // Wohnwechsel zu Lebzeiten: Verkauf der Liegenschaft und Umzug in eine
   // Mietwohnung, unabhaengig vom Todesfall. Die Wirkung ist dieselbe wie beim
   // Umzug oder Verkauf im Todesfallszenario - Liegenschaftskosten,
@@ -7714,12 +8314,22 @@ function rechneEinmal(cfg, tarife, vorlauf) {
 
   // ----------------------------------------------------- Heimeintritt
   // Zieht eine Person ins Heim, uebernimmt die andere Person einen einstellbaren
-  // Anteil von deren Kosten fuer Liegenschaft, Hypothekarzinsen und
-  // Rueckstellungen. Der Anteil bezieht sich auf den Kostenanteil der Person
-  // im Heim: 25 Prozent von deren 50 Prozent sind 12,5 Prozentpunkte.
+  // Anteil von deren Kosten fuer Liegenschaft, Hypothekarzinsen,
+  // Liegenschaftsversicherungen und Rueckstellungen. Der Anteil bezieht sich auf
+  // den Kostenanteil der Person im Heim: 25 Prozent von deren 50 Prozent sind
+  // 12,5 Prozentpunkte.
+  //
+  // Das Jahr der Uebernahme ist eigens einstellbar (heim_umlage_ab). Ohne
+  // Eingabe gilt das Jahr des Heimeintritts. So laesst sich abbilden, dass die
+  // Kosten erst spaeter uebergehen - etwa wenn der Eintritt unterjaehrig ist
+  // oder die Uebernahme erst ab dem Folgejahr vereinbart wird.
+  const heimUmlageAb = p => (p.heim_umlage_ab != null && p.heim_umlage_ab !== "")
+    ? Number(p.heim_umlage_ab) : Number(p.heimeintritt_ab);
   const heimUmlage = jahr => {
     for (const p of personen) {
-      if (p.heimeintritt_ab == null || jahr < Number(p.heimeintritt_ab)) continue;
+      if (p.heimeintritt_ab == null) continue;
+      const ab = heimUmlageAb(p);
+      if (!isFinite(ab) || jahr < ab) continue;
       const q = Number(p.heim_umlage_anteil) || 0;
       if (q <= 0) continue;
       const andere = personen.find(x => x.id !== p.id);
@@ -7728,6 +8338,29 @@ function rechneEinmal(cfg, tarife, vorlauf) {
     }
     return null;
   };
+  // Vollstaendige Uebernahme einzelner Positionen: traegt die andere Person
+  // eine Position ganz, so geht der Anteil der Person im Heim zu hundert
+  // Prozent auf sie ueber - unabhaengig von der eingestellten Quote, die nur
+  // fuer die Liegenschaft gilt. Massgebend ist dasselbe Jahr wie fuer die
+  // Umlage.
+  const heimPaar = jahr => {
+    for (const p of personen) {
+      if (p.heimeintritt_ab == null) continue;
+      const ab = heimUmlageAb(p);
+      if (!isFinite(ab) || jahr < ab) continue;
+      const andere = personen.find(x => x.id !== p.id);
+      if (!andere) continue;
+      return { von: p.id, zu: andere.id, quote: 1 };
+    }
+    return null;
+  };
+  // Rubriken, deren Kosten die andere Person mittraegt. Die Liegenschaft und
+  // ihre Versicherungen bleiben bestehen, auch wenn eine Person im Heim ist;
+  // sie sind deshalb keine Frage des Entfalls, sondern der Verteilung.
+  const HEIM_UMLAGE_GRUPPEN = Array.isArray(cfg.heim_umlage_gruppen) && cfg.heim_umlage_gruppen.length
+    ? cfg.heim_umlage_gruppen
+    : [HAUSKOSTEN, 'Versicherungen Liegenschaft'];
+  const heimUmlageGruppe = g => HEIM_UMLAGE_GRUPPEN.includes(g);
   const umlegen = (anteile, u) => {
     if (!u || !anteile) return anteile;
     const teil = (anteile[u.von] || 0) * u.quote;
@@ -7948,7 +8581,7 @@ function rechneEinmal(cfg, tarife, vorlauf) {
       const satz = hypoJahressatz(h, jahr);
       const zins = zinsWeg ? 0 : rest * satz;
       zinsTotal += zins; schuldTotal += rest;
-      const hAnteile = (nachTod(jahr) && tfLebt) ? { [tfLebt]: 1 }
+      const hAnteile = (abTod(jahr) && tfLebt) ? { [tfLebt]: 1 }
                      : umlegen(h.anteile || {}, heimUmlage(jahr));
       for (const [pid, a] of Object.entries(hAnteile)) {
         zinsJePerson[pid] = (zinsJePerson[pid] || 0) + zins * a;
@@ -7999,12 +8632,14 @@ function rechneEinmal(cfg, tarife, vorlauf) {
       if (gruppe === HAUSKOSTEN && (nachUmzug(jahr) || nachVerkauf(jahr))) return null;
       const pid = person.id;
       const quelle = (zweitbudget(pid, jahr) && b2Nach[pos.id]) ? b2Nach[pos.id] : pos;
-      const anteile = (nachTod(jahr) && tfLebt &&
+      const anteile = (abTod(jahr) && tfLebt &&
                        (UMLAGE.includes(gruppe) || quelle.umlage_bei_tod))
         ? { [tfLebt]: 1 }
-        : (gruppe === HAUSKOSTEN
+        : (heimUmlageGruppe(gruppe)
             ? umlegen(quelle.anteile || {}, heimUmlage(jahr))
-            : (quelle.anteile || {}));
+            : (quelle.heim_uebernahme
+                ? umlegen(quelle.anteile || {}, heimPaar(jahr))
+                : (quelle.anteile || {})));
       const anteil = Number(anteile[pid]) || 0;
       if (!anteil) return null;
       const betrag = positionBetrag(quelle, jahr, cfg.jahr_von);
@@ -8012,7 +8647,11 @@ function rechneEinmal(cfg, tarife, vorlauf) {
       const lebt = jahr <= endeJahr[pid];
       const imHeim = person.heimeintritt_ab != null && jahr >= person.heimeintritt_ab;
       if (!lebt && (quelle.entfaellt_bei_tod !== false)) return null;
-      if (imHeim && quelle.entfaellt_bei_heim) return null;
+      // Liegenschaft und Liegenschaftsversicherungen entfallen nie: sie bleiben
+      // bestehen und werden statt dessen umgelegt. Sonst muesste die andere
+      // Person den ganzen Betrag tragen, was der eingestellten Quote
+      // widerspraeche.
+      if (imHeim && quelle.entfaellt_bei_heim && !heimUmlageGruppe(gruppe)) return null;
       return { quelle, gruppe, b: betrag * anteil };
     };
 
@@ -8049,8 +8688,8 @@ function rechneEinmal(cfg, tarife, vorlauf) {
           break;
         }
       }
-      // Nach dem Tod traegt die ueberlebende Person den ganzen Beitrag.
-      if (nachTod(jahr) && tfLebt) {
+      // Ab dem Todesjahr traegt die ueberlebende Person den ganzen Beitrag.
+      if (abTod(jahr) && tfLebt) {
         invJePerson[tfLebt] = (invJePerson[tfLebt] || 0) + (invJePerson[tfOpfer] || 0);
         invJePerson[tfOpfer] = 0;
       } else {
@@ -8132,7 +8771,7 @@ function rechneEinmal(cfg, tarife, vorlauf) {
       // Verkauf der Liegenschaft entfaellt die Einzahlung ganz.
       // Nach dem Tod traegt die ueberlebende Person den ganzen Beitrag: die
       // Kosten des Hauses bleiben dieselben, nur die Zahl der Zahlenden sinkt.
-      if (nachTod(jahr) && tfLebt) {
+      if (abTod(jahr) && tfLebt) {
         rstJePerson[tfLebt] = (rstJePerson[tfLebt] || 0) + (rstJePerson[tfOpfer] || 0);
         rstJePerson[tfOpfer] = 0;
       }
@@ -8180,7 +8819,7 @@ function rechneEinmal(cfg, tarife, vorlauf) {
         let anteile = (e.anteile && Object.keys(e.anteile).length) ? e.anteile
                     : ((rst.anteile && Object.keys(rst.anteile).length) ? rst.anteile
                                                                         : gleichverteilt);
-        if (nachTod(jahr) && tfLebt) anteile = { [tfLebt]: 1 };
+        if (abTod(jahr) && tfLebt) anteile = { [tfLebt]: 1 };
         else anteile = umlegen(anteile, heimUmlage(jahr));
         if (nachUmzug(jahr) || nachVerkauf(jahr)) continue;
         const quote = e.werterhaltend_anteil != null
@@ -8300,12 +8939,14 @@ function rechneEinmal(cfg, tarife, vorlauf) {
         // Nach dem Tod traegt die ueberlebende Person diese Gruppen allein.
         // Einzelne Positionen koennen dasselbe verlangen, ohne dass die ganze
         // Gruppe uebergeht: Flag umlage_bei_tod, gesetzt in den Vorlagen.
-        const anteile = (nachTod(jahr) && tfLebt &&
+        const anteile = (abTod(jahr) && tfLebt &&
                          (UMLAGE.includes(gruppe) || quelle.umlage_bei_tod))
           ? { [tfLebt]: 1 }
-          : (gruppe === HAUSKOSTEN
+          : (heimUmlageGruppe(gruppe)
               ? umlegen(quelle.anteile || {}, heimUmlage(jahr))
-              : (quelle.anteile || {}));
+              : (quelle.heim_uebernahme
+                  ? umlegen(quelle.anteile || {}, heimPaar(jahr))
+                  : (quelle.anteile || {})));
         const anteil = Number(anteile[pid]) || 0;
         if (!anteil) continue;
         const betrag = positionBetrag(quelle, jahr, cfg.jahr_von);
@@ -8313,7 +8954,7 @@ function rechneEinmal(cfg, tarife, vorlauf) {
         const lebt = jahr <= endeJahr[pid];
         const imHeim = person.heimeintritt_ab != null && jahr >= person.heimeintritt_ab;
         if (!lebt && (quelle.entfaellt_bei_tod !== false)) continue;
-        if (imHeim && quelle.entfaellt_bei_heim) continue;
+        if (imHeim && quelle.entfaellt_bei_heim && !heimUmlageGruppe(gruppe)) continue;
         const b = betrag * anteil;
         // Abzugsarten gelten nur fuer Ausgaben. Eine Einnahme darf keinen Abzug
         // ausloesen - sonst mindert sie das steuerbare Einkommen doppelt.
@@ -8645,18 +9286,50 @@ function rechneEinmal(cfg, tarife, vorlauf) {
       {
         const imHeim = personen.find(x =>
           x.heimeintritt_ab != null && jahr >= Number(x.heimeintritt_ab));
-        let traeger = null, standard = null;
-        if (tfAktiv && nachTod(jahr)) { traeger = tfLebt; standard = tfTod + 1; }
+        // Zwei Anlaesse mit verschiedenen Zeitpunkten und eigenen Betraegen:
+        //   - Heim- oder Spitalaufenthalt der anderen Person: sie lebt noch,
+        //     fuehrt den Haushalt aber nicht mehr mit. Felder mit Vorsatz
+        //     "heim_", Vorgabe fuer den Beginn ist das Jahr des Eintritts.
+        //   - Todesfall: der ganze Haushalt bleibt an der ueberlebenden Person.
+        //     Felder ohne Vorsatz, Vorgabe ist das Todesjahr.
+        // Ab dem Todesjahr gilt der zweite Block; er ersetzt den ersten und
+        // wird nicht dazugezaehlt - es ist dieselbe Arbeit, nur aus einem
+        // anderen Anlass und in anderem Umfang.
+        let traeger = null, standard = null, vor = "";
+        // Massgebend ist das Todesjahr selbst, nicht erst das Jahr danach: der
+        // Haushalt bleibt schon in jenem Jahr an der ueberlebenden Person.
+        if (tfAktiv && tfTod != null && jahr >= tfTod) {
+          traeger = tfLebt; standard = tfTod; vor = "";
+        }
         else if (imHeim) {
           const andere = personen.find(x => x.id !== imHeim.id);
           traeger = andere ? andere.id : null;
           standard = Number(imHeim.heimeintritt_ab);
+          vor = "heim_";
         }
-        const ab = tf.zusatz_ab_jahr != null ? Number(tf.zusatz_ab_jahr) : standard;
-        if (traeger === pid && ab != null && jahr >= ab &&
-            !nachUmzug(jahr) && !nachVerkauf(jahr))
-          hilfe = ((Number(tf.gaertner_pro_monat) || 0) +
-                   (Number(tf.haushaltshilfe_pro_monat) || 0)) * 12;
+        // Je Kostenart ein eigener Zeitraum und ein eigener Monatsbetrag. Der
+        // Gartenunterhalt faellt wahlweise das ganze Jahr an oder nur von Maerz
+        // bis und mit Oktober - acht Monate. Fehlt ein Beginnjahr, gilt das
+        // gemeinsame Feld; fehlt auch dieses, der Standard: das Todesjahr der
+        // anderen Person, sonst das Jahr des Heimeintritts.
+        if (traeger === pid && !nachUmzug(jahr) && !nachVerkauf(jahr)) {
+          // Das alte gemeinsame Feld gilt nur noch fuer den Todesfall.
+          const gem = (!vor && tf.zusatz_ab_jahr != null && tf.zusatz_ab_jahr !== "")
+            ? Number(tf.zusatz_ab_jahr) : standard;
+          for (const art of ["gaertner", "haushaltshilfe"]) {
+            const pm = Number(tf[vor + art + "_pro_monat"]) || 0;
+            if (!pm) continue;
+            const eigen = tf[vor + art + "_ab_jahr"];
+            const ab = (eigen != null && eigen !== "") ? Number(eigen) : gem;
+            const bisR = tf[vor + art + "_bis_jahr"];
+            const bis = (bisR != null && bisR !== "") ? Number(bisR) : Infinity;
+            if (ab == null || !isFinite(ab)) continue;
+            if (jahr < ab || jahr > bis) continue;
+            const monate = (art === "gaertner")
+              ? (Number(tf[vor + "gaertner_monate"]) || 12) : 12;
+            hilfe += pm * monate;
+          }
+        }
       }
 
       // Vermietung der Einliegerwohnung: Mietzins und Investition fallen der
@@ -9099,14 +9772,26 @@ function rechneEinmal(cfg, tarife, vorlauf) {
         let abzugAnteil = 1;
         // Hoechstbetrag nach dem Systemwechsel, je Person. Massgebend sind die
         // Werte der Karte "Ersterwerber einer Liegenschaft": Betrag im ersten
-        // Jahr, Abbaudauer und - wo erfasst - das Jahr des Ersterwerbs. Der
-        // Betrag sinkt linear auf null (Jahr 1 voll, Jahr 2 neun Zehntel,
-        // Jahr 10 ein Zehntel), nach Ablauf der Frist ist er null.
+        // Jahr und Abbaudauer. Der Betrag sinkt linear auf null (Jahr 1 voll,
+        // Jahr 2 neun Zehntel, Jahr 10 ein Zehntel), nach Ablauf der Frist ist
+        // er null.
+        //
+        // Erstes Jahr des Abbaus ist das Jahr der Abschaffung des
+        // Eigenmietwerts, nicht das Jahr des Erwerbs. Solange der
+        // Eigenmietwert besteht, sind die Schuldzinsen ohnehin unbeschraenkt
+        // abziehbar; ein Hoechstbetrag wirkt dort nicht und kann deshalb auch
+        // nicht abgebaut werden. Erst der Systemwechsel setzt die Frist in
+        // Gang - fuer beide Anwendungen gleich: fuer den Schalter
+        // "Schuldzinsen weiter abziehbar" wie fuer den Ersterwerberabzug.
+        // Das Jahr des Erwerbs entscheidet allein darueber, ob der Abzug
+        // ueberhaupt zusteht (er wirkt nicht vor dem Erwerb).
         const ee = (st.ersterwerber || {})[pid] || {};
         const eeDauer = Math.max(1, Number(st.ersterwerber_dauer) || 10);
         const eeBetrag = Number(ee.hoechstbetrag) || 0;
-        const hoechstImJahr = startJahr => {
-          const nr = jahr - startJahr + 1;
+        const eeStartJahr = Number(st.eigenmietwert_abschaffung_jahr);
+        const hoechstImJahr = () => {
+          if (!Number.isFinite(eeStartJahr)) return 0;
+          const nr = jahr - eeStartJahr + 1;
           if (nr < 1 || nr > eeDauer) return 0;
           return eeBetrag * (eeDauer - nr + 1) / eeDauer;
         };
@@ -9123,7 +9808,7 @@ function rechneEinmal(cfg, tarife, vorlauf) {
         // bisher unbegrenzt; nach Ablauf der Frist gilt wieder der quotale
         // Anteil. Startjahr ist das Jahr der Abschaffung.
         const zinsWeiterDeckel = (zinsWeiter && eeBetrag > 0)
-          ? hoechstImJahr(Number(st.eigenmietwert_abschaffung_jahr)) : null;
+          ? hoechstImJahr() : null;
         const zinsWeiterWirkt = zinsWeiter
           && (eeBetrag <= 0 || (zinsWeiterDeckel != null && zinsWeiterDeckel > 0));
         // Quotaler Anteil fuer den vermieteten Teil. Er gilt fuer den
@@ -9158,7 +9843,9 @@ function rechneEinmal(cfg, tarife, vorlauf) {
         let erstErwerb = 0;
         if (emwWeg && ee.aktiv) {
           const erwerbsjahr = Number(ee.erwerbsjahr) || cfg.jahr_von;
-          const hoechst = hoechstImJahr(erwerbsjahr);
+          // Der Abbau laeuft ab der Abschaffung; das Erwerbsjahr entscheidet
+          // nur darueber, ob der Abzug im laufenden Jahr schon zusteht.
+          const hoechst = jahr >= erwerbsjahr ? hoechstImJahr() : 0;
           if (hoechst > 0) {
             const schonGewaehrt = (zinsWeiterWirkt && zinsWeiterDeckel != null)
               ? Math.min(schuldzins, zinsWeiterDeckel) : 0;
@@ -12378,6 +13065,49 @@ function umstellen(k) {
     if (!iv.anteile || !Object.keys(iv.anteile).length) iv.anteile = gleich;
   }
   if (!Array.isArray(k.vermoegen_person)) k.vermoegen_person = [];
+
+  // Heimeintritt: die Regel, was entfaellt, wurde in v251 umgestellt. Zuvor
+  // entfiel nur, was eigens gekennzeichnet war; neu entfallen die persoenlichen
+  // Ausgaben der Person im Heim, und weiter laufen nur Krankenkasse und
+  // Krankheitskosten, Steuern und Steuerberatung sowie die Sammelpositionen.
+  // Die Umstellung laeuft einmal je Rechnung und laesst sich danach je Zeile
+  // aendern; das Kennzeichen verhindert, dass sie eine Korrektur wieder
+  // ueberschreibt.
+  // Die Zusatzkosten sind seit v255 nach Anlass getrennt: Heimaufenthalt und
+  // Todesfall. Bisher galt ein Satz Betraege fuer beide. Damit sich an einer
+  // bestehenden Rechnung nichts aendert, werden die erfassten Betraege einmalig
+  // auch in den Heim-Block uebernommen.
+  if (!k.zusatzkosten_getrennt) {
+    k.zusatzkosten_getrennt = true;
+    const tf0 = k.todesfall || (k.todesfall = {});
+    const hatHeim = (k.personen || []).some(p => p && p.heimeintritt_ab != null);
+    if (hatHeim) {
+      for (const art of ["gaertner", "haushaltshilfe"]) {
+        if (tf0["heim_" + art + "_pro_monat"] == null)
+          tf0["heim_" + art + "_pro_monat"] = Number(tf0[art + "_pro_monat"]) || 0;
+      }
+      if (tf0.heim_gaertner_monate == null)
+        tf0.heim_gaertner_monate = Number(tf0.gaertner_monate) || 12;
+    }
+  }
+
+  if (!k.heim_entfall_umgestellt) {
+    k.heim_entfall_umgestellt = true;
+    const umlage = g => ["Liegenschaft", "Versicherungen Liegenschaft"].includes(g);
+    const weiter = /Steuerberat|Diverses|Zus(ä|ae)tzliche Ausgaben/i;
+    for (const pos of (k.positionen || [])) {
+      if (!pos) continue;
+      if (pos.fluss === "einnahme") { delete pos.entfaellt_bei_heim; continue; }
+      const g = pos.gruppe || "";
+      if (umlage(g)) { pos.entfaellt_bei_heim = false; continue; }
+      if (["Steuerabzüge", "Steuerabzuege"].includes(g)
+          || ["krankenversicherung", "krankheitskosten"].includes(pos.abzugsart)
+          || weiter.test(pos.bezeichnung || "")) {
+        pos.entfaellt_bei_heim = false; continue;
+      }
+      pos.entfaellt_bei_heim = true;
+    }
+  }
 
   // Szenario «Hypothek zurueckzahlen»: eigenes Konto neben dem
   // Amortisationskonto. Vorgabe: nicht aktiv, damit sich an einer bestehenden
@@ -15603,55 +16333,93 @@ function liegenschaftZeichnen() {
   invVerlaufZeichnen();
 }
 
-// Zwei Schaltflächen unter der Positionstabelle. Jede öffnet eine Eingabeseite
-// mit Eckwerten, Einzahlungen, Kontoentwicklung und Grafik; geöffnet ist immer
-// nur eine, damit der Reiter übersichtlich bleibt.
+// Die Seite ist in vier Kapitel gegliedert. Sichtbar ist zunaechst nur der
+// Titel jedes Kapitels mit einer kurzen Angabe; ein Klick oeffnet es, der Knopf
+// am Fuss schliesst es wieder. Offen ist immer nur ein Kapitel - so bleibt die
+// Seite kurz, und es ist stets erkennbar, worin man sich befindet.
+const LIEG_KAPITEL = [
+  { id: "kap-kosten", schluessel: "kosten" },
+  { id: "kap-werte", schluessel: "werte" },
+  { id: "kap-nk", schluessel: "nk" },
+  { id: "kap-inv", schluessel: "inv" },
+];
+
 function kontoKnoepfeZeichnen() {
-  const w = $("#kontoKnoepfe");
-  if (!w) return;
-  w.innerHTML = "";
-  const nk = $("#blockNk"), iv = $("#blockInv");
-  if (nk) nk.hidden = kontoAnsicht !== "nk";
-  if (iv) iv.hidden = kontoAnsicht !== "inv";
-
-  const reihe = el("div");
-  reihe.style.cssText = "display:flex; flex-direction:column; gap:8px; max-width:640px";
-
-  const knopf = (id, text, unterzeile) => {
-    const b = el("button", "knopf" + (kontoAnsicht === id ? " stark" : ""));
-    b.type = "button";
-    b.style.cssText = "text-align:left; padding:10px 14px; font-size:14px";
-    b.appendChild(el("div", null, text));
-    if (unterzeile) {
-      const u = el("div", null, unterzeile);
-      u.style.cssText = "font-size:12px; font-weight:400; opacity:.75; margin-top:2px";
-      b.appendChild(u);
-    }
-    b.addEventListener("click", () => {
-      kontoAnsicht = (kontoAnsicht === id) ? null : id;
-      liegenschaftZeichnen();
-      requestAnimationFrame(() => {
-        tabellenrahmenPruefen(); kopfzeilenAusrichten($("#blatt-liegenschaft"));
-        const ziel = kontoAnsicht === "nk" ? $("#blockNk")
-                   : kontoAnsicht === "inv" ? $("#blockInv") : null;
-        if (ziel) { scrollFreigeben(); ziel.scrollIntoView({ block: "start", behavior: "smooth" }); }
-      });
-    });
-    return b;
+  // Kurzangabe im Kopf jedes Kapitels
+  const kurz = {};
+  {
+    const pos = (cfg.positionen || []).filter(x =>
+      LIEGENSCHAFTSGRUPPEN.includes(x.gruppe || ""));
+    const summe = pos.reduce((a, x) => a + (Number(x.betrag) || 0), 0);
+    kurz["kap-kosten"] = pos.length + (pos.length === 1 ? " Position, " : " Positionen, ")
+      + chf(summe) + " CHF pro Jahr";
+  }
+  {
+    const st = cfg.steuer || {};
+    const emw = Number(st.eigenmietwert_pro_jahr) || 0;
+    const vkw = Number(st.verkehrswert_liegenschaft) || 0;
+    const ohne = st.eigenmietwert_abschaffung_jahr;
+    kurz["kap-werte"] = "Eigenmietwert "
+      + (emw ? chf(emw) + " CHF" : "nicht erfasst")
+      + (ohne ? " bis " + (Number(ohne) - 1) : "")
+      + " · Verkehrswert " + (vkw ? chf(vkw) + " CHF" : "nicht erfasst");
+  }
+  const standText = (konto, feld) => {
+    if (!konto || !konto.aktiv) return "Konto nicht aktiv";
+    const letzte = (erg && erg.konten && erg.konten.length)
+      ? erg.konten[erg.konten.length - 1] : null;
+    return "aktiv · Bestand Ende " + (letzte ? letzte.jahr : "—") + " "
+      + chf(letzte ? (letzte[feld] || 0) : 0) + " CHF";
   };
+  kurz["kap-nk"] = standText(cfg.rueckstellungskonto, "rueckstellungen");
+  kurz["kap-inv"] = standText(cfg.investitionskonto, "investitionen");
 
-  const r = cfg.rueckstellungskonto || {}, i2 = cfg.investitionskonto || {};
-  reihe.appendChild(knopf("nk",
-    (kontoAnsicht === "nk" ? "Eingabe Nebenkosten schliessen" : "Eingabe Nebenkosten"),
-    "Eckwerte, Einzahlungen, Kontoentwicklung und Grafik — Konto " +
-    (r.aktiv ? "aktiv" : "nicht aktiv")));
-  reihe.appendChild(knopf("inv",
-    (kontoAnsicht === "inv"
-      ? "Eingabe Rückstellungen Investitionen und Ausgaben Investitionen schliessen"
-      : "Eingabe Rückstellungen Investitionen und Ausgaben Investitionen"),
-    "Eckwerte, Einzahlungen, werterhaltende Massnahmen, Kontoentwicklung und Grafik — " +
-    "Konto " + (i2.aktiv ? "aktiv" : "nicht aktiv")));
-  w.appendChild(reihe);
+  for (const kap of LIEG_KAPITEL) {
+    const w = document.getElementById(kap.id);
+    if (!w) continue;
+    const kopf = w.querySelector(":scope > .kapitelkopf2");
+    const inh = w.querySelector(":scope > .kapitelinhalt2");
+    if (!kopf || !inh) continue;
+    const kz = kopf.querySelector(".k2kurz");
+    if (kz) kz.textContent = kurz[kap.id] || "";
+    const offen = kontoAnsicht === kap.schluessel;
+    inh.hidden = !offen;
+    w.classList.toggle("offen", offen);
+    const pf = kopf.querySelector(".k2pfeil");
+    if (pf) pf.textContent = offen ? "▾" : "▸";
+    // Knopf am Fuss
+    const fuss = inh.querySelector(":scope > .k2fuss");
+    if (fuss && !fuss.dataset.gebunden) {
+      fuss.dataset.gebunden = "1";
+      const b = el("button", "knopf", "← Zurück zur Übersicht");
+      b.type = "button";
+      b.addEventListener("click", () => {
+        kontoAnsicht = null;
+        liegenschaftZeichnen();
+        requestAnimationFrame(() => {
+          scrollFreigeben();
+          const z = document.getElementById(kap.id);
+          if (z) z.scrollIntoView({ block: "start", behavior: "smooth" });
+        });
+      });
+      fuss.appendChild(b);
+    }
+    if (!kopf.dataset.gebunden) {
+      kopf.dataset.gebunden = "1";
+      kopf.addEventListener("click", () => {
+        kontoAnsicht = (kontoAnsicht === kap.schluessel) ? null : kap.schluessel;
+        liegenschaftZeichnen();
+        requestAnimationFrame(() => {
+          tabellenrahmenPruefen(); kopfzeilenAusrichten($("#blatt-liegenschaft"));
+          if (kontoAnsicht === kap.schluessel) {
+            scrollFreigeben();
+            const z = document.getElementById(kap.id);
+            if (z) z.scrollIntoView({ block: "start", behavior: "smooth" });
+          }
+        });
+      });
+    }
+  }
 }
 
 // ------------------------------------------- Konto fuer Investitionen
@@ -16547,8 +17315,91 @@ function erfassterAnschlusssatz() {
   return h0 ? Number(h0.satz) || 0 : 0;
 }
 
-function benoetigtesKapital(pid, reserve, satz) {
+// Verlaengert oder verkuerzt die Eingaben auf ein anderes Endjahr der genannten
+// Person. Gebraucht fuer Szenario 3, wenn dort ein hoeheres oder tieferes
+// Endalter gesetzt wird als das erfasste.
+//
+// Fortgeschrieben wird nur, was bisher bis zum Ende lief: jede Jahresangabe,
+// die auf dem bisherigen Endjahr der Person oder auf dem Ende des
+// Betrachtungszeitraums steht, rueckt auf das neue Endjahr. Angaben mit einem
+// frueheren Endjahr bleiben, wo sie sind - ein Fahrzeug, das 2034 ersetzt wird,
+// wird nicht laenger gefahren, nur weil die Person aelter wird.
+//
+// Die Betraege selbst werden nicht neu gesetzt. Sie wachsen mit den erfassten
+// Teuerungssaetzen weiter; das ist die Fortschreibung. Eine Position ohne
+// Teuerung bleibt nominal gleich - so, wie sie erfasst ist.
+//
+// Die Angaben der anderen Person bleiben unveraendert. Gerechnet wird je
+// Person einzeln; ein hoeheres Alter der einen sagt nichts ueber die andere.
+function eingabenVerlaengern(k, pid, neuesEnde, protokoll) {
+  const p = (k.personen || []).find(x => x.id === pid);
+  if (!p || !(neuesEnde > 0)) return k;
+  const altesEnde = Number(p.lebenserwartung_bis) || 0;
+  if (!altesEnde || neuesEnde === altesEnde) return k;
+  const altesJahrBis = Number(k.jahr_bis) || 0;
+  // Fortgeschrieben wird nur nach oben. Eine Verkuerzung - das gesetzte Alter
+  // liegt unter dem erfassten - setzt allein das Todesjahr der Person; die
+  // Positionen laufen dann ins Leere, was richtig ist, denn die Person lebt
+  // nicht mehr. Verkuerzt werden duerfen die Angaben nicht: Positionen, die
+  // bis zum Ende des Betrachtungszeitraums laufen, gehoeren auch der anderen
+  // Person, und die lebt weiter.
+  const laenger = neuesEnde > altesEnde;
+  // Protokoll der Fortschreibung: was wurde angefasst, was lief vorher aus.
+  const pr = protokoll || {};
+  pr.fortgeschrieben = 0; pr.laeuftAus = [];
+  const neuBis = j => {
+    if (!laenger || j == null) return j;
+    const n = Number(j);
+    if (n === altesEnde) { pr.fortgeschrieben++; return neuesEnde; }
+    if (n === altesJahrBis && neuesEnde > altesJahrBis) { pr.fortgeschrieben++; return neuesEnde; }
+    return j;
+  };
+
+  p.lebenserwartung_bis = neuesEnde;
+  if (neuesEnde > altesJahrBis) k.jahr_bis = neuesEnde;
+
+  for (const pos of (k.positionen || []))
+    if (pos && pos.bis != null) pos.bis = neuBis(pos.bis);
+
+  for (const h of (k.hypotheken || []))
+    for (const f of (h.folgeperioden || []))
+      if (f && f.bis != null) f.bis = neuBis(f.bis);
+
+  const rk = k.rueckstellungskonto;
+  if (rk) for (const s of (rk.einzahlung_stufen || []))
+    if (s && s.bis != null) s.bis = neuBis(s.bis);
+
+  const ik = k.investitionskonto;
+  if (ik) for (const s of (ik.einzahlung_stufen || []))
+    if (s && s.bis != null) s.bis = neuBis(s.bis);
+
+  const ak = k.amortisationskonto;
+  if (ak && ak.einzahlung_bis != null) ak.einzahlung_bis = neuBis(ak.einzahlung_bis);
+
+  // Welche Ausgaben der Person laufen vor dem neuen Endjahr aus? Sie werden
+  // bewusst nicht fortgeschrieben - ihr Endjahr ist erfasst und gemeint. Fuer
+  // die Beurteilung des Ergebnisses ist es aber wesentlich zu wissen, dass in
+  // den zusaetzlichen Jahren weniger Ausgaben anfallen.
+  if (laenger) {
+    for (const pos of (k.positionen || [])) {
+      if (!pos || pos.bis == null) continue;
+      const bis = Number(pos.bis);
+      if (!(bis >= altesEnde) && bis < neuesEnde
+          && ((pos.anteile || {})[pid] || 0) > 0
+          && (pos.fluss || "ausgabe") === "ausgabe")
+        pr.laeuftAus.push({ name: pos.bezeichnung || pos.id, bis });
+    }
+    pr.laeuftAus.sort((a, b) => b.bis - a.bis);
+  }
+
+  return k;
+}
+
+// Sucht das erforderliche Startkapital einer Person. "bisJahr" ist das
+// gewuenschte letzte Rechenjahr; fehlt es, gilt das erfasste.
+function benoetigtesKapital(pid, reserve, satz, bisJahr, protokoll) {
   const basis = structuredClone(cfg);
+  if (bisJahr != null) eingabenVerlaengern(basis, pid, Number(bisJahr), protokoll);
   if (satz != null) anschlusssatzSetzen(basis, satz);
   const v = (basis.vorsorge || []).find(x => x.person_id === pid);
   if (!v) return null;
@@ -18325,36 +19176,127 @@ async function rueckBreakEvenSuchen(melden) {
   return (a + b) / 2;
 }
 
+// ====================================================== Szenario 3: Kapitalbedarf
+// Gesucht ist das Startkapital, das eine Person zu Beginn ihrer Rechnung
+// braucht, damit es bis zu ihrem letzten Jahr reicht.
+//
+// Der Ablauf ist zweigeteilt. Links stehen die Eingaben; sie rechnen nicht
+// mehr bei jedem Tastendruck, sondern werden nur gemerkt. Erst der Knopf
+// «Berechnung starten» loest den Lauf aus. Das hat zwei Gruende: Jede Person
+// braucht rund dreissig vollstaendige Durchlaeufe des Rechenkerns, und eine
+// halb eingetippte Zahl ergibt eine Rechnung, die niemand sehen will.
+//
+// Rechts erscheint danach das Ergebnis, und zwar nur dieses: die beiden
+// gesuchten Betraege. Die ausfuehrliche Auswertung darunter bleibt stehen,
+// bis neu gerechnet wird.
+
+// Gewuenschtes Endalter je Person. Fehlt ein Eintrag, gilt das Alter im
+// erfassten letzten Jahr.
+const kapAlterJePerson = {};
+// Ergebnis des letzten Laufs. Null heisst: noch nicht gerechnet.
+let kapLauf = null;
+let kapLaeuft = false;
+
+function kapEndjahrErfasst(p) { return endeJahrPerson(p); }
+function kapEndalterErfasst(p) {
+  const j = kapEndjahrErfasst(p);
+  return (p.geburtsjahr != null && j > 0) ? (j - p.geburtsjahr) : null;
+}
+function kapAlterVon(pid) {
+  const p = cfg.personen.find(x => x.id === pid);
+  if (!p) return null;
+  const v = kapAlterJePerson[pid];
+  return (v == null) ? kapEndalterErfasst(p) : v;
+}
+// Letztes Rechenjahr, das sich aus dem gesetzten Alter ergibt.
+function kapEndjahrVon(pid) {
+  const p = cfg.personen.find(x => x.id === pid);
+  if (!p) return null;
+  const a = kapAlterVon(pid);
+  return (p.geburtsjahr != null && a != null) ? (p.geburtsjahr + a) : kapEndjahrErfasst(p);
+}
+// Weicht die Eingabe vom erfassten Stand ab? Danach richtet sich, ob der
+// Knopf «Werte zurücksetzen» etwas zu tun hat.
+function kapEingabenGeaendert() {
+  if (szenarioAnschlusssatz != null
+      && Math.abs(szenarioAnschlusssatz - erfassterAnschlusssatz()) > 1e-9) return true;
+  for (const p of cfg.personen) {
+    if ((szenarienReserveJePerson[p.id] ?? szenarienReserve) !== szenarienReserve) return true;
+    const a = kapAlterJePerson[p.id];
+    if (a != null && a !== kapEndalterErfasst(p)) return true;
+  }
+  return false;
+}
+function kapZuruecksetzen() {
+  for (const p of cfg.personen) {
+    delete szenarienReserveJePerson[p.id];
+    delete kapAlterJePerson[p.id];
+  }
+  szenarioAnschlusssatz = null;
+}
+// Schluessel der Eingaben. Stimmt er nicht mehr mit jenem des letzten Laufs
+// ueberein, ist das Ergebnis veraltet; die Leiste sagt das.
+function kapSchluessel() {
+  return JSON.stringify({
+    s: szenarioAnschlusssatz ?? erfassterAnschlusssatz(),
+    p: cfg.personen.map(p => [p.id, reserveVon(p.id), kapEndjahrVon(p.id)]),
+  });
+}
+
+// --------------------------------------------------------------- der Lauf
+function kapRechnen() {
+  const t0 = performance.now();
+  const satz = szenarioAnschlusssatz ?? erfassterAnschlusssatz();
+  let laeufe = 0;
+  const zeilen = [];
+  for (const p of cfg.personen) {
+    const v = (cfg.vorsorge || []).find(x => x.person_id === p.id);
+    const erfasst = v ? Number(v.kapital_start) || 0 : 0;
+    const reserve = reserveVon(p.id);
+    const jE = kapEndjahrVon(p.id);
+    const jErf = kapEndjahrErfasst(p);
+    const prot = {};
+    const erg2 = benoetigtesKapital(p.id, reserve, szenarioAnschlusssatz,
+      (jE != null && jE !== jErf) ? jE : null, prot);
+    laeufe += erg2 ? erg2.laeufe : 0;
+    zeilen.push({
+      pid: p.id, bezeichnung: p.bezeichnung, geburtsjahr: p.geburtsjahr,
+      ab: abJahr(p.id), ende: jE, endeErfasst: jErf, verlaengert: jE !== jErf,
+      fortgeschrieben: prot.fortgeschrieben || 0, laeuftAus: prot.laeuftAus || [],
+      reserve, erfasst, noetig: erg2 ? erg2.wert : null,
+      steuernNoetig: erg2 ? erg2.steuernNoetig : null,
+      steuernErfasst: erg2 ? erg2.steuernErfasst : null,
+    });
+  }
+  kapLauf = {
+    schluessel: kapSchluessel(), zeilen, laeufe, satz,
+    ms: Math.round(performance.now() - t0),
+    zeit: new Date().toLocaleTimeString("de-CH"),
+  };
+}
+
+// ------------------------------------------------------------- Zeichnen
 function kapitalSzenarioZeichnen() {
+  kapEckwerteZeichnen();
+  kapTabelleZeichnen();
+}
+
+function kapEckwerteZeichnen() {
   const w = $("#szenarienEckwerte"); w.innerHTML = "";
+
+  // ---- linke Spalte: Eingaben ----
   const ke = el("div", "karte");
   ke.appendChild(el("h3", null, "Eckwerte"));
+
   for (const p of cfg.personen) {
     const f = el("div", "feld");
     f.appendChild(el("label", null, "Restkapital am Ende, " + p.bezeichnung));
     f.appendChild(zahlFeld(reserveVon(p.id), v => {
-      szenarienReserveJePerson[p.id] = v || 0; kapitalSzenarioZeichnen();
+      szenarienReserveJePerson[p.id] = v || 0; kapEckwerteZeichnen();
     }));
     f.appendChild(el("span", "einheit", "CHF"));
     ke.appendChild(f);
   }
-
-  // Anschlusssatz der Hypotheken, Vorgabe ist der erfasste Satz
-  const erfasstSatz = erfassterAnschlusssatz();
-  const fz = el("div", "feld");
-  fz.appendChild(el("label", null, "Anschlusssatz Hypotheken"));
-  fz.appendChild(zahlFeld(szenarioAnschlusssatz ?? erfasstSatz, v => {
-    szenarioAnschlusssatz = (v == null) ? null : Math.max(0, v);
-    kapitalSzenarioZeichnen();
-  }, { proz: true, leerErlaubt: true }));
-  fz.appendChild(el("span", "einheit", "%"));
-  ke.appendChild(fz);
-  const ez = el("p", null,
-    "Gilt für alle Tranchen ab dem Jahr nach ihrem Ablauf; der laufende Satz bis dahin " +
-    "bleibt unverändert. Vorgabe ist der im Reiter Hypotheken erfasste Satz von " +
-    proz(erfasstSatz) + ". Feld leeren stellt darauf zurück.");
-  ez.style.cssText = "font-size:12px;color:var(--gedaempft);margin:6px 0 10px";
-  ke.appendChild(ez);
 
   const et = el("p", null,
     "Betrag, der am Ende der Rechnung dieser Person übrig bleiben soll — als Erbe, " +
@@ -18362,19 +19304,219 @@ function kapitalSzenarioZeichnen() {
     "Lebenserwartung. Das Kapital darf in keinem Rechenjahr unter diesen Betrag " +
     "fallen. Null bedeutet: es reicht genau bis zum letzten Jahr und ist dann " +
     "aufgebraucht. Je Person frei wählbar.");
-  et.style.cssText = "font-size:12px;color:var(--gedaempft);margin:6px 0 0";
+  et.style.cssText = "font-size:12px;color:var(--gedaempft);margin:6px 0 14px";
   ke.appendChild(et);
+
+  // ---- Endalter je Person ----
+  for (const p of cfg.personen) {
+    const erfA = kapEndalterErfasst(p);
+    const f = el("div", "feld");
+    f.appendChild(el("label", null, "Rechnen bis Alter, " + p.bezeichnung));
+    f.appendChild(zahlFeld(kapAlterVon(p.id), v => {
+      // Leeres Feld stellt auf das erfasste Alter zurueck.
+      if (v == null) delete kapAlterJePerson[p.id];
+      else kapAlterJePerson[p.id] = Math.max(1, Math.round(v));
+      kapEckwerteZeichnen();
+    }, { leerErlaubt: true, klasse: "spalte-schmal" }));
+    const jE = kapEndjahrVon(p.id);
+    f.appendChild(el("span", "einheit",
+      "Jahre" + (jE != null ? "  (bis " + jE + ")" : "")));
+    ke.appendChild(f);
+  }
+
+  const ea = el("p");
+  ea.style.cssText = "font-size:12px;color:var(--gedaempft);margin:6px 0 14px";
+  ea.innerHTML =
+    "Alter, bis zu dem das Kapital reichen soll. Vorgabe ist das Alter im erfassten "
+    + "letzten Rechenjahr ("
+    + cfg.personen.map(p => p.bezeichnung + " "
+        + (kapEndalterErfasst(p) ?? "–") + ", Jahr " + kapEndjahrErfasst(p)).join("; ")
+    + "). Feld leeren stellt darauf zurück.<br><br>"
+    + "<strong>Fortschreibung.</strong> Ein höheres Alter verlängert die Rechnung. "
+    + "Fortgeschrieben wird nur, was bisher bis zum Schluss lief: Jede Jahresangabe, "
+    + "die auf dem bisherigen letzten Jahr steht — Budgetpositionen, Anschlussperioden "
+    + "der Hypotheken, Einzahlungsstufen der Rückstellungskonten — rückt auf das neue "
+    + "letzte Jahr. Angaben mit einem früheren Endjahr bleiben unverändert; ein "
+    + "Fahrzeug, das nur bis 2034 erfasst ist, wird nicht länger gefahren, nur weil "
+    + "die Person älter wird. Die Beträge selbst werden nicht neu gesetzt — sie wachsen "
+    + "mit den erfassten Teuerungssätzen weiter, eine Position ohne Teuerung bleibt "
+    + "nominal gleich. Gerechnet wird je Person einzeln: das Alter der einen Person "
+    + "ändert an den Angaben der anderen nichts.";
+  ke.appendChild(ea);
+
+  // ---- Anschlusssatz ----
+  const erfasstSatz = erfassterAnschlusssatz();
+  const fz = el("div", "feld");
+  fz.appendChild(el("label", null, "Anschlusssatz Hypotheken"));
+  fz.appendChild(zahlFeld(szenarioAnschlusssatz ?? erfasstSatz, v => {
+    szenarioAnschlusssatz = (v == null) ? null : Math.max(0, v);
+    kapEckwerteZeichnen();
+  }, { proz: true, leerErlaubt: true }));
+  fz.appendChild(el("span", "einheit", "%"));
+  ke.appendChild(fz);
+  const ez = el("p", null,
+    "Gilt für alle Tranchen ab dem Jahr nach ihrem Ablauf; der laufende Satz bis dahin " +
+    "bleibt unverändert. Vorgabe ist der im Reiter Hypotheken erfasste Satz von " +
+    proz(erfasstSatz) + ". Feld leeren stellt darauf zurück.");
+  ez.style.cssText = "font-size:12px;color:var(--gedaempft);margin:6px 0 0";
+  ke.appendChild(ez);
   w.appendChild(ke);
 
-  const tk = $("#tabSzenarioKapital"); tk.innerHTML = "";
+  // ---- rechte Spalte: nur das Ergebnis ----
+  w.appendChild(kapErgebniskarte());
+
+  // ---- Leiste mit den beiden Knoepfen ----
+  kapLeisteZeichnen();
+}
+
+// Die Knopfleiste steht unter dem Eingaberaster, nicht in der Karte: so ist
+// sie ueber die ganze Breite sichtbar und nicht zu uebersehen.
+function kapLeisteZeichnen() {
+  const block = $("#szenario-kapital");
+  if (!block) return;
+  let leiste = block.querySelector(".startleiste");
+  if (!leiste) {
+    leiste = el("div", "startleiste");
+    block.insertBefore(leiste, block.querySelector(".tabellenrahmen"));
+  }
+  leiste.innerHTML = "";
+
+  const b = el("button", "knopf gross", kapLaeuft ? "rechnet …" : "Berechnung starten");
+  b.type = "button";
+  b.disabled = kapLaeuft;
+  b.title = "Rechnet mit den links gesetzten Werten das erforderliche Startkapital "
+    + "je Person. Je Person rund dreissig vollständige Durchläufe des Rechenkerns.";
+  b.addEventListener("click", () => {
+    if (kapLaeuft) return;
+    kapLaeuft = true;
+    kapLeisteZeichnen();
+    // Ein Atemzug, damit der Knopf seinen Zustand zeigt, bevor gerechnet wird.
+    setTimeout(() => {
+      try { kapRechnen(); } finally { kapLaeuft = false; }
+      kapEckwerteZeichnen();
+      kapTabelleZeichnen();
+      szenarioStandSetzen("Kapitalbedarf neu berechnet — "
+        + kapLauf.laeufe + " Durchläufe, " + kapLauf.ms + " ms");
+    }, 20);
+  });
+  leiste.appendChild(b);
+
+  const z = el("button", "knopf", "Werte zurücksetzen");
+  z.type = "button";
+  z.disabled = !kapEingabenGeaendert();
+  z.title = "Stellt Restkapital, Endalter und Anschlusssatz auf die erfassten "
+    + "Eingaben zurück und rechnet damit neu.";
+  z.addEventListener("click", () => {
+    kapZuruecksetzen();
+    kapRechnen();
+    kapEckwerteZeichnen();
+    kapTabelleZeichnen();
+    szenarioStandSetzen("Werte zurückgesetzt und neu berechnet");
+  });
+  leiste.appendChild(z);
+
+  const chip = el("span", "chip");
+  if (!kapLauf) { chip.textContent = "noch nicht gerechnet"; chip.classList.add("offen"); }
+  else if (kapLauf.schluessel !== kapSchluessel()) {
+    chip.textContent = "Eingabe geändert — Ergebnis von " + kapLauf.zeit;
+    chip.classList.add("offen");
+  } else {
+    chip.textContent = "gerechnet " + kapLauf.zeit + " · " + kapLauf.laeufe
+      + " Durchläufe, " + kapLauf.ms + " ms";
+  }
+  leiste.appendChild(chip);
+}
+
+// Rechte Spalte: ausschliesslich das Ergebnis.
+function kapErgebniskarte() {
+  const k = el("div", "karte ergebniskarte");
+  k.appendChild(el("h3", null, "Erforderliches Startkapital"));
+
+  if (!kapLauf) {
+    const p = el("p", "ergLeer",
+      "Werte links setzen und «Berechnung starten» klicken. Das Ergebnis erscheint hier; "
+      + "die Auswertung unterhalb bleibt bis dahin stehen.");
+    k.appendChild(p);
+    return k;
+  }
+
+  const veraltet = kapLauf.schluessel !== kapSchluessel();
+  if (veraltet) {
+    const h = el("p", "ergLeer",
+      "Seit diesem Ergebnis wurde die Eingabe geändert. Nochmals «Berechnung starten» "
+      + "klicken.");
+    h.style.color = "var(--warnung)";
+    k.appendChild(h);
+  }
+
+  for (const z of kapLauf.zeilen) {
+    const d = el("div", "ergZeile");
+    d.appendChild(el("div", "ergName",
+      z.bezeichnung + " · " + z.ab + " bis " + z.ende
+      + (z.geburtsjahr != null ? ", Alter " + (z.ende - z.geburtsjahr) : "")));
+    const wert = el("div", "ergWert");
+    if (z.noetig == null) {
+      wert.textContent = "nicht erreichbar";
+      wert.style.fontSize = "20px";
+      wert.style.color = "var(--warnung)";
+    } else {
+      wert.textContent = chf(z.noetig);
+      wert.appendChild(el("span", "einh", "CHF"));
+    }
+    d.appendChild(wert);
+    if (z.noetig != null) {
+      const diff = z.noetig - z.erfasst;
+      const n = el("div", "ergNeben");
+      const sp = el("span", diff > 0 ? "rot" : "gruen",
+        (diff > 0 ? "+" : "") + chf(diff) + " CHF");
+      sp.style.fontWeight = "600";
+      n.appendChild(sp);
+      n.appendChild(document.createTextNode(
+        diff > 0 ? "  fehlt gegenüber der Eingabe" : "  mehr vorhanden als nötig"));
+      d.appendChild(n);
+    }
+    if (z.verlaengert) {
+      const v = el("div", "ergNeben");
+      v.style.color = "var(--gedaempft)";
+      if (z.ende < z.endeErfasst) {
+        v.textContent = "verkürzt auf " + z.ende + " (erfasst war " + z.endeErfasst + ")";
+      } else {
+        v.textContent = "fortgeschrieben bis " + z.ende
+          + " (erfasst war " + z.endeErfasst + ") · "
+          + (z.fortgeschrieben > 0
+              ? z.fortgeschrieben + " Jahresangaben verlängert"
+              : "keine Jahresangabe endete auf " + z.endeErfasst);
+      }
+      d.appendChild(v);
+      if (z.ende > z.endeErfasst && z.laeuftAus.length) {
+        const a = el("div", "ergNeben");
+        a.style.cssText = "color:var(--warnung);text-decoration:underline dotted;cursor:help";
+        a.textContent = z.laeuftAus.length + " Ausgabepositionen laufen vor "
+          + z.ende + " aus";
+        a.title = "Diese Positionen haben ein erfasstes Endjahr und werden nicht "
+          + "fortgeschrieben — in den zusätzlichen Jahren fallen sie nicht mehr an:\n\n"
+          + z.laeuftAus.map(x => "  " + x.name + " — bis " + x.bis).join("\n")
+          + "\n\nSoll eine davon weiterlaufen, ist ihr Endjahr im Reiter Budget "
+          + "anzupassen.";
+        d.appendChild(a);
+      }
+    }
+    k.appendChild(d);
+  }
+  return k;
+}
+
+// ------------------------------------------------ Auswertung unterhalb
+// Sie bleibt stehen, bis neu gerechnet wird, und zeigt immer den Stand des
+// letzten Laufs - nicht die zwischenzeitlich geaenderte Eingabe.
+function kapTabelleZeichnen() {
+  const tk = $("#tabSzenarioKapital"); if (!tk) return;
+  tk.innerHTML = "";
   const kz2 = tk.createTHead().insertRow();
-  // Die Spaltentitel nennen den Posten, um den es geht: beide Betraege sind
-  // dasselbe Startkapital am selben Stichjahr, einmal eingegeben, einmal
-  // gesucht. Der Hinweistext erklaert jede Spalte.
   [["Person", "Person, für die gerechnet wird."],
    ["Berechnung ab", "Erstes Rechenjahr der Person. Auf den Anfang dieses Jahres beziehen sich beide Kapitalbeträge."],
-   ["letztes Jahr", "Letztes Rechenjahr der Person, abgeleitet aus dem erfassten Todesjahr."],
-   ["Restkapital Ziel CHF", "Betrag, den der Kapitalbestand in keinem Rechenjahr unterschreiten darf. Änderbar."],
+   ["letztes Jahr", "Letztes Rechenjahr der Person, abgeleitet aus dem gesetzten Endalter."],
+   ["Restkapital Ziel CHF", "Betrag, den der Kapitalbestand in keinem Rechenjahr unterschreiten darf."],
    ["Startkapital erfasst CHF", "Das im Reiter «Vorsorge» eingetragene Startkapital der Person. Reine Eingabe."],
    ["Startkapital erforderlich CHF", "Gesuchter Betrag: jenes Startkapital, bei dem der tiefste Kapitalbestand über alle Rechenjahre gerade noch dem Restkapital-Ziel entspricht."],
    ["Differenz CHF", "erforderlich minus erfasst. Positiv und rot: es fehlt Kapital. Negativ und grün: es ist mehr vorhanden als nötig."],
@@ -18387,59 +19529,61 @@ function kapitalSzenarioZeichnen() {
     });
   const kb2 = tk.createTBody();
 
-  let laeufeTotal = 0;
-  const t0 = performance.now();
-  for (const p of cfg.personen) {
-    const v = (cfg.vorsorge || []).find(x => x.person_id === p.id);
-    const erfasst = v ? Number(v.kapital_start) || 0 : 0;
-    const reserve = reserveVon(p.id);
-    const erg2 = benoetigtesKapital(p.id, reserve, szenarioAnschlusssatz);
-    laeufeTotal += erg2 ? erg2.laeufe : 0;
-    const noetig = erg2 ? erg2.wert : null;
-
+  const mt = $("#szenarienMethode");
+  if (!kapLauf) {
     const r = kb2.insertRow();
-    const c0 = el("td", "txt"); c0.textContent = p.bezeichnung; r.appendChild(c0);
+    const c = el("td", "txt");
+    c.colSpan = 9;
+    c.style.padding = "10px";
+    c.style.color = "var(--gedaempft)";
+    c.textContent = "Noch nicht gerechnet. Der Knopf «Berechnung starten» oberhalb "
+      + "führt den Lauf aus.";
+    r.appendChild(c);
+    if (mt) mt.textContent = "";
+    return;
+  }
+
+  for (const z of kapLauf.zeilen) {
+    const p = cfg.personen.find(x => x.id === z.pid);
+    const v = (cfg.vorsorge || []).find(x => x.person_id === z.pid);
+    const r = kb2.insertRow();
+    const c0 = el("td", "txt"); c0.textContent = z.bezeichnung; r.appendChild(c0);
     const c1 = el("td", "rechts mono"); c1.style.padding = "5px 10px";
-    c1.textContent = String(abJahr(p.id)) +
-      (p.geburtsjahr != null ? ", Alter " + (abJahr(p.id) - p.geburtsjahr) : "");
+    c1.textContent = String(z.ab)
+      + (z.geburtsjahr != null ? ", Alter " + (z.ab - z.geburtsjahr) : "");
     r.appendChild(c1);
     const cB = el("td", "rechts mono"); cB.style.padding = "5px 10px";
-    const jE = endeJahrPerson(p);
-    cB.textContent = String(jE) +
-      (p.geburtsjahr != null ? ", Alter " + (jE - p.geburtsjahr) : "");
+    cB.textContent = String(z.ende)
+      + (z.geburtsjahr != null ? ", Alter " + (z.ende - z.geburtsjahr) : "");
+    if (z.verlaengert) {
+      cB.style.fontWeight = "600";
+      cB.title = "Fortgeschrieben. Erfasst ist das Jahr " + z.endeErfasst + ".";
+    }
     r.appendChild(cB);
-    // Zielwert je Person, hier ebenfalls aenderbar
-    const cR = el("td");
-    cR.appendChild(zahlFeld(reserve, v => {
-      szenarienReserveJePerson[p.id] = v || 0; kapitalSzenarioZeichnen();
-    }, { klasse: "spalte-mittel" }));
-    r.appendChild(cR);
+    const cR = el("td", "rechts mono"); cR.style.padding = "5px 10px";
+    cR.textContent = chf(z.reserve); r.appendChild(cR);
     const c2 = el("td", "rechts mono"); c2.style.padding = "5px 10px";
-    c2.textContent = chf(erfasst); r.appendChild(c2);
+    c2.textContent = chf(z.erfasst); r.appendChild(c2);
     const c3 = el("td", "rechts mono"); c3.style.padding = "5px 10px";
     c3.style.fontWeight = "600";
-    c3.textContent = noetig == null ? "nicht erreichbar" : chf(noetig);
+    c3.textContent = z.noetig == null ? "nicht erreichbar" : chf(z.noetig);
     r.appendChild(c3);
     const c4 = el("td", "rechts mono"); c4.style.padding = "5px 10px";
-    if (noetig == null) c4.textContent = "–";
+    if (z.noetig == null) c4.textContent = "–";
     else {
-      const d = noetig - erfasst;
+      const d = z.noetig - z.erfasst;
       c4.textContent = (d > 0 ? "+" : "") + chf(d);
       c4.classList.add(d > 0 ? "rot" : "gruen");
     }
     r.appendChild(c4);
-    // Steuern ueber alle Rechenjahre der Person, gerechnet mit dem
-    // erforderlichen Startkapital. Der Vergleichswert zum erfassten Kapital
-    // steht im Hinweistext der Zelle: er zeigt, dass die Steuern in der
-    // Iteration mitlaufen und nicht festgehalten werden.
     const c5 = el("td", "rechts mono"); c5.style.padding = "5px 10px";
-    if (erg2 && erg2.steuernNoetig != null) {
-      c5.textContent = chf(erg2.steuernNoetig);
-      const dS = erg2.steuernNoetig - (erg2.steuernErfasst || 0);
+    if (z.steuernNoetig != null) {
+      c5.textContent = chf(z.steuernNoetig);
+      const dS = z.steuernNoetig - (z.steuernErfasst || 0);
       c5.title = "Summe aus Einkommens- und Vermögenssteuer über alle Rechenjahre von "
-        + p.bezeichnung + " (" + abJahr(p.id) + " bis " + endeJahrPerson(p) + ").\n"
-        + "Mit dem erfassten Startkapital: " + chf(erg2.steuernErfasst || 0) + " CHF.\n"
-        + "Mit dem erforderlichen Startkapital: " + chf(erg2.steuernNoetig) + " CHF.\n"
+        + z.bezeichnung + " (" + z.ab + " bis " + z.ende + ").\n"
+        + "Mit dem erfassten Startkapital: " + chf(z.steuernErfasst || 0) + " CHF.\n"
+        + "Mit dem erforderlichen Startkapital: " + chf(z.steuernNoetig) + " CHF.\n"
         + "Unterschied: " + (dS > 0 ? "+" : "") + chf(dS) + " CHF.\n"
         + "Die Steuern werden in jedem Durchlauf neu gerechnet; ein höheres Kapital "
         + "erhöht Vermögenssteuer und steuerbaren Vermögensertrag.";
@@ -18447,49 +19591,56 @@ function kapitalSzenarioZeichnen() {
       c5.textContent = "–";
     }
     r.appendChild(c5);
+
     const zelle = el("td"); zelle.style.padding = "3px 8px";
     zelle.style.whiteSpace = "nowrap";
-    if (noetig != null && v) {
+    if (z.noetig != null && v) {
       const b = el("button", "knopf", "Übernehmen in die Berechnung");
       b.type = "button"; b.style.cssText = "padding:3px 9px;font-size:12px";
       b.title = "Schreibt den erforderlichen Betrag, auf ganze Franken gerundet, als "
-        + "Startkapital von " + p.bezeichnung + " in den Reiter «Vorsorge». "
-        + "Die erfasste Eingabe wird überschrieben und der Stand sofort gespeichert.";
+        + "Startkapital von " + z.bezeichnung + " in den Reiter «Vorsorge». "
+        + "Die erfasste Eingabe wird überschrieben und der Stand sofort gespeichert."
+        + (z.verlaengert
+            ? "\n\nAchtung: Dieser Betrag gilt für die fortgeschriebene Laufzeit bis "
+              + z.ende + ". Das erfasste letzte Jahr (" + z.endeErfasst + ") bleibt "
+              + "unverändert — das Übernehmen ändert nur das Startkapital."
+            : "");
       b.addEventListener("click", () => {
-        kapitalVorUebernahme[p.id] = Number(v.kapital_start) || 0;
-        v.kapital_start = Math.round(noetig);
+        kapitalVorUebernahme[z.pid] = Number(v.kapital_start) || 0;
+        v.kapital_start = Math.round(z.noetig);
         rechnen();
-        melde("Startkapital von " + p.bezeichnung + " auf " + chf(noetig) + " CHF gesetzt "
+        melde("Startkapital von " + z.bezeichnung + " auf " + chf(z.noetig) + " CHF gesetzt "
             + "und gespeichert. Der bisherige Wert von "
-            + chf(kapitalVorUebernahme[p.id]) + " CHF lässt sich mit «Zurück» "
+            + chf(kapitalVorUebernahme[z.pid]) + " CHF lässt sich mit «Zurück» "
             + "wiederherstellen, solange diese Sitzung offen ist.");
       });
       zelle.appendChild(b);
     }
-    // Rueckgaengig: nur sichtbar, wenn in dieser Sitzung uebernommen wurde.
-    if (kapitalVorUebernahme[p.id] != null && v) {
+    if (kapitalVorUebernahme[z.pid] != null && v) {
       const zb = el("button", "knopf", "Zurück");
       zb.type = "button";
       zb.style.cssText = "padding:3px 9px;font-size:12px;margin-left:6px";
-      zb.title = "Setzt das Startkapital von " + p.bezeichnung + " auf "
-        + chf(kapitalVorUebernahme[p.id]) + " CHF zurück, den Wert vor dem Übernehmen.";
+      zb.title = "Setzt das Startkapital von " + z.bezeichnung + " auf "
+        + chf(kapitalVorUebernahme[z.pid]) + " CHF zurück, den Wert vor dem Übernehmen.";
       zb.addEventListener("click", () => {
-        const alt = kapitalVorUebernahme[p.id];
-        delete kapitalVorUebernahme[p.id];
+        const alt = kapitalVorUebernahme[z.pid];
+        delete kapitalVorUebernahme[z.pid];
         v.kapital_start = alt;
         rechnen();
-        melde("Startkapital von " + p.bezeichnung + " auf " + chf(alt) + " CHF zurückgesetzt.");
+        melde("Startkapital von " + z.bezeichnung + " auf " + chf(alt) + " CHF zurückgesetzt.");
       });
       zelle.appendChild(zb);
     }
     r.appendChild(zelle);
+    if (p) { /* p wird nur fuer kuenftige Erweiterungen gehalten */ }
   }
-  const dauer = Math.round(performance.now() - t0);
-  szenarioStandSetzen("neu berechnet — " + laeufeTotal + " Durchläufe, " + dauer + " ms");
 
-  $("#szenarienMethode").textContent =
+  if (!mt) return;
+  const verlaengert = kapLauf.zeilen.filter(z => z.verlaengert);
+  mt.textContent =
     "Verfahren: Intervallhalbierung über dem Startkapital, je Person 32 Schritte, " +
-    "insgesamt " + laeufeTotal + " Durchläufe des Rechenkerns in " + dauer + " ms. " +
+    "insgesamt " + kapLauf.laeufe + " Durchläufe des Rechenkerns in " + kapLauf.ms + " ms, " +
+    "gerechnet um " + kapLauf.zeit + ". " +
     "Jeder dieser Durchläufe ist eine vollständige Neuberechnung sämtlicher Jahre von " +
     "der Spalte «Berechnung ab» bis zur Spalte «letztes Jahr» — mit Ausgaben, Einnahmen, " +
     "Teuerung, Hypothekarzinsen, Liegenschaft, Rückstellungen und Steuern. " +
@@ -18499,20 +19650,36 @@ function kapitalSzenarioZeichnen() {
     "Kapital. Gesucht wird deshalb der Punkt, an dem Kapital und Steuern zueinander " +
     "passen; die Spalte «Steuern total» zeigt das Ergebnis, der Hinweistext dieser Zelle " +
     "den Vergleich zum erfassten Kapital. " +
-    "Von aussen gesetzt und über alle Durchläufe gleich gehalten werden nur zwei Grössen: " +
-    "das Startkapital der jeweiligen Person, das gesucht wird, und — sofern oben " +
-    "abweichend gesetzt — der Anschlusssatz der Hypotheken. Alle erfassten Eingaben " +
+    "Von aussen gesetzt und über alle Durchläufe gleich gehalten werden nur drei Grössen: " +
+    "das Startkapital der jeweiligen Person, das gesucht wird, der Anschlusssatz der " +
+    "Hypotheken und das letzte Rechenjahr. Alle übrigen erfassten Eingaben " +
     "bleiben unverändert; verändert wird nichts an den Daten, gerechnet wird auf einer " +
     "Kopie. Abbruch, sobald der kleinste Kapitalbestand über alle Rechenjahre die " +
     "Reserve erreicht. Gerechnet wurde mit einem Anschlusssatz von " +
-    proz(szenarioAnschlusssatz ?? erfassterAnschlusssatz()) +
-    " und je Person mit dem oben gesetzten Restkapital: " +
-    cfg.personen.map(p => p.bezeichnung + " " + chf(reserveVon(p.id)) + " CHF").join(", ") +
-    ". Ein Wert «nicht erreichbar» bedeutet, dass auch sehr viel Kapital " +
+    proz(kapLauf.satz) +
+    " und je Person mit dem gesetzten Restkapital: " +
+    kapLauf.zeilen.map(z => z.bezeichnung + " " + chf(z.reserve) + " CHF").join(", ") +
+    ". " +
+    (verlaengert.length
+      ? "Fortgeschrieben wurde die Laufzeit bei " +
+        verlaengert.map(z => z.bezeichnung + " von " + z.endeErfasst + " auf " + z.ende
+          + " (" + z.fortgeschrieben + " Jahresangaben verlängert"
+          + (z.laeuftAus.length
+              ? ", " + z.laeuftAus.length + " Ausgabepositionen laufen vorher aus: "
+                + z.laeuftAus.slice(0, 6).map(x => x.name + " bis " + x.bis).join(", ")
+                + (z.laeuftAus.length > 6 ? " und weitere" : "")
+              : "")
+          + ")").join("; ") +
+        ". Fortgeschrieben werden nur jene Jahresangaben, die bisher auf dem " +
+        "letzten Rechenjahr standen; die Beträge wachsen mit den erfassten " +
+        "Teuerungssätzen weiter und werden nicht neu gesetzt. Angaben mit einem " +
+        "früheren Endjahr bleiben unverändert — in den zusätzlichen Jahren fallen " +
+        "diese Ausgaben deshalb nicht mehr an. "
+      : "Die Laufzeit entspricht bei beiden Personen der erfassten Eingabe. ") +
+    "Ein Wert «nicht erreichbar» bedeutet, dass auch sehr viel Kapital " +
     "nicht genügt — dann ist die Lücke strukturell, etwa weil die Vermögenssteuer mit " +
     "dem Kapital mitwächst.";
 }
-
 // ------------------------------------------------------- Szenario Todesfall
 // Der Vergleich rechnet dieselbe Konfiguration ein zweites Mal ohne Szenario.
 function todesfallZeichnen() {
@@ -18742,43 +19909,32 @@ function todesfallZeichnen() {
     "deren Tod an die Kinder: ihre Positionen enden dann und werden nicht umgelegt.");
 
   // ---- Zusatzkosten ----
+  // Untereinander statt nebeneinander, je Kostenart mit eigenem Zeitraum. Beim
+  // Gartenunterhalt ist waehlbar, ob er das ganze Jahr anfaellt oder nur von
+  // Maerz bis und mit Oktober.
   const k2 = karte("Zusätzliche Kosten der weiterführenden Person");
-  feld(k2, "Gärtner", zahlFeld(tf.gaertner_pro_monat ?? 0,
-    v => { tf.gaertner_pro_monat = v || 0; rechnen(); }, { grenze: { min: 0, max: 200000, weichMax: 50000 } }), "CHF/Mt");
-  feld(k2, "Haushaltshilfe", zahlFeld(tf.haushaltshilfe_pro_monat ?? 0,
-    v => { tf.haushaltshilfe_pro_monat = v || 0; rechnen(); }, { grenze: { min: 0, max: 200000, weichMax: 50000 } }), "CHF/Mt");
   const imHeim = cfg.personen.find(x => x.heimeintritt_ab != null);
-  // Vorgabewert wie im Rechenkern: nach einem Todesfall das Jahr nach dem Tod,
-  // sonst das Jahr des Heimeintritts. Er steht grau im leeren Feld, damit
-  // ersichtlich ist, ab wann ohne eigene Eingabe gerechnet wird.
-  // Massgebend ist, ob der Rechenkern einen Todesfall führt - auch einen aus
-  // "Betrachtung bis" abgeleiteten -, nicht allein der Schalter.
   const tfWirkt = !!(erg.todesfall && tfEff.jahr != null);
+  // Vorgabe: das Todesjahr der anderen Person, sonst das Jahr des Heimeintritts.
   const zusatzVorgabe = tfWirkt
-    ? Number(tfEff.jahr) + 1
+    ? Number(tfEff.jahr)
     : (imHeim && imHeim.heimeintritt_ab != null ? Number(imHeim.heimeintritt_ab) : null);
-  feld(k2, "ab Jahr", zahlFeld(tf.zusatz_ab_jahr,
-    v => { tf.zusatz_ab_jahr = v; rechnen(); },
-    { jahr: true, leerErlaubt: true, vorgabe: zusatzVorgabe,
-      vorgabeHinweis: zusatzVorgabe != null
-        ? ((tf.aktiv && todesjahrEff != null)
-            ? "Leer: gerechnet wird ab " + zusatzVorgabe + " - dem Jahr nach dem Tod von "
-              + ((cfg.personen.find(x => x.id === opferId) || {}).bezeichnung || "der verstorbenen Person") + "."
-            : "Leer: gerechnet wird ab " + zusatzVorgabe + " - dem Jahr des Heimeintritts.")
-        : "Ohne Todesfall und ohne Heimeintritt fallen diese Kosten nicht an." }), "");
-  const jahresbetrag = ((Number(tf.gaertner_pro_monat) || 0) +
-                        (Number(tf.haushaltshilfe_pro_monat) || 0)) * 12;
+  k2.appendChild(zusatzkostenBeide(
+    imHeim && imHeim.heimeintritt_ab != null ? Number(imHeim.heimeintritt_ab) : null,
+    tfWirkt ? Number(tfEff.jahr) : null));
   const traegerName = ueberlebend ? ueberlebend.bezeichnung
     : (imHeim ? (cfg.personen.find(x => x.id !== imHeim.id) || {}).bezeichnung : "–");
-  text(k2, "Zusammen " + chf(jahresbetrag) + " CHF pro Jahr. Diese Kosten trägt die " +
-    "Person, die den Haushalt weiterführt: nach einem Todesfall die überlebende Person, " +
-    "sonst die Person, die nicht ins Heim geht" +
+  text(k2, "Diese Kosten trägt die Person, die den Haushalt weiterführt: nach einem " +
+    "Todesfall die überlebende Person, sonst die Person, die nicht ins Heim geht" +
     (traegerName !== "–" ? " (derzeit " + traegerName + ")" : "") + ". " +
-    "Bleibt <em>ab Jahr</em> leer, gilt das Jahr nach dem Tod beziehungsweise das " +
-    "Jahr des Heimeintritts. Mit dem Umzug in eine Wohnung oder dem Verkauf der " +
-    "Liegenschaft entfallen diese Kosten. Bereits im Reiter Budget erfasste " +
-    "Beträge für Gartenunterhalt und Haushaltshilfe kommen hinzu und sind dort " +
-    "gegebenenfalls zu streichen.");
+    "Bleibt <em>ab Jahr</em> leer, gilt " +
+    (zusatzVorgabe != null ? zusatzVorgabe : "—") +
+    (tfWirkt ? " — das Todesjahr der anderen Person" : " — das Jahr des Heimeintritts") +
+    "; bleibt <em>bis Jahr</em> leer, laufen die Kosten bis zum Ende der Betrachtung. " +
+    "Mit dem Umzug in eine Wohnung oder dem Verkauf der Liegenschaft entfallen sie. " +
+    "<strong>Diese Eingabe geht vor:</strong> sobald hier ein Betrag steht, werden die " +
+    "gleichnamigen Positionen im Reiter Budget auf null gesetzt, damit dieselben Kosten " +
+    "nicht zweimal zählen. Gerechnet wird dann allein mit den Werten dieser Tabelle.");
 
   // ---- Umzug ----
   const k3 = karte("Umzug in eine Wohnung");
@@ -20031,17 +21187,25 @@ function lebenserwartungsblock(p, feld) {
 }
 
 function personenZeichnen() {
-  const w = $("#kartenPersonen"); w.innerHTML = "";
+  // Zwei Kapitel: die allgemeinen Angaben und der Heim- oder Spitalaufenthalt.
+  // Jedes enthaelt je Person eine Karte; die Karten stehen nebeneinander.
+  const w = $("#kartenPersonen"); if (w) w.innerHTML = "";
+  const wh = $("#kartenHeim"); if (wh) wh.innerHTML = "";
   for (const p of cfg.personen) {
     const v = cfg.vorsorge.find(x => x.person_id === p.id);
     const k = el("div", "karte");
     k.appendChild(el("h3", null, p.bezeichnung));
+    // Zweite Karte derselben Person fuer das Kapitel Heim- und Spitalaufenthalt
+    const kh = el("div", "karte");
+    kh.appendChild(el("h3", null, p.bezeichnung));
+    // «ziel» ist die Karte, in die die folgenden Zeilen geschrieben werden.
+    let ziel = k;
 
     const feld = (etikett, kind, einheit, breit) => {
       const f = el("div", "feld");
       f.appendChild(el("label", null, etikett)); f.appendChild(kind);
       f.appendChild(el("span", "einheit" + (breit ? " breit" : ""), einheit || ""));
-      k.appendChild(f);
+      ziel.appendChild(f);
     };
     // Alter der Person im angegebenen Jahr, sofern das Geburtsjahr gesetzt ist
     const alterIn = jahr => (p.geburtsjahr != null && jahr != null)
@@ -20099,39 +21263,32 @@ function personenZeichnen() {
       const th = el("p");
       th.innerHTML = teile.join(" ");
       th.style.cssText = "font-size:12px;color:var(--gedaempft);margin:2px 0 8px";
-      k.appendChild(th);
+      ziel.appendChild(th);
     }
 
     // ---- Vorschlag zur Lebenserwartung --------------------------------
-    k.appendChild(lebenserwartungsblock(p, feld));
+    ziel.appendChild(lebenserwartungsblock(p, feld));
 
-    // AHV-Rente: Eingabe pro Monat, wirkt auf die Position im Reiter Budget
-    const ahv = ahvPosition(p.id, true);
-    feld("AHV-Rente pro Monat, ohne 13. Rente", zahlFeld(
-      Math.round((Number(ahv.betrag) || 0) / AHV_MONATE),
-      x => { ahv.betrag = (x || 0) * AHV_MONATE; rechnen(); }),
-      "CHF/Mt", true);
-    feld("Teuerung AHV", zahlFeld(ahv.teuerung ?? 0,
-      x => { ahv.teuerung = x || 0; rechnen(); }, { proz: true, grenze: { min: -0.10, max: 0.25, weichMax: 0.10 } }), "%");
-    const ahvMt = Math.round((Number(ahv.betrag) || 0) / AHV_MONATE);
-    const ahv13 = ahvPosition13(p.id, false);
-    const ab13 = ahv13 ? Number(ahv13.von) : AHV_13_AB_JAHR;
-    const ahvText = el("p", null,
-      "Einzutragen ist die ordentliche Monatsrente OHNE die 13. Rente — genau der Betrag, " +
-      "der in der Rentenvorausberechnung der Ausgleichskasse pro Monat steht. " +
-      "Die Grundrente ergibt " + chf(ahvMt) + " × " + AHV_MONATE + " = " +
-      chf(ahv.betrag) + " CHF pro Jahr. Die 13. AHV-Rente rechnet das Programm als " +
-      "eigene Position dazu: sie wird nach Gesetz erstmals im Dezember " +
-      AHV_13_AB_JAHR + " ausbezahlt und danach jedes Jahr im Dezember, hier also ab " +
-      ab13 + " mit " + chf(ahvMt) + " CHF — zusammen " +
-      chf((Number(ahv.betrag) || 0) + ahvMt) + " CHF pro Jahr. " +
-      "Die Maximalrente beträgt 2520 Franken im Monat, mit der 13. Rente 32 760 im Jahr; " +
-      "die Minimalrente 1260. Die Rente läuft ab dem Pensionierungsjahr " +
-      (p.pensionierung != null ? p.pensionierung : "–") +
-      "; der Beginn folgt diesem Jahr selbsttätig.");
-    ahvText.style.cssText = "font-size:12px;color:var(--gedaempft);margin:2px 0 8px";
-    k.appendChild(ahvText);
+    // Die AHV-Rente wird seit v250 im Reiter «Vorsorge und Vermögen» erfasst.
+    // Sie gehoert sachlich zu den Einnahmen, aus denen der Lebensbedarf gedeckt
+    // wird, und stand hier zwischen lauter Jahreszahlen.
+    {
+      const hw = el("p");
+      hw.innerHTML = "<strong>AHV-Rente:</strong> Sie wird im Reiter "
+        + "«Vorsorge und Vermögen» erfasst, im Punkt «AHV-Rente» der Karte dieser "
+        + "Person. Der Beginn folgt dem oben erfassten Pensionierungsjahr "
+        + (p.pensionierung != null ? p.pensionierung : "–") + " selbsttätig.";
+      hw.style.cssText = "font-size:12px;color:var(--gedaempft);margin:2px 0 8px";
+      ziel.appendChild(hw);
+    }
 
+    ziel = kh;
+    ziel = kartenteil(kh, p.id + "|1", "1 Aufenthalt und Kosten",
+      "Ab wann ein Heim- oder Spitalaufenthalt gerechnet wird, was er kostet und wie "
+      + "sich die Kosten entwickeln.",
+      p.heimeintritt_ab != null
+        ? "ab " + p.heimeintritt_ab + ", " + chf(Number(p.heimkosten_pro_monat) || 0) + " CHF/Mt"
+        : "nicht gerechnet");
     const sch = el("div", "schalter");
     const cb = el("input"); cb.type = "checkbox"; cb.checked = p.heimeintritt_ab != null;
     cb.addEventListener("change", () => {
@@ -20140,7 +21297,7 @@ function personenZeichnen() {
       rechnen();
     });
     sch.appendChild(cb); sch.appendChild(el("span", null, "Heim- oder Spitalaufenthalt"));
-    k.appendChild(sch);
+    ziel.appendChild(sch);
     if (p.heimeintritt_ab != null) {
       // Alle drei Eingaben stehen beieinander; die Erlaeuterung samt gemessener
       // Wirkung folgt danach. So sehen die Karten beider Personen gleich aus.
@@ -20161,6 +21318,17 @@ function personenZeichnen() {
         x => { p.heimkosten_basisjahr = x; rechnen(); },
         { jahr: true, leerErlaubt: true, vorgabe: p.heimeintritt_ab,
           vorgabeHinweis: "Leer: der Betrag gilt in Franken des Eintrittsjahres." }), "");
+      {
+        const e = el("p", "kleintext",
+          "Der Monatsbetrag gilt in Franken des Basisjahres und wird mit der Teuerung "
+          + "aufgezinst. Für Heim- und Pflegekosten besteht kein publizierter Index — "
+          + "das «i» sagt das ausdrücklich. Belegt ist nur, dass die Gesamtkosten für Heime "
+          + "und Spitex 2023 um 5 Prozent gegenüber dem Vorjahr stiegen. Ein Satz deutlich "
+          + "über der allgemeinen Teuerung ist deshalb zu erwägen; die Höhe ist eine "
+          + "Annahme, die Du treffen musst.");
+        e.style.cssText = "margin:8px 0 0; color:var(--gedaempft)";
+        ziel.appendChild(e);
+      }
       // Eine zweite Pflegestufe. Mehr Stufen sind im Rechenkern moeglich
       // (heim_stufen), hier wird eine angeboten - das deckt den Regelfall.
       const st0 = (p.heim_stufen && p.heim_stufen[0]) || null;
@@ -20175,7 +21343,7 @@ function personenZeichnen() {
       const schS = el("div", "schalter");
       schS.appendChild(cbS);
       schS.appendChild(el("span", null, "höhere Pflegestufe ab einem Jahr"));
-      k.appendChild(schS);
+      ziel.appendChild(schS);
       if (st0) {
         feld("Pflegestufe ab Jahr", zahlFeld(st0.ab_jahr,
           x => { st0.ab_jahr = x; rechnen(); }, { jahr: true }), alterIn(st0.ab_jahr), true);
@@ -20183,24 +21351,66 @@ function personenZeichnen() {
           x => { st0.pro_monat = x || 0; rechnen(); },
           { grenze: { min: 0, max: 200000, weichMax: 50000 } }), "CHF");
       }
+      let zielUmlage = null;
+      {
+        const a2 = (cfg.personen || []).find(x => x.id !== p.id);
+        const q = Number(p.heim_umlage_anteil) || 0;
+        ziel = zielUmlage = kartenteil(kh, p.id + "|2", "2 Übernahme durch "
+          + (a2 ? (a2.bezeichnung || a2.id) : "die andere Person"),
+          "Anteil der Liegenschaftskosten, den die andere Person zusätzlich trägt, und "
+          + "ab welchem Jahr.",
+          q > 0 ? proz(q) + " ab " + ((p.heim_umlage_ab != null && p.heim_umlage_ab !== "")
+              ? p.heim_umlage_ab : p.heimeintritt_ab)
+            : "keine Übernahme");
+      }
       feld("andere Person übernimmt", zahlFeld(p.heim_umlage_anteil ?? 0,
         x => { p.heim_umlage_anteil = x || 0; rechnen(); }, { proz: true }), "%");
+      // Das Jahr der Uebernahme ist eigens einstellbar. Ohne Eingabe gilt das
+      // Jahr des Heimeintritts.
+      feld("Übernahme ab Jahr", zahlFeld(p.heim_umlage_ab ?? null,
+        x => { p.heim_umlage_ab = x; rechnen(); },
+        { jahr: true, leerErlaubt: true, vorgabe: p.heimeintritt_ab,
+          vorgabeHinweis: "Leer: die Übernahme beginnt im Jahr des Heimeintritts." }),
+        alterIn(p.heim_umlage_ab ?? p.heimeintritt_ab), true);
       {
-        const e = el("p", "kleintext",
-          "Der Monatsbetrag gilt in Franken des Basisjahres und wird mit der Teuerung "
-          + "aufgezinst. Für Heim- und Pflegekosten besteht kein publizierter Index — "
-          + "das «i» sagt das ausdrücklich. Belegt ist nur, dass die Gesamtkosten für Heime "
-          + "und Spitex 2023 um 5 Prozent gegenüber dem Vorjahr stiegen. Ein Satz deutlich "
-          + "über der allgemeinen Teuerung ist deshalb zu erwägen; die Höhe ist eine "
-          + "Annahme, die Du treffen musst.");
-        e.style.cssText = "margin:8px 0 0; color:var(--gedaempft)";
-        k.appendChild(e);
+        const uab = (p.heim_umlage_ab != null && p.heim_umlage_ab !== "")
+          ? Number(p.heim_umlage_ab) : Number(p.heimeintritt_ab);
+        const tfH = todesfallEff();
+        const todJ = (tfH.aktiv && tfH.jahr != null) ? Number(tfH.jahr) : null;
+        const hu = el("p", null,
+          (todJ != null
+            ? "Diese Quote gilt nur, solange beide Personen leben. Ab dem Todesjahr "
+              + todJ + " trägt die überlebende Person die Liegenschaftskosten, die "
+              + "Hypothekarzinsen und die Einzahlungen in die Rückstellungskonten "
+              + "vollständig; die Quote wird dann nicht mehr angewendet. "
+            : "Diese Quote gilt, solange beide Personen leben. Stirbt eine, trägt die "
+              + "andere die Liegenschaftskosten ab dem Todesjahr vollständig. ")
+          + "Vorgabe ist das Jahr des Heimeintritts (" + p.heimeintritt_ab + "); das Feld "
+          + "bleibt dafür leer und folgt einer Änderung des Eintrittsjahres von selbst. "
+          + "Ein eingetragenes Jahr geht vor. Gerechnet wird die Übernahme ab " + uab
+          + (uab !== Number(p.heimeintritt_ab)
+              ? " — also " + Math.abs(uab - Number(p.heimeintritt_ab))
+                + (Math.abs(uab - Number(p.heimeintritt_ab)) === 1 ? " Jahr " : " Jahre ")
+                + (uab > Number(p.heimeintritt_ab) ? "nach" : "vor") + " dem Eintritt."
+              : "."));
+        hu.style.cssText = "font-size:12px;color:var(--gedaempft);margin:2px 0 8px";
+        ziel.appendChild(hu);
       }
-      heimUmlageErklaerung(k, p);
+      ziel = kartenteil(kh, p.id + "|3", "3 Budgetposten bei Heimaufenthalt",
+        "Welche Ausgaben dieser Person wegfallen und welche die andere Person ganz "
+        + "übernimmt.");
+      ziel.appendChild(heimEntfallBlock(p));
+      heimUmlageErklaerung(zielUmlage, p);
+      kartenteil(kh, p.id + "|4", "4 Zusätzliche Kosten für "
+        + ((cfg.personen.find(x => x.id !== p.id) || {}).bezeichnung || "die andere Person"),
+        null, zusatzkostenKurz())
+        .appendChild(heimZusatzBlock(p));
     }
 
-    w.appendChild(k);
+    if (w) w.appendChild(k);
+    if (wh) wh.appendChild(kh);
   }
+  personenKapitelZeichnen();
 }
 
 
@@ -20209,6 +21419,471 @@ function personenZeichnen() {
 // unten an der Personenkarte; das Blatt wurde dadurch sehr lang, und die
 // beiden Themen - wer die Personen sind, und wovon sie leben - waren nicht
 // getrennt. Der Aufbau je Person ist unveraendert.
+// Aufklappbarer Teil innerhalb einer Karte. Eine Stufe unter dem Kapitelbalken:
+// mittelblau hinterlegt, waehrend das Kapitel dunkelblau ist. Zurueckgegeben
+// wird der Inhalt, in den die folgenden Zeilen geschrieben werden.
+let kartenteilOffen = {};   // Schluessel -> true
+
+function kartenteil(ziel, schluessel, titel, erlaeuterung, kurz) {
+  const w = el("div", "teilordner");
+  const kopf = el("button", "teilkopf");
+  kopf.type = "button";
+  const pfeil = el("span", "tpfeil", "▸");
+  kopf.appendChild(pfeil);
+  kopf.appendChild(el("span", "ttitel", titel));
+  if (kurz) kopf.appendChild(el("span", "tkurz", kurz));
+  const inh = el("div", "teilinhalt2");
+  const setzen = auf => {
+    inh.hidden = !auf;
+    pfeil.textContent = auf ? "▾" : "▸";
+    w.classList.toggle("offen", auf);
+  };
+  kopf.addEventListener("click", () => {
+    const auf = inh.hidden;
+    // Je Karte ist nur ein Teil offen.
+    if (auf && w.parentElement)
+      w.parentElement.querySelectorAll(":scope > .teilordner").forEach(x => {
+        if (x !== w && x.__zu) { x.__zu(); kartenteilOffen[x.dataset.schluessel] = false; }
+      });
+    setzen(auf);
+    kartenteilOffen[schluessel] = auf;
+  });
+  w.__zu = () => setzen(false);
+  w.dataset.schluessel = schluessel;
+  if (erlaeuterung) {
+    const e = el("p", null, erlaeuterung);
+    e.style.cssText = "font-size:12px;color:var(--gedaempft);margin:0 0 8px";
+    inh.appendChild(e);
+  }
+  setzen(!!kartenteilOffen[schluessel]);
+  w.appendChild(kopf); w.appendChild(inh);
+  ziel.appendChild(w);
+  return inh;
+}
+
+// ------------------------- Kapitel im Reiter Personen -----------------------
+let personenKapitel = null;   // "person" | "heim" | null
+
+function personenKapitelZeichnen() {
+  const liste = [
+    { id: "kap-person", schluessel: "person", kurz: () => {
+        const n = (cfg.personen || []).length;
+        return n + (n === 1 ? " Person" : " Personen") + " · Betrachtung "
+          + cfg.jahr_von + " bis " + cfg.jahr_bis;
+      } },
+    { id: "kap-heim", schluessel: "heim", kurz: () => {
+        const mit = (cfg.personen || []).filter(p => p.heimeintritt_ab != null);
+        if (!mit.length) return "kein Heim- oder Spitalaufenthalt gerechnet";
+        return mit.map(p => (p.bezeichnung || p.id) + " ab " + p.heimeintritt_ab
+          + ", " + chf(Number(p.heimkosten_pro_monat) || 0) + " CHF/Mt").join(" · ");
+      } },
+  ];
+  for (const kap of liste) {
+    const w = document.getElementById(kap.id);
+    if (!w) continue;
+    const kopf = w.querySelector(":scope > .kapitelkopf2");
+    const inh = w.querySelector(":scope > .kapitelinhalt2");
+    if (!kopf || !inh) continue;
+    const kz = kopf.querySelector(".k2kurz");
+    if (kz) kz.textContent = kap.kurz();
+    const offen = personenKapitel === kap.schluessel;
+    inh.hidden = !offen;
+    w.classList.toggle("offen", offen);
+    const pf = kopf.querySelector(".k2pfeil");
+    if (pf) pf.textContent = offen ? "▾" : "▸";
+    const fuss = inh.querySelector(":scope > .k2fuss");
+    if (fuss && !fuss.dataset.gebunden) {
+      fuss.dataset.gebunden = "1";
+      const b = el("button", "knopf", "← Zurück zur Übersicht");
+      b.type = "button";
+      b.addEventListener("click", () => {
+        personenKapitel = null;
+        personenKapitelZeichnen();
+        requestAnimationFrame(() => {
+          scrollFreigeben();
+          const z = document.getElementById(kap.id);
+          if (z) z.scrollIntoView({ block: "start", behavior: "smooth" });
+        });
+      });
+      fuss.appendChild(b);
+    }
+    if (!kopf.dataset.gebunden) {
+      kopf.dataset.gebunden = "1";
+      kopf.addEventListener("click", () => {
+        personenKapitel = (personenKapitel === kap.schluessel) ? null : kap.schluessel;
+        personenKapitelZeichnen();
+        requestAnimationFrame(() => {
+          tabellenrahmenPruefen(); kopfzeilenAusrichten($("#blatt-personen"));
+          if (personenKapitel === kap.schluessel) {
+            scrollFreigeben();
+            const z = document.getElementById(kap.id);
+            if (z) z.scrollIntoView({ block: "start", behavior: "smooth" });
+          }
+        });
+      });
+    }
+  }
+}
+
+// Die Tabelle wird an zwei Orten gebraucht: im Szenario 2 des Reiters
+// Todesfall und im Kapitel «Heim- und Spitalaufenthalt» des Reiters Personen.
+// Beide schreiben in dieselben Felder - es gibt nur eine Eingabe.
+const ZUSATZKOSTEN = [
+  { art: "gaertner", titel: "Gartenunterhalt", monate: true,
+    muster: /Gartenunterhalt|G(ä|ae)rtner/i },
+  { art: "haushaltshilfe", titel: "Haushaltshilfe", monate: false,
+    muster: /Haushaltshilfe/i },
+];
+
+// Setzt gleichnamige Budgetpositionen auf null. Sonst stuenden dieselben
+// Kosten zweimal in der Rechnung: einmal hier und einmal im Budget.
+function zusatzkostenBudgetNullen(art) {
+  const def = ZUSATZKOSTEN.find(x => x.art === art);
+  const betroffen = [];
+  for (const pos of (cfg.positionen || [])) {
+    if (!pos || pos.fluss === "einnahme") continue;
+    if (!def.muster.test(pos.bezeichnung || "")) continue;
+    if (!(Number(pos.betrag) > 0)) continue;
+    betroffen.push((pos.bezeichnung || pos.id) + " " + chf(pos.betrag) + " CHF");
+    pos.betrag = 0;
+  }
+  return betroffen;
+}
+
+// Kurzfassung fuer den Kopf des Teils: die beiden Jahresbetraege.
+function zusatzkostenKurz() {
+  const tf = cfg.todesfall || {};
+  const summe = vor => (Number(tf[vor + "gaertner_pro_monat"]) || 0)
+      * (Number(tf[vor + "gaertner_monate"]) || 12)
+    + (Number(tf[vor + "haushaltshilfe_pro_monat"]) || 0) * 12;
+  const a = summe("heim_"), b = summe("");
+  if (!a && !b) return "keine erfasst";
+  return "A " + chf(a) + " · B " + chf(b) + " CHF pro Jahr";
+}
+
+function zusatzkostenTabelle(vor, vorgabeJahr) {
+  const tf = cfg.todesfall || (cfg.todesfall = {});
+  const w = el("div");
+  const rahmen = el("div", "tabellenrahmen");
+  const t = document.createElement("table");
+  t.className = "dicht";
+  const kz = t.createTHead().insertRow();
+  ["Kosten", "ab Jahr", "bis Jahr", "CHF pro Monat", "Monate im Jahr", "CHF pro Jahr"]
+    .forEach((x, i) => kz.appendChild(el("th", i === 0 ? "links" : null, x)));
+  const kb = t.createTBody();
+  for (const def of ZUSATZKOSTEN) {
+    const pm = Number(tf[vor + def.art + "_pro_monat"]) || 0;
+    const monate = def.monate ? (Number(tf[vor + "gaertner_monate"]) || 12) : 12;
+    const r = kb.insertRow();
+    const c0 = el("td", "txt"); c0.textContent = def.titel; r.appendChild(c0);
+    r.appendChild(td(zahlFeld(tf[vor + def.art + "_ab_jahr"] ?? null, x => {
+      tf[vor + def.art + "_ab_jahr"] = x; rechnen();
+    }, { jahr: true, leerErlaubt: true, vorgabe: vorgabeJahr,
+         vorgabeHinweis: vorgabeJahr != null
+           ? "Leer: gerechnet wird ab " + vorgabeJahr + "."
+           : "Ohne Todesfall und ohne Heimeintritt fallen diese Kosten nicht an." }),
+      "rechts"));
+    r.appendChild(td(zahlFeld(tf[vor + def.art + "_bis_jahr"] ?? null, x => {
+      tf[vor + def.art + "_bis_jahr"] = x; rechnen();
+    }, { jahr: true, leerErlaubt: true, vorgabe: cfg.jahr_bis,
+         vorgabeHinweis: "Leer: bis zum Ende der Betrachtung." }), "rechts"));
+    r.appendChild(td(zahlFeld(pm, x => {
+      tf[vor + def.art + "_pro_monat"] = Math.max(0, x || 0);
+      const weg = (Number(x) > 0) ? zusatzkostenBudgetNullen(def.art) : [];
+      rechnen();
+      if (weg.length)
+        melde("Im Budget auf null gesetzt, weil hier erfasst: " + weg.join(", ") + ".");
+    }, { grenze: { min: 0, max: 200000, weichMax: 50000 } }), "rechts"));
+    {
+      const c = el("td", "links");
+      if (def.monate) {
+        const s2 = wahlFeld([["12", "ganzes Jahr (12)"], ["8", "März bis Oktober (8)"]],
+          String(monate), x => { tf[vor + "gaertner_monate"] = Number(x) || 12; rechnen(); });
+        s2.style.minWidth = "178px";
+        c.appendChild(s2);
+      } else {
+        c.textContent = "12"; c.style.color = "var(--gedaempft)";
+      }
+      r.appendChild(c);
+    }
+    const c5 = el("td", "rechts mono");
+    c5.style.padding = "5px 10px";
+    c5.textContent = chf(pm * monate);
+    r.appendChild(c5);
+  }
+  // Summenzeile
+  {
+    const g = Number(tf[vor + "gaertner_pro_monat"]) || 0;
+    const h = Number(tf[vor + "haushaltshilfe_pro_monat"]) || 0;
+    const mg = Number(tf[vor + "gaertner_monate"]) || 12;
+    const r = kb.insertRow(); r.className = "ergebnis";
+    const c = el("td", "txt"); c.textContent = "zusammen"; r.appendChild(c);
+    for (let i = 0; i < 4; i++) r.insertCell();
+    const cs = el("td", "rechts mono");
+    cs.style.cssText = "padding:5px 10px;font-weight:700";
+    cs.textContent = chf(g * mg + h * 12);
+    r.appendChild(cs);
+  }
+  rahmen.appendChild(t);
+  w.appendChild(rahmen);
+  return w;
+}
+
+// Beide Bloecke untereinander, mit Zwischentitel. Die Funktion wird im
+// Szenario 2 und im Reiter Personen gebraucht.
+function zusatzkostenBeide(heimJahr, todJahr) {
+  const w = el("div");
+  const titel = (txt, erl) => {
+    const u = el("p", null, txt);
+    u.style.cssText = "font-size:13px;font-weight:700;margin:14px 0 3px";
+    w.appendChild(u);
+    const e = el("p", null, erl);
+    e.style.cssText = "font-size:12px;color:var(--gedaempft);margin:0 0 6px";
+    w.appendChild(e);
+  };
+  titel("A — ab Heim- oder Spitalaufenthalt",
+    "Die andere Person lebt, führt den Haushalt aber nicht mehr mit. Vorgabe für den "
+    + "Beginn: " + (heimJahr != null ? "das Jahr des Eintritts, " + heimJahr
+                                     : "es ist kein Heimeintritt erfasst") + ".");
+  w.appendChild(zusatzkostenTabelle("heim_", heimJahr));
+  titel("B — ab Todesfall",
+    "Der ganze Haushalt bleibt an der überlebenden Person; der Aufwand ist in der Regel "
+    + "höher als unter A. Vorgabe für den Beginn: "
+    + (todJahr != null ? "das Todesjahr, " + todJahr : "es ist kein Todesfall erfasst")
+    + ". Ab dem Todesjahr gilt dieser Block; er ersetzt den Block A und wird nicht "
+    + "dazugezählt — es ist dieselbe Arbeit, nur aus einem anderen Anlass und in "
+    + "anderem Umfang.");
+  w.appendChild(zusatzkostenTabelle("", todJahr));
+  return w;
+}
+
+function heimZusatzBlock(person) {
+  const w = el("div");
+  w.style.marginTop = "16px";
+  const andere = (cfg.personen || []).find(x => x.id !== person.id) || null;
+  if (!andere) return w;
+  const name = andere.bezeichnung || andere.id;
+  const e = el("p", null,
+    "Was " + (person.bezeichnung || person.id) + " bisher selbst besorgt hat, ist ab dem "
+    + "Heimeintritt einzukaufen. Dieselbe Tabelle steht im Reiter Todesfall unter "
+    + "«Szenario 2»; beide Orte schreiben in dieselben Felder. Erfasst wird ein Betrag "
+    + "pro Monat, woraus das Programm den Jahresbetrag rechnet. Gleichnamige Positionen "
+    + "im Reiter Budget werden dabei auf null gesetzt, damit dieselben Kosten nicht "
+    + "zweimal zählen.");
+  e.style.cssText = "font-size:12px;color:var(--gedaempft);margin:0 0 8px";
+  w.appendChild(e);
+  const tfE = todesfallEff();
+  const heimJahr = person.heimeintritt_ab != null ? Number(person.heimeintritt_ab) : null;
+  const todJahr = (tfE.aktiv && tfE.jahr != null) ? Number(tfE.jahr) : null;
+  w.appendChild(zusatzkostenBeide(heimJahr, todJahr));
+  const h = el("p", null,
+    "Bleibt «bis Jahr» leer, laufen die Kosten bis zum Ende der Betrachtung ("
+    + cfg.jahr_bis + "). Beim Gartenunterhalt ist wählbar, ob er das ganze Jahr anfällt "
+    + "oder nur von März bis und mit Oktober — acht Monate.");
+  h.style.cssText = "font-size:12px;color:var(--gedaempft);margin:8px 0 0";
+  w.appendChild(h);
+  return w;
+}
+
+// ---------------------------------- Was beim Heimeintritt entfaellt ---------
+// Zieht eine Person ins Heim, so deckt das Heim ihren Lebensbedarf: Wohnen,
+// Verpflegung, Betreuung. Ihre persoenlichen Ausgaben fallen deshalb weg -
+// Fahrzeuge, Ferien, Kleider, Abonnemente und dergleichen. Weiter laufen nur
+// Verpflichtungen, die vom Aufenthaltsort unabhaengig sind: Krankenkasse und
+// Krankheitskosten, Steuern und Steuerberatung sowie die Sammelpositionen
+// "Diverses" und "Zusaetzliche Ausgaben", die einen Rest an Auslagen tragen.
+//
+// Die Liegenschaft und ihre Versicherungen entfallen nicht: sie bestehen
+// weiter und werden statt dessen zwischen den Personen neu verteilt - das
+// regelt die Quote "andere Person uebernimmt".
+const HEIM_WEITER_ABZUGSARTEN = ["krankenversicherung", "krankheitskosten"];
+const HEIM_WEITER_MUSTER = /Steuerberat|Diverses|Zus(ä|ae)tzliche Ausgaben/i;
+
+// Vorgabe: laeuft diese Position im Heim weiter?
+function heimLaeuftWeiterVorgabe(pos) {
+  if (!pos) return true;
+  if (pos.fluss === "einnahme") return true;
+  const gruppe = pos.gruppe || "";
+  if (heimUmlageGruppeUi(gruppe)) return true;
+  if (STEUERGRUPPEN.includes(gruppe)) return true;
+  if (HEIM_WEITER_ABZUGSARTEN.includes(pos.abzugsart)) return true;
+  if (HEIM_WEITER_MUSTER.test(pos.bezeichnung || "")) return true;
+  return false;
+}
+
+// Rubriken, die umgelegt statt aufgehoben werden - dieselbe Liste wie im
+// Rechenkern.
+function heimUmlageGruppeUi(g) {
+  const liste = (Array.isArray(cfg.heim_umlage_gruppen) && cfg.heim_umlage_gruppen.length)
+    ? cfg.heim_umlage_gruppen : ["Liegenschaft", "Versicherungen Liegenschaft"];
+  return liste.includes(g);
+}
+
+// Setzt die Vorgabe fuer alle Ausgabenpositionen, die diese Person betreffen.
+function heimVorgabeSetzen(person) {
+  for (const pos of (cfg.positionen || [])) {
+    if (!pos || !((Number((pos.anteile || {})[person.id]) || 0) > 0)) continue;
+    if (pos.fluss === "einnahme") { delete pos.entfaellt_bei_heim; continue; }
+    if (heimUmlageGruppeUi(pos.gruppe || "")) { pos.entfaellt_bei_heim = false; continue; }
+    pos.entfaellt_bei_heim = !heimLaeuftWeiterVorgabe(pos);
+  }
+}
+
+function heimEntfallBlock(person) {
+  const w = el("div");
+  w.style.marginTop = "14px";
+  const andere = (cfg.personen || []).find(x => x.id !== person.id) || null;
+  const andererName = andere ? (andere.bezeichnung || andere.id) : "die andere Person";
+  const esc = x => String(x).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+  // Positionen, an denen diese Person einen Anteil traegt, ohne Einnahmen und
+  // ohne die Rubriken, die ohnehin quotal umgelegt werden.
+  const eigene = (cfg.positionen || []).filter(x =>
+    x && x.fluss !== "einnahme"
+      && (Number((x.anteile || {})[person.id]) || 0) > 0
+      && !heimUmlageGruppeUi(x.gruppe || ""));
+  const teil = x => (Number(x.betrag) || 0) * (Number((x.anteile || {})[person.id]) || 0);
+  const entfallen = eigene.filter(x => x.entfaellt_bei_heim);
+  const uebernommen = eigene.filter(x => !x.entfaellt_bei_heim && x.heim_uebernahme);
+  const bleiben = eigene.filter(x => !x.entfaellt_bei_heim && !x.heim_uebernahme);
+
+  const kopf = el("button", "unterkopf");
+  kopf.type = "button";
+  const pfeil = el("span", "uppfeil", "▸");
+  kopf.appendChild(pfeil);
+  kopf.appendChild(el("span", "upt", "Budgetpositionen im Heim"));
+  kopf.appendChild(el("span", "upk",
+    entfallen.length + " entfallen · " + uebernommen.length + " übernimmt "
+    + andererName + " · " + bleiben.length + " bleiben"));
+  const hu = el("div", "unterpunkt");
+  const inh = el("div", "unterinhalt");
+  inh.hidden = !heimEntfallOffen[person.id];
+  pfeil.textContent = inh.hidden ? "▸" : "▾";
+  hu.classList.toggle("offen", !inh.hidden);
+  kopf.addEventListener("click", () => {
+    inh.hidden = !inh.hidden;
+    heimEntfallOffen[person.id] = !inh.hidden;
+    pfeil.textContent = inh.hidden ? "▸" : "▾";
+    hu.classList.toggle("offen", !inh.hidden);
+  });
+
+  const e = el("p");
+  e.innerHTML =
+    "Je Position sind zwei Kästchen zu setzen — oder keines. <strong>Entfällt:</strong> "
+    + "die Ausgabe fällt ab dem Heimeintritt weg und wird von niemandem getragen. "
+    + "<strong>" + esc(andererName) + " übernimmt:</strong> der Anteil dieser Person geht "
+    + "<em>ganz</em> auf " + esc(andererName) + " über — nicht anteilig, sondern zu "
+    + "hundert Prozent, ab dem oben eingestellten Übernahmejahr. <strong>Kein "
+    + "Kästchen:</strong> die Ausgabe läuft bei der Person im Heim unverändert weiter. "
+    + "Beides zugleich ist nicht möglich; das Setzen des einen löscht das andere.<br>"
+    + "Nicht in dieser Liste stehen die Liegenschaftskosten — Hypothekarzinsen, "
+    + "Nebenkosten, Rückstellungen und Versicherungen Liegenschaft. Sie entfallen nie "
+    + "und gehen mit der Quote oben anteilig auf " + esc(andererName) + " über.";
+  e.style.cssText = "font-size:12px;color:var(--gedaempft);margin:0 0 10px";
+  inh.appendChild(e);
+
+  const knopf = el("button", "knopf", "Vorgabe wieder herstellen");
+  knopf.type = "button";
+  knopf.style.cssText = "margin:0 0 10px;padding:5px 11px;font-size:12px";
+  knopf.addEventListener("click", () => {
+    heimVorgabeSetzen(person);
+    rechnen();
+    melde("Vorgabe gesetzt.");
+  });
+  inh.appendChild(knopf);
+
+  const rahmen = el("div", "tabellenrahmen");
+  const t = document.createElement("table");
+  t.className = "dicht heimliste";
+  const kz = t.createTHead().insertRow();
+  ["entfällt", andererName + "<br>übernimmt", "Position", "Rubrik",
+   "Betrag CHF/Jahr", "Wirkung ab Heimeintritt"].forEach((x, i) => {
+    const th = el("th", i <= 1 ? "mitte" : (i === 2 || i === 3 || i === 5 ? "links" : null));
+    th.innerHTML = x; kz.appendChild(th);
+  });
+  const kb = t.createTBody();
+  for (const pos of eigene.slice().sort((a, b) =>
+      (a.gruppe || "").localeCompare(b.gruppe || "")
+      || (a.bezeichnung || "").localeCompare(b.bezeichnung || ""))) {
+    const r = kb.insertRow();
+    if (pos.entfaellt_bei_heim) r.style.opacity = ".62";
+    // Kästchen 1: entfällt
+    {
+      const c = el("td", "mitte");
+      const cb = el("input"); cb.type = "checkbox";
+      cb.checked = !!pos.entfaellt_bei_heim;
+      cb.title = "Die Ausgabe fällt weg";
+      cb.addEventListener("change", () => {
+        pos.entfaellt_bei_heim = cb.checked;
+        if (cb.checked) pos.heim_uebernahme = false;
+        rechnen();
+      });
+      c.appendChild(cb); r.appendChild(c);
+    }
+    // Kästchen 2: die andere Person übernimmt ganz
+    {
+      const c = el("td", "mitte");
+      const cb = el("input"); cb.type = "checkbox";
+      cb.checked = !!pos.heim_uebernahme && !pos.entfaellt_bei_heim;
+      cb.disabled = !andere;
+      cb.title = andere ? andererName + " trägt diese Ausgabe vollständig"
+                        : "Es ist nur eine Person erfasst";
+      cb.addEventListener("change", () => {
+        pos.heim_uebernahme = cb.checked;
+        if (cb.checked) pos.entfaellt_bei_heim = false;
+        rechnen();
+      });
+      c.appendChild(cb); r.appendChild(c);
+    }
+    const c0 = el("td", "txt"); c0.textContent = pos.bezeichnung || pos.id;
+    r.appendChild(c0);
+    const c1 = el("td", "txt"); c1.textContent = pos.gruppe || "—";
+    c1.style.color = "var(--gedaempft)"; r.appendChild(c1);
+    const c2 = el("td", "rechts mono");
+    c2.style.padding = "5px 10px";
+    c2.textContent = chf(teil(pos));
+    r.appendChild(c2);
+    const c3 = el("td", "txt");
+    c3.style.cssText = "font-size:12px";
+    if (pos.entfaellt_bei_heim) {
+      c3.textContent = "fällt weg";
+      c3.style.color = "var(--warnung)";
+    } else if (pos.heim_uebernahme && andere) {
+      c3.textContent = andererName + " trägt sie ganz";
+      c3.style.color = "var(--gut)";
+    } else {
+      c3.textContent = "läuft weiter bei " + (person.bezeichnung || person.id);
+      c3.style.color = "var(--gedaempft)";
+    }
+    r.appendChild(c3);
+  }
+  if (!eigene.length) {
+    const r = kb.insertRow(); const c = r.insertCell(); c.colSpan = 6;
+    c.className = "txt";
+    c.textContent = "Für diese Person sind keine Ausgaben erfasst, die im Heim "
+      + "entfallen oder übergehen könnten.";
+  }
+  rahmen.appendChild(t);
+  inh.appendChild(rahmen);
+
+  const sE = entfallen.reduce((a, x) => a + teil(x), 0);
+  const sU = uebernommen.reduce((a, x) => a + teil(x), 0);
+  const sB = bleiben.reduce((a, x) => a + teil(x), 0);
+  const f = el("p", null,
+    "Gemessen am erfassten Budget: " + chf(sE) + " CHF pro Jahr fallen weg, "
+    + chf(sU) + " CHF gehen ganz auf " + andererName + " über, "
+    + chf(sB) + " CHF laufen bei " + (person.bezeichnung || person.id)
+    + " weiter. Dazu kommen die Heimkosten selbst und der Anteil an der "
+    + "Liegenschaft, der nicht auf " + andererName + " übergeht. Die Beträge sind "
+    + "Werte des Basisjahres, ohne Teuerung.");
+  f.style.cssText = "font-size:12px;color:var(--gedaempft);margin:10px 0 0";
+  inh.appendChild(f);
+
+  hu.appendChild(kopf); hu.appendChild(inh);
+  w.appendChild(hu);
+  return w;
+}
+let heimEntfallOffen = {};
+
 // ------------------------------------------ Wirkung der Umlage bei Heimeintritt
 // Was die andere Person genau uebernimmt, war mit "Liegenschaft, Hypothekar-
 // zinsen und Rueckstellungen" zu knapp beschrieben. Statt einer Aufzaehlung aus
@@ -20385,6 +22060,68 @@ function vorsorgeUnterpunkt(pid, titel, kurz, inhalt) {
   return w;
 }
 
+// ------------------------------------------------------------- AHV-Rente
+// Eingegeben wird die ordentliche Monatsrente ohne die 13. Rente, so wie sie
+// in der Rentenvorausberechnung der Ausgleichskasse steht. Gerechnet wird
+// daraus die Jahresposition im Budget; die 13. Rente fuehrt das Programm als
+// eigene Position und zahlt sie im Dezember aus.
+function ahvBlock(person) {
+  const p = person;
+  const w = el("div");
+  w.appendChild(el("h3", null, "AHV-Rente"));
+  const feld = (etikett, kind, einheit, breit) => {
+    const f = el("div", "feld");
+    f.appendChild(el("label", null, etikett)); f.appendChild(kind);
+    f.appendChild(el("span", "einheit" + (breit ? " breit" : ""), einheit || ""));
+    w.appendChild(f);
+  };
+  const ahv = ahvPosition(p.id, true);
+  feld("AHV-Rente pro Monat, ohne 13. Rente", zahlFeld(
+    Math.round((Number(ahv.betrag) || 0) / AHV_MONATE),
+    x => { ahv.betrag = (x || 0) * AHV_MONATE; rechnen(); }),
+    "CHF/Mt", true);
+  feld("Teuerung AHV", zahlFeld(ahv.teuerung ?? 0,
+    x => { ahv.teuerung = x || 0; rechnen(); },
+    { proz: true, grenze: { min: -0.10, max: 0.25, weichMax: 0.10 } }), "%");
+  const ahvMt = Math.round((Number(ahv.betrag) || 0) / AHV_MONATE);
+  const ahv13 = ahvPosition13(p.id, false);
+  const ab13 = ahv13 ? Number(ahv13.von) : AHV_13_AB_JAHR;
+  const ahvText = el("p", null,
+    "Einzutragen ist die ordentliche Monatsrente OHNE die 13. Rente — genau der Betrag, " +
+    "der in der Rentenvorausberechnung der Ausgleichskasse pro Monat steht. " +
+    "Die Grundrente ergibt " + chf(ahvMt) + " × " + AHV_MONATE + " = " +
+    chf(ahv.betrag) + " CHF pro Jahr. Die 13. AHV-Rente rechnet das Programm als " +
+    "eigene Position dazu: sie wird nach Gesetz erstmals im Dezember " +
+    AHV_13_AB_JAHR + " ausbezahlt und danach jedes Jahr im Dezember, hier also ab " +
+    ab13 + " mit " + chf(ahvMt) + " CHF — zusammen " +
+    chf((Number(ahv.betrag) || 0) + ahvMt) + " CHF pro Jahr. " +
+    "Die Maximalrente beträgt 2520 Franken im Monat, mit der 13. Rente 32 760 im Jahr; " +
+    "die Minimalrente 1260. Die Rente läuft ab dem Pensionierungsjahr " +
+    (p.pensionierung != null ? p.pensionierung : "–") +
+    " — erfasst im Reiter Personen; der Beginn folgt diesem Jahr selbsttätig.");
+  ahvText.style.cssText = "font-size:12px;color:var(--gedaempft);margin:2px 0 8px";
+  w.appendChild(ahvText);
+  // Die Rente steht zugleich als Position im Budget. Wer sie dort ändert,
+  // ändert dieselbe Grösse - das ist hier zu sagen, damit niemand zwei Werte
+  // sucht.
+  const q = el("p", null,
+    "Dieselbe Grösse steht im Reiter Budget als Einnahme «" +
+    (ahv.bezeichnung || "AHV-Rente") + "». Eine Änderung hier und dort betrifft " +
+    "denselben Wert; die 13. Rente wird dort als eigene Zeile geführt und ist " +
+    "nicht von Hand zu ändern.");
+  q.style.cssText = "font-size:12px;color:var(--gedaempft);margin:0 0 4px";
+  w.appendChild(q);
+  return w;
+}
+
+// Kurzfassung für den Kopf des Punktes
+function ahvKurz(person) {
+  const a = ahvPosition(person.id, false);
+  if (!a || !(Number(a.betrag) > 0)) return "keine erfasst";
+  const mt = Math.round((Number(a.betrag) || 0) / AHV_MONATE);
+  return chf(mt) + " CHF/Mt · Teuerung " + proz(Number(a.teuerung) || 0);
+}
+
 function vorsorgeZeichnen() {
   const w = $("#kartenVorsorge");
   if (!w) return;
@@ -20525,6 +22262,10 @@ function vorsorgeZeichnen() {
       knopf.style.cssText = "margin-top:6px;padding:5px 11px;font-size:12px";
       knopf.addEventListener("click", () => { v.jahr_start = p.pensionierung; rechnen(); });
       ziel.appendChild(knopf);
+
+      // Die AHV-Rente gehört zu den Einnahmen, aus denen der Lebensbedarf
+      // gedeckt wird. Sie steht deshalb hier und nicht mehr im Reiter Personen.
+      ziel.appendChild(vorsorgeUnterpunkt(p.id, "AHV-Rente", ahvKurz(p), ahvBlock(p)));
 
       // Eigener Punkt: Schalter und Erlaeuterungen zur Besteuerung.
       const unterSt = el("div");
@@ -22083,7 +23824,17 @@ function steuernZeichnen() {
       + "veranlagt, und massgebend sind die Schuldzinsen auf ihrem Anteil. "
       + "Abgezogen wird nur, was neben dem quotalen Schuldzinsenabzug noch an "
       + "bezahlten Zinsen offen ist; insgesamt nie mehr als die bezahlten Zinsen. "
-      + "Der Abzug wirkt erst ab dem Jahr der Abschaffung des Eigenmietwerts.";
+      + "<br><br><strong>Beginn des Abbaus.</strong> Erstes Jahr der Frist ist das "
+      + "Jahr der Abschaffung des Eigenmietwerts"
+      + (st.eigenmietwert_abschaffung_jahr != null
+          ? " (" + st.eigenmietwert_abschaffung_jahr + ")" : "")
+      + ", nicht das Jahr des Erwerbs. Solange der Eigenmietwert besteht, sind die "
+      + "Schuldzinsen ohnehin unbeschränkt abziehbar; ein Höchstbetrag wirkt dort "
+      + "nicht und kann deshalb auch nicht abgebaut werden. Das <em>Jahr des "
+      + "Ersterwerbs</em> entscheidet allein darüber, ob der Abzug überhaupt "
+      + "zusteht: Liegt der Erwerb nach der Abschaffung, wirkt der Abzug erst ab "
+      + "dem Erwerbsjahr — die Frist läuft aber vom Jahr der Abschaffung an und "
+      + "verkürzt sich dadurch entsprechend.";
     ke.appendChild(pe);
 
     const ue = el("div", "merker"); ue.style.marginTop = "10px";
@@ -22520,7 +24271,10 @@ function steuernZeichnen() {
       + "«Liegenschaft am Wohnort»; ein eingeschalteter Schalter öffnet den "
       + "Abzug höchstens bis zum Höchstbetrag im Abschnitt 4.2 «Ersterwerber einer "
       + "Liegenschaft», abnehmend über " + (Number(st.ersterwerber_dauer) || 10)
-      + " Jahre. Die Spalte <em>Grundlage</em> nennt je Jahr, welche Regel gilt. "
+      + " Jahre ab dem Jahr der Abschaffung"
+      + (st.eigenmietwert_abschaffung_jahr != null
+          ? " (" + st.eigenmietwert_abschaffung_jahr + ")" : "")
+      + ". Die Spalte <em>Grundlage</em> nennt je Jahr, welche Regel gilt. "
       + "«–» heisst, dass die Person in diesem Jahr nicht in der Rechnung steht "
       + "(vor «Betrachtung von» oder nach «Betrachtung bis»). Die blaue Linie "
       + "markiert das Jahr der Abschaffung.";
@@ -27118,6 +28872,7 @@ function zurEingabe(ziel, rueckId) {
         const k = n.parentElement;
         const kopf = k && (k.querySelector(":scope > h3")
                         || k.querySelector(":scope > .kapitelkopf")
+                        || k.querySelector(":scope > .kapitelkopf2")
                         || k.querySelector(":scope > .unterkopf"));
         if (kopf) kopf.click();
       }
@@ -27135,8 +28890,14 @@ function zurEingabe(ziel, rueckId) {
     });
     if (karte) return karte;
     // Aufklappbarer Unterpunkt in einer Karte (Reiter Vorsorge)
-    return [...blatt.querySelectorAll(".unterpunkt")].find(u => {
+    const up = [...blatt.querySelectorAll(".unterpunkt")].find(u => {
       const h = u.querySelector(":scope > .unterkopf");
+      return h && re.test(h.textContent);
+    });
+    if (up) return up;
+    // Kapitel eines Blattes (Reiter Liegenschaft)
+    return [...blatt.querySelectorAll(".kapitel2")].find(u => {
+      const h = u.querySelector(":scope > .kapitelkopf2");
       return h && re.test(h.textContent);
     }) || null;
   };
@@ -27149,25 +28910,34 @@ function zurEingabe(ziel, rueckId) {
     }
   }
   setTimeout(() => {
-    const karte = karteFinden();
-    if (karte) sichtbarMachen(karte);
-    const wurzel = karte || blatt;
-    let treffer = null;
-    if (ziel.feld) {
-      const re = new RegExp(ziel.feld);
-      const kand = [];
-      wurzel.querySelectorAll("label, .schalter > span, td, th, h3, h4").forEach(x => {
-        if (x.children.length > 3) return;
-        if (re.test((x.textContent || "").trim())) kand.push(x);
-      });
-      // Bezeichnungen, die in Eingabefeldern stehen (Budgetzeilen)
-      if (!kand.length) wurzel.querySelectorAll("input[type=text], input:not([type]), textarea").forEach(x => {
-        if (re.test((x.value || "").trim())) kand.push(x);
-      });
-      treffer = kand[ziel.nr || 0] || kand[0] || null;
-    }
-    const ort = treffer ? (treffer.closest(".feld, .schalter, tr") || treffer) : wurzel;
-    sichtbarMachen(ort);
+    // Suchen, oeffnen, dann noch einmal suchen: das Oeffnen eines Kapitels oder
+    // eines Unterpunkts zeichnet den Bereich neu, und der zuerst gefundene
+    // Treffer haengt danach nicht mehr im Dokument. Die Hervorhebung ginge
+    // sonst ins Leere.
+    const suchen = () => {
+      const karte = karteFinden();
+      if (karte) sichtbarMachen(karte);
+      const wurzel = karte || blatt;
+      let treffer = null;
+      if (ziel.feld) {
+        const re = new RegExp(ziel.feld);
+        const kand = [];
+        wurzel.querySelectorAll("label, .schalter > span, td, th, h3, h4").forEach(x => {
+          if (x.children.length > 3) return;
+          if (re.test((x.textContent || "").trim())) kand.push(x);
+        });
+        // Bezeichnungen, die in Eingabefeldern stehen (Budgetzeilen)
+        if (!kand.length) wurzel.querySelectorAll("input[type=text], input:not([type]), textarea").forEach(x => {
+          if (re.test((x.value || "").trim())) kand.push(x);
+        });
+        treffer = kand[ziel.nr || 0] || kand[0] || null;
+      }
+      const o = treffer ? (treffer.closest(".feld, .schalter, tr") || treffer) : wurzel;
+      sichtbarMachen(o);
+      return o;
+    };
+    suchen();
+    const ort = suchen();
     setTimeout(() => {
       scrollFreigeben();
       ort.scrollIntoView({ block: "center", behavior: "smooth" });
@@ -27239,6 +29009,57 @@ function uebersichtZeichnen() {
     { t: "Heim- oder Spitalaufenthalt", je: p => p.heimeintritt_ab != null
         ? "ab " + p.heimeintritt_ab + ", " + chf(Number(p.heimkosten_pro_monat) || 0) + " CHF/Monat" : "keiner",
       z: { blatt: "personen", feld: "^Heim- oder Spitalaufenthalt" } },
+    { t: "Teuerung der Heimkosten", je: p => p.heimeintritt_ab == null ? null
+        : warn(pr(p.heimkosten_teuerung ?? 0) + ", Basisjahr "
+            + (p.heimkosten_basisjahr ?? p.heimeintritt_ab),
+          "kein publizierter Index für Heim- und Pflegekosten"),
+      z: { blatt: "personen", feld: "Teuerung der Heimkosten" }, klein: true },
+    { t: "Höhere Pflegestufe", je: p => {
+        if (p.heimeintritt_ab == null) return null;
+        const st = (p.heim_stufen && p.heim_stufen[0]) || null;
+        return st ? "ab " + st.ab_jahr + ", " + chf(Number(st.pro_monat) || 0) + " CHF/Monat"
+                  : "keine";
+      }, z: { blatt: "personen", feld: "Pflegestufe ab Jahr" }, klein: true },
+    { t: "Übernahme durch die andere Person", je: p => {
+        if (p.heimeintritt_ab == null) return null;
+        const q = Number(p.heim_umlage_anteil) || 0;
+        if (!(q > 0)) return "keine";
+        const ab = (p.heim_umlage_ab != null && p.heim_umlage_ab !== "")
+          ? p.heim_umlage_ab : p.heimeintritt_ab;
+        return proz(q) + " der Liegenschaftskosten ab " + ab;
+      }, z: { blatt: "personen", feld: "andere Person übernimmt" }, klein: true },
+    { t: "Budgetposten bei Heimaufenthalt", je: p => {
+        if (p.heimeintritt_ab == null) return null;
+        const eigen = (cfg.positionen || []).filter(x => x && x.fluss !== "einnahme"
+          && (Number((x.anteile || {})[p.id]) || 0) > 0
+          && !heimUmlageGruppeUi(x.gruppe || ""));
+        const e = eigen.filter(x => x.entfaellt_bei_heim).length;
+        const u = eigen.filter(x => !x.entfaellt_bei_heim && x.heim_uebernahme).length;
+        return e + " entfallen, " + u + " übernimmt die andere Person, "
+          + (eigen.length - e - u) + " bleiben";
+      }, z: { blatt: "personen", feld: "Budgetpositionen im Heim" }, klein: true },
+    ...(() => {
+      // Zusatzkosten für die Person, die den Haushalt weiterführt. Sie stehen
+      // nicht bei einer Person, sondern gelten für den Haushalt.
+      const tf2 = cfg.todesfall || {};
+      const zeile = (vor, titel) => {
+        const g = Number(tf2[vor + "gaertner_pro_monat"]) || 0;
+        const h = Number(tf2[vor + "haushaltshilfe_pro_monat"]) || 0;
+        const mg = Number(tf2[vor + "gaertner_monate"]) || 12;
+        if (!g && !h) return { t: titel, alle: "keine erfasst",
+          z: { blatt: "personen", feld: "Gartenunterhalt" }, klein: true };
+        const teile = [];
+        if (g) teile.push("Gartenunterhalt " + chf(g) + " CHF/Mt × " + mg + " = "
+          + chf(g * mg) + " CHF");
+        if (h) teile.push("Haushaltshilfe " + chf(h) + " CHF/Mt × 12 = " + chf(h * 12) + " CHF");
+        const ab = tf2[vor + "gaertner_ab_jahr"] || tf2[vor + "haushaltshilfe_ab_jahr"];
+        return { t: titel,
+          alle: teile.join("; ") + (ab ? "; ab " + ab : ""),
+          z: { blatt: "personen", feld: "Gartenunterhalt" }, klein: true };
+      };
+      return [zeile("heim_", "Zusatzkosten A, ab Heimaufenthalt"),
+              zeile("", "Zusatzkosten B, ab Todesfall")];
+    })(),
     { t: "Zivilstand", alle: (cfg.zivilstand || {}).art === "verheiratet" ? "verheiratet" : "unverheiratet (Konkubinat)",
       z: { blatt: "personen", feld: "^Zivilstand" }, oben: true },
     { t: "Gemeinsame Kasse, solange beide leben", alle: jn((cfg.zivilstand || {}).kasse_gemeinsam),
@@ -27268,8 +29089,7 @@ function uebersichtZeichnen() {
         const max = Number((cfg.zivilstand || {}).ahv_maximalrente) || 0;
         const t = chf(s) + " CHF ab " + (a.von ?? "–");
         return max && Math.abs(s - max) < 1 ? warn(t + " (Maximalrente)", "Maximalrente hinterlegt, Rentenvorausberechnung fehlt") : t; },
-      z: { blatt: "positionen", feld: "AHV-Rente" },
-      feldJe: p => { const a = ahvPosition(p.id, false); return a ? "^" + (a.bezeichnung || "AHV-Rente").replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "$" : "AHV-Rente"; } },
+      z: { blatt: "vorsorge", abschnitt: "^AHV-Rente", feld: "AHV-Rente pro Monat" } },
     { t: "Policen Säule 3b", je: p => { const l = (cfg.policen || []).filter(x => x.person_id === p.id);
         return l.length ? l.length + " Police" + (l.length > 1 ? "n" : "") + ", Ablaufleistung "
           + chf(l.reduce((a, x) => a + (Number(x.ablauf_leistung) || 0), 0)) + " CHF" : "keine"; },
@@ -27298,8 +29118,22 @@ function uebersichtZeichnen() {
       z: { blatt: "steuern", abschnitt: "kalten Progression", feld: "koppeln" } },
     { t: "Schuldzinsen nach der Abschaffung weiter abziehbar", je: p => jn((st.schuldzins_nach_abschaffung || {})[p.id]),
       z: { blatt: "steuern", abschnitt: "Liegenschaft am Wohnort", feld: "^Person" } },
-    { t: "Ersterwerber (Höchstbetrag im ersten Jahr)", je: p => { const e = (st.ersterwerber || {})[p.id] || {};
-        return e.aktiv ? "ja, ab " + (e.erwerbsjahr ?? "–") + ", " + chf(Number(e.hoechstbetrag) || 0) + " CHF" : "nein"; },
+    { t: "Ersterwerber einer Liegenschaft", je: p => { const e = (st.ersterwerber || {})[p.id] || {};
+        if (!e.aktiv) return "nein";
+        const dauer = Math.max(1, Number(st.ersterwerber_dauer) || 10);
+        const ja = Number(st.eigenmietwert_abschaffung_jahr);
+        const jv = Number(e.erwerbsjahr);
+        // Der Abbau laeuft ab der Abschaffung des Eigenmietwerts, nicht ab dem
+        // Erwerb. Das Erwerbsjahr wird nur genannt, wenn es spaeter liegt und
+        // den Beginn der Wirkung nach hinten schiebt.
+        return "Erwerb " + (Number.isFinite(jv) && jv > 0 ? jv : "–") + ", "
+          + chf(Number(e.hoechstbetrag) || 0) + " CHF im ersten Jahr, "
+          + (Number.isFinite(ja) && ja > 0
+              ? "linear abnehmend über " + dauer + " Jahre ab der Abschaffung "
+                + ja + " auf 0 (letztes Jahr " + (ja + dauer - 1) + ")"
+                + (Number.isFinite(jv) && jv > ja ? ", wirksam erst ab " + jv : "")
+              : "linear abnehmend über " + dauer + " Jahre ab der Abschaffung des "
+                + "Eigenmietwerts — ohne Abschaffungsjahr ohne Wirkung"); },
       z: { blatt: "steuern", abschnitt: "Ersterwerber", feld: "Gilt als Ersterwerber" } },
   ]);
 
@@ -27417,9 +29251,6 @@ function uebersichtZeichnen() {
     { t: "Erbgang an den Partner (Liegenschaft / Kapital / Vorsorge)", je: p => { const e = ea(p.id);
         return [e.liegenschaft, e.kapital, e.vorsorge].map(x => proz(Number(x) || 0)).join(" / "); },
       z: { blatt: "todesfall", abschnitt: "Szenario 1", feld: "Steuerwert Liegenschaft" } },
-    { t: "Zusatzkosten Gärtner und Haushaltshilfe", alle: chf(((Number(tf.gaertner_pro_monat) || 0) + (Number(tf.haushaltshilfe_pro_monat) || 0)) * 12)
-        + " CHF/Jahr" + (tf.zusatz_ab_jahr != null ? " ab " + tf.zusatz_ab_jahr : ""),
-      z: { blatt: "todesfall", abschnitt: "Szenario 2", feld: "Gärtner" } },
     { t: "Umzug in eine Wohnung", alle: (tf.umzug || {}).aktiv ? "ab " + tf.umzug.jahr : "nein",
       z: { blatt: "todesfall", abschnitt: "Szenario 3", feld: "Umzug berücksichtigen" } },
     { t: "Vermietung der Einliegerwohnung", alle: (tf.vermietung || {}).aktiv ? "ab " + (tf.vermietung.ab_jahr ?? "–") + ", " + chf(Number(tf.vermietung.miete_pro_monat) || 0) + " CHF/Monat" : "nein",
