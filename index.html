@@ -1067,7 +1067,7 @@ table.uebersicht tr.klein td.name{padding-left:22px}
 
   <div class="leistenfuss">
     <span>Budget- und Rentenberechnung &middot; Kanton St. Gallen, Gemeinde Gommiswald</span>
-    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v262</span></span>
+    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v263</span></span>
   </div>
   <p class="merker" id="fassungHinweis" style="margin:8px 0 0" hidden></p>
   <!-- Band fuer die Aktualisierung. Es erscheint nur, wenn es etwas zu melden
@@ -2197,6 +2197,42 @@ table.uebersicht tr.klein td.name{padding-left:22px}
           50 000 Franken verschieben; <strong>mittel</strong> zwischen etwa 5 000 und
           50 000 Franken; <strong>klein</strong> darunter. Die Einstufung ist eine
           Abschätzung, keine gerechnete Grösse.</p>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v263 — Szenario 3: Zurücksetzen vollständig, Erläuterung präzisiert</h3>
+        <ul class="liste">
+          <li><strong>Behoben — «Werte zurücksetzen» war unvollständig.</strong> Der Knopf
+            stellte Restkapital, Endalter und Anschlusssatz zurück, nicht aber ein
+            Startkapital, das zuvor mit «Übernehmen in die Berechnung» in den Reiter
+            Vorsorge geschrieben worden war. Das ist die einzige Grösse, die dieses
+            Szenario an den erfassten Daten ändert — sie blieb stehen. <strong>Neu</strong>
+            wird auch sie zurückgenommen und die Hauptrechnung sofort neu ausgeführt; eine
+            Meldung weist darauf hin. Der Knopf ist entsprechend auch dann aktiv, wenn nur
+            ein Kapital übernommen wurde.</li>
+          <li><strong>Erläuterung zur Laufzeit neu gegliedert.</strong> Bisher stand dort
+            nur, welche Jahresangaben fortgeschrieben werden. Das liess offen, was in den
+            zusätzlichen Jahren überhaupt gerechnet wird. Neu steht es in vier Punkten:
+            <ul class="liste">
+              <li><strong>Ausgaben und Einnahmen nach dem Budget</strong> — und, wo für
+                spätere Jahre eigene Positionen mit einem Ab-Jahr erfasst sind, nach
+                diesem Altersbudget. Die Beträge wachsen mit den erfassten
+                Teuerungssätzen weiter.</li>
+              <li><strong>Hypotheken: nur die Folgeperioden.</strong> Eine Tranche, die in
+                den zusätzlichen Jahren abläuft, läuft danach mit dem gesetzten
+                Anschlusssatz weiter; der laufende Satz bis zum Ablauf bleibt
+                unberührt.</li>
+              <li><strong>Steuern</strong> werden in jedem zusätzlichen Jahr neu
+                gerechnet, nach den erfassten Tarifen, Steuerfüssen und Abzügen.</li>
+              <li><strong>Die Abnahme des Kapitals</strong> läuft weiter: Rendite auf dem
+                Bestand, Entnahme für den Fehlbetrag des Jahres, Einzahlungen in die
+                Rückstellungskonten und deren Verwendung.</li>
+            </ul></li>
+          <li><strong>Klargestellt:</strong> Die zusätzlichen Jahre werden vollständig
+            gerechnet, nicht hochgerechnet — jedes Jahr einzeln wie alle übrigen. Der
+            Methodentext unterhalb der Tabelle sagt dasselbe.</li>
+          <li><strong>Keine Änderung der Rechnung.</strong> Der Rechenkern bleibt
+            unberührt; die Musterrechnung liefert unverändert dieselben Werte.</li>
+        </ul>
       </div>
       <div class="karte breit">
         <h3>Änderungen in v262 — Szenario 3 «Erforderliches Kapital» umgebaut</h3>
@@ -19224,15 +19260,33 @@ function kapEingabenGeaendert() {
     if ((szenarienReserveJePerson[p.id] ?? szenarienReserve) !== szenarienReserve) return true;
     const a = kapAlterJePerson[p.id];
     if (a != null && a !== kapEndalterErfasst(p)) return true;
+    // Ein in dieser Sitzung uebernommenes Startkapital zaehlt ebenfalls als
+    // Abweichung von der Grundeingabe - es ist die folgenreichste von allen.
+    if (kapitalVorUebernahme[p.id] != null) return true;
   }
   return false;
 }
+// Stellt den Stand der Grundeingabe wieder her: Restkapital, Endalter und
+// Anschlusssatz dieses Szenarios, dazu ein Startkapital, das hier uebernommen
+// und damit in den Reiter Vorsorge geschrieben wurde. Letzteres ist die
+// einzige Groesse, die dieses Szenario an den erfassten Daten aendert; ohne
+// Ruecknahme bliebe sie stehen.
 function kapZuruecksetzen() {
+  let kapitalZurueck = false;
   for (const p of cfg.personen) {
     delete szenarienReserveJePerson[p.id];
     delete kapAlterJePerson[p.id];
+    if (kapitalVorUebernahme[p.id] != null) {
+      const v = (cfg.vorsorge || []).find(x => x.person_id === p.id);
+      if (v) { v.kapital_start = kapitalVorUebernahme[p.id]; kapitalZurueck = true; }
+      delete kapitalVorUebernahme[p.id];
+    }
   }
   szenarioAnschlusssatz = null;
+  // Wurde ein erfasster Wert zurueckgenommen, muss die Hauptrechnung neu
+  // laufen; sonst zeigen die uebrigen Reiter weiter den uebernommenen Stand.
+  if (kapitalZurueck) rechnen();
+  return kapitalZurueck;
 }
 // Schluessel der Eingaben. Stimmt er nicht mehr mit jenem des letzten Laufs
 // ueberein, ist das Ergebnis veraltet; die Leiste sagt das.
@@ -19332,16 +19386,39 @@ function kapEckwerteZeichnen() {
     + cfg.personen.map(p => p.bezeichnung + " "
         + (kapEndalterErfasst(p) ?? "–") + ", Jahr " + kapEndjahrErfasst(p)).join("; ")
     + "). Feld leeren stellt darauf zurück.<br><br>"
-    + "<strong>Fortschreibung.</strong> Ein höheres Alter verlängert die Rechnung. "
-    + "Fortgeschrieben wird nur, was bisher bis zum Schluss lief: Jede Jahresangabe, "
-    + "die auf dem bisherigen letzten Jahr steht — Budgetpositionen, Anschlussperioden "
-    + "der Hypotheken, Einzahlungsstufen der Rückstellungskonten — rückt auf das neue "
-    + "letzte Jahr. Angaben mit einem früheren Endjahr bleiben unverändert; ein "
-    + "Fahrzeug, das nur bis 2034 erfasst ist, wird nicht länger gefahren, nur weil "
-    + "die Person älter wird. Die Beträge selbst werden nicht neu gesetzt — sie wachsen "
-    + "mit den erfassten Teuerungssätzen weiter, eine Position ohne Teuerung bleibt "
-    + "nominal gleich. Gerechnet wird je Person einzeln: das Alter der einen Person "
-    + "ändert an den Angaben der anderen nichts.";
+    + "<strong>Was in den zusätzlichen Jahren gerechnet wird.</strong> Ein höheres Alter "
+    + "verlängert die Rechnung. Die zusätzlichen Jahre werden vollständig gerechnet, "
+    + "nicht hochgerechnet — jedes Jahr einzeln, mit allen Posten:"
+    + "<ul style='margin:6px 0 6px 0;padding-left:22px'>"
+    + "<li><strong>Ausgaben und Einnahmen nach dem Budget.</strong> Es gilt dasselbe "
+      + "Budget wie in den Jahren davor. Sind für spätere Jahre eigene Positionen "
+      + "erfasst — ein Altersbudget mit einem <em>Ab-Jahr</em>, etwa tiefere Ferien- "
+      + "oder Fahrzeugkosten —, greifen diese zu ihrem Jahr, auch in den zusätzlichen "
+      + "Jahren. Die Beträge wachsen mit den erfassten Teuerungssätzen weiter; eine "
+      + "Position ohne Teuerung bleibt nominal gleich.</li>"
+    + "<li><strong>Hypotheken: nur die Folgeperioden.</strong> Eine Tranche, die in den "
+      + "zusätzlichen Jahren abläuft, läuft danach mit dem unten gesetzten "
+      + "Anschlusssatz weiter — ebenso jede Tranche, die bereits vorher abgelaufen "
+      + "ist. Der laufende Satz bis zum Ablauf der jeweiligen Tranche bleibt "
+      + "unberührt.</li>"
+    + "<li><strong>Steuern.</strong> Einkommens- und Vermögenssteuer werden in jedem "
+      + "zusätzlichen Jahr neu gerechnet, nach den erfassten Tarifen, Steuerfüssen und "
+      + "Abzügen. Mehr Kapital heisst mehr Vermögenssteuer und mehr steuerbaren "
+      + "Vermögensertrag.</li>"
+    + "<li><strong>Abnahme des Kapitals.</strong> Der Verzehr läuft weiter: Rendite auf "
+      + "dem Bestand, Entnahme für den Fehlbetrag des Jahres, Einzahlungen in die "
+      + "Rückstellungskonten und deren Verwendung. Nichts wird festgehalten.</li>"
+    + "</ul>"
+    + "<strong>Was nicht fortgeschrieben wird.</strong> Jahresangaben, die auf dem "
+    + "bisherigen letzten Jahr stehen, rücken auf das neue letzte Jahr — "
+    + "Budgetpositionen, Anschlussperioden der Hypotheken, Einzahlungsstufen der "
+    + "Rückstellungskonten. Angaben mit einem <em>früheren</em> Endjahr bleiben "
+    + "unverändert: Ein Fahrzeug, das bis 2034 erfasst ist, wird nicht länger gefahren, "
+    + "nur weil die Person älter wird. Wie viele Positionen davon betroffen sind, steht "
+    + "nach der Rechnung in der Ergebniskarte; soll eine davon weiterlaufen, ist ihr "
+    + "Endjahr im Reiter Budget anzupassen.<br><br>"
+    + "Gerechnet wird je Person einzeln: das Alter der einen Person ändert an den "
+    + "Angaben der anderen nichts.";
   ke.appendChild(ea);
 
   // ---- Anschlusssatz ----
@@ -19404,14 +19481,19 @@ function kapLeisteZeichnen() {
   const z = el("button", "knopf", "Werte zurücksetzen");
   z.type = "button";
   z.disabled = !kapEingabenGeaendert();
-  z.title = "Stellt Restkapital, Endalter und Anschlusssatz auf die erfassten "
-    + "Eingaben zurück und rechnet damit neu.";
+  z.title = "Stellt den Stand der Grundeingabe wieder her: Restkapital, Endalter und "
+    + "Anschlusssatz dieses Szenarios, dazu ein Startkapital, das hier mit «Übernehmen» "
+    + "in den Reiter Vorsorge geschrieben wurde. Anschliessend wird neu gerechnet.";
   z.addEventListener("click", () => {
-    kapZuruecksetzen();
+    const kapitalZurueck = kapZuruecksetzen();
     kapRechnen();
     kapEckwerteZeichnen();
     kapTabelleZeichnen();
     szenarioStandSetzen("Werte zurückgesetzt und neu berechnet");
+    if (kapitalZurueck)
+      melde("Alle Werte dieses Szenarios stehen wieder auf der Grundeingabe. "
+          + "Auch das übernommene Startkapital wurde im Reiter Vorsorge "
+          + "zurückgenommen und die Rechnung neu ausgeführt.");
   });
   leiste.appendChild(z);
 
@@ -19670,8 +19752,13 @@ function kapTabelleZeichnen() {
                 + (z.laeuftAus.length > 6 ? " und weitere" : "")
               : "")
           + ")").join("; ") +
-        ". Fortgeschrieben werden nur jene Jahresangaben, die bisher auf dem " +
-        "letzten Rechenjahr standen; die Beträge wachsen mit den erfassten " +
+        ". Die zusätzlichen Jahre werden vollständig gerechnet, nicht hochgerechnet: " +
+        "Ausgaben und Einnahmen nach dem erfassten Budget — und, wo für spätere Jahre " +
+        "eigene Positionen mit einem Ab-Jahr erfasst sind, nach diesem Altersbudget —, " +
+        "Hypothekarzinsen nach den Folgeperioden mit dem gesetzten Anschlusssatz, " +
+        "Einkommens- und Vermögenssteuer je Jahr neu, dazu Rendite, Entnahme und " +
+        "Rückstellungskonten. Fortgeschrieben werden nur jene Jahresangaben, die bisher " +
+        "auf dem letzten Rechenjahr standen; die Beträge wachsen mit den erfassten " +
         "Teuerungssätzen weiter und werden nicht neu gesetzt. Angaben mit einem " +
         "früheren Endjahr bleiben unverändert — in den zusätzlichen Jahren fallen " +
         "diese Ausgaben deshalb nicht mehr an. "
