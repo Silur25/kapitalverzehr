@@ -1088,7 +1088,7 @@ table.uebersicht tr.klein td.name{padding-left:22px}
 
   <div class="leistenfuss">
     <span>Budget- und Rentenberechnung &middot; Kanton St. Gallen, Gemeinde Gommiswald</span>
-    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v267</span></span>
+    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v269</span></span>
   </div>
   <p class="merker" id="fassungHinweis" style="margin:8px 0 0" hidden></p>
   <!-- Band fuer die Aktualisierung. Es erscheint nur, wenn es etwas zu melden
@@ -2230,6 +2230,150 @@ table.uebersicht tr.klein td.name{padding-left:22px}
           50 000 Franken verschieben; <strong>mittel</strong> zwischen etwa 5 000 und
           50 000 Franken; <strong>klein</strong> darunter. Die Einstufung ist eine
           Abschätzung, keine gerechnete Grösse.</p>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v269 — Zusatzversicherung, Teuerungsrechner und Prämienteuerung</h3>
+        <ul class="liste">
+          <li><strong>Neu: Leistungen der Zusatzversicherung</strong> bei der Pflege zu
+            Hause. Spitalzusatzversicherungen richten dafür oft Beiträge aus — an die
+            Hauskrankenpflege und an die Haushaltshilfe, je als Franken pro Tag mit einer
+            Höchstzahl von Tagen. Erfasst werden sechs Werte, <strong>alle
+            eingebbar</strong>:
+            <ul class="liste">
+              <li>Beitrag an die Hauskrankenpflege pro Tag, Tage pro Jahr und Tage
+                insgesamt — das Gesamtkontingent läuft über die Jahre weiter</li>
+              <li>Beitrag an die Haushaltshilfe pro Tag und Tage pro Jahr</li>
+              <li>Jahresfranchise der Zusatzversicherung</li>
+            </ul>
+            Gerechnet wird höchstens so viel, wie an Kosten tatsächlich selbst zu tragen
+            bleibt; Tage werden nur verbraucht, soweit Kosten anfallen. <strong>Im Heim
+            greifen diese Leistungen nicht</strong> — eine Spitalzusatzversicherung deckt
+            den Spitalaufenthalt, nicht die Langzeitpflege. Das steht nun ausdrücklich in
+            der Erläuterung.
+            <br><strong>Gemessen</strong> bei 6 Stunden Pflege und 4 Stunden
+            Hauswirtschaft pro Woche: 1'612 CHF an die Pflege, 1'345 CHF an die
+            Hauswirtschaft, abzüglich 1'000 CHF Franchise — die selbst getragenen
+            Spitex-Kosten sinken von 10'477 auf 7'520 CHF im Jahr.</li>
+
+          <li><strong>Neue Spalte «Zusatzversicherung»</strong> in der Jahrestabelle des
+            Szenarios 8, zwischen Gemeinde und Hilflosenentschädigung.</li>
+
+          <li><strong>Neu: Teuerungsrechner aus zwei eigenen Beträgen.</strong> Im
+            Auskunftsfenster zur Teuerung lassen sich zwei Jahre und zwei Beträge
+            eingeben — etwa aus zwei Policen oder zwei Rechnungen. Das Programm rechnet
+            das geometrische Mittel (Betrag₂ ⁄ Betrag₁) hoch 1 ⁄ (Jahr₂ − Jahr₁) − 1 und
+            übernimmt es auf Knopfdruck. Die amtlichen Reihen bleiben daneben stehen.</li>
+
+          <li><strong>Behoben — falsche Zuordnung der Teuerungsreihe.</strong> Eine
+            Position mit der steuerlichen Abzugsart «Krankenversicherung», die bloss
+            «Versicherung Person 1» heisst, wurde der Rubrik <em>Sachversicherungen</em>
+            zugeordnet und erhielt deren Teuerung. Neu geht die Abzugsart der Bezeichnung
+            vor: Eine Krankenkassenprämie folgt dem Prämienindex.</li>
+
+          <li><strong>Neue Teuerungsquelle «Zusatzversicherungen (VVG)» mit 5.24 %</strong>,
+            gemessen an zwei Policen desselben Versicherten: Monatsprämie 681.85 CHF
+            (1.1.2024) → 829.65 CHF (1.1.2027), bereinigt um eine neu hinzugekommene
+            Unfalldeckung 794.85 CHF, also +16.6 % über drei Jahre. Je Deckung:
+            <ul class="liste">
+              <li>Grundversicherung +3.62 % pro Jahr</li>
+              <li>Spitalzusatz halbprivat <strong>+10.05 %</strong> pro Jahr</li>
+              <li>Zusatzversicherung Prävention +13.41 %</li>
+              <li>weltweite Arztwahl +2.57 %, Unfall-Zusatz +5.17 %,
+                Komplementärmedizin 0 %</li>
+            </ul>
+            <strong>Bemerkenswert:</strong> Der Spitalzusatz stieg trotz des
+            Prämientarifmodells «Abschlussalter» um gut 10 % pro Jahr. Dieses Modell
+            schützt vor der Erhöhung wegen Älterwerdens, <em>nicht</em> vor der
+            allgemeinen Prämienanpassung. Wer die Prämie deswegen als stabil annimmt,
+            rechnet zu tief.</li>
+
+          <li><strong>Neu: Budgetposition aufteilen.</strong> Der Knopf «⇄» in jeder
+            Budgetzeile zerlegt eine Position in zwei, die sich den Betrag hälftig teilen
+            und danach eigene Beträge und Teuerungssätze tragen. Gebraucht, wenn ein Teil
+            einer Ausgabe anders teuert als der andere.</li>
+
+          <li><strong>Teuerung der Krankenkassenprämie in den Beispielwerten von 0.50 %
+            auf 3.29 % gesetzt</strong> — dem belegten Wert aus dem Prämienindex
+            (5'928 ausgewertete Erwachsenenprämien 2015–2025, ergänzt um die
+            Prämiengenehmigung 2026 des BAG). <strong>Die Musterrechnung ändert sich
+            dadurch:</strong> Das Kapital der zuerst versterbenden Person sinkt von
+            −424'744 auf −511'558 CHF, jenes der überlebenden steigt leicht von 141'364
+            auf 144'351 CHF, und die Steuern über die ganze Laufzeit gehen von 774'433
+            auf 768'181 CHF zurück — höhere Prämien bedeuten höhere Abzüge.
+            <br>Zum Vergleich über 23 Jahre: 8'182 CHF Jahresprämie werden bei 0.50 %
+            zu 9'177 CHF, bei 3.29 % zu 17'100 CHF und bei 5.24 % zu 26'545 CHF. Die
+            Annahme über diesen einen Satz verschiebt den Kapitalbedarf um mehr als
+            150'000 CHF.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v268 — Pflegekosten nach Kostenträgern aufgeschlüsselt</h3>
+        <ul class="liste">
+          <li><strong>Behoben — die Krankenkasse fehlte in der Rechnung.</strong> Bisher
+            unterstellte das Programm, dass die Kasse nichts an die Pflege zahlt: Die
+            Beteiligung wurde als Mindestwert aus Pflegetaxe und Höchstbetrag gerechnet.
+            <strong>Neu</strong> werden die Pflegekosten auf drei Träger verteilt:
+            <ul class="liste">
+              <li><strong>Krankenversicherung:</strong> 9.60 CHF je 20 Minuten
+                Pflegebedarf, höchstens 12 Stufen und damit 115.20 CHF pro Tag
+                (Art. 7a Abs. 3 KLV)</li>
+              <li><strong>Versicherte Person:</strong> vom Rest höchstens 23.00 CHF pro
+                Tag (Art. 25a Abs. 5 KVG, Art. 8 Abs. 1 PflegeG SG)</li>
+              <li><strong>Öffentliche Hand:</strong> was dann noch offen ist — Kanton zu
+                zwei Dritteln, Gemeinde zu einem Drittel (Art. 9 Abs. 1 PflegeG SG)</li>
+            </ul>
+            Die Pflegestufe steht auf der Heimrechnung; ist sie nicht erfasst, schätzt
+            das Programm sie aus der Pflegetaxe anhand der kantonalen Höchstansätze von
+            12 bis 254 CHF (Art. 2 der Verordnung sGS 331.21). Das neue Feld «davon
+            Beitrag der Krankenkasse pro Tag» lässt sich je Person überschreiben.
+            <br><strong>Gemessen</strong> bei einer Pflegetaxe von 75 CHF pro Tag:
+            Kasse 38.40, selbst 23.00, Gemeinde und Kanton 13.60 CHF. Im Jahr sind das
+            14'016 / 8'395 / 4'964 CHF.</li>
+
+          <li><strong>Dasselbe bei der Spitex.</strong> Der Kassenbeitrag für Grundpflege
+            beträgt 52.60 CHF je Stunde (Art. 7a Abs. 1 KLV); die Differenz zum Tarif von
+            69.15 CHF trägt die Gemeinde.</li>
+
+          <li><strong>Die Jahrestabelle im Szenario 8 ist neu nach Kostenträgern
+            gegliedert</strong>, mit zweizeiliger Kopfzeile:
+            <ul class="liste">
+              <li><strong>Gesamtkosten der Pflege</strong> — zuvorderst, damit die
+                Grössenordnung sichtbar ist</li>
+              <li><strong>Selbst zu tragen</strong> mit der Aufteilung in Pflege,
+                Betreuung und Hotellerie, Sonstiges und Spitex</li>
+              <li><strong>Krankenversicherung</strong></li>
+              <li><strong>Gemeinde und Kanton</strong></li>
+              <li><strong>Hilflosenentschädigung</strong> als Einnahme</li>
+            </ul>
+            Eine Summenzeile nennt die Beträge über die ganze Dauer; ihr Hinweistext gibt
+            die Anteile in Prozent. In der Musterrechnung: 706'697 CHF Gesamtkosten,
+            davon 495'873 CHF selbst getragen, 163'834 CHF Krankenversicherung und
+            46'990 CHF Gemeinde und Kanton.</li>
+
+          <li><strong>Neu wird ausgewiesen, bis wann die Heimkosten laufen.</strong> Ein
+            hervorgehobener Hinweis im Heimblock nennt Eintrittsjahr, letztes Rechenjahr
+            — also <strong>bis zum Tod</strong> gemäss der erfassten Lebenserwartung —,
+            die Zahl der Jahre und die Summe der selbst getragenen Heimkosten über die
+            ganze Dauer. Dazu der Hinweis, dass für eine andere Dauer die
+            Lebenserwartung zu ändern ist, nicht das Eintrittsjahr.</li>
+
+          <li><strong>Die Hilflosenentschädigung ist neu erklärt</strong> — und zwar auch
+            im ausgeschalteten Zustand, denn wer nicht weiss, was sie ist, kann nicht
+            entscheiden, ob er sie berücksichtigen will. Genannt werden die sechs
+            massgebenden Lebensverrichtungen, die Wartefrist von einem Jahr, die
+            Anmeldung bei der Ausgleichskasse mit höchstens zwölf Monaten Rückwirkung,
+            und die Voraussetzung von Wohnsitz und Rentenbezug. Der Schalter heisst neu
+            «berücksichtigen» statt «beziehen»; dasselbe gilt im Szenario 8.</li>
+
+          <li><strong>Die Sätze stehen im Reiter Steuern, Kapitel 5</strong> — neu auch
+            der Kassenbeitrag je Pflegestufe, die höchste Pflegestufe, die kantonalen
+            Höchstansätze für Stufe 1 und 12 sowie der Kassenbeitrag der Spitex je
+            Stunde, jeweils mit Rechtsgrundlage.</li>
+
+          <li><strong>Keine Änderung an bestehenden Rechnungen.</strong> Bei Erfassung
+            als Gesamtbetrag bleibt alles wie bisher; die Musterrechnung liefert
+            unverändert dieselben Werte.</li>
+        </ul>
       </div>
       <div class="karte breit">
         <h3>Änderungen in v267 — Pflege: Heim, Spitex und Hilflosenentschädigung</h3>
@@ -7677,7 +7821,7 @@ table.uebersicht tr.klein td.name{padding-left:22px}
 
 <div id="bericht" hidden><div id="berichtInhalt"></div></div>
 <script>
-const DATEN = {"haushalt": {"bezeichnung": "Beispielhaushalt (Uebernahme aus Excel-Mappe BM 28)", "jahr_von": 2025, "jahr_bis": 2060, "personen": [{"id": "P1", "bezeichnung": "Person 1", "geburtsjahr": 1960, "pensionierung": 2026, "lebenserwartung_bis": 2047, "heimeintritt_ab": 2043, "heimkosten_pro_monat": 10000, "kinder": 0}, {"id": "P2", "bezeichnung": "Person 2", "geburtsjahr": 1969, "pensionierung": 2034, "lebenserwartung_bis": 2060, "heimeintritt_ab": null, "heimkosten_pro_monat": 0, "kinder": 0}], "hypotheken": [{"id": "H1", "bezeichnung": "Saron-Hypothek, variabel", "betrag": 150000, "satz": 0.0175, "beginn_jahr": 2024, "ablauf_jahr": 2039, "folgeperioden": [{"von": 2040, "bis": 2060, "satz": 0.035}], "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "H2", "bezeichnung": "Festhypothek 2", "betrag": 100000, "satz": 0.0287, "beginn_jahr": 2024, "ablauf_jahr": 2033, "folgeperioden": [{"von": 2034, "bis": 2060, "satz": 0.035}], "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "H3", "bezeichnung": "Festhypothek 3", "betrag": 100000, "satz": 0.0277, "beginn_jahr": 2024, "ablauf_jahr": 2032, "folgeperioden": [{"von": 2033, "bis": 2060, "satz": 0.035}], "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "H4", "bezeichnung": "Festhypothek 4", "betrag": 100000, "satz": 0.0283, "beginn_jahr": 2023, "ablauf_jahr": 2032, "folgeperioden": [{"von": 2033, "bis": 2060, "satz": 0.035}], "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "H5", "bezeichnung": "Festhypothek 5 (Haupttranche)", "betrag": 732000, "satz": 0.011, "beginn_jahr": 2022, "ablauf_jahr": 2037, "folgeperioden": [{"von": 2038, "bis": 2060, "satz": 0.035}], "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "H6", "bezeichnung": "Festhypothek 6", "betrag": 358000, "satz": 0.0174, "beginn_jahr": 2025, "ablauf_jahr": 2040, "folgeperioden": [{"von": 2041, "bis": 2060, "satz": 0.035}], "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "H7", "bezeichnung": "Festhypothek 7", "betrag": 60000, "satz": 0.0085, "beginn_jahr": 2022, "ablauf_jahr": 2031, "folgeperioden": [{"von": 2032, "bis": 2060, "satz": 0.035}], "anteile": {"P1": 0.5, "P2": 0.5}}], "amortisationskonto": {"aktiv": true, "bezeichnung": "Amortisationskonto Hypothek", "startbetrag": 12000, "startjahr": 2024, "einzahlung_pro_monat_und_person": 1000, "einzahlung_von": 2023, "einzahlung_bis": 2033, "zins": 0.03, "auszahlung_jahr": 2034, "amortisiert_hypothek": "H5", "anteile": {"P1": 0.5, "P2": 0.5}, "einzahlung_person": {"P1": 1000, "P2": 1000}, "verteilung": {"H5": 1.0}}, "rueckstellungskonto": {"aktiv": true, "bezeichnung": "Rueckstellungen Erneuerung Liegenschaft", "startbetrag": 0, "startjahr": 2025, "zins": 0.008, "einzahlung_stufen": [{"bis": 2032, "betrag_pro_person": 3600}, {"bis": 2050, "betrag_pro_person": 3000}, {"bis": 2053, "betrag_pro_person": 1000}], "aufloesung_jahr": null, "anteile": {"P1": 0.5, "P2": 0.5}, "werterhaltende_massnahmen": {"2026": 3000}}, "vorsorge": [{"person_id": "P1", "kapital_start": 850000, "jahr_start": 2026, "zins": 0.0225, "entnahmezeitpunkt": "monatlich_anfang", "bezug_steuerbar": false, "ertrag_steuerbar": true, "einlagen": {"2026": 100000, "2027": 50000, "2028": 50000, "2029": 50000, "2030": 50000, "2031": 20000}}, {"person_id": "P2", "kapital_start": 900000, "jahr_start": 2034, "zins": 0.0225, "entnahmezeitpunkt": "monatlich_anfang", "bezug_steuerbar": false, "ertrag_steuerbar": true, "einlagen": {}}], "vermoegen": [{"id": "V_HAUS", "bezeichnung": "Liegenschaft (Steuerwert)", "betrag": 1350000, "anteile": {"P1": 0.5, "P2": 0.5}, "art": "liegenschaft"}, {"id": "V_CASH_P1", "bezeichnung": "Uebriges Vermoegen Person 1", "betrag": 80000, "anteile": {"P1": 1.0}}, {"id": "V_CASH_P2", "bezeichnung": "Uebriges Vermoegen Person 2", "betrag": 300000, "anteile": {"P2": 1.0}}], "steuer": {"kanton": "SG", "gemeinde": "Gommiswald (vormals Rieden)", "tarifjahr": 2026, "tarif_bund": "bund_2026.yaml", "tarif_kanton": "sg_2026.yaml", "steuerfuss_kanton": 1.05, "steuerfuss_gemeinde": 1.03, "steuerfuss_kirche": 0.0, "faktor_bund": 1, "reduktionsfaktor_werterhaltend": 0.75, "eigenmietwert_marktmiete_pro_monat": 0, "eigenmietwert_reduktionsfaktor": 0.75}, "positionen": [{"id": "NK_STROM", "bezeichnung": "Strom, Wasser, Abwasser, Kehricht", "gruppe": "Liegenschaft", "betrag": 3985, "basisjahr": 2026, "teuerung": 0.0, "anteile": {"P1": 0.5, "P2": 0.5}, "entfaellt_bei_heim": true}, {"id": "NK_SONSTIGE", "bezeichnung": "Uebrige Nebenkosten (TV, Internet, Garten, Strassenkooperation)", "gruppe": "Liegenschaft", "betrag": 6995, "basisjahr": 2026, "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "REPARATUREN", "bezeichnung": "Reparaturen und kleiner Unterhalt", "gruppe": "Liegenschaft", "fluss": "ausgabe", "betrag": 2000, "basisjahr": 2026, "teuerung": 0.005, "abzugsart": "keine", "umlage_bei_tod": true, "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "INV_MOEBEL", "bezeichnung": "Investitionen Moebel und Einrichtung", "gruppe": "Liegenschaft", "betrag": 6000, "basisjahr": 2026, "bis": 2035, "anteile": {"P1": 0.5, "P2": 0.5}, "entfaellt_bei_heim": true}, {"id": "FLIMS_HYPOTHEK", "bezeichnung": "Hypothekarkosten Ferienwohnung", "gruppe": "Ferienwohnung Flims", "betrag": 0, "anteile": {"P2": 1.0}, "abzugsart": "hypozins"}, {"id": "FLIMS_NEBENKOSTEN", "bezeichnung": "Nebenkosten Ferienwohnung", "gruppe": "Ferienwohnung Flims", "betrag": 0, "teuerung": 0.0005, "basisjahr": 2026, "anteile": {"P2": 1.0}}, {"id": "FLIMS_ZUSATZ", "bezeichnung": "Zusaetzliche Ausgaben Ferienwohnung", "gruppe": "Ferienwohnung Flims", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "FLIMS_STEUERN", "bezeichnung": "Steuern Ferienwohnung", "gruppe": "Ferienwohnung Flims", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "STALL_PACHT", "bezeichnung": "Pacht Stall", "gruppe": "Stall", "betrag": 2500, "bis": 2040, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "STALL_BETRIEB", "bezeichnung": "Betriebskosten Stall", "gruppe": "Stall", "betrag": 15000, "bis": 2035, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "STALL_BETRIEB_RED", "bezeichnung": "Betriebskosten Stall, reduziert", "gruppe": "Stall", "betrag": 2500, "von": 2036, "bis": 2040, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "AUTO_BETRIEB_1", "bezeichnung": "Betriebskosten Fahrzeug 1", "gruppe": "Fahrzeuge", "betrag": 10498.33, "bis": 2033, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "AUTO_BETRIEB_2", "bezeichnung": "Betriebskosten Fahrzeug 2", "gruppe": "Fahrzeuge", "betrag": 11182, "bis": 2028, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "AUTO_KAUF_NEU", "bezeichnung": "Kauf Ersatzfahrzeug", "gruppe": "Fahrzeuge", "betrag": 50000, "von": 2034, "bis": 2034, "anteile": {"P1": 0.25, "P2": 0.75}, "entfaellt_bei_heim": true}, {"id": "AUTO_BETRIEB_NEU", "bezeichnung": "Betriebskosten Ersatzfahrzeug", "gruppe": "Fahrzeuge", "betrag": 8280, "von": 2034, "bis": 2045, "anteile": {"P1": 0.25, "P2": 0.75}, "entfaellt_bei_heim": true}, {"id": "AUTO_VERS_NEU", "bezeichnung": "Versicherung Ersatzfahrzeug", "gruppe": "Fahrzeuge", "betrag": 0, "von": 2034, "bis": 2045, "anteile": {"P1": 0.25, "P2": 0.75}, "entfaellt_bei_heim": true}, {"id": "ANHAENGER_1", "bezeichnung": "Pferdeanhaenger, Vignette und Verkehrsabgaben", "gruppe": "Fahrzeuge", "betrag": 240, "bis": 2035, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "ANHAENGER_2", "bezeichnung": "Transportanhaenger, Vignette und Verkehrsabgaben", "gruppe": "Fahrzeuge", "betrag": 160, "bis": 2045, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "KRANKENKASSE_P1", "bezeichnung": "Versicherung Person 1", "gruppe": "Versicherungen Person 1", "betrag": 8784, "basisjahr": 2025, "teuerung": 0.005, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": false, "abzugsart": "krankenversicherung"}, {"id": "SELBSTBEHALT_P1", "bezeichnung": "Selbstbehalt Versicherung Person 1", "gruppe": "Versicherungen Person 1", "betrag": 1500, "anteile": {"P1": 1.0}, "abzugsart": "krankheitskosten"}, {"id": "KRANKENKASSE_P2", "bezeichnung": "Versicherung Person 2", "gruppe": "Versicherungen Person 2", "betrag": 0, "basisjahr": 2025, "teuerung": 0.01, "anteile": {"P2": 1.0}, "entfaellt_bei_heim": false, "abzugsart": "krankenversicherung"}, {"id": "SELBSTBEHALT_P2", "bezeichnung": "Selbstbehalt Versicherung Person 2", "gruppe": "Versicherungen Person 2", "betrag": 0, "anteile": {"P2": 1.0}, "abzugsart": "krankheitskosten"}, {"id": "KELLER_MIETE", "bezeichnung": "Mietkosten Kellerabteil", "gruppe": "Lebenshaltung Person 1", "betrag": 744, "anteile": {"P1": 1.0}}, {"id": "ESSEN_P1", "bezeichnung": "Verpflegung", "gruppe": "Lebenshaltung Person 1", "betrag": 7200, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "COIFFEUR_P1", "bezeichnung": "Coiffeur und persoenliche Auslagen", "gruppe": "Lebenshaltung Person 1", "betrag": 1500, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "ZAHNARZT_P1", "bezeichnung": "Zahnarzt und Arzt", "gruppe": "Lebenshaltung Person 1", "betrag": 1000, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true, "abzugsart": "krankheitskosten"}, {"id": "KLEIDER_P1", "bezeichnung": "Kleider", "gruppe": "Lebenshaltung Person 1", "betrag": 1500, "anteile": {"P1": 1.0}}, {"id": "SKIABO_P1", "bezeichnung": "Skiabonnement", "gruppe": "Lebenshaltung Person 1", "betrag": 1500, "bis": 2035, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "URLAUB_P1", "bezeichnung": "Ferien", "gruppe": "Lebenshaltung Person 1", "betrag": 8000, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "ZEITSCHRIFTEN_P1", "bezeichnung": "Zeitschriften", "gruppe": "Lebenshaltung Person 1", "betrag": 400, "anteile": {"P1": 1.0}}, {"id": "PARKPLATZ_P1", "bezeichnung": "Parkplatzmiete", "gruppe": "Lebenshaltung Person 1", "betrag": 600, "bis": 2045, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "HOERGERAETE_P1", "bezeichnung": "Hoergeraete und Hilfsmittel", "gruppe": "Lebenshaltung Person 1", "betrag": 750, "anteile": {"P1": 1.0}, "abzugsart": "krankheitskosten"}, {"id": "STEUERBERATER_P1", "bezeichnung": "Steuerberatung", "gruppe": "Lebenshaltung Person 1", "betrag": 2500, "anteile": {"P1": 1.0}}, {"id": "INV_PRIVAT_P1", "bezeichnung": "Private Investitionen", "gruppe": "Lebenshaltung Person 1", "betrag": 5000, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "ABOS_P1", "bezeichnung": "Digitale Abonnemente", "gruppe": "Lebenshaltung Person 1", "betrag": 600, "anteile": {"P1": 1.0}}, {"id": "LH_HAUSHALTSHILFE_P1", "bezeichnung": "Haushaltshilfe", "gruppe": "Lebenshaltung Person 1", "betrag": 0, "anteile": {"P1": 1.0}}, {"id": "LH_GARTEN_P1", "bezeichnung": "Gartenunterhalt", "gruppe": "Lebenshaltung Person 1", "betrag": 0, "anteile": {"P1": 1.0}}, {"id": "LH_ANGEHOERIGE_P1", "bezeichnung": "Unterstuetzung Angehoerige", "gruppe": "Lebenshaltung Person 1", "betrag": 0, "anteile": {"P1": 1.0}}, {"id": "DIVERSES_P1", "bezeichnung": "Diverses", "gruppe": "Lebenshaltung Person 1", "betrag": 10000, "anteile": {"P1": 1.0}}, {"id": "ZUSATZ_P1", "bezeichnung": "Zusaetzliche Ausgaben", "gruppe": "Lebenshaltung Person 1", "betrag": 1000, "anteile": {"P1": 1.0}}, {"id": "LH_KELLER_P2", "bezeichnung": "Mietkosten Kellerabteil", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "ESSEN_P2", "bezeichnung": "Verpflegung", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "COIFFEUR_P2", "bezeichnung": "Coiffeur und persoenliche Auslagen", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "ZAHNARZT_P2", "bezeichnung": "Zahnarzt und Arzt", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}, "abzugsart": "krankheitskosten"}, {"id": "KLEIDER_P2", "bezeichnung": "Kleider", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "LH_SKIABO_P2", "bezeichnung": "Skiabonnement", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "URLAUB_P2", "bezeichnung": "Ferien", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "LH_ZEITSCHRIFTEN_P2", "bezeichnung": "Zeitschriften", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "LH_PARKPLATZ_P2", "bezeichnung": "Parkplatzmiete", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "LH_HILFSMITTEL_P2", "bezeichnung": "Hoergeraete und Hilfsmittel", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}, "abzugsart": "krankheitskosten"}, {"id": "LH_STEUERBERATUNG_P2", "bezeichnung": "Steuerberatung", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "LH_INV_PRIVAT_P2", "bezeichnung": "Private Investitionen", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "LH_ABOS_P2", "bezeichnung": "Digitale Abonnemente", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "HAUSHALTSHILFE_P2", "bezeichnung": "Haushaltshilfe", "gruppe": "Lebenshaltung Person 2", "betrag": 36000, "von": 2043, "anteile": {"P2": 1.0}}, {"id": "GAERTNER_P2", "bezeichnung": "Gartenunterhalt", "gruppe": "Lebenshaltung Person 2", "betrag": 3600, "von": 2043, "anteile": {"P2": 1.0}}, {"id": "KOSTEN_ANGEHOERIGE_1", "bezeichnung": "Unterstuetzung Angehoerige", "gruppe": "Lebenshaltung Person 2", "betrag": 15000, "bis": 2026, "anteile": {"P2": 1.0}}, {"id": "LH_DIVERSES_P2", "bezeichnung": "Diverses", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "LH_ZUSATZ_P2", "bezeichnung": "Zusaetzliche Ausgaben", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "LOHN_P1", "bezeichnung": "Nettolohn Person 1", "gruppe": "Einnahmen Person 1", "fluss": "einnahme", "betrag": 10000, "bis": 2026, "anteile": {"P1": 1.0}, "abzugsart": "erwerb"}, {"id": "NEBENERWERB_P1", "bezeichnung": "Nebenerwerb Person 1", "gruppe": "Einnahmen Person 1", "fluss": "einnahme", "betrag": 5000, "bis": 2026, "anteile": {"P1": 1.0}, "abzugsart": "erwerb"}, {"id": "AHV_P1", "bezeichnung": "AHV-Rente Person 1", "gruppe": "Einnahmen Person 1", "fluss": "einnahme", "betrag": 32760, "basisjahr": 2026, "teuerung": 0.008, "von": 2026, "anteile": {"P1": 1.0}}, {"id": "UEBRIGE_EINNAHMEN_P1", "bezeichnung": "Uebrige Einnahmen Person 1", "gruppe": "Einnahmen Person 1", "fluss": "einnahme", "betrag": 8400, "bis": 2033, "anteile": {"P1": 1.0}}, {"id": "LOHN_P2", "bezeichnung": "Nettolohn Person 2", "gruppe": "Einnahmen Person 2", "fluss": "einnahme", "betrag": 200000, "bis": 2033, "anteile": {"P2": 1.0}, "abzugsart": "erwerb"}, {"id": "NEBENERWERB_P2", "bezeichnung": "Nebenerwerb Person 2", "gruppe": "Einnahmen Person 2", "fluss": "einnahme", "betrag": 0, "bis": 2033, "anteile": {"P2": 1.0}, "abzugsart": "erwerb"}, {"id": "AHV_P2", "bezeichnung": "AHV-Rente Person 2", "gruppe": "Einnahmen Person 2", "fluss": "einnahme", "betrag": 32760, "basisjahr": 2026, "teuerung": 0.008, "von": 2034, "anteile": {"P2": 1.0}}, {"id": "UEBRIGE_EINNAHMEN_P2", "bezeichnung": "Uebrige Einnahmen Person 2", "gruppe": "Einnahmen Person 2", "fluss": "einnahme", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "ABZUG_DIVERSES_P1", "bezeichnung": "Uebrige Steuerabzuege Person 1", "gruppe": "Steuerabzuege", "betrag": 4000, "anteile": {"P1": 1.0}, "abzugsart": "uebrige"}, {"id": "ABZUG_DIVERSES_P2", "bezeichnung": "Uebrige Steuerabzuege Person 2", "gruppe": "Steuerabzuege", "betrag": 4000, "anteile": {"P2": 1.0}, "abzugsart": "uebrige"}, {"id": "FAHRZEUGVERSICHERUNG", "bezeichnung": "Fahrzeugversicherung", "gruppe": "Fahrzeuge", "betrag": 0, "anteile": {"P1": 0.5, "P2": 0.5}, "umlage_bei_tod": true}], "vermoegen_person": []}, "tarife": {"sg": {"marginalstufen": [{"breite": 11600, "satz": 0.0}, {"breite": 4200, "satz": 0.04}, {"breite": 18000, "satz": 0.06}, {"breite": 26500, "satz": 0.08}, {"breite": 38100, "satz": 0.092}, {"breite": 166100, "satz": 0.094}], "flat": {"ab_einkommen": 264500, "satz": 0.085}, "vermoegenssteuer": {"einfache_steuer": 0.0017, "sozialabzug_pro_person": 75000, "sozialabzug_pro_kind": 20000}, "bezeichnung": "Kanton St. Gallen, einfache Steuer vom Einkommen, Alleinstehende", "rechtsgrundlage": "Art. 50 StG SG (sGS 811.1)"}, "bund": {"stufen": [{"untergrenze": 0, "sockel": 0.0, "satz_je_100": 0.0}, {"untergrenze": 15200, "sockel": 0.0, "satz_je_100": 0.77}, {"untergrenze": 33200, "sockel": 138.6, "satz_je_100": 0.88}, {"untergrenze": 43500, "sockel": 229.2, "satz_je_100": 2.64}, {"untergrenze": 58000, "sockel": 612.0, "satz_je_100": 2.97}, {"untergrenze": 76200, "sockel": 1152.5, "satz_je_100": 5.94}, {"untergrenze": 82100, "sockel": 1502.95, "satz_je_100": 6.6}, {"untergrenze": 108900, "sockel": 3271.75, "satz_je_100": 8.8}, {"untergrenze": 141500, "sockel": 6140.55, "satz_je_100": 11.0}, {"untergrenze": 185100, "sockel": 10936.55, "satz_je_100": 13.2}], "flat": {"ab_einkommen": 794000, "satz": 0.115}, "bezeichnung": "Direkte Bundessteuer, Grundtarif Alleinstehende", "rechtsgrundlage": "DBG Art. 36 Abs. 1"}}};
+const DATEN = {"haushalt": {"bezeichnung": "Beispielhaushalt (Uebernahme aus Excel-Mappe BM 28)", "jahr_von": 2025, "jahr_bis": 2060, "personen": [{"id": "P1", "bezeichnung": "Person 1", "geburtsjahr": 1960, "pensionierung": 2026, "lebenserwartung_bis": 2047, "heimeintritt_ab": 2043, "heimkosten_pro_monat": 10000, "kinder": 0}, {"id": "P2", "bezeichnung": "Person 2", "geburtsjahr": 1969, "pensionierung": 2034, "lebenserwartung_bis": 2060, "heimeintritt_ab": null, "heimkosten_pro_monat": 0, "kinder": 0}], "hypotheken": [{"id": "H1", "bezeichnung": "Saron-Hypothek, variabel", "betrag": 150000, "satz": 0.0175, "beginn_jahr": 2024, "ablauf_jahr": 2039, "folgeperioden": [{"von": 2040, "bis": 2060, "satz": 0.035}], "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "H2", "bezeichnung": "Festhypothek 2", "betrag": 100000, "satz": 0.0287, "beginn_jahr": 2024, "ablauf_jahr": 2033, "folgeperioden": [{"von": 2034, "bis": 2060, "satz": 0.035}], "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "H3", "bezeichnung": "Festhypothek 3", "betrag": 100000, "satz": 0.0277, "beginn_jahr": 2024, "ablauf_jahr": 2032, "folgeperioden": [{"von": 2033, "bis": 2060, "satz": 0.035}], "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "H4", "bezeichnung": "Festhypothek 4", "betrag": 100000, "satz": 0.0283, "beginn_jahr": 2023, "ablauf_jahr": 2032, "folgeperioden": [{"von": 2033, "bis": 2060, "satz": 0.035}], "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "H5", "bezeichnung": "Festhypothek 5 (Haupttranche)", "betrag": 732000, "satz": 0.011, "beginn_jahr": 2022, "ablauf_jahr": 2037, "folgeperioden": [{"von": 2038, "bis": 2060, "satz": 0.035}], "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "H6", "bezeichnung": "Festhypothek 6", "betrag": 358000, "satz": 0.0174, "beginn_jahr": 2025, "ablauf_jahr": 2040, "folgeperioden": [{"von": 2041, "bis": 2060, "satz": 0.035}], "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "H7", "bezeichnung": "Festhypothek 7", "betrag": 60000, "satz": 0.0085, "beginn_jahr": 2022, "ablauf_jahr": 2031, "folgeperioden": [{"von": 2032, "bis": 2060, "satz": 0.035}], "anteile": {"P1": 0.5, "P2": 0.5}}], "amortisationskonto": {"aktiv": true, "bezeichnung": "Amortisationskonto Hypothek", "startbetrag": 12000, "startjahr": 2024, "einzahlung_pro_monat_und_person": 1000, "einzahlung_von": 2023, "einzahlung_bis": 2033, "zins": 0.03, "auszahlung_jahr": 2034, "amortisiert_hypothek": "H5", "anteile": {"P1": 0.5, "P2": 0.5}, "einzahlung_person": {"P1": 1000, "P2": 1000}, "verteilung": {"H5": 1.0}}, "rueckstellungskonto": {"aktiv": true, "bezeichnung": "Rueckstellungen Erneuerung Liegenschaft", "startbetrag": 0, "startjahr": 2025, "zins": 0.008, "einzahlung_stufen": [{"bis": 2032, "betrag_pro_person": 3600}, {"bis": 2050, "betrag_pro_person": 3000}, {"bis": 2053, "betrag_pro_person": 1000}], "aufloesung_jahr": null, "anteile": {"P1": 0.5, "P2": 0.5}, "werterhaltende_massnahmen": {"2026": 3000}}, "vorsorge": [{"person_id": "P1", "kapital_start": 850000, "jahr_start": 2026, "zins": 0.0225, "entnahmezeitpunkt": "monatlich_anfang", "bezug_steuerbar": false, "ertrag_steuerbar": true, "einlagen": {"2026": 100000, "2027": 50000, "2028": 50000, "2029": 50000, "2030": 50000, "2031": 20000}}, {"person_id": "P2", "kapital_start": 900000, "jahr_start": 2034, "zins": 0.0225, "entnahmezeitpunkt": "monatlich_anfang", "bezug_steuerbar": false, "ertrag_steuerbar": true, "einlagen": {}}], "vermoegen": [{"id": "V_HAUS", "bezeichnung": "Liegenschaft (Steuerwert)", "betrag": 1350000, "anteile": {"P1": 0.5, "P2": 0.5}, "art": "liegenschaft"}, {"id": "V_CASH_P1", "bezeichnung": "Uebriges Vermoegen Person 1", "betrag": 80000, "anteile": {"P1": 1.0}}, {"id": "V_CASH_P2", "bezeichnung": "Uebriges Vermoegen Person 2", "betrag": 300000, "anteile": {"P2": 1.0}}], "steuer": {"kanton": "SG", "gemeinde": "Gommiswald (vormals Rieden)", "tarifjahr": 2026, "tarif_bund": "bund_2026.yaml", "tarif_kanton": "sg_2026.yaml", "steuerfuss_kanton": 1.05, "steuerfuss_gemeinde": 1.03, "steuerfuss_kirche": 0.0, "faktor_bund": 1, "reduktionsfaktor_werterhaltend": 0.75, "eigenmietwert_marktmiete_pro_monat": 0, "eigenmietwert_reduktionsfaktor": 0.75}, "positionen": [{"id": "NK_STROM", "bezeichnung": "Strom, Wasser, Abwasser, Kehricht", "gruppe": "Liegenschaft", "betrag": 3985, "basisjahr": 2026, "teuerung": 0.0, "anteile": {"P1": 0.5, "P2": 0.5}, "entfaellt_bei_heim": true}, {"id": "NK_SONSTIGE", "bezeichnung": "Uebrige Nebenkosten (TV, Internet, Garten, Strassenkooperation)", "gruppe": "Liegenschaft", "betrag": 6995, "basisjahr": 2026, "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "REPARATUREN", "bezeichnung": "Reparaturen und kleiner Unterhalt", "gruppe": "Liegenschaft", "fluss": "ausgabe", "betrag": 2000, "basisjahr": 2026, "teuerung": 0.005, "abzugsart": "keine", "umlage_bei_tod": true, "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "INV_MOEBEL", "bezeichnung": "Investitionen Moebel und Einrichtung", "gruppe": "Liegenschaft", "betrag": 6000, "basisjahr": 2026, "bis": 2035, "anteile": {"P1": 0.5, "P2": 0.5}, "entfaellt_bei_heim": true}, {"id": "FLIMS_HYPOTHEK", "bezeichnung": "Hypothekarkosten Ferienwohnung", "gruppe": "Ferienwohnung Flims", "betrag": 0, "anteile": {"P2": 1.0}, "abzugsart": "hypozins"}, {"id": "FLIMS_NEBENKOSTEN", "bezeichnung": "Nebenkosten Ferienwohnung", "gruppe": "Ferienwohnung Flims", "betrag": 0, "teuerung": 0.0005, "basisjahr": 2026, "anteile": {"P2": 1.0}}, {"id": "FLIMS_ZUSATZ", "bezeichnung": "Zusaetzliche Ausgaben Ferienwohnung", "gruppe": "Ferienwohnung Flims", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "FLIMS_STEUERN", "bezeichnung": "Steuern Ferienwohnung", "gruppe": "Ferienwohnung Flims", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "STALL_PACHT", "bezeichnung": "Pacht Stall", "gruppe": "Stall", "betrag": 2500, "bis": 2040, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "STALL_BETRIEB", "bezeichnung": "Betriebskosten Stall", "gruppe": "Stall", "betrag": 15000, "bis": 2035, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "STALL_BETRIEB_RED", "bezeichnung": "Betriebskosten Stall, reduziert", "gruppe": "Stall", "betrag": 2500, "von": 2036, "bis": 2040, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "AUTO_BETRIEB_1", "bezeichnung": "Betriebskosten Fahrzeug 1", "gruppe": "Fahrzeuge", "betrag": 10498.33, "bis": 2033, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "AUTO_BETRIEB_2", "bezeichnung": "Betriebskosten Fahrzeug 2", "gruppe": "Fahrzeuge", "betrag": 11182, "bis": 2028, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "AUTO_KAUF_NEU", "bezeichnung": "Kauf Ersatzfahrzeug", "gruppe": "Fahrzeuge", "betrag": 50000, "von": 2034, "bis": 2034, "anteile": {"P1": 0.25, "P2": 0.75}, "entfaellt_bei_heim": true}, {"id": "AUTO_BETRIEB_NEU", "bezeichnung": "Betriebskosten Ersatzfahrzeug", "gruppe": "Fahrzeuge", "betrag": 8280, "von": 2034, "bis": 2045, "anteile": {"P1": 0.25, "P2": 0.75}, "entfaellt_bei_heim": true}, {"id": "AUTO_VERS_NEU", "bezeichnung": "Versicherung Ersatzfahrzeug", "gruppe": "Fahrzeuge", "betrag": 0, "von": 2034, "bis": 2045, "anteile": {"P1": 0.25, "P2": 0.75}, "entfaellt_bei_heim": true}, {"id": "ANHAENGER_1", "bezeichnung": "Pferdeanhaenger, Vignette und Verkehrsabgaben", "gruppe": "Fahrzeuge", "betrag": 240, "bis": 2035, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "ANHAENGER_2", "bezeichnung": "Transportanhaenger, Vignette und Verkehrsabgaben", "gruppe": "Fahrzeuge", "betrag": 160, "bis": 2045, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "KRANKENKASSE_P1", "bezeichnung": "Versicherung Person 1", "gruppe": "Versicherungen Person 1", "betrag": 8784, "basisjahr": 2025, "teuerung": 0.0329, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": false, "abzugsart": "krankenversicherung"}, {"id": "SELBSTBEHALT_P1", "bezeichnung": "Selbstbehalt Versicherung Person 1", "gruppe": "Versicherungen Person 1", "betrag": 1500, "anteile": {"P1": 1.0}, "abzugsart": "krankheitskosten"}, {"id": "KRANKENKASSE_P2", "bezeichnung": "Versicherung Person 2", "gruppe": "Versicherungen Person 2", "betrag": 0, "basisjahr": 2025, "teuerung": 0.0329, "anteile": {"P2": 1.0}, "entfaellt_bei_heim": false, "abzugsart": "krankenversicherung"}, {"id": "SELBSTBEHALT_P2", "bezeichnung": "Selbstbehalt Versicherung Person 2", "gruppe": "Versicherungen Person 2", "betrag": 0, "anteile": {"P2": 1.0}, "abzugsart": "krankheitskosten"}, {"id": "KELLER_MIETE", "bezeichnung": "Mietkosten Kellerabteil", "gruppe": "Lebenshaltung Person 1", "betrag": 744, "anteile": {"P1": 1.0}}, {"id": "ESSEN_P1", "bezeichnung": "Verpflegung", "gruppe": "Lebenshaltung Person 1", "betrag": 7200, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "COIFFEUR_P1", "bezeichnung": "Coiffeur und persoenliche Auslagen", "gruppe": "Lebenshaltung Person 1", "betrag": 1500, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "ZAHNARZT_P1", "bezeichnung": "Zahnarzt und Arzt", "gruppe": "Lebenshaltung Person 1", "betrag": 1000, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true, "abzugsart": "krankheitskosten"}, {"id": "KLEIDER_P1", "bezeichnung": "Kleider", "gruppe": "Lebenshaltung Person 1", "betrag": 1500, "anteile": {"P1": 1.0}}, {"id": "SKIABO_P1", "bezeichnung": "Skiabonnement", "gruppe": "Lebenshaltung Person 1", "betrag": 1500, "bis": 2035, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "URLAUB_P1", "bezeichnung": "Ferien", "gruppe": "Lebenshaltung Person 1", "betrag": 8000, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "ZEITSCHRIFTEN_P1", "bezeichnung": "Zeitschriften", "gruppe": "Lebenshaltung Person 1", "betrag": 400, "anteile": {"P1": 1.0}}, {"id": "PARKPLATZ_P1", "bezeichnung": "Parkplatzmiete", "gruppe": "Lebenshaltung Person 1", "betrag": 600, "bis": 2045, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "HOERGERAETE_P1", "bezeichnung": "Hoergeraete und Hilfsmittel", "gruppe": "Lebenshaltung Person 1", "betrag": 750, "anteile": {"P1": 1.0}, "abzugsart": "krankheitskosten"}, {"id": "STEUERBERATER_P1", "bezeichnung": "Steuerberatung", "gruppe": "Lebenshaltung Person 1", "betrag": 2500, "anteile": {"P1": 1.0}}, {"id": "INV_PRIVAT_P1", "bezeichnung": "Private Investitionen", "gruppe": "Lebenshaltung Person 1", "betrag": 5000, "anteile": {"P1": 1.0}, "entfaellt_bei_heim": true}, {"id": "ABOS_P1", "bezeichnung": "Digitale Abonnemente", "gruppe": "Lebenshaltung Person 1", "betrag": 600, "anteile": {"P1": 1.0}}, {"id": "LH_HAUSHALTSHILFE_P1", "bezeichnung": "Haushaltshilfe", "gruppe": "Lebenshaltung Person 1", "betrag": 0, "anteile": {"P1": 1.0}}, {"id": "LH_GARTEN_P1", "bezeichnung": "Gartenunterhalt", "gruppe": "Lebenshaltung Person 1", "betrag": 0, "anteile": {"P1": 1.0}}, {"id": "LH_ANGEHOERIGE_P1", "bezeichnung": "Unterstuetzung Angehoerige", "gruppe": "Lebenshaltung Person 1", "betrag": 0, "anteile": {"P1": 1.0}}, {"id": "DIVERSES_P1", "bezeichnung": "Diverses", "gruppe": "Lebenshaltung Person 1", "betrag": 10000, "anteile": {"P1": 1.0}}, {"id": "ZUSATZ_P1", "bezeichnung": "Zusaetzliche Ausgaben", "gruppe": "Lebenshaltung Person 1", "betrag": 1000, "anteile": {"P1": 1.0}}, {"id": "LH_KELLER_P2", "bezeichnung": "Mietkosten Kellerabteil", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "ESSEN_P2", "bezeichnung": "Verpflegung", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "COIFFEUR_P2", "bezeichnung": "Coiffeur und persoenliche Auslagen", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "ZAHNARZT_P2", "bezeichnung": "Zahnarzt und Arzt", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}, "abzugsart": "krankheitskosten"}, {"id": "KLEIDER_P2", "bezeichnung": "Kleider", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "LH_SKIABO_P2", "bezeichnung": "Skiabonnement", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "URLAUB_P2", "bezeichnung": "Ferien", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "LH_ZEITSCHRIFTEN_P2", "bezeichnung": "Zeitschriften", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "LH_PARKPLATZ_P2", "bezeichnung": "Parkplatzmiete", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "LH_HILFSMITTEL_P2", "bezeichnung": "Hoergeraete und Hilfsmittel", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}, "abzugsart": "krankheitskosten"}, {"id": "LH_STEUERBERATUNG_P2", "bezeichnung": "Steuerberatung", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "LH_INV_PRIVAT_P2", "bezeichnung": "Private Investitionen", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "LH_ABOS_P2", "bezeichnung": "Digitale Abonnemente", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "HAUSHALTSHILFE_P2", "bezeichnung": "Haushaltshilfe", "gruppe": "Lebenshaltung Person 2", "betrag": 36000, "von": 2043, "anteile": {"P2": 1.0}}, {"id": "GAERTNER_P2", "bezeichnung": "Gartenunterhalt", "gruppe": "Lebenshaltung Person 2", "betrag": 3600, "von": 2043, "anteile": {"P2": 1.0}}, {"id": "KOSTEN_ANGEHOERIGE_1", "bezeichnung": "Unterstuetzung Angehoerige", "gruppe": "Lebenshaltung Person 2", "betrag": 15000, "bis": 2026, "anteile": {"P2": 1.0}}, {"id": "LH_DIVERSES_P2", "bezeichnung": "Diverses", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "LH_ZUSATZ_P2", "bezeichnung": "Zusaetzliche Ausgaben", "gruppe": "Lebenshaltung Person 2", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "LOHN_P1", "bezeichnung": "Nettolohn Person 1", "gruppe": "Einnahmen Person 1", "fluss": "einnahme", "betrag": 10000, "bis": 2026, "anteile": {"P1": 1.0}, "abzugsart": "erwerb"}, {"id": "NEBENERWERB_P1", "bezeichnung": "Nebenerwerb Person 1", "gruppe": "Einnahmen Person 1", "fluss": "einnahme", "betrag": 5000, "bis": 2026, "anteile": {"P1": 1.0}, "abzugsart": "erwerb"}, {"id": "AHV_P1", "bezeichnung": "AHV-Rente Person 1", "gruppe": "Einnahmen Person 1", "fluss": "einnahme", "betrag": 32760, "basisjahr": 2026, "teuerung": 0.008, "von": 2026, "anteile": {"P1": 1.0}}, {"id": "UEBRIGE_EINNAHMEN_P1", "bezeichnung": "Uebrige Einnahmen Person 1", "gruppe": "Einnahmen Person 1", "fluss": "einnahme", "betrag": 8400, "bis": 2033, "anteile": {"P1": 1.0}}, {"id": "LOHN_P2", "bezeichnung": "Nettolohn Person 2", "gruppe": "Einnahmen Person 2", "fluss": "einnahme", "betrag": 200000, "bis": 2033, "anteile": {"P2": 1.0}, "abzugsart": "erwerb"}, {"id": "NEBENERWERB_P2", "bezeichnung": "Nebenerwerb Person 2", "gruppe": "Einnahmen Person 2", "fluss": "einnahme", "betrag": 0, "bis": 2033, "anteile": {"P2": 1.0}, "abzugsart": "erwerb"}, {"id": "AHV_P2", "bezeichnung": "AHV-Rente Person 2", "gruppe": "Einnahmen Person 2", "fluss": "einnahme", "betrag": 32760, "basisjahr": 2026, "teuerung": 0.008, "von": 2034, "anteile": {"P2": 1.0}}, {"id": "UEBRIGE_EINNAHMEN_P2", "bezeichnung": "Uebrige Einnahmen Person 2", "gruppe": "Einnahmen Person 2", "fluss": "einnahme", "betrag": 0, "anteile": {"P2": 1.0}}, {"id": "ABZUG_DIVERSES_P1", "bezeichnung": "Uebrige Steuerabzuege Person 1", "gruppe": "Steuerabzuege", "betrag": 4000, "anteile": {"P1": 1.0}, "abzugsart": "uebrige"}, {"id": "ABZUG_DIVERSES_P2", "bezeichnung": "Uebrige Steuerabzuege Person 2", "gruppe": "Steuerabzuege", "betrag": 4000, "anteile": {"P2": 1.0}, "abzugsart": "uebrige"}, {"id": "FAHRZEUGVERSICHERUNG", "bezeichnung": "Fahrzeugversicherung", "gruppe": "Fahrzeuge", "betrag": 0, "anteile": {"P1": 0.5, "P2": 0.5}, "umlage_bei_tod": true}], "vermoegen_person": []}, "tarife": {"sg": {"marginalstufen": [{"breite": 11600, "satz": 0.0}, {"breite": 4200, "satz": 0.04}, {"breite": 18000, "satz": 0.06}, {"breite": 26500, "satz": 0.08}, {"breite": 38100, "satz": 0.092}, {"breite": 166100, "satz": 0.094}], "flat": {"ab_einkommen": 264500, "satz": 0.085}, "vermoegenssteuer": {"einfache_steuer": 0.0017, "sozialabzug_pro_person": 75000, "sozialabzug_pro_kind": 20000}, "bezeichnung": "Kanton St. Gallen, einfache Steuer vom Einkommen, Alleinstehende", "rechtsgrundlage": "Art. 50 StG SG (sGS 811.1)"}, "bund": {"stufen": [{"untergrenze": 0, "sockel": 0.0, "satz_je_100": 0.0}, {"untergrenze": 15200, "sockel": 0.0, "satz_je_100": 0.77}, {"untergrenze": 33200, "sockel": 138.6, "satz_je_100": 0.88}, {"untergrenze": 43500, "sockel": 229.2, "satz_je_100": 2.64}, {"untergrenze": 58000, "sockel": 612.0, "satz_je_100": 2.97}, {"untergrenze": 76200, "sockel": 1152.5, "satz_je_100": 5.94}, {"untergrenze": 82100, "sockel": 1502.95, "satz_je_100": 6.6}, {"untergrenze": 108900, "sockel": 3271.75, "satz_je_100": 8.8}, {"untergrenze": 141500, "sockel": 6140.55, "satz_je_100": 11.0}, {"untergrenze": 185100, "sockel": 10936.55, "satz_je_100": 13.2}], "flat": {"ab_einkommen": 794000, "satz": 0.115}, "bezeichnung": "Direkte Bundessteuer, Grundtarif Alleinstehende", "rechtsgrundlage": "DBG Art. 36 Abs. 1"}}};
 const VORLAGEN = {"Ferienwohnung Flims": [{"id": "FLIMS_HYPOTHEK", "bezeichnung": "Hypothekarkosten Ferienwohnung", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "hypozins", "entfaellt_bei_heim": false}, {"id": "FLIMS_NEBENKOSTEN", "bezeichnung": "Nebenkosten Ferienwohnung", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0.0005, "basisjahr": 2026, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "FLIMS_ZUSATZ", "bezeichnung": "Zusaetzliche Ausgaben Ferienwohnung", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "FLIMS_STEUERN", "bezeichnung": "Steuern Ferienwohnung", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}], "Versicherungen Liegenschaft": [{"id": "HAUSRAT_UNFALL", "bezeichnung": "Hausrat- und Unfallversicherung", "pid": "P1", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false, "anteile": {"P1": 0.5, "P2": 0.5}, "umlage_bei_tod": true}, {"id": "RECHTSSCHUTZVERSICHERUNG", "bezeichnung": "Rechtsschutzversicherung", "pid": "P1", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false, "anteile": {"P1": 0.5, "P2": 0.5}}, {"id": "SELBSTBEHALT_SACH", "bezeichnung": "Selbstbehalt Versicherungen", "pid": "P1", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false, "anteile": {"P1": 0.5, "P2": 0.5}, "umlage_bei_tod": true}], "Lebenshaltung Person 1": [{"id": "KELLER_MIETE", "bezeichnung": "Mietkosten Kellerabteil", "pid": "P1", "fluss": "ausgabe", "betrag": 744, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "ESSEN_P1", "bezeichnung": "Verpflegung", "pid": "P1", "fluss": "ausgabe", "betrag": 7200, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": true}, {"id": "COIFFEUR_P1", "bezeichnung": "Coiffeur und persoenliche Auslagen", "pid": "P1", "fluss": "ausgabe", "betrag": 1500, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": true}, {"id": "ZAHNARZT_P1", "bezeichnung": "Zahnarzt und Arzt", "pid": "P1", "fluss": "ausgabe", "betrag": 1000, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "krankheitskosten", "entfaellt_bei_heim": true}, {"id": "KLEIDER_P1", "bezeichnung": "Kleider", "pid": "P1", "fluss": "ausgabe", "betrag": 1500, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "SKIABO_P1", "bezeichnung": "Skiabonnement", "pid": "P1", "fluss": "ausgabe", "betrag": 1500, "teuerung": 0, "basisjahr": null, "von": null, "bis": 2035, "abzugsart": "keine", "entfaellt_bei_heim": true}, {"id": "URLAUB_P1", "bezeichnung": "Ferien", "pid": "P1", "fluss": "ausgabe", "betrag": 8000, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": true}, {"id": "ZEITSCHRIFTEN_P1", "bezeichnung": "Zeitschriften", "pid": "P1", "fluss": "ausgabe", "betrag": 400, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "PARKPLATZ_P1", "bezeichnung": "Parkplatzmiete", "pid": "P1", "fluss": "ausgabe", "betrag": 600, "teuerung": 0, "basisjahr": null, "von": null, "bis": 2045, "abzugsart": "keine", "entfaellt_bei_heim": true}, {"id": "HOERGERAETE_P1", "bezeichnung": "Hoergeraete und Hilfsmittel", "pid": "P1", "fluss": "ausgabe", "betrag": 750, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "krankheitskosten", "entfaellt_bei_heim": false}, {"id": "STEUERBERATER_P1", "bezeichnung": "Steuerberatung", "pid": "P1", "fluss": "ausgabe", "betrag": 2500, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "INV_PRIVAT_P1", "bezeichnung": "Private Investitionen", "pid": "P1", "fluss": "ausgabe", "betrag": 5000, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": true}, {"id": "ABOS_P1", "bezeichnung": "Digitale Abonnemente", "pid": "P1", "fluss": "ausgabe", "betrag": 600, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "LH_HAUSHALTSHILFE_P1", "bezeichnung": "Haushaltshilfe", "pid": "P1", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "LH_GARTEN_P1", "bezeichnung": "Gartenunterhalt", "pid": "P1", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "LH_ANGEHOERIGE_P1", "bezeichnung": "Unterstuetzung Angehoerige", "pid": "P1", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "FAHRZEUG_ZAHLUNG_P1", "bezeichnung": "Anteilige Zahlung Fahrzeugkosten", "pid": "P1", "fluss": "transfer", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "DIVERSES_P1", "bezeichnung": "Diverses", "pid": "P1", "fluss": "ausgabe", "betrag": 10000, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "ZUSATZ_P1", "bezeichnung": "Zusaetzliche Ausgaben", "pid": "P1", "fluss": "ausgabe", "betrag": 1000, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}], "Versicherungen Person 1": [{"id": "KRANKENKASSE_P1", "bezeichnung": "Krankenversicherung Person 1", "pid": "P1", "fluss": "ausgabe", "betrag": 8784, "teuerung": 0.005, "basisjahr": 2025, "von": null, "bis": null, "abzugsart": "krankenversicherung", "entfaellt_bei_heim": false}, {"id": "SELBSTBEHALT_P1", "bezeichnung": "Selbstbehalt Krankenversicherung Person 1", "pid": "P1", "fluss": "ausgabe", "betrag": 1500, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "krankheitskosten", "entfaellt_bei_heim": false}], "Einnahmen Person 1": [{"id": "LOHN_P1", "bezeichnung": "Nettolohn Person 1", "pid": "P1", "fluss": "einnahme", "betrag": 10000, "teuerung": 0, "basisjahr": null, "von": null, "bis": 2026, "abzugsart": "erwerb", "entfaellt_bei_heim": false}, {"id": "NEBENERWERB_P1", "bezeichnung": "Nebenerwerb 1 Person 1", "pid": "P1", "fluss": "einnahme", "betrag": 5000, "teuerung": 0, "basisjahr": null, "von": null, "bis": 2026, "abzugsart": "erwerb", "entfaellt_bei_heim": false}, {"id": "NEBENERWERB2_P1", "bezeichnung": "Nebenerwerb 2 Person 1", "pid": "P1", "fluss": "einnahme", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": 2026, "abzugsart": "erwerb", "entfaellt_bei_heim": false}, {"id": "NEBENERWERB3_P1", "bezeichnung": "Nebenerwerb 3 Person 1", "pid": "P1", "fluss": "einnahme", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": 2026, "abzugsart": "erwerb", "entfaellt_bei_heim": false}, {"id": "NEBENERWERB4_P1", "bezeichnung": "Nebenerwerb 4 Person 1", "pid": "P1", "fluss": "einnahme", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": 2026, "abzugsart": "erwerb", "entfaellt_bei_heim": false}, {"id": "AHV_P1", "bezeichnung": "AHV-Rente Person 1", "pid": "P1", "fluss": "einnahme", "betrag": 30240, "teuerung": 0.008, "basisjahr": 2026, "von": 2026, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false, "ohne_13": true}, {"id": "AHV13_P1", "bezeichnung": "13. AHV-Rente Person 1", "pid": "P1", "fluss": "einnahme", "betrag": 2520, "teuerung": 0.008, "basisjahr": 2026, "von": 2026, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "UEBRIGE_EINNAHMEN_P1", "bezeichnung": "Uebrige Einnahmen Person 1", "pid": "P1", "fluss": "einnahme", "betrag": 8400, "teuerung": 0, "basisjahr": null, "von": null, "bis": 2033, "abzugsart": "keine", "entfaellt_bei_heim": false, "ersetzt": ["AUTO_ZAHLUNG_P2_AN_P1"]}], "Lebenshaltung Person 2": [{"id": "LH_KELLER_P2", "bezeichnung": "Mietkosten Kellerabteil", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "ESSEN_P2", "bezeichnung": "Verpflegung", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "COIFFEUR_P2", "bezeichnung": "Coiffeur und persoenliche Auslagen", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "ZAHNARZT_P2", "bezeichnung": "Zahnarzt und Arzt", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "krankheitskosten", "entfaellt_bei_heim": false}, {"id": "KLEIDER_P2", "bezeichnung": "Kleider", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "LH_SKIABO_P2", "bezeichnung": "Skiabonnement", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "URLAUB_P2", "bezeichnung": "Ferien", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "LH_ZEITSCHRIFTEN_P2", "bezeichnung": "Zeitschriften", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "LH_PARKPLATZ_P2", "bezeichnung": "Parkplatzmiete", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "LH_HILFSMITTEL_P2", "bezeichnung": "Hoergeraete und Hilfsmittel", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "krankheitskosten", "entfaellt_bei_heim": false}, {"id": "LH_STEUERBERATUNG_P2", "bezeichnung": "Steuerberatung", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "LH_INV_PRIVAT_P2", "bezeichnung": "Private Investitionen", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "LH_ABOS_P2", "bezeichnung": "Digitale Abonnemente", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "HAUSHALTSHILFE_P2", "bezeichnung": "Haushaltshilfe", "pid": "P2", "fluss": "ausgabe", "betrag": 36000, "teuerung": 0, "basisjahr": null, "von": 2043, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "GAERTNER_P2", "bezeichnung": "Gartenunterhalt", "pid": "P2", "fluss": "ausgabe", "betrag": 3600, "teuerung": 0, "basisjahr": null, "von": 2043, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "KOSTEN_ANGEHOERIGE_1", "bezeichnung": "Unterstuetzung Angehoerige", "pid": "P2", "fluss": "ausgabe", "betrag": 15000, "teuerung": 0, "basisjahr": null, "von": null, "bis": 2026, "abzugsart": "keine", "entfaellt_bei_heim": false, "ersetzt": ["KOSTEN_ANGEHOERIGE_2"], "summieren": true}, {"id": "FAHRZEUG_ZAHLUNG_P2", "bezeichnung": "Anteilige Zahlung Fahrzeugkosten", "pid": "P2", "fluss": "transfer", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "LH_DIVERSES_P2", "bezeichnung": "Diverses", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "LH_ZUSATZ_P2", "bezeichnung": "Zusaetzliche Ausgaben", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}], "Versicherungen Person 2": [{"id": "KRANKENKASSE_P2", "bezeichnung": "Krankenversicherung Person 2", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0.01, "basisjahr": 2025, "von": null, "bis": null, "abzugsart": "krankenversicherung", "entfaellt_bei_heim": false}, {"id": "SELBSTBEHALT_P2", "bezeichnung": "Selbstbehalt Krankenversicherung Person 2", "pid": "P2", "fluss": "ausgabe", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "krankheitskosten", "entfaellt_bei_heim": false}], "Einnahmen Person 2": [{"id": "LOHN_P2", "bezeichnung": "Nettolohn Person 2", "pid": "P2", "fluss": "einnahme", "betrag": 200000, "teuerung": 0, "basisjahr": null, "von": null, "bis": 2033, "abzugsart": "erwerb", "entfaellt_bei_heim": false}, {"id": "NEBENERWERB_P2", "bezeichnung": "Nebenerwerb 1 Person 2", "pid": "P2", "fluss": "einnahme", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": 2033, "abzugsart": "erwerb", "entfaellt_bei_heim": false}, {"id": "NEBENERWERB2_P2", "bezeichnung": "Nebenerwerb 2 Person 2", "pid": "P2", "fluss": "einnahme", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": 2033, "abzugsart": "erwerb", "entfaellt_bei_heim": false}, {"id": "NEBENERWERB3_P2", "bezeichnung": "Nebenerwerb 3 Person 2", "pid": "P2", "fluss": "einnahme", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": 2033, "abzugsart": "erwerb", "entfaellt_bei_heim": false}, {"id": "NEBENERWERB4_P2", "bezeichnung": "Nebenerwerb 4 Person 2", "pid": "P2", "fluss": "einnahme", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": 2033, "abzugsart": "erwerb", "entfaellt_bei_heim": false}, {"id": "AHV_P2", "bezeichnung": "AHV-Rente Person 2", "pid": "P2", "fluss": "einnahme", "betrag": 30240, "teuerung": 0.008, "basisjahr": 2026, "von": 2034, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false, "ohne_13": true}, {"id": "AHV13_P2", "bezeichnung": "13. AHV-Rente Person 2", "pid": "P2", "fluss": "einnahme", "betrag": 2520, "teuerung": 0.008, "basisjahr": 2026, "von": 2026, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}, {"id": "UEBRIGE_EINNAHMEN_P2", "bezeichnung": "Uebrige Einnahmen Person 2", "pid": "P2", "fluss": "einnahme", "betrag": 0, "teuerung": 0, "basisjahr": null, "von": null, "bis": null, "abzugsart": "keine", "entfaellt_bei_heim": false}]};// ===========================================================================
 //  Rechenkern - Portierung des geprueften Python-Kerns nach JavaScript.
 //  Die Zahlen muessen auf den Rappen mit der Python-Fassung uebereinstimmen.
@@ -8015,16 +8159,44 @@ function heimkostenImJahr(person, jahr) {
 // uebersteigt die Taxe den Kassenbeitrag immer, und dann ist die Beteiligung
 // der volle Hoechstbetrag. Nur in den untersten Stufen waere sie kleiner;
 // dort faellt der Unterschied nicht ins Gewicht.
+// Beitrag der Krankenversicherung an die Pflege im Heim, je Tag. Er ist nach
+// Pflegestufe gestaffelt: 9.60 Franken je 20 Minuten Pflegebedarf, hoechstens
+// zwoelf Stufen, also hoechstens 115.20 Franken je Tag (Art. 7a Abs. 3 KLV).
+//
+// Die Pflegestufe steht auf der Heimrechnung. Ist sie nicht erfasst, wird sie
+// aus der Pflegetaxe geschaetzt: Die Hoechstansaetze des Kantons St. Gallen
+// nach Art. 2 der Verordnung ueber die Pflegefinanzierung (sGS 331.21)
+// reichen von 12 Franken in Stufe 1 bis 254 Franken in Stufe 12. Zwischen
+// diesen beiden Punkten wird linear interpoliert. Die Schaetzung ersetzt die
+// Angabe auf der Rechnung nicht - sie liefert eine brauchbare Groessenordnung,
+// solange die Stufe nicht bekannt ist.
+function kassenbeitragHeim(pflegeTag, pf) {
+  const p = pf || {};
+  const jeStufe = Number(p.kassenbeitrag_je_stufe);
+  const satz = isFinite(jeStufe) ? jeStufe : 9.60;
+  const maxStufen = Number(p.pflegestufen_max) || 12;
+  if (!(pflegeTag > 0)) return 0;
+  const u = Number(p.sg_ansatz_stufe1), o = Number(p.sg_ansatz_stufe12);
+  const unten = isFinite(u) ? u : 12, oben = isFinite(o) ? o : 254;
+  const stufe = oben > unten
+    ? Math.min(maxStufen, Math.max(1,
+        Math.round(1 + (pflegeTag - unten) / (oben - unten) * (maxStufen - 1))))
+    : maxStufen;
+  // Die Kasse zahlt nie mehr, als die Pflege tatsaechlich kostet.
+  return Math.min(pflegeTag, stufe * satz);
+}
+
 function heimTeileImJahr(person, jahr, pf) {
   const leer = { pflege: 0, betreuung: 0, sonstige: 0, sonstigeTraeger: "selbst",
-                 pflegeVoll: 0, pflegeGetragen: 0, total: 0 };
+                 pflegeVoll: 0, pflegeKasse: 0, pflegeGemeinde: 0,
+                 pflegeGetragen: 0, total: 0, gesamt: 0 };
   if (!person || person.heimeintritt_ab == null) return leer;
   const ab = Number(person.heimeintritt_ab);
   if (!isFinite(ab) || jahr < ab) return leer;
   if (person.heim_kosten_art !== "geteilt") {
     // Alte Erfassung: ein Gesamtbetrag, voll selbst getragen.
     const t = heimkostenImJahr(person, jahr);
-    return Object.assign({}, leer, { betreuung: t, total: t });
+    return Object.assign({}, leer, { betreuung: t, total: t, gesamt: t });
   }
   // Pflegestufe: die letzte erreichte Stufe gilt, wie beim Gesamtbetrag.
   let pflegeTag = Number(person.heim_pflegetaxe_pro_tag) || 0;
@@ -8041,26 +8213,44 @@ function heimTeileImJahr(person, jahr, pf) {
     ? Number(person.heimkosten_basisjahr) : ab;
   const f = Math.pow(1 + tau, Math.max(0, jahr - basis));
   const tage = tageImJahr(jahr);
+  const pflegeTagJ = pflegeTag * f;
 
-  // Die Beteiligung an der Pflege ist ein Frankenbetrag je Tag und folgt
-  // der Teuerung nicht: sie ist an den bundesrechtlichen Pflegebeitrag
-  // gebunden, nicht an den Heimtarif.
+  // ---- Aufteilung der Pflegekosten auf die drei Traeger ----------------
+  // 1. Die Krankenversicherung zahlt ihren Beitrag nach Pflegestufe. Er ist
+  //    an den Pflegebedarf gebunden und folgt der Teuerung des Heimtarifs
+  //    nicht - der Bundesrat setzt ihn fest.
+  // 2. Die versicherte Person traegt vom Rest hoechstens 20 Prozent des
+  //    hoechsten Pflegebeitrags, also 23.00 Franken je Tag.
+  // 3. Was dann noch offen ist, traegt die oeffentliche Hand: in St. Gallen
+  //    der Kanton zu zwei Dritteln und die politische Gemeinde zu einem
+  //    Drittel (Art. 9 Abs. 1 PflegeG SG).
+  const kasseTag = (person.heim_kassenbeitrag_pro_tag != null
+                    && person.heim_kassenbeitrag_pro_tag !== "")
+    ? Math.max(0, Number(person.heim_kassenbeitrag_pro_tag))
+    : kassenbeitragHeim(pflegeTag, pf);
   const grenze = Number((pf || {}).beteiligung_heim_pro_tag);
   const grenzeTag = isFinite(grenze) ? Math.max(0, grenze) : 23;
-  const pflegeVoll = pflegeTag * f * tage;
-  const pflegeEigen = Math.min(pflegeTag * f, grenzeTag) * tage;
+  const restTag = Math.max(0, pflegeTagJ - kasseTag);
+  const eigenTag = Math.min(restTag, grenzeTag);
+  const gemeindeTag = Math.max(0, restTag - eigenTag);
 
   const sonstMonat = Number(person.heim_sonstige_pro_monat) || 0;
   const sonstige = sonstMonat * 12 * f;
+  const betreuung = betreuTag * f * tage;
 
   return {
-    pflege: pflegeEigen,
-    betreuung: betreuTag * f * tage,
+    pflege: eigenTag * tage,
+    betreuung,
     sonstige,
     sonstigeTraeger: person.heim_sonstige_traeger || "selbst",
-    pflegeVoll,
-    pflegeGetragen: Math.max(0, pflegeVoll - pflegeEigen),
-    total: pflegeEigen + betreuTag * f * tage + sonstige,
+    pflegeVoll: pflegeTagJ * tage,
+    pflegeKasse: kasseTag * tage,
+    pflegeGemeinde: gemeindeTag * tage,
+    pflegeGetragen: (kasseTag + gemeindeTag) * tage,
+    pflegetaxeTag: pflegeTagJ,
+    kassenbeitragTag: kasseTag,
+    total: eigenTag * tage + betreuung + sonstige,
+    gesamt: pflegeTagJ * tage + betreuung + sonstige,
   };
 }
 
@@ -8081,7 +8271,8 @@ function heimTeileImJahr(person, jahr, pf) {
 // Die Spitex endet von selbst im Jahr des Heimeintritts - beides zugleich
 // gibt es nicht.
 function spitexTeileImJahr(person, jahr, pf) {
-  const leer = { pflege: 0, haus: 0, pflegeVoll: 0, pflegeGetragen: 0, total: 0,
+  const leer = { pflege: 0, haus: 0, pflegeVoll: 0, pflegeKasse: 0,
+                 pflegeGemeinde: 0, pflegeGetragen: 0, total: 0, gesamt: 0,
                  stdPflege: 0, stdHaus: 0 };
   if (!person || !person.spitex_aktiv || person.spitex_ab == null) return leer;
   const ab = Number(person.spitex_ab);
@@ -8129,12 +8320,89 @@ function spitexTeileImJahr(person, jahr, pf) {
   const tagePflege = stdP > 0 ? tageImJahr(jahr) : 0;
   const pflegeEigen = Math.min(pflegeVoll * anteil, grenzeTag * tagePflege);
 
+  // Aufteilung der Pflegekosten: Die Krankenversicherung zahlt ihren Beitrag
+  // je Stunde nach Art. 7a Abs. 1 KLV - 76.90 Franken fuer Abklaerung und
+  // Beratung, 63.00 fuer Untersuchung und Behandlung, 52.60 fuer Grundpflege.
+  // Gerechnet wird mit dem Beitrag fuer Grundpflege, weil dieser den Hauptteil
+  // der Stunden ausmacht. Was Kasse und Eigenanteil nicht decken, traegt nach
+  // Art. 16 Abs. 1 PflegeG SG die politische Gemeinde.
+  const kasseStd = (p.kassenbeitrag_spitex_std != null)
+    ? Math.max(0, Number(p.kassenbeitrag_spitex_std)) : 52.60;
+  const pflegeKasse = Math.min(pflegeVoll, stdP * wochen * kasseStd);
+  const pflegeGemeinde = Math.max(0, pflegeVoll - pflegeKasse - pflegeEigen);
+
   return {
     pflege: pflegeEigen, haus,
-    pflegeVoll, pflegeGetragen: Math.max(0, pflegeVoll - pflegeEigen),
-    total: pflegeEigen + haus, stdPflege: stdP, stdHaus: stdH,
+    pflegeVoll, pflegeKasse, pflegeGemeinde,
+    pflegeGetragen: pflegeKasse + pflegeGemeinde,
+    total: pflegeEigen + haus, gesamt: pflegeVoll + haus,
+    stdPflege: stdP, stdHaus: stdH,
   };
 }
+
+// --------------------------------- Leistungen der Zusatzversicherung
+// Spitalzusatzversicherungen decken den Aufenthalt im Spital, nicht die
+// Langzeitpflege im Heim. Fuer die Pflege zu Hause richten sie dagegen
+// Beitraege aus - bei der hier hinterlegten Deckung an die
+// Hauskrankenpflege und an die Haushaltshilfe, je als Franken je Tag mit
+// einer Hoechstzahl von Tagen.
+//
+// Gerechnet wird je Jahr:
+//   1. Beitrag an die Hauskrankenpflege: Satz je Tag mal Zahl der Tage,
+//      hoechstens so viel, wie an Pflege selbst zu tragen bleibt. Mehr als
+//      die tatsaechlichen Kosten zahlt keine Versicherung.
+//   2. Beitrag an die Haushaltshilfe, gleich gerechnet, gegen die
+//      Hauswirtschaftskosten.
+//   3. Von der Summe wird die Jahresfranchise abgezogen.
+//
+// "verbraucht" zaehlt die bereits bezogenen Tage der Hauskrankenpflege ueber
+// die Jahre; das Kontingent ist insgesamt begrenzt.
+//
+// ALLE Werte sind Eingaben. Die Vorgaben stammen aus den Zusatzbedingungen
+// einer halbprivaten Deckung und sind eine ANNAHME: Die Bedingungen aendern
+// von Jahr zu Jahr, und ob ein Beitrag den Selbstbehalt der Grundversicherung
+// deckt oder nur Leistungen ausserhalb davon, geht aus dem Wortlaut nicht
+// immer hervor. Massgebend ist die eigene Police.
+function zusatzLeistungImJahr(person, pflegeSelbst, hausKosten, verbraucht) {
+  const leer = { hkp: 0, hh: 0, franchise: 0, total: 0, tageHkp: 0 };
+  if (!person || !person.zusatz_aktiv) return leer;
+  // Ohne Kosten keine Leistung - und vor allem kein Verbrauch des
+  // Kontingents. Ohne diese Pruefung zaehlte jedes Rechenjahr Tage, auch
+  // jene lange vor dem ersten Pflegebedarf, und das Kontingent waere
+  // aufgebraucht, bevor die Pflege ueberhaupt beginnt.
+  const kostenP = Math.max(0, pflegeSelbst || 0);
+  const kostenH = Math.max(0, hausKosten || 0);
+  if (!(kostenP > 0 || kostenH > 0)) return leer;
+
+  const satzH = Number(person.zusatz_hkp_pro_tag) || 0;
+  const satzW = Number(person.zusatz_hh_pro_tag) || 0;
+  const tageJahr = Math.max(0, Number(person.zusatz_hkp_tage_jahr) || 0);
+  const tageTotal = Math.max(0, Number(person.zusatz_hkp_tage_total) || 0);
+  const tageW = Math.max(0, Number(person.zusatz_hh_tage_jahr) || 0);
+  const fr = Math.max(0, Number(person.zusatz_franchise) || 0);
+
+  // Hauskrankenpflege: Tage dieses Jahres, begrenzt durch das Restkontingent.
+  // Tage werden nur verbraucht, soweit Pflegekosten anfallen.
+  const rest = tageTotal > 0 ? Math.max(0, tageTotal - (verbraucht || 0)) : tageJahr;
+  const tageMoeglich = Math.max(0, Math.min(tageJahr, rest));
+  // Mehr Tage als noetig werden nicht bezogen: Deckt der Satz je Tag die
+  // Kosten schon nach wenigen Tagen, bleibt der Rest des Kontingents stehen.
+  const tageHkp = (kostenP > 0 && satzH > 0)
+    ? Math.min(tageMoeglich, Math.ceil(kostenP / satzH)) : 0;
+  const hkpRoh = Math.min(kostenP, satzH * tageHkp);
+  const hhRoh = Math.min(kostenH, satzW * tageW);
+  const roh = hkpRoh + hhRoh;
+  // Die Franchise mindert die Auszahlung, nicht den Anspruch.
+  const total = Math.max(0, roh - fr);
+  // Franchise anteilig den beiden Posten zuweisen, damit die Anzeige stimmt.
+  const q = roh > 0 ? total / roh : 0;
+  return {
+    hkp: hkpRoh * q, hh: hhRoh * q,
+    franchise: Math.min(fr, roh),
+    total, tageHkp,
+  };
+}
+
 
 // ------------------------------------------- Hilflosenentschaedigung AHV
 // Sie wird unabhaengig von Einkommen und Vermoegen ausgerichtet - ein
@@ -8603,6 +8871,10 @@ function rechneEinmal(cfg, tarife, vorlauf) {
   const rzRunden = (rz.aktiv ? (rz.runden || []) : []).filter(r => r && r.aktiv !== false);
   let rzBestand = Number(rz.startbetrag) || 0;
   let rzVorTod = 0;
+  // Bereits bezogene Tage der Hauskrankenpflege je Person. Das Kontingent
+  // der Zusatzversicherung ist insgesamt begrenzt und laeuft ueber Jahre.
+  const zusatzTageVerbraucht = {};
+  personen.forEach(p => zusatzTageVerbraucht[p.id] = 0);
   const rzEingezahlt = {};
   personen.forEach(p => rzEingezahlt[p.id] = 0);
   const rzAnteile = () => {
@@ -9757,6 +10029,15 @@ function rechneEinmal(cfg, tarife, vorlauf) {
       zeile.heimkosten = hT.pflege + hT.betreuung + zeile.heimSonstigeSelbst
                        + zeile.heimSonstigeFuerAndere;
       zeile.spitexkosten = sT.total;
+      // Leistungen der Zusatzversicherung an die Pflege zu Hause. Sie
+      // mindern, was selbst zu tragen bleibt. Im Heim greifen sie nicht:
+      // Eine Spitalzusatzversicherung deckt den Spitalaufenthalt, nicht die
+      // Langzeitpflege.
+      const zus = zusatzLeistungImJahr(person, sT.pflege, sT.haus,
+        zusatzTageVerbraucht[pid] || 0);
+      zusatzTageVerbraucht[pid] = (zusatzTageVerbraucht[pid] || 0) + zus.tageHkp;
+      zeile.zusatzLeistung = zus;
+      zeile.spitexkosten = Math.max(0, sT.total - zus.total);
       // Hilflosenentschaedigung: Einnahme, unabhaengig von Einkommen und
       // Vermoegen. Steuerfrei nach Art. 24 lit. h DBG.
       zeile.hilflosenentschaedigung = hilflosImJahr(person, jahr, pfCfg, cfg.zivilstand);
@@ -13623,6 +13904,18 @@ function umstellen(k) {
       beteiligung_spitex_anteil: 0.10,
       beteiligung_spitex_pro_tag: 7.70,
       pflegebeitrag_bund_pro_tag: 115.20,
+      // Beitrag der Krankenversicherung: 9.60 Franken je 20 Minuten
+      // Pflegebedarf, hoechstens zwoelf Stufen (Art. 7a Abs. 3 KLV). Die
+      // Stufe wird aus der Pflegetaxe geschaetzt; die Hoechstansaetze des
+      // Kantons reichen von 12 Franken in Stufe 1 bis 254 Franken in
+      // Stufe 12 (Art. 2 der Verordnung sGS 331.21).
+      kassenbeitrag_je_stufe: 9.60,
+      pflegestufen_max: 12,
+      sg_ansatz_stufe1: 12,
+      sg_ansatz_stufe12: 254,
+      // Ambulant, Art. 7a Abs. 1 KLV: 76.90 fuer Abklaerung und Beratung,
+      // 63.00 fuer Untersuchung und Behandlung, 52.60 fuer Grundpflege.
+      kassenbeitrag_spitex_std: 52.60,
       spitex_tarif_pflege: 69.15,
       spitex_tarif_haus: 40.00,
       min_altersrente: 1260,
@@ -13645,6 +13938,7 @@ function umstellen(k) {
       if (p.heim_betreuung_pro_tag == null) p.heim_betreuung_pro_tag = 0;
       if (p.heim_sonstige_pro_monat == null) p.heim_sonstige_pro_monat = 0;
       if (p.heim_sonstige_traeger == null) p.heim_sonstige_traeger = "selbst";
+      if (p.heim_kassenbeitrag_pro_tag === undefined) p.heim_kassenbeitrag_pro_tag = null;
       if (p.spitex_aktiv == null) p.spitex_aktiv = false;
       if (p.spitex_ab === undefined) p.spitex_ab = null;
       if (p.spitex_bis === undefined) p.spitex_bis = null;
@@ -13658,6 +13952,16 @@ function umstellen(k) {
       if (p.he_grad == null) p.he_grad = "mittel";
       if (p.he_besitzstand_iv == null) p.he_besitzstand_iv = false;
       if (p.he_betrag_eigen === undefined) p.he_betrag_eigen = null;
+      // Leistungen der Zusatzversicherung an die Pflege zu Hause. Die
+      // Vorgaben stammen aus den Zusatzbedingungen einer halbprivaten
+      // Deckung und sind eine Annahme - massgebend ist die eigene Police.
+      if (p.zusatz_aktiv == null) p.zusatz_aktiv = false;
+      if (p.zusatz_hkp_pro_tag == null) p.zusatz_hkp_pro_tag = 60;
+      if (p.zusatz_hkp_tage_jahr == null) p.zusatz_hkp_tage_jahr = 365;
+      if (p.zusatz_hkp_tage_total == null) p.zusatz_hkp_tage_total = 720;
+      if (p.zusatz_hh_pro_tag == null) p.zusatz_hh_pro_tag = 30;
+      if (p.zusatz_hh_tage_jahr == null) p.zusatz_hh_tage_jahr = 60;
+      if (p.zusatz_franchise == null) p.zusatz_franchise = 1000;
     }
 
     // Ersterwerberabzug je Person; ohne Eintrag wirkt er nicht.
@@ -16249,6 +16553,45 @@ function positionsTabelle(t, filter, quelle, bloecke) {
       // eine Vorlagenposition kaeme beim naechsten Oeffnen von selbst zurueck.
       {
         const zw = el("td"); zw.style.cssText = "padding:3px 4px;text-align:center";
+        // Aufteilen: Eine Position wird in zwei zerlegt, die sich den Betrag
+        // teilen und danach eigene Teuerungssaetze tragen koennen. Gebraucht
+        // etwa bei der Krankenkassenpraemie: Der Teil einer
+        // Zusatzversicherung im Tarifmodell "Abschlussalter" steigt nicht
+        // altersbedingt, waehrend die Grundversicherung der allgemeinen
+        // Kostenentwicklung folgt. Ein einziger Mischsatz bildet das nicht ab.
+        {
+          const b2 = el("button", "knopf", "⇄");
+          b2.type = "button";
+          b2.title = "Position in zwei Zeilen aufteilen. Beide behalten "
+            + "Rubrik, Kostenteiler und Jahreszahlen; der Betrag wird hälftig "
+            + "verteilt und lässt sich danach je Zeile ändern — ebenso die "
+            + "Teuerung. Nützlich, wenn ein Teil der Ausgabe anders teuert als "
+            + "der andere.";
+          b2.style.cssText = "padding:2px 7px;font-size:12px;line-height:1.2;margin-right:4px";
+          b2.addEventListener("click", () => {
+            const halb = Math.round((Number(pos.betrag) || 0) / 2);
+            const neu = structuredClone(pos);
+            neu.id = (pos.id || "POS") + "_T2_" + Date.now().toString(36);
+            neu.bezeichnung = (pos.bezeichnung || "Position") + " (Teil 2)";
+            neu.betrag = (Number(pos.betrag) || 0) - halb;
+            pos.bezeichnung = (pos.bezeichnung || "Position") + " (Teil 1)";
+            pos.betrag = halb;
+            const einfuegen = arr => {
+              if (!Array.isArray(arr)) return;
+              const i3 = pos.id ? arr.findIndex(x => x && x.id === pos.id) : arr.indexOf(pos);
+              if (i3 >= 0) arr.splice(i3 + 1, 0, structuredClone(neu));
+            };
+            einfuegen(cfg.positionen);
+            einfuegen((cfg.budget2 || {}).positionen);
+            if (liste !== cfg.positionen && liste !== (cfg.budget2 || {}).positionen)
+              einfuegen(liste);
+            rechnen();
+            melde("«" + (pos.bezeichnung || "") + "» aufgeteilt. Beide Zeilen tragen "
+              + "je " + chf(halb) + " CHF; Beträge und Teuerung sind nun je Zeile "
+              + "zu setzen. Die Summe bleibt vorerst gleich.");
+          });
+          zw.appendChild(b2);
+        }
         // Eigene Zeilen sind immer loeschbar: sie stammen aus keiner Vorlage
         // und kaemen deshalb auch nicht von selbst zurueck.
         {
@@ -19438,13 +19781,27 @@ function pflegeEckwerteZeichnen() {
     pflegeEingaben.heAktiv = cbH.checked; pflegeEckwerteZeichnen();
   });
   schH.appendChild(cbH);
-  schH.appendChild(el("span", null, "Hilflosenentschädigung der AHV beziehen"));
+  schH.appendChild(el("span", null,
+    "Hilflosenentschädigung der AHV berücksichtigen"));
   ke.appendChild(schH);
   if (pflegeEingaben.heAktiv)
     feld("Grad der Hilflosigkeit", wahlFeld(
       [["leicht", "leicht"], ["mittel", "mittel"], ["schwer", "schwer"]],
       pflegeEingaben.heGrad || "mittel",
       x => { pflegeEingaben.heGrad = x; pflegeEckwerteZeichnen(); }), "");
+  const eH = el("p", "kleintext");
+  eH.innerHTML = pflegeEingaben.heAktiv
+    ? "<strong>Ein.</strong> Die Entschädigung wird in beiden Pflegeverläufen gerechnet, "
+      + "ab Beginn der Spitex-Phase. Anspruch besteht, wenn eine Person für alltägliche "
+      + "Verrichtungen dauernd auf Hilfe angewiesen ist; sie wird <strong>unabhängig von "
+      + "Einkommen und Vermögen</strong> ausgerichtet und ist nach Art. 24 lit. h DBG "
+      + "steuerfrei. Zu beachten: Sie wird erst nach einem Jahr Hilflosigkeit "
+      + "ausgerichtet und muss bei der Ausgleichskasse angemeldet werden."
+    : "<strong>Aus.</strong> Die Entschädigung wird nicht gerechnet — die vorsichtige "
+      + "Annahme. Einschalten, wenn mit einem Anspruch zu rechnen ist; bei einem "
+      + "Heimaufenthalt mit Pflegebedarf ist er die Regel.";
+  eH.style.cssText = "margin:4px 0 0; color:var(--gedaempft)";
+  ke.appendChild(eH);
 
   const schD = el("div", "schalter");
   const cbD = el("input"); cbD.type = "checkbox";
@@ -19634,36 +19991,102 @@ function pflegeTabelleZeichnen() {
   }
 
   // ---- Jahreswerte des langen Verlaufs ----
+  // Aufbau nach Kostentraegern: zuerst die Gesamtkosten, dann was die Person
+  // selbst traegt mit ihrer Aufteilung, dann der Beitrag der
+  // Krankenversicherung, zuletzt der Anteil der oeffentlichen Hand. So ist in
+  // einer Zeile zu sehen, wie sich die Kosten verteilen - und dass der selbst
+  // getragene Teil nur ein Bruchteil des Ganzen ist.
   const lang = pflegeLauf.laeufe.find(x => x.art === "lang");
   const tj = $("#tabPflegeJahre");
   if (tj && lang && lang.erg && p) {
     tj.innerHTML = "";
-    const kz2 = tj.createTHead().insertRow();
-    ["Jahr", "Alter", "Spitex selbst CHF", "Heim selbst CHF",
-     "davon Pflege CHF", "davon Betreuung CHF", "davon Sonstiges CHF",
-     "Hilflosenentschädigung CHF", "von Kasse und Gemeinde getragen CHF"]
-      .forEach((x, i) => kz2.appendChild(el("th", i === 0 ? "links" : null, x)));
+    const kopf1 = tj.createTHead().insertRow();
+    const kopf2 = tj.createTHead().insertRow();
+    const gr = (text, spalten, klasse) => {
+      const th = el("th", klasse || "gruppe", text);
+      th.colSpan = spalten; kopf1.appendChild(th);
+    };
+    const ug = (text, klasse) => kopf2.appendChild(el("th", klasse || null, text));
+    gr("", 2, "links");
+    ug("Jahr", "links"); ug("Alter");
+    gr("Gesamtkosten der Pflege", 1);
+    ug("total CHF", "trenner");
+    gr("Selbst zu tragen", 5);
+    ug("zusammen CHF", "trenner");
+    ug("Pflege"); ug("Betreuung und Hotellerie"); ug("Sonstiges"); ug("Spitex");
+    gr("Krankenversicherung", 1);
+    ug("Beitrag CHF", "trenner");
+    gr("Gemeinde und Kanton", 1);
+    ug("Restfinanzierung CHF", "trenner");
+    gr("Zusatzversicherung", 1);
+    ug("Leistung CHF", "trenner");
+    gr("Einnahme", 1);
+    ug("Hilflosenentschädigung CHF", "trenner");
+    // Die erste Kopfzeile braucht fuer die beiden ersten Spalten einen
+    // Platzhalter, der sich ueber beide Zeilen zieht.
+    kopf1.cells[0].rowSpan = 1;
+
     const kb2 = tj.createTBody();
+    let sG = 0, sS = 0, sK = 0, sGem = 0, sHe = 0, sZ = 0;
     for (const z of (lang.erg.reihen[p.id] || [])) {
       if (!z.lebt) continue;
-      const hat = (z.spitexkosten || 0) > 0 || (z.heimkosten || 0) > 0
-               || (z.hilflosenentschaedigung || 0) > 0;
-      if (!hat) continue;
+      const hT = z.heimTeile || {}, sT = z.spitexTeile || {};
+      const gesamt = (hT.gesamt || 0) + (sT.gesamt || 0);
+      const selbst = (z.heimkosten || 0) + (z.spitexkosten || 0);
+      const kasse = (hT.pflegeKasse || 0) + (sT.pflegeKasse || 0);
+      const gem = (hT.pflegeGemeinde || 0) + (sT.pflegeGemeinde || 0);
+      const zus = (z.zusatzLeistung || {}).total || 0;
+      const he = z.hilflosenentschaedigung || 0;
+      if (!(gesamt > 0 || he > 0)) continue;
+      sG += gesamt; sS += selbst; sK += kasse; sGem += gem; sHe += he; sZ += zus;
+
       const r = kb2.insertRow();
       const c0 = el("td", "txt"); c0.textContent = z.jahr; r.appendChild(c0);
-      const mono = txt => { const c = el("td", "rechts mono");
+      const mono = (txt, klasse) => { const c = el("td", "rechts mono" + (klasse ? " " + klasse : ""));
         c.style.padding = "4px 10px"; c.textContent = txt; return c; };
       r.appendChild(mono(String(z.alter ?? "–")));
-      r.appendChild(mono(chf(z.spitexkosten || 0)));
-      r.appendChild(mono(chf(z.heimkosten || 0)));
-      r.appendChild(mono(chf((z.heimTeile || {}).pflege || 0)));
-      r.appendChild(mono(chf((z.heimTeile || {}).betreuung || 0)));
+      const cG = mono(chf(gesamt), "trenner"); cG.style.fontWeight = "600";
+      r.appendChild(cG);
+      const cS = mono(chf(selbst), "trenner"); cS.style.fontWeight = "600";
+      r.appendChild(cS);
+      r.appendChild(mono(chf(hT.pflege || 0)));
+      r.appendChild(mono(chf(hT.betreuung || 0)));
       r.appendChild(mono(chf(z.heimSonstigeSelbst || 0)));
-      const cHe = mono(chf(z.hilflosenentschaedigung || 0));
-      if ((z.hilflosenentschaedigung || 0) > 0) cHe.classList.add("gruen");
+      r.appendChild(mono(chf(z.spitexkosten || 0)));
+      r.appendChild(mono(chf(kasse), "trenner"));
+      r.appendChild(mono(chf(gem), "trenner"));
+      const cZ = mono(chf(zus), "trenner");
+      if (zus > 0) cZ.classList.add("gruen");
+      r.appendChild(cZ);
+      const cHe = mono(chf(he), "trenner");
+      if (he > 0) cHe.classList.add("gruen");
       r.appendChild(cHe);
-      r.appendChild(mono(chf(((z.heimTeile || {}).pflegeGetragen || 0)
-        + ((z.spitexTeile || {}).pflegeGetragen || 0))));
+    }
+    // Summenzeile: sie beantwortet die Frage, um die es geht.
+    if (sG > 0) {
+      const r = kb2.insertRow(); r.className = "ergebnis";
+      const c0 = el("td", "txt"); c0.colSpan = 2;
+      c0.textContent = "über die ganze Dauer";
+      r.appendChild(c0);
+      const mono = (txt, klasse) => { const c = el("td", "rechts mono" + (klasse ? " " + klasse : ""));
+        c.style.cssText = "padding:5px 10px;font-weight:700"; c.textContent = txt; return c; };
+      r.appendChild(mono(chf(sG), "trenner"));
+      r.appendChild(mono(chf(sS), "trenner"));
+      for (let i = 0; i < 4; i++) r.insertCell();
+      r.appendChild(mono(chf(sK), "trenner"));
+      r.appendChild(mono(chf(sGem), "trenner"));
+      const cZ = mono(chf(sZ), "trenner"); if (sZ > 0) cZ.classList.add("gruen");
+      r.appendChild(cZ);
+      const cHe = mono(chf(sHe), "trenner"); cHe.classList.add("gruen");
+      r.appendChild(cHe);
+      // Anteile als Hinweis an der Summenzeile
+      r.cells[2].title = "Gesamtkosten der Pflege über die ganze Dauer.\n"
+        + "Davon selbst getragen: " + proz(sS / sG) + ".\n"
+        + "Krankenversicherung: " + proz(sK / sG) + ".\n"
+        + "Gemeinde und Kanton: " + proz(sGem / sG) + ".\n"
+        + (sZ > 0 ? "Zusatzversicherung: " + proz(sZ / sG) + ".\n" : "")
+        + "\nDie Hilflosenentschädigung ist keine Kostenbeteiligung, sondern eine "
+        + "Einnahme; sie steht deshalb ausserhalb dieser Verteilung.";
     }
   }
 
@@ -22576,6 +22999,25 @@ function personenZeichnen() {
         feld("Pflegetaxe pro Tag", zahlFeld(p.heim_pflegetaxe_pro_tag || 0,
           x => { p.heim_pflegetaxe_pro_tag = x || 0; rechnen(); },
           { dez: true, grenze: { min: 0, max: 500, weichMax: 300 } }), "CHF");
+        // Beitrag der Krankenversicherung. Er steht auf der Heimrechnung;
+        // fehlt die Angabe, wird er aus der Pflegetaxe geschaetzt.
+        {
+          const schaetz = (() => {
+            const t = Number(p.heim_pflegetaxe_pro_tag) || 0;
+            if (!(t > 0)) return 0;
+            const u = Number(pf.sg_ansatz_stufe1) || 12;
+            const o = Number(pf.sg_ansatz_stufe12) || 254;
+            const n = Number(pf.pflegestufen_max) || 12;
+            const stufe = Math.min(n, Math.max(1,
+              Math.round(1 + (t - u) / Math.max(1, o - u) * (n - 1))));
+            return Math.min(t, stufe * (Number(pf.kassenbeitrag_je_stufe) || 9.6));
+          })();
+          feld("davon Beitrag der Krankenkasse pro Tag",
+            zahlFeld(p.heim_kassenbeitrag_pro_tag ?? null,
+              x => { p.heim_kassenbeitrag_pro_tag = x; rechnen(); },
+              { dez: true, leerErlaubt: true, vorgabe: schaetz,
+                vorgabeHinweis: "Leer: geschätzt aus der Pflegetaxe." }), "CHF");
+        }
         feld("Betreuung und Hotellerie pro Tag", zahlFeld(p.heim_betreuung_pro_tag || 0,
           x => { p.heim_betreuung_pro_tag = x || 0; rechnen(); },
           { dez: true, grenze: { min: 0, max: 500, weichMax: 300 } }), "CHF");
@@ -22592,18 +23034,22 @@ function personenZeichnen() {
           x => { p.heim_sonstige_traeger = x; rechnen(); }), "");
 
         // Was die Aufteilung bewirkt, am gerechneten Jahr gezeigt.
-        const zH = rechenzeilen(p.id).find(z => z.heimTeile && z.heimTeile.total > 0);
+        const zH = rechenzeilen(p.id).find(z => z.heimTeile && z.heimTeile.gesamt > 0);
         const pe = el("p", "kleintext");
         pe.innerHTML =
           "<strong>Warum getrennt.</strong> Die drei Teile werden ganz verschieden "
           + "finanziert:<ul style='margin:4px 0;padding-left:20px'>"
-          + "<li><strong>Pflege:</strong> Krankenversicherung und öffentliche Hand tragen "
-            + "den grössten Teil. Die versicherte Person zahlt höchstens "
+          + "<li><strong>Pflege</strong> tragen drei Seiten. Die "
+            + "<em>Krankenversicherung</em> zahlt ihren Beitrag nach Pflegestufe — "
+            + chf(Number(pf.kassenbeitrag_je_stufe) || 9.6) + " CHF je 20 Minuten "
+            + "Pflegebedarf, höchstens " + (pf.pflegestufen_max ?? 12) + " Stufen und "
+            + "damit " + chf(Number(pf.pflegebeitrag_bund_pro_tag) || 115.2)
+            + " CHF pro Tag (Art. 7a Abs. 3 KLV). Vom Rest trägt die "
+            + "<em>versicherte Person</em> höchstens "
             + chf(Number(pf.beteiligung_heim_pro_tag) || 23) + " CHF pro Tag — 20 % des "
-            + "höchsten bundesrechtlichen Pflegebeitrags von "
-            + chf(Number(pf.pflegebeitrag_bund_pro_tag) || 115.2) + " CHF "
-            + "(Art. 25a Abs. 5 KVG, Art. 8 Abs. 1 PflegeG SG). Die Restfinanzierung "
-            + "tragen Kanton zu zwei Dritteln und Gemeinde zu einem Drittel "
+            + "höchsten Pflegebeitrags (Art. 25a Abs. 5 KVG, Art. 8 Abs. 1 PflegeG SG). "
+            + "Was dann noch offen ist, trägt die <em>öffentliche Hand</em>: Kanton zu "
+            + "zwei Dritteln, politische Gemeinde zu einem Drittel "
             + "(Art. 9 Abs. 1 PflegeG SG).</li>"
           + "<li><strong>Betreuung und Hotellerie:</strong> von keiner Versicherung "
             + "gedeckt, voll selbst zu tragen.</li>"
@@ -22611,15 +23057,50 @@ function personenZeichnen() {
             + "Telefon, persönliche Anschaffungen. Diese Kosten kann auch die andere "
             + "Person übernehmen.</li></ul>"
           + (zH
-              ? "<strong>Gerechnet im Jahr " + zH.jahr + ":</strong> Pflegetaxe "
-                + chf(zH.heimTeile.pflegeVoll) + " CHF im Jahr, davon selbst getragen "
-                + chf(zH.heimTeile.pflege) + " CHF — die öffentliche Hand und die Kasse "
-                + "tragen " + chf(zH.heimTeile.pflegeGetragen) + " CHF. Betreuung und "
-                + "Hotellerie " + chf(zH.heimTeile.betreuung) + " CHF, sonstige Ausgaben "
-                + chf(zH.heimTeile.sonstige) + " CHF."
+              ? "<strong>Gerechnet im Jahr " + zH.jahr + ":</strong> Gesamtkosten "
+                + chf(zH.heimTeile.gesamt) + " CHF. Davon trägt die Krankenkasse "
+                + chf(zH.heimTeile.pflegeKasse) + " CHF, Gemeinde und Kanton "
+                + chf(zH.heimTeile.pflegeGemeinde) + " CHF, selbst zu tragen bleiben "
+                + chf(zH.heimTeile.total) + " CHF — davon "
+                + chf(zH.heimTeile.pflege) + " CHF Pflege, "
+                + chf(zH.heimTeile.betreuung) + " CHF Betreuung und Hotellerie und "
+                + chf(zH.heimTeile.sonstige) + " CHF Sonstiges."
               : "");
         pe.style.cssText = "margin:8px 0 0; color:var(--gedaempft)";
         ziel.appendChild(pe);
+      }
+
+      // ---- Bis wann die Heimkosten laufen --------------------------------
+      // Ohne diese Angabe bleibt offen, ueber wie viele Jahre gerechnet wird -
+      // und gerade das entscheidet ueber den Kapitalbedarf.
+      {
+        const ende = Number(p.lebenserwartung_bis);
+        const ein = Number(p.heimeintritt_ab);
+        const jahre = (isFinite(ende) && isFinite(ein)) ? (ende - ein + 1) : null;
+        const pl = el("p");
+        pl.innerHTML =
+          "<strong>Bis wann gerechnet wird.</strong> Die Heimkosten laufen vom "
+          + "Eintrittsjahr <strong>" + (isFinite(ein) ? ein : "–") + "</strong> bis zum "
+          + "letzten Rechenjahr dieser Person, also <strong>bis zum Tod</strong> gemäss "
+          + "der erfassten Lebenserwartung — hier <strong>"
+          + (isFinite(ende) ? ende : "–") + "</strong>"
+          + (p.geburtsjahr != null && isFinite(ende)
+              ? " (Alter " + (ende - Number(p.geburtsjahr)) + ")" : "")
+          + ". Das sind <strong>" + (jahre != null ? jahre : "–")
+          + (jahre === 1 ? " Jahr" : " Jahre") + "</strong> Aufenthalt."
+          + (jahre != null && jahre > 0
+              ? " Über die ganze Dauer ergibt das rund <strong>"
+                + chf(rechenzeilen(p.id).reduce((a, z) => a + (Number(z.heimkosten) || 0), 0))
+                + " CHF</strong> selbst zu tragende Heimkosten."
+              : "")
+          + "<br>Soll die Dauer anders sein, ist die <em>Lebenserwartung</em> im Kapitel 1 "
+          + "zu ändern — nicht das Eintrittsjahr. Zum Vergleich: Die mittlere "
+          + "Aufenthaltsdauer beträgt 784 Tage, also gut zwei Jahre; die Verteilung ist "
+          + "aber stark rechtsschief, und die Minderheit mit langem Verlauf bestimmt den "
+          + "Kapitalbedarf. Das Szenario 8 «Pflegebedürftigkeit» rechnet beides.";
+        pl.style.cssText = "font-size:12px;margin:10px 0 0;padding:8px 10px;"
+          + "background:var(--akzent-weich);border-radius:var(--r)";
+        ziel.appendChild(pl);
       }
       // Teuerung der Heimkosten. Bis zu einem Heimeintritt vergehen oft zwanzig
       // Jahre; ein heutiger Heimtarif ist dann kein brauchbarer Wert mehr.
@@ -22756,6 +23237,82 @@ function personenZeichnen() {
             + "zugleich gibt es nicht.";
           px.style.cssText = "margin:8px 0 0; color:var(--gedaempft)";
           ziel.appendChild(px);
+
+          // ---- Leistungen der Zusatzversicherung -----------------------
+          const schZ = el("div", "schalter");
+          schZ.style.marginTop = "12px";
+          const cbZ = el("input"); cbZ.type = "checkbox"; cbZ.checked = !!p.zusatz_aktiv;
+          cbZ.addEventListener("change", () => { p.zusatz_aktiv = cbZ.checked; rechnen(); });
+          schZ.appendChild(cbZ);
+          schZ.appendChild(el("span", null,
+            "Leistungen der Zusatzversicherung berücksichtigen"));
+          ziel.appendChild(schZ);
+
+          if (!p.zusatz_aktiv) {
+            const pz0 = el("p", "kleintext");
+            pz0.innerHTML =
+              "<strong>Aus — die vorsichtige Annahme.</strong> Spitalzusatz­versicherungen "
+              + "richten für die <em>Pflege zu Hause</em> oft Beiträge aus: an die "
+              + "Hauskrankenpflege und an die Haushaltshilfe, als Franken je Tag mit einer "
+              + "Höchstzahl von Tagen. Ob und in welcher Höhe, steht in den "
+              + "Zusatzbedingungen der eigenen Police — häufig unter der Bedingung, dass "
+              + "auch eine ambulante Zusatzdeckung besteht. Für den <strong>Heimaufenthalt "
+              + "greifen diese Leistungen nicht</strong>: Eine Spitalzusatzversicherung "
+              + "deckt den Spitalaufenthalt, nicht die Langzeitpflege.";
+            pz0.style.cssText = "margin:4px 0 0; color:var(--gedaempft)";
+            ziel.appendChild(pz0);
+          } else {
+            feld("Hauskrankenpflege, Beitrag pro Tag", zahlFeld(p.zusatz_hkp_pro_tag ?? 0,
+              x => { p.zusatz_hkp_pro_tag = x || 0; rechnen(); },
+              { dez: true, grenze: { min: 0, max: 500, weichMax: 200 } }), "CHF");
+            feld("davon Tage pro Jahr, höchstens", zahlFeld(p.zusatz_hkp_tage_jahr ?? 365,
+              x => { p.zusatz_hkp_tage_jahr = x || 0; rechnen(); },
+              { grenze: { min: 0, max: 366, weichMax: 366 } }), "Tage");
+            feld("Tage insgesamt, höchstens", zahlFeld(p.zusatz_hkp_tage_total ?? 0,
+              x => { p.zusatz_hkp_tage_total = x || 0; rechnen(); },
+              { grenze: { min: 0, max: 10000, weichMax: 3650 } }), "Tage");
+            feld("Haushaltshilfe, Beitrag pro Tag", zahlFeld(p.zusatz_hh_pro_tag ?? 0,
+              x => { p.zusatz_hh_pro_tag = x || 0; rechnen(); },
+              { dez: true, grenze: { min: 0, max: 500, weichMax: 200 } }), "CHF");
+            feld("davon Tage pro Jahr, höchstens", zahlFeld(p.zusatz_hh_tage_jahr ?? 0,
+              x => { p.zusatz_hh_tage_jahr = x || 0; rechnen(); },
+              { grenze: { min: 0, max: 366, weichMax: 366 } }), "Tage");
+            feld("Jahresfranchise der Zusatzversicherung", zahlFeld(p.zusatz_franchise ?? 0,
+              x => { p.zusatz_franchise = x || 0; rechnen(); },
+              { grenze: { min: 0, max: 20000, weichMax: 5000 } }), "CHF");
+
+            const zZ = rechenzeilen(p.id).find(z => z.zusatzLeistung
+              && (z.zusatzLeistung.total > 0 || z.zusatzLeistung.franchise > 0));
+            const summeZ = rechenzeilen(p.id).reduce((a, z) =>
+              a + ((z.zusatzLeistung || {}).total || 0), 0);
+            const pz = el("p", "kleintext");
+            pz.innerHTML =
+              "<strong>Wie gerechnet wird.</strong> Der Beitrag je Tag mal die Zahl der "
+              + "Tage, höchstens so viel, wie an Pflege beziehungsweise Hauswirtschaft "
+              + "selbst zu tragen bleibt — mehr als die tatsächlichen Kosten zahlt keine "
+              + "Versicherung. Von der Summe wird die Jahresfranchise abgezogen. Das "
+              + "Kontingent «Tage insgesamt» läuft über die Jahre weiter; ist es "
+              + "aufgebraucht, fällt die Leistung weg. Null bei «Tage insgesamt» bedeutet "
+              + "kein Gesamtlimit."
+              + "<br><strong>Nur für die Pflege zu Hause.</strong> Im Heim greifen diese "
+              + "Leistungen nicht."
+              + "<br><strong>⚠ Alle sechs Werte sind Annahmen</strong> aus den "
+              + "Zusatzbedingungen einer halbprivaten Deckung. Massgebend ist die eigene "
+              + "Police mit ihren Zusatzbedingungen; sie ändern von Jahr zu Jahr. Zudem "
+              + "geht aus dem Wortlaut solcher Bedingungen nicht immer hervor, ob der "
+              + "Beitrag den Selbstbehalt der Grundversicherung deckt oder nur Leistungen "
+              + "ausserhalb davon. Im Zweifel ist bei der Versicherung nachzufragen."
+              + (zZ
+                  ? "<br><strong>Gerechnet im Jahr " + zZ.jahr + ":</strong> "
+                    + chf(zZ.zusatzLeistung.hkp) + " CHF an die Pflege, "
+                    + chf(zZ.zusatzLeistung.hh) + " CHF an die Hauswirtschaft, "
+                    + "abzüglich " + chf(zZ.zusatzLeistung.franchise) + " CHF Franchise — "
+                    + "ausbezahlt " + chf(zZ.zusatzLeistung.total) + " CHF. Über die "
+                    + "ganze Spitex-Phase " + chf(summeZ) + " CHF."
+                  : "");
+            pz.style.cssText = "margin:8px 0 0; color:var(--gedaempft)";
+            ziel.appendChild(pz);
+          }
         }
       }
 
@@ -22773,8 +23330,27 @@ function personenZeichnen() {
           rechnen();
         });
         schH.appendChild(cbH);
-        schH.appendChild(el("span", null, "Hilflosenentschädigung der AHV beziehen"));
+        schH.appendChild(el("span", null,
+          "Hilflosenentschädigung der AHV berücksichtigen"));
         ziel.appendChild(schH);
+
+        // Erlaeuterung auch im ausgeschalteten Zustand: Wer nicht weiss, was
+        // die Entschaedigung ist und wann sie faellig wird, kann nicht
+        // entscheiden, ob er sie beruecksichtigen will.
+        if (!p.he_aktiv) {
+          const pa = el("p", "kleintext");
+          pa.innerHTML =
+            "<strong>Aus — die Entschädigung wird nicht gerechnet.</strong> Das ist die "
+            + "vorsichtige Annahme. Einzuschalten, wenn mit einem Anspruch zu rechnen "
+            + "ist: Er besteht, wenn eine Person <strong>für alltägliche Verrichtungen "
+            + "dauernd auf Hilfe angewiesen</strong> ist — Ankleiden, Aufstehen, Essen, "
+            + "Körperpflege, Notdurft, Fortbewegung. Die Entschädigung wird "
+            + "<strong>unabhängig von Einkommen und Vermögen</strong> ausgerichtet; ein "
+            + "Eigenheim spielt keine Rolle. Bei einem Heimaufenthalt mit Pflegebedarf "
+            + "ist der Anspruch die Regel, nicht die Ausnahme.";
+          pa.style.cssText = "margin:4px 0 0; color:var(--gedaempft)";
+          ziel.appendChild(pa);
+        }
 
         if (p.he_aktiv) {
           feld("ab Jahr", zahlFeld(p.he_ab, x => { p.he_ab = x; rechnen(); },
@@ -22812,12 +23388,28 @@ function personenZeichnen() {
               vorgabeHinweis: "Leer: der gesetzliche Betrag zum gewählten Grad." }), "CHF");
 
           const zHe = rechenzeilen(p.id).find(z => (z.hilflosenentschaedigung || 0) > 0);
+          const zHeAlle = rechenzeilen(p.id).filter(z => (z.hilflosenentschaedigung || 0) > 0);
+          const summeHe = zHeAlle.reduce((a, z) => a + z.hilflosenentschaedigung, 0);
           const ph = el("p", "kleintext");
           ph.innerHTML =
-            "<strong>Unabhängig von Einkommen und Vermögen.</strong> Ein Eigenheim "
-            + "spielt keine Rolle — anders als bei den Ergänzungsleistungen. Anspruch "
-            + "besteht, wenn für alltägliche Verrichtungen dauernd Hilfe nötig ist: "
-            + "Ankleiden, Essen, Körperpflege, Fortbewegung.<br>"
+            "<strong>Wann sie bezahlt wird.</strong> Anspruch besteht, wenn eine Person "
+            + "<strong>für alltägliche Verrichtungen dauernd auf Hilfe angewiesen</strong> "
+            + "ist. Massgebend sind sechs Lebensverrichtungen: Ankleiden und Auskleiden, "
+            + "Aufstehen und Absitzen, Essen, Körperpflege, Notdurft, Fortbewegung und "
+            + "Kontaktaufnahme. Je nach Zahl der betroffenen Verrichtungen gilt die "
+            + "Hilflosigkeit als leicht, mittel oder schwer. Weitere Voraussetzungen:"
+            + "<ul style='margin:4px 0;padding-left:20px'>"
+            + "<li>Die Hilflosigkeit muss <strong>ein Jahr</strong> ohne wesentlichen "
+              + "Unterbruch gedauert haben und voraussichtlich weiter andauern. Die "
+              + "Entschädigung wird deshalb frühestens ein Jahr nach Eintritt der "
+              + "Hilflosigkeit ausgerichtet.</li>"
+            + "<li>Sie muss <strong>bei der Ausgleichskasse angemeldet</strong> werden — "
+              + "sie wird nicht von Amtes wegen zugesprochen. Nachzahlungen erfolgen "
+              + "höchstens zwölf Monate rückwirkend.</li>"
+            + "<li>Wohnsitz in der Schweiz und Bezug einer AHV-Rente oder von "
+              + "Ergänzungsleistungen.</li></ul>"
+            + "<strong>Unabhängig von Einkommen und Vermögen.</strong> Ein Eigenheim "
+            + "spielt keine Rolle — anders als bei den Ergänzungsleistungen.<br>"
             + "<strong>Beträge der AHV</strong> (Merkblatt 3.01, Stand 1.1.2026): "
             + chf(Math.round((Number(pf.min_altersrente) || 1260) * (pf.he_anteil_leicht ?? 0.2)))
             + " / "
@@ -22838,8 +23430,10 @@ function personenZeichnen() {
             + "<strong>Steuerlich</strong> ist sie nach Art. 24 lit. h DBG steuerfrei: "
             + "Sie erhöht das verfügbare Geld, nicht das steuerbare Einkommen."
             + (zHe
-                ? "<br><strong>Gerechnet im Jahr " + zHe.jahr + ":</strong> "
-                  + chf(zHe.hilflosenentschaedigung) + " CHF."
+                ? "<br><strong>Gerechnet:</strong> " + chf(zHe.hilflosenentschaedigung)
+                  + " CHF im Jahr " + zHe.jahr + ", über " + zHeAlle.length
+                  + (zHeAlle.length === 1 ? " Jahr" : " Jahre") + " zusammen "
+                  + chf(summeHe) + " CHF."
                 : "");
           ph.style.cssText = "margin:8px 0 0; color:var(--gedaempft)";
           ziel.appendChild(ph);
@@ -25694,21 +26288,43 @@ function steuernZeichnen() {
     kp.appendChild(p1);
 
     kp.appendChild(el("h4", "abschnitt2", "Im Heim"));
-    feldP("Beteiligung pro Tag, höchstens", zahl("beteiligung_heim_pro_tag", 23), "CHF");
+    feldP("Beitrag der Krankenkasse je Pflegestufe", zahl("kassenbeitrag_je_stufe", 9.60), "CHF");
+    feldP("Höchste Pflegestufe", zahlFeld(pf.pflegestufen_max ?? 12,
+      x => { pf.pflegestufen_max = (x == null) ? 12 : Math.max(1, x); rechnen(); },
+      { leerErlaubt: true }), "");
     feldP("Pflegebeitrag des Bundes pro Tag", zahl("pflegebeitrag_bund_pro_tag", 115.2), "CHF");
+    feldP("Beteiligung pro Tag, höchstens", zahl("beteiligung_heim_pro_tag", 23), "CHF");
+    feldP("Höchstansatz Pflegekosten SG, Stufe 1", zahl("sg_ansatz_stufe1", 12), "CHF");
+    feldP("Höchstansatz Pflegekosten SG, Stufe 12", zahl("sg_ansatz_stufe12", 254), "CHF");
     const p2 = el("p");
     p2.innerHTML =
-      "Nach <strong>Art. 25a Abs. 5 KVG</strong> trägt die versicherte Person höchstens "
-      + "20 % des höchsten vom Bundesrat festgesetzten Pflegebeitrags. Bei "
-      + chf(Number(pf.pflegebeitrag_bund_pro_tag) || 115.2) + " CHF pro Tag sind das "
-      + chf((Number(pf.pflegebeitrag_bund_pro_tag) || 115.2) * 0.2) + " CHF. "
-      + "<strong>Art. 8 Abs. 1 des Pflegegesetzes SG</strong> (sGS 331.1) übernimmt diese "
-      + "Grenze. Die Restfinanzierung tragen nach <strong>Art. 9 Abs. 1</strong> der "
-      + "Kanton zu zwei Dritteln und die politische Gemeinde zu einem Drittel.<br>"
-      + "<em>Zu beachten:</em> Das Gesetz nennt den Höchstbetrag, nicht den tatsächlich "
-      + "erhobenen Satz. Dieser steht in der Verordnung der Regierung. Die Vorgabe von "
-      + chf(Number(pf.beteiligung_heim_pro_tag) || 23) + " CHF unterstellt, dass die "
-      + "Grenze voll ausgeschöpft wird — das ist die ungünstigste Annahme.";
+      "<strong>Drei Träger teilen sich die Pflegekosten.</strong>"
+      + "<ul style='margin:4px 0;padding-left:20px'>"
+      + "<li><strong>Krankenversicherung:</strong> "
+        + chf(Number(pf.kassenbeitrag_je_stufe) || 9.6) + " CHF je 20 Minuten "
+        + "Pflegebedarf, höchstens " + (pf.pflegestufen_max ?? 12) + " Stufen und damit "
+        + chf(Number(pf.pflegebeitrag_bund_pro_tag) || 115.2) + " CHF pro Tag "
+        + "(Art. 7a Abs. 3 KLV).</li>"
+      + "<li><strong>Versicherte Person:</strong> vom Rest höchstens 20 % des höchsten "
+        + "Pflegebeitrags, also "
+        + chf((Number(pf.pflegebeitrag_bund_pro_tag) || 115.2) * 0.2) + " CHF pro Tag "
+        + "(Art. 25a Abs. 5 KVG). <strong>Art. 8 Abs. 1 des Pflegegesetzes SG</strong> "
+        + "(sGS 331.1) übernimmt diese Grenze.</li>"
+      + "<li><strong>Öffentliche Hand:</strong> was dann noch offen ist — nach "
+        + "<strong>Art. 9 Abs. 1 PflegeG SG</strong> der Kanton zu zwei Dritteln und die "
+        + "politische Gemeinde zu einem Drittel.</li></ul>"
+      + "Die <strong>Pflegestufe</strong> steht auf der Heimrechnung. Ist sie nicht "
+      + "erfasst, schätzt das Programm sie aus der Pflegetaxe: Die Höchstansätze des "
+      + "Kantons nach Art. 2 der Verordnung sGS 331.21 reichen von "
+      + chf(Number(pf.sg_ansatz_stufe1) || 12) + " CHF in Stufe 1 bis "
+      + chf(Number(pf.sg_ansatz_stufe12) || 254) + " CHF in Stufe 12; dazwischen wird "
+      + "linear interpoliert. Im Reiter Personen lässt sich der Beitrag je Person "
+      + "überschreiben.<br>"
+      + "<em>Zu beachten:</em> Das Gesetz nennt den Höchstbetrag der Beteiligung, nicht "
+      + "den tatsächlich erhobenen Satz. Dieser steht in der Verordnung der Regierung. "
+      + "Die Vorgabe von " + chf(Number(pf.beteiligung_heim_pro_tag) || 23) + " CHF "
+      + "unterstellt, dass die Grenze voll ausgeschöpft wird — das ist die ungünstigste "
+      + "Annahme.";
     p2.style.cssText = "font-size:12px;color:var(--gedaempft);margin:4px 0 12px";
     kp.appendChild(p2);
 
@@ -25718,6 +26334,7 @@ function steuernZeichnen() {
       x => { pf.beteiligung_spitex_anteil = (x == null) ? 0.10 : Math.max(0, x); rechnen(); },
       { proz: true, leerErlaubt: true }), "%");
     feldP("Beteiligung pro Tag, höchstens", zahl("beteiligung_spitex_pro_tag", 7.70), "CHF");
+    feldP("Beitrag der Krankenkasse pro Stunde", zahl("kassenbeitrag_spitex_std", 52.60), "CHF");
     feldP("Tarif Grundpflege pro Stunde", zahl("spitex_tarif_pflege", 69.15), "CHF");
     feldP("Tarif Hauswirtschaft pro Stunde", zahl("spitex_tarif_haus", 40), "CHF");
     const p3 = el("p");
@@ -25728,11 +26345,14 @@ function steuernZeichnen() {
       + "also 7.69 CHF. <strong>St. Gallen schöpft die bundesrechtliche Grenze von 20 % "
       + "hier bewusst nur zur Hälfte aus.</strong> Die Restfinanzierung trägt nach "
       + "Art. 16 Abs. 1 die politische Gemeinde.<br>"
-      + "Der Tarif für die Grundpflege ist der Höchstansatz nach <strong>Art. 11 der "
-      + "Verordnung über die Pflegefinanzierung</strong> (sGS 331.21); dort stehen auch "
-      + "82.85 CHF für Untersuchung und Behandlung und 101.10 CHF für Abklärung und "
-      + "Beratung. Gerechnet wird mit dem Satz für Grundpflege, weil dieser den "
-      + "Hauptteil der Stunden ausmacht.<br>"
+      + "Der <strong>Beitrag der Krankenkasse</strong> beträgt nach Art. 7a Abs. 1 KLV "
+      + "76.90 CHF für Abklärung und Beratung, 63.00 CHF für Untersuchung und Behandlung "
+      + "und 52.60 CHF für Grundpflege. Gerechnet wird mit dem Satz für Grundpflege, weil "
+      + "dieser den Hauptteil der Stunden ausmacht.<br>"
+      + "Der <strong>Tarif</strong> für die Grundpflege ist der Höchstansatz nach "
+      + "<strong>Art. 11 der Verordnung sGS 331.21</strong>; dort stehen auch 82.85 CHF "
+      + "für Untersuchung und Behandlung und 101.10 CHF für Abklärung und Beratung. Die "
+      + "Differenz zwischen Tarif und Kassenbeitrag trägt die Gemeinde.<br>"
       + "<strong>Hauswirtschaft</strong> ist keine Leistung der Krankenversicherung und "
       + "hat keinen amtlichen Tarif. Die Vorgabe von "
       + chf(Number(pf.spitex_tarif_haus) || 40) + " CHF ist eine <em>Annahme</em>; die "
@@ -27644,6 +28264,10 @@ const TEUERUNG_QUELLEN = [
     zeitraum: "2015–2025", quelle: "Auswertung von 5 928 Erwachsenenprämien (moneyland), ergänzt durch BAG, Prämiengenehmigung 2026",
     rechnung: "Mittlere Erwachsenenprämie 274.10 CHF (2015) → 378.70 CHF (2025), also +38.2 % → 3.29 % pro Jahr. Die mittlere Prämie des BAG steigt 2026 um weitere 4.4 % auf 393.30 CHF.",
     bemerkung: "Krankenkassenprämien sind NICHT Teil des Landesindex der Konsumentenpreise; sie gelten volkswirtschaftlich als Transfer. Das BFS führt dafür den eigenen Krankenversicherungsprämien-Index. Der Wert liegt weit über der allgemeinen Teuerung — das ist der Hauptgrund, weshalb diese Position ausdrücklich zu erfassen ist." },
+  { id: "vvg", name: "Zusatzversicherungen (VVG), eigene Policen", satz: 0.0524,
+    zeitraum: "2024–2027", quelle: "Zwei Policen desselben Versicherten, Prämien je Deckung",
+    rechnung: "Monatsprämie 681.85 CHF (1.1.2024) → 829.65 CHF (1.1.2027). Bereinigt um die neu hinzugekommene Unfalldeckung von 34.80 CHF ergibt das 794.85 CHF, also +16.6 % über drei Jahre → 5.24 % pro Jahr. Je Deckung: Grundversicherung +3.62 %, Spitalzusatz halbprivat +10.05 %, Zusatzversicherung Prävention +13.41 %, weltweite Arztwahl +2.57 %, Unfall-Zusatz +5.17 %, Komplementärmedizin 0 %.",
+    bemerkung: "Dies ist kein amtlicher Index, sondern eine Messung an zwei eigenen Policen über nur drei Jahre — sie kann eine ungewöhnliche Periode treffen. Bemerkenswert ist, dass der Spitalzusatz im Prämientarifmodell «Abschlussalter» um gut 10 % pro Jahr stieg: Dieses Modell schützt vor der Erhöhung wegen Älterwerdens, nicht vor der allgemeinen Prämienanpassung. Wer die Prämie als stabil annimmt, rechnet zu tief." },
   { id: "miete", name: "Wohnungsmieten, Mietpreisindex", satz: 0.0139,
     zeitraum: "Dezember 2015 – Dezember 2025", quelle: "BFS, Mietpreisindex",
     rechnung: "Index 100.0 → 114.8, also +14.8 % über zehn Jahre → 1.39 % pro Jahr." },
@@ -27678,6 +28302,11 @@ function teuerungRubrik(pos) {
   // Praemie; "Hypothekarkosten Ferienwohnung" ist ein Zins, keine Ferienreise.
   if (hat(/hypothek|zins|amortisation|schuld/)) return "gesamt";
   if (hat(/selbstbehalt|franchise|zahnarzt|arzt|medikament|hoergeraet|hörgerät|brille|therapie|spital/)) return "gesundheit";
+  // Die Abzugsart geht der Bezeichnung vor: Eine Position, die steuerlich als
+  // Krankenversicherungspraemie gilt, ist eine Praemie - auch wenn sie nur
+  // "Versicherung Person 1" heisst und damit sonst unter die
+  // Sachversicherungen fiele.
+  if (st.includes("krankenversicherung") || st.includes("krankenkasse")) return "okp";
   if (hat(/krankenversicherung|krankenkasse|grundversicherung|kvg/)) return "okp";
   if (hat(/heim|pflege/)) return "heim";
   if (hat(/versicherung/) || st.includes("versicherungspr")) return "sachvers";
@@ -27731,6 +28360,83 @@ function teuerungFensterOeffnen(knopf, pos) {
   const p0 = el("p", "kleintext", "Position: " + (pos.bezeichnung || "ohne Bezeichnung")
     + (pos.gruppe ? " — Rubrik " + pos.gruppe : ""));
   p0.style.margin = "0 0 10px"; k.appendChild(p0);
+
+  // ---- Eigener Rechner aus zwei Beträgen ------------------------------
+  // Die belegten Reihen sind Durchschnitte über die ganze Schweiz. Wer zwei
+  // eigene Rechnungen oder Policen aus verschiedenen Jahren hat, kennt die
+  // Teuerung seiner eigenen Position genauer - und braucht dafür keinen
+  // Taschenrechner.
+  {
+    const kr = el("div");
+    kr.style.cssText = "border:1px solid var(--linie); border-radius:var(--r);"
+      + "padding:9px 11px; margin:0 0 12px; background:var(--flaeche2)";
+    kr.appendChild(el("strong", null, "Aus zwei eigenen Beträgen rechnen"));
+    const ze = el("div");
+    ze.style.cssText = "display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;"
+      + "margin:7px 0 0";
+    const mach = (etikett, wert, opt) => {
+      const f = el("div"); f.style.cssText = "display:flex;flex-direction:column;gap:2px";
+      const l = el("label", null, etikett);
+      l.style.cssText = "font-size:11px;color:var(--gedaempft)";
+      f.appendChild(l);
+      const i = el("input"); i.type = "text"; i.inputMode = "decimal";
+      i.value = wert == null ? "" : String(wert);
+      i.style.cssText = "width:" + (opt && opt.breit ? "108px" : "76px") + ";text-align:right";
+      f.appendChild(i); ze.appendChild(f);
+      return i;
+    };
+    const iJ1 = mach("Jahr, früher", null);
+    const iB1 = mach("Betrag CHF", null, { breit: true });
+    const iJ2 = mach("Jahr, später", null);
+    const iB2 = mach("Betrag CHF", null, { breit: true });
+    const erg2 = el("span", "chip", "—");
+    erg2.style.marginLeft = "4px";
+    const uebern = el("button", "knopf klein", "übernehmen");
+    uebern.type = "button"; uebern.disabled = true;
+    let satz = null;
+    const rechne2 = () => {
+      const j1 = Number(String(iJ1.value).replace(/[^\d.-]/g, ""));
+      const j2 = Number(String(iJ2.value).replace(/[^\d.-]/g, ""));
+      const b1 = Number(String(iB1.value).replace(/['’\s]/g, "").replace(",", "."));
+      const b2 = Number(String(iB2.value).replace(/['’\s]/g, "").replace(",", "."));
+      const n = j2 - j1;
+      if (!(isFinite(j1) && isFinite(j2) && n > 0 && b1 > 0 && b2 > 0)) {
+        satz = null; erg2.textContent = "—"; uebern.disabled = true;
+        erg2.title = "Beide Jahre und beide Beträge eingeben; das zweite Jahr muss "
+          + "später liegen.";
+        return;
+      }
+      satz = Math.pow(b2 / b1, 1 / n) - 1;
+      erg2.textContent = proz(satz) + " pro Jahr";
+      erg2.title = b1 + " CHF im Jahr " + j1 + " → " + b2 + " CHF im Jahr " + j2
+        + ", also " + proz(b2 / b1 - 1) + " über " + n
+        + (n === 1 ? " Jahr" : " Jahre") + ".\nGeometrisches Mittel: "
+        + "(" + b2 + " / " + b1 + ") hoch 1/" + n + " − 1 = " + proz(satz) + ".";
+      uebern.disabled = false;
+    };
+    [iJ1, iB1, iJ2, iB2].forEach(i => i.addEventListener("input", rechne2));
+    uebern.addEventListener("click", () => {
+      if (satz == null) return;
+      pos.teuerung = satz;
+      if (pos.basisjahr == null) {
+        const j2 = Number(String(iJ2.value).replace(/[^\d.-]/g, ""));
+        if (isFinite(j2)) pos.basisjahr = j2;
+      }
+      rechnen();
+      melde("Teuerung von «" + (pos.bezeichnung || "") + "» auf " + proz(satz)
+        + " gesetzt, gerechnet aus den beiden eingegebenen Beträgen.");
+    });
+    ze.appendChild(erg2); ze.appendChild(uebern);
+    kr.appendChild(ze);
+    const he2 = el("p", "kleintext",
+      "Gerechnet wird das geometrische Mittel: (Betrag₂ ⁄ Betrag₁) hoch 1 ⁄ (Jahr₂ − Jahr₁) "
+      + "− 1. Zwei Policen oder zwei Rechnungen genügen. Je kürzer der Zeitraum, desto "
+      + "eher trifft der Wert eine ungewöhnliche Periode — über zehn Jahre ist er "
+      + "belastbarer als über zwei.");
+    he2.style.cssText = "margin:7px 0 0; color:var(--gedaempft)";
+    kr.appendChild(he2);
+    k.appendChild(kr);
+  }
 
   const zeigen = (q, hervor) => {
     const z = el("div");
