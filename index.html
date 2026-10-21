@@ -1088,7 +1088,7 @@ table.uebersicht tr.klein td.name{padding-left:22px}
 
   <div class="leistenfuss">
     <span>Budget- und Rentenberechnung &middot; Kanton St. Gallen, Gemeinde Gommiswald</span>
-    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v264</span></span>
+    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v265</span></span>
   </div>
   <p class="merker" id="fassungHinweis" style="margin:8px 0 0" hidden></p>
   <!-- Band fuer die Aktualisierung. Es erscheint nur, wenn es etwas zu melden
@@ -2218,6 +2218,35 @@ table.uebersicht tr.klein td.name{padding-left:22px}
           50 000 Franken verschieben; <strong>mittel</strong> zwischen etwa 5 000 und
           50 000 Franken; <strong>klein</strong> darunter. Die Einstufung ist eine
           Abschätzung, keine gerechnete Grösse.</p>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v265 — Fassungsabfrage meldete einen veralteten Stand</h3>
+        <ul class="liste">
+          <li><strong>Der Fehler.</strong> Nach dem Hochladen einer neuen Fassung meldete
+            das Band weiterhin «noch nicht veröffentlicht» und nannte eine längst
+            überholte Fassungsnummer. Das sah aus, als wäre der Upload fehlgeschlagen —
+            war es aber nicht.</li>
+          <li><strong>Ursache.</strong> Die Fassung im Verzeichnis wird im Browser
+            gespeichert und nur <strong>einmal pro Tag</strong> neu abgefragt. Beim Start
+            zeigte das Programm den gespeicherten Wert und fragte nicht nach, solange die
+            letzte Abfrage keine 24 Stunden zurücklag. Wer vormittags prüfte und
+            nachmittags veröffentlichte, sah bis zum nächsten Tag den alten Stand.</li>
+          <li><strong>Behoben:</strong> Ist der gespeicherte Stand <em>älter</em> als die
+            hier laufende Fassung, wird das Verzeichnis sofort neu abgefragt — unabhängig
+            von der Tagesfrist. Genau dieser Fall tritt nach dem Veröffentlichen ein.</li>
+          <li><strong>Neuer Knopf «Jetzt nachsehen»</strong> im Band, bei beiden Meldungen.
+            Er fragt das Verzeichnis unmittelbar ab, statt auf die tägliche Suche zu
+            warten.</li>
+          <li><strong>Das Band nennt neu den Stand der Auskunft</strong> mit Datum und
+            Uhrzeit. Ohne diese Angabe liess sich nicht beurteilen, ob die Meldung den
+            heutigen Stand wiedergibt.</li>
+          <li><strong>Hinweis beim Veröffentlichen ergänzt.</strong> Er nannte nur
+            «index.html» und «version.txt»; hochzuladen sind alle neun Dateien des Pakets.
+            Neu steht dort auch, dass die ZIP-Datei selbst nicht taugt — GitHub packt sie
+            nicht aus —, dass «Commit directly to the main branch» zu wählen ist und dass
+            danach «Jetzt nachsehen» zu klicken ist.</li>
+          <li><strong>Keine Änderung der Rechnung.</strong></li>
+        </ul>
       </div>
       <div class="karte breit">
         <h3>Änderungen in v264 — Zusatzkosten: Spalten breit genug für die Beträge</h3>
@@ -26663,7 +26692,7 @@ function aktualisierungZeichnen() {
   if (band) {
     band.hidden = true;
     band.innerHTML = "";
-    const zeigen = (text, knopfText, aufKlick, warnen) => {
+    const zeigen = (text, knopfText, aufKlick, warnen, auchNachsehen) => {
       band.hidden = false;
       band.style.background = warnen ? "var(--warnung-weich)" : "var(--akzent-weich)";
       band.appendChild(document.createTextNode(text + " "));
@@ -26674,16 +26703,43 @@ function aktualisierungZeichnen() {
         k.addEventListener("click", aufKlick);
         band.appendChild(k);
       }
+      // Zweiter Knopf: das Verzeichnis sofort neu abfragen. Die Auskunft im
+      // Band stammt aus dem Zwischenspeicher und kann bis zu einen Tag alt
+      // sein; ohne diesen Knopf bliebe eine eben hochgeladene Fassung
+      // unbemerkt.
+      if (auchNachsehen) {
+        const n = document.createElement("button");
+        n.type = "button"; n.className = "knopf klein";
+        n.style.marginLeft = "6px";
+        n.textContent = "Jetzt nachsehen";
+        n.title = "Fragt das Verzeichnis sofort ab, statt auf die tägliche "
+          + "Suche zu warten.";
+        n.addEventListener("click", () => {
+          n.disabled = true; n.textContent = "sieht nach …";
+          aktualisierungPruefen(true);
+        });
+        band.appendChild(n);
+      }
     };
     if (dort != null && hier != null) {
+      // Alter der Auskunft. Sie stammt aus dem Zwischenspeicher und wird nur
+      // einmal am Tag erneuert; ohne diese Angabe liesse sich nicht
+      // beurteilen, ob die Meldung den heutigen Stand wiedergibt.
+      const alt = aktStand.zeit
+        ? " Stand der Auskunft: " + aktStand.zeit.toLocaleString("de-CH",
+            { day: "2-digit", month: "2-digit", year: "numeric",
+              hour: "2-digit", minute: "2-digit" }) + "."
+        : "";
       if (dort > hier) {
         zeigen("Im Verzeichnis liegt Fassung " + aktStand.dort + " — hier läuft "
-          + VERSION + ". Zum Aktualisieren im Programmordner «Aktualisieren.cmd» starten.",
-          "Verzeichnis öffnen", () => window.open(GH_RELEASE(), "_blank", "noopener"), true);
+          + VERSION + ". Zum Aktualisieren im Programmordner «Aktualisieren.cmd» starten."
+          + alt,
+          "Verzeichnis öffnen", () => window.open(GH_RELEASE(), "_blank", "noopener"),
+          true, true);
       } else if (ent && hier > dort) {
         zeigen("Fassung " + VERSION + " ist noch nicht veröffentlicht; im Verzeichnis liegt "
-          + aktStand.dort + ".",
-          "Fassung " + VERSION + " veröffentlichen", veroeffentlichen, false);
+          + aktStand.dort + "." + alt,
+          "Fassung " + VERSION + " veröffentlichen", veroeffentlichen, false, true);
       }
     }
   }
@@ -26772,10 +26828,14 @@ function aktualisierungZeichnen() {
 // Browser nicht tun, ohne einen Zugangsschluessel zu fuehren.
 function veroeffentlichen() {
   window.open(GH_HOCHLADEN(), "_blank", "noopener");
-  melde("Hochladeseite geöffnet. Dort «index.html» und «version.txt» aus dem "
-      + "Programmordner hineinziehen, als Beschreibung «Fassung " + VERSION + "» eintragen "
-      + "und auf «Commit changes» klicken. Zuvor sollte die Fassung auf den eigenen Geräten "
-      + "geprüft sein.");
+  melde("Hochladeseite geöffnet. Dort den ganzen Inhalt des Pakets hineinziehen — "
+      + "alle neun Dateien, nicht nur «index.html» und «version.txt», und nicht die "
+      + "ZIP-Datei selbst: GitHub packt sie nicht aus. Als Beschreibung «Fassung "
+      + VERSION + "» eintragen, «Commit directly to the main branch» wählen und auf "
+      + "«Commit changes» klicken. Alles in einem einzigen Commit, damit index.html und "
+      + "version.txt nie auseinanderlaufen. Danach im Band oben «Jetzt nachsehen» "
+      + "klicken — das Verzeichnis wird sonst erst am nächsten Tag wieder abgefragt. "
+      + "Zuvor sollte die Fassung auf den eigenen Geräten geprüft sein.");
 }
 
 // ==================================================== Offene Punkte
@@ -27470,9 +27530,21 @@ $("#btnAktSeite").addEventListener("click",
     aktStand.gesucht = true;
     try { aktualisierungZeichnen(); } catch (e) { }
   }
-  // Nachfragen nur, wenn die selbsttaetige Suche eingeschaltet ist und die
-  // letzte Abfrage mehr als einen Tag zurueckliegt.
-  if (autoPruefung() && (!g || !g.zeit || Date.now() - g.zeit > AKT_ABSTAND))
+  // Nachfragen nur, wenn die selbsttaetige Suche eingeschaltet ist - und
+  // entweder die letzte Abfrage mehr als einen Tag zurueckliegt, oder der
+  // gemerkte Stand aelter ist als die hier laufende Fassung.
+  //
+  // Der zweite Fall ist der wichtige: Wurde eben veroeffentlicht, so steht im
+  // Verzeichnis bereits die neue Fassung, im Zwischenspeicher aber noch die
+  // alte. Ohne diese Bedingung meldete das Programm bis zum naechsten Tag
+  // "noch nicht veroeffentlicht", obwohl die Datei laengst oben liegt - und
+  // die Meldung sah aus wie ein fehlgeschlagener Upload.
+  const gemerktAelter = (() => {
+    const h = fassungNummer(VERSION), d = fassungNummer(g && g.dort);
+    return h != null && d != null && h > d;
+  })();
+  if (autoPruefung()
+      && (!g || !g.zeit || Date.now() - g.zeit > AKT_ABSTAND || gemerktAelter))
     setTimeout(() => aktualisierungPruefen(false), 1500);
 }
   ablageArt = null; ablageAnzeigen();
