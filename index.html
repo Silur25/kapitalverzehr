@@ -1088,7 +1088,7 @@ table.uebersicht tr.klein td.name{padding-left:22px}
 
   <div class="leistenfuss">
     <span>Budget- und Rentenberechnung &middot; Kanton St. Gallen, Gemeinde Gommiswald</span>
-    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v266</span></span>
+    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v267</span></span>
   </div>
   <p class="merker" id="fassungHinweis" style="margin:8px 0 0" hidden></p>
   <!-- Band fuer die Aktualisierung. Es erscheint nur, wenn es etwas zu melden
@@ -1666,6 +1666,18 @@ table.uebersicht tr.klein td.name{padding-left:22px}
         </div>
       </div>
 
+      <div id="szenario-pflege" class="szenarioblock" hidden>
+        <div class="gitter" id="pflegeEckwerte"
+             style="grid-template-columns:repeat(auto-fit,minmax(300px,520px))"></div>
+        <h2 class="abschnitt">Die drei Verläufe im Vergleich</h2>
+        <div class="tabellenrahmen"><table id="tabSzenarioPflege"></table></div>
+        <h2 class="abschnitt">Selbst getragene Pflegekosten, Jahr für Jahr</h2>
+        <div class="tabellenrahmen rollt" data-fest="1" style="max-height:460px; overflow-y:auto">
+          <table id="tabPflegeJahre"></table>
+        </div>
+        <p class="fuehrung" id="pflegeHinweis" style="margin-top:12px"></p>
+      </div>
+
       <div id="szenario-kapital" class="szenarioblock" hidden>
         <div class="gitter" id="szenarienEckwerte"
              style="grid-template-columns:repeat(auto-fit,minmax(300px,520px))"></div>
@@ -2218,6 +2230,96 @@ table.uebersicht tr.klein td.name{padding-left:22px}
           50 000 Franken verschieben; <strong>mittel</strong> zwischen etwa 5 000 und
           50 000 Franken; <strong>klein</strong> darunter. Die Einstufung ist eine
           Abschätzung, keine gerechnete Grösse.</p>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v267 — Pflege: Heim, Spitex und Hilflosenentschädigung</h3>
+        <ul class="liste">
+          <li><strong>Ausgangslage.</strong> Der Heimaufenthalt war ein einziger
+            Monatsbetrag. Tatsächlich zerfallen Pflegekosten in Teile, die ganz
+            verschieden finanziert werden — und die Stufe vor dem Heim sowie alle
+            Einnahmen bei Pflegebedürftigkeit fehlten ganz.</li>
+
+          <li><strong>Heimkosten neu wahlweise getrennt erfassbar.</strong> Die Wahl
+            «Erfassung der Kosten» bietet weiterhin einen Gesamtbetrag oder neu drei
+            getrennte Posten:
+            <ul class="liste">
+              <li><strong>Pflegetaxe pro Tag</strong> — davon trägt die versicherte
+                Person höchstens 23.00 CHF pro Tag, also 20 % des höchsten
+                bundesrechtlichen Pflegebeitrags von 115.20 CHF (Art. 25a Abs. 5 KVG,
+                Art. 8 Abs. 1 PflegeG SG). Die Restfinanzierung tragen Kanton zu zwei
+                Dritteln und Gemeinde zu einem Drittel (Art. 9 Abs. 1 PflegeG SG).</li>
+              <li><strong>Betreuung und Hotellerie pro Tag</strong> — von keiner
+                Versicherung gedeckt, voll selbst zu tragen.</li>
+              <li><strong>Sonstige Ausgaben pro Monat</strong> — Coiffeur, Kleider,
+                Telefon, persönliche Anschaffungen. <strong>Neu wählbar, wer sie
+                trägt:</strong> die Person selbst, die andere Person, oder beide je zur
+                Hälfte.</li>
+            </ul>
+            Die höhere Pflegestufe wirkt bei getrennter Erfassung auf Pflege- und
+            Betreuungstaxe getrennt. Gemessen: Bei 180 CHF Pflegetaxe und 160 CHF
+            Betreuung trägt die Person 8'395 statt 65'700 CHF Pflege im Jahr — die
+            öffentliche Hand und die Kasse tragen 57'305 CHF.</li>
+
+          <li><strong>Neu: Pflege zu Hause (Spitex)</strong> als Stufe vor dem Heim.
+            Erfasst werden Pflege- und Hauswirtschaftsstunden je Woche, mit Beginn und
+            Ende; die Spitex endet von selbst im Jahr des Heimeintritts. Die Beteiligung
+            beträgt nach Art. 15 Abs. 1 und 2 PflegeG SG 10 % des der Kasse verrechneten
+            Betrags, je Tag höchstens 7.70 CHF — St. Gallen schöpft die bundesrechtliche
+            Grenze von 20 % bewusst nur zur Hälfte aus. Hauswirtschaft ist keine
+            KVG-Leistung und voll selbst zu tragen.</li>
+
+          <li><strong>Neu: Hilflosenentschädigung der AHV</strong> als Einnahme je
+            Person, mit Grad, Beginn und Ende. Sie wird <strong>unabhängig von Einkommen
+            und Vermögen</strong> ausgerichtet — ein Eigenheim spielt keine Rolle. Die
+            Beträge folgen der minimalen Altersrente: 20, 50 und 80 % bei leichtem,
+            mittlerem und schwerem Grad, also 252, 630 und 1'008 CHF im Monat (Merkblatt
+            3.01, Stand 1.1.2026), mit der Teuerung der AHV-Renten. Bei leichtem Grad
+            entfällt der Anspruch ab dem Heimeintritt — das Programm rechnet das
+            selbsttätig. Ein Kästchen «Besitzstand» bildet den höheren Betrag ab, den
+            behält, wer schon vor dem Referenzalter eine Entschädigung der IV bezog.
+            Steuerlich ist sie nach Art. 24 lit. h DBG steuerfrei.</li>
+
+          <li><strong>Neu: Eintritt über das Alter</strong> und ein Knopf «Aus der
+            Statistik setzen». Vorgaben: mittleres Eintrittsalter 82 Jahre, mittlere
+            Aufenthaltsdauer 784 Tage, also 2.1 Jahre (Curaviva).</li>
+
+          <li><strong>Neu: Szenario 8 «Pflegebedürftigkeit».</strong> Es rechnet drei
+            Verläufe nebeneinander — kein Pflegefall, ein mittlerer und ein langer
+            Verlauf — und weist Kapital am Ende, Erschöpfungsjahr und die Summe der
+            selbst getragenen Pflegekosten aus, dazu die Jahreswerte des langen
+            Verlaufs. Ein Schalter bestimmt, ob die eingegebene Dauer das Lebensende
+            setzt.
+            <br><strong>Gemessen</strong> in der Musterrechnung: mittlerer Verlauf
+            255'357 CHF selbst getragene Pflegekosten, langer Verlauf 879'639 CHF — das
+            3.4-fache. Darin liegt der Grund, weshalb der statistische Mittelwert als
+            Planungswert nicht taugt: Die Verteilung der Aufenthaltsdauer ist stark
+            rechtsschief, und die Minderheit mit langem Verlauf bestimmt den
+            Kapitalbedarf.</li>
+
+          <li><strong>Neuer Abschnitt im Reiter Steuern, Kapitel 5:</strong>
+            «Pflegefinanzierung — Beteiligung und Tarife». Dort stehen offen und
+            einstellbar: die Beteiligungsgrenzen für Heim und Spitex, der Pflegebeitrag
+            des Bundes, die Stundenansätze für Grundpflege (69.15 CHF, Höchstansatz nach
+            Art. 11 der Verordnung sGS 331.21) und Hauswirtschaft, die minimale
+            Altersrente und die Vorgaben aus der Statistik — jeweils mit
+            Rechtsgrundlage.</li>
+
+          <li><strong>Was nicht gerechnet wird.</strong> Ergänzungsleistungen. Ihre
+            Eintrittsschwelle liegt bei 100'000 CHF Vermögen für Alleinstehende und
+            200'000 CHF für Ehepaare (Stand 1.1.2026) und wird in keinem Verlauf
+            erreicht. Der Methodentext des Szenarios sagt das ausdrücklich.</li>
+
+          <li><strong>Annahmen, die als solche gekennzeichnet sind:</strong> der
+            Stundenansatz für Hauswirtschaft, für den es keinen amtlichen Tarif gibt;
+            die Teuerung der Pflegekosten, für die kein publizierter Index besteht; und
+            die Annahme, dass die Beteiligungsgrenze von 23.00 CHF im Heim voll
+            ausgeschöpft wird — das Gesetz nennt den Höchstbetrag, nicht den erhobenen
+            Satz.</li>
+
+          <li><strong>Keine Änderung an bestehenden Rechnungen.</strong> Die Vorgabe
+            bleibt die Erfassung als Gesamtbetrag; Spitex und Hilflosenentschädigung sind
+            ausgeschaltet. Die Musterrechnung liefert unverändert dieselben Werte.</li>
+        </ul>
       </div>
       <div class="karte breit">
         <h3>Änderungen in v266 — Besteuerung des Vorsorgekapitals nach Schweizer Recht</h3>
@@ -7888,6 +7990,199 @@ function heimkostenImJahr(person, jahr) {
   return monat * 12 * Math.pow(1 + tau, Math.max(0, jahr - basis));
 }
 
+// ------------------------------------------- Heimkosten nach Finanzierung
+// Pflegekosten zerfallen in Teile, die ganz unterschiedlich finanziert
+// werden. Wer nur einen Gesamtbetrag erfasst, muss diese Aufteilung im Kopf
+// machen - und sie aendert sich mit jeder Pflegestufe.
+//
+//   Pflege        Krankenversicherung und oeffentliche Hand tragen den
+//                 groessten Teil. Die versicherte Person zahlt nach
+//                 Art. 25a Abs. 5 KVG hoechstens 20 Prozent des hoechsten
+//                 vom Bundesrat festgesetzten Pflegebeitrags; bei 115.20
+//                 Franken je Tag sind das 23.00 Franken je Tag. Art. 8
+//                 Abs. 1 des Pflegegesetzes SG (sGS 331.1) uebernimmt diese
+//                 Grenze. Die Restfinanzierung tragen nach Art. 9 Abs. 1
+//                 Kanton zu zwei Dritteln und politische Gemeinde zu einem
+//                 Drittel.
+//   Betreuung
+//   und Hotellerie  Von keiner Versicherung gedeckt; voll selbst zu tragen.
+//   Sonstiges     Alles Weitere, das im Heim anfaellt und nicht in den
+//                 beiden Taxen steckt. Diese Kosten kann auch die andere
+//                 Person uebernehmen.
+//
+// Die Vereinfachung: Gerechnet wird die Beteiligung als Mindestwert aus
+// Hoechstbetrag und erfasster Pflegetaxe. In den hoeheren Pflegestufen
+// uebersteigt die Taxe den Kassenbeitrag immer, und dann ist die Beteiligung
+// der volle Hoechstbetrag. Nur in den untersten Stufen waere sie kleiner;
+// dort faellt der Unterschied nicht ins Gewicht.
+function heimTeileImJahr(person, jahr, pf) {
+  const leer = { pflege: 0, betreuung: 0, sonstige: 0, sonstigeTraeger: "selbst",
+                 pflegeVoll: 0, pflegeGetragen: 0, total: 0 };
+  if (!person || person.heimeintritt_ab == null) return leer;
+  const ab = Number(person.heimeintritt_ab);
+  if (!isFinite(ab) || jahr < ab) return leer;
+  if (person.heim_kosten_art !== "geteilt") {
+    // Alte Erfassung: ein Gesamtbetrag, voll selbst getragen.
+    const t = heimkostenImJahr(person, jahr);
+    return Object.assign({}, leer, { betreuung: t, total: t });
+  }
+  // Pflegestufe: die letzte erreichte Stufe gilt, wie beim Gesamtbetrag.
+  let pflegeTag = Number(person.heim_pflegetaxe_pro_tag) || 0;
+  let betreuTag = Number(person.heim_betreuung_pro_tag) || 0;
+  const stufen = Array.isArray(person.heim_stufen) ? person.heim_stufen.slice() : [];
+  stufen.sort((x, y) => (Number(x.ab_jahr) || 0) - (Number(y.ab_jahr) || 0));
+  for (const st of stufen) {
+    if (!st || st.ab_jahr == null || jahr < Number(st.ab_jahr)) continue;
+    if (st.pflegetaxe_pro_tag != null) pflegeTag = Number(st.pflegetaxe_pro_tag) || 0;
+    if (st.betreuung_pro_tag != null) betreuTag = Number(st.betreuung_pro_tag) || 0;
+  }
+  const tau = Number(person.heimkosten_teuerung) || 0;
+  const basis = person.heimkosten_basisjahr != null
+    ? Number(person.heimkosten_basisjahr) : ab;
+  const f = Math.pow(1 + tau, Math.max(0, jahr - basis));
+  const tage = tageImJahr(jahr);
+
+  // Die Beteiligung an der Pflege ist ein Frankenbetrag je Tag und folgt
+  // der Teuerung nicht: sie ist an den bundesrechtlichen Pflegebeitrag
+  // gebunden, nicht an den Heimtarif.
+  const grenze = Number((pf || {}).beteiligung_heim_pro_tag);
+  const grenzeTag = isFinite(grenze) ? Math.max(0, grenze) : 23;
+  const pflegeVoll = pflegeTag * f * tage;
+  const pflegeEigen = Math.min(pflegeTag * f, grenzeTag) * tage;
+
+  const sonstMonat = Number(person.heim_sonstige_pro_monat) || 0;
+  const sonstige = sonstMonat * 12 * f;
+
+  return {
+    pflege: pflegeEigen,
+    betreuung: betreuTag * f * tage,
+    sonstige,
+    sonstigeTraeger: person.heim_sonstige_traeger || "selbst",
+    pflegeVoll,
+    pflegeGetragen: Math.max(0, pflegeVoll - pflegeEigen),
+    total: pflegeEigen + betreuTag * f * tage + sonstige,
+  };
+}
+
+// ----------------------------------------------------- Pflege zu Hause
+// Die haeufige Abfolge ist nicht "gesund, dann Heim", sondern
+// gesund - Spitex - Heim. Erfasst werden Stunden je Woche, getrennt nach
+// Pflege und Hauswirtschaft, weil beide ganz verschieden finanziert sind:
+//
+//   Pflege        Nach Art. 15 Abs. 1 und 2 des Pflegegesetzes SG traegt die
+//                 versicherte Person 10 Prozent des der Krankenversicherung
+//                 verrechneten Betrags, je Tag hoechstens 10 Prozent des
+//                 hoechsten bundesrechtlichen Stundenbeitrags. Bei 76.90
+//                 Franken sind das 7.69 Franken je Tag. Die Restfinanzierung
+//                 traegt nach Art. 16 Abs. 1 die politische Gemeinde.
+//   Hauswirtschaft  Putzen, Waschen, Einkaufen: keine KVG-Leistung, voll
+//                 selbst zu tragen.
+//
+// Die Spitex endet von selbst im Jahr des Heimeintritts - beides zugleich
+// gibt es nicht.
+function spitexTeileImJahr(person, jahr, pf) {
+  const leer = { pflege: 0, haus: 0, pflegeVoll: 0, pflegeGetragen: 0, total: 0,
+                 stdPflege: 0, stdHaus: 0 };
+  if (!person || !person.spitex_aktiv || person.spitex_ab == null) return leer;
+  const ab = Number(person.spitex_ab);
+  if (!isFinite(ab) || jahr < ab) return leer;
+  // Ende: eigenes Bis-Jahr, sonst das Jahr vor dem Heimeintritt.
+  const bisEigen = (person.spitex_bis != null && person.spitex_bis !== "")
+    ? Number(person.spitex_bis) : null;
+  const heim = person.heimeintritt_ab != null ? Number(person.heimeintritt_ab) : null;
+  if (bisEigen != null && jahr > bisEigen) return leer;
+  if (heim != null && jahr >= heim) return leer;
+
+  let stdP = Number(person.spitex_pflege_std_woche) || 0;
+  let stdH = Number(person.spitex_haus_std_woche) || 0;
+  const stufen = Array.isArray(person.spitex_stufen) ? person.spitex_stufen.slice() : [];
+  stufen.sort((x, y) => (Number(x.ab_jahr) || 0) - (Number(y.ab_jahr) || 0));
+  for (const st of stufen) {
+    if (!st || st.ab_jahr == null || jahr < Number(st.ab_jahr)) continue;
+    if (st.pflege_std_woche != null) stdP = Number(st.pflege_std_woche) || 0;
+    if (st.haus_std_woche != null) stdH = Number(st.haus_std_woche) || 0;
+  }
+  const p = pf || {};
+  const tarifP = Number(p.spitex_tarif_pflege);
+  const tarifH = Number(p.spitex_tarif_haus);
+  const satzP = isFinite(tarifP) ? tarifP : 69.15;
+  const satzH = isFinite(tarifH) ? tarifH : 40;
+  // Teuerung der Pflegekosten: derselbe Satz wie beim Heim, damit nicht zwei
+  // Annahmen nebeneinander stehen.
+  const tau = Number(person.heimkosten_teuerung) || 0;
+  const basis = person.spitex_basisjahr != null ? Number(person.spitex_basisjahr)
+              : (person.heimkosten_basisjahr != null
+                  ? Number(person.heimkosten_basisjahr) : ab);
+  const f = Math.pow(1 + tau, Math.max(0, jahr - basis));
+  const wochen = 52;
+  const pflegeVoll = stdP * wochen * satzP * f;
+  const haus = stdH * wochen * satzH * f;
+
+  const anteil = (p.beteiligung_spitex_anteil != null)
+    ? Math.max(0, Number(p.beteiligung_spitex_anteil)) : 0.10;
+  const grenzeTag = (p.beteiligung_spitex_pro_tag != null)
+    ? Math.max(0, Number(p.beteiligung_spitex_pro_tag)) : 7.70;
+  // Beteiligung: Anteil am verrechneten Betrag, je Tag gedeckelt. Der Deckel
+  // greift nur an Tagen mit Pflege; gerechnet wird mit der Zahl der Tage,
+  // an denen ueberhaupt Pflege geleistet wird - naeherungsweise alle Tage,
+  // sobald im Mittel mehr als eine Stunde je Woche anfaellt.
+  const tagePflege = stdP > 0 ? tageImJahr(jahr) : 0;
+  const pflegeEigen = Math.min(pflegeVoll * anteil, grenzeTag * tagePflege);
+
+  return {
+    pflege: pflegeEigen, haus,
+    pflegeVoll, pflegeGetragen: Math.max(0, pflegeVoll - pflegeEigen),
+    total: pflegeEigen + haus, stdPflege: stdP, stdHaus: stdH,
+  };
+}
+
+// ------------------------------------------- Hilflosenentschaedigung AHV
+// Sie wird unabhaengig von Einkommen und Vermoegen ausgerichtet - ein
+// Eigenheim spielt keine Rolle. Hoehe nach Merkblatt 3.01, Stand 1. Januar
+// 2026: 20, 50 und 80 Prozent der minimalen Altersrente von 1260 Franken,
+// also 252, 630 und 1008 Franken je Monat. Bei leichter Hilflosigkeit
+// besteht der Anspruch nur, solange die Person zu Hause wohnt.
+//
+// Besitzstand: Wer vor dem Referenzalter eine Hilflosenentschaedigung der IV
+// bezog, behaelt deren hoeheren Betrag (504, 1260 und 2016 Franken je Monat
+// fuer zu Hause lebende Personen).
+//
+// Die Entschaedigung folgt der minimalen Altersrente und damit der Teuerung
+// der AHV; gerechnet wird mit demselben Satz wie bei den AHV-Renten.
+function hilflosImJahr(person, jahr, pf, zv) {
+  if (!person || !person.he_aktiv || person.he_ab == null) return 0;
+  const ab = Number(person.he_ab);
+  if (!isFinite(ab) || jahr < ab) return 0;
+  if (person.he_bis != null && person.he_bis !== "" && jahr > Number(person.he_bis))
+    return 0;
+  const imHeim = person.heimeintritt_ab != null && jahr >= Number(person.heimeintritt_ab);
+  const grad = person.he_grad || "mittel";
+  // Leichte Hilflosigkeit: nur zu Hause.
+  if (grad === "leicht" && imHeim) return 0;
+  const p = pf || {};
+  let monat;
+  if (person.he_betrag_eigen != null && person.he_betrag_eigen !== "") {
+    monat = Number(person.he_betrag_eigen) || 0;
+  } else if (person.he_besitzstand_iv) {
+    monat = grad === "leicht" ? (Number(p.he_iv_leicht) || 504)
+          : grad === "schwer" ? (Number(p.he_iv_schwer) || 2016)
+          : (Number(p.he_iv_mittel) || 1260);
+  } else {
+    const min = Number(p.min_altersrente) || 1260;
+    const q = grad === "leicht" ? (Number(p.he_anteil_leicht) || 0.20)
+            : grad === "schwer" ? (Number(p.he_anteil_schwer) || 0.80)
+            : (Number(p.he_anteil_mittel) || 0.50);
+    monat = min * q;
+  }
+  // Teuerung: der Satz der AHV-Renten, Basisjahr wie dort.
+  const z = zv || {};
+  const tau = (p.he_teuerung != null && p.he_teuerung !== "")
+    ? Number(p.he_teuerung) : (Number(z.ahv_teuerung) || 0);
+  const basis = Number(z.ahv_basisjahr) || ab;
+  return monat * 12 * Math.pow(1 + tau, Math.max(0, jahr - basis));
+}
+
+
 // --------------------------------------------------- Rendite des Kapitals
 // Die Anlagerendite ist in der Regel ein einziger Satz je Person. Fuer die
 // Untersuchung der Reihenfolge der Renditen laesst sich stattdessen ein Pfad
@@ -9405,6 +9700,23 @@ function rechneEinmal(cfg, tarife, vorlauf) {
         if (vermBasis[pid] != null) vermBasis[pid] += rzBestand * (Number(a) || 0);
     }
 
+    // Sonstige Heimausgaben, die eine Person fuer die andere traegt. Sie
+    // muessen vor der Personenschleife bekannt sein: wer uebernimmt, bucht
+    // sie im selben Jahr, in dem sie bei der anderen Person wegfallen.
+    const heimSonstFremd = {};
+    for (const p of personen) heimSonstFremd[p.id] = 0;
+    for (const p of personen) {
+      if (jahr > endeJahr[p.id]) continue;
+      const t = heimTeileImJahr(p, jahr, cfg.pflege || {});
+      if (!(t.sonstige > 0) || t.sonstigeTraeger === "selbst") continue;
+      const quote = t.sonstigeTraeger === "beide" ? 0.5 : 1;
+      // Die andere Person traegt - lebt sie nicht mehr, faellt die
+      // Uebernahme auf die Person im Heim zurueck.
+      const andere = personen.find(x => x.id !== p.id && jahr <= endeJahr[x.id]);
+      if (andere) heimSonstFremd[andere.id] += t.sonstige * quote;
+      else heimSonstFremd[p.id] += t.sonstige * quote;
+    }
+
     // --- Je Person: Fixpunkt-Iteration ---
     for (const person of personen) {
       const pid = person.id;
@@ -9426,7 +9738,28 @@ function rechneEinmal(cfg, tarife, vorlauf) {
       // Er ist keine Einnahme und kein Ertrag, sondern ein Wechsel des Gefaesses;
       // gebucht wird er weiter unten als Zufluss am Jahresende.
       zeile.kontoUebertrag = uebertragJePerson[pid] || 0;
-      zeile.heimkosten = imHeim ? heimkostenImJahr(person, jahr) : 0;
+      // ---- Pflegekosten: Heim und Spitex, nach Finanzierung getrennt ----
+      const pfCfg = cfg.pflege || {};
+      const hT = heimTeileImJahr(person, jahr, pfCfg);
+      const sT = spitexTeileImJahr(person, jahr, pfCfg);
+      zeile.heimTeile = hT;
+      zeile.spitexTeile = sT;
+      // Sonstige Heimausgaben kann die andere Person ganz oder halb tragen.
+      // Was sie uebernimmt, faellt hier weg und wird dort gebucht.
+      const sonstQuote = hT.sonstigeTraeger === "andere" ? 0
+                       : hT.sonstigeTraeger === "beide" ? 0.5 : 1;
+      zeile.heimSonstigeSelbst = hT.sonstige * sonstQuote;
+      zeile.heimSonstigeAndere = hT.sonstige * (1 - sonstQuote);
+      // Was diese Person fuer die andere uebernimmt. Faellt die Uebernahme
+      // auf sie selbst zurueck, weil die andere nicht mehr lebt, ist der
+      // Betrag hier bereits enthalten und darf oben nicht doppelt zaehlen.
+      zeile.heimSonstigeFuerAndere = heimSonstFremd[pid] || 0;
+      zeile.heimkosten = hT.pflege + hT.betreuung + zeile.heimSonstigeSelbst
+                       + zeile.heimSonstigeFuerAndere;
+      zeile.spitexkosten = sT.total;
+      // Hilflosenentschaedigung: Einnahme, unabhaengig von Einkommen und
+      // Vermoegen. Steuerfrei nach Art. 24 lit. h DBG.
+      zeile.hilflosenentschaedigung = hilflosImJahr(person, jahr, pfCfg, cfg.zivilstand);
 
       const rstAnteil = rstAnteileJahr[pid] || 0;
       const invAnteil = invAnteileJahr[pid] || 0;
@@ -9609,6 +9942,7 @@ function rechneEinmal(cfg, tarife, vorlauf) {
                      + rueckstellung + investitionsBeitrag
                      + massnahme + hilfe + wohnung + investitionSelbst
                      + zeile.erbschaftssteuer + kapitalsteuer + zeile.heimkosten
+                     + zeile.spitexkosten
                      + schenkKosten + policePr;
       zeile.gruppen = { ...a.gruppen };
       const buchen = (name, betrag) => {
@@ -9626,12 +9960,19 @@ function rechneEinmal(cfg, tarife, vorlauf) {
       buchen('Erbschaftssteuer', zeile.erbschaftssteuer);
       buchen('Kapitalleistungssteuer', kapitalsteuer);
       buchen('Heim- oder Spitalaufenthalt', zeile.heimkosten);
+      buchen('Pflege zu Hause (Spitex)', zeile.spitexkosten);
       buchen('Schenkung Liegenschaft', schenkKosten);
       buchen('Prämien Säule 3b', policePr);
       // Der Ertrag weiterer Vermoegenswerte ist nicht nur steuerbar, er fliesst
       // der Person auch zu und deckt Ausgaben. Ohne diese Zeile wirkte ein
       // ertragbringender Vermoegenswert allein belastend.
-      zeile.einnahmen = a.einnahmen + mietzins + (vermErtrag[pid] || 0);
+      // Die Hilflosenentschaedigung zaehlt zu den Einnahmen - sie erhoeht das
+      // verfuegbare Geld -, ist aber nach Art. 24 lit. h DBG steuerfrei. Sie
+      // wird deshalb unten bei den steuerfreien Einnahmen wieder abgezogen.
+      zeile.einnahmen = a.einnahmen + mietzins + (vermErtrag[pid] || 0)
+                      + (zeile.hilflosenentschaedigung || 0);
+      if (zeile.hilflosenentschaedigung)
+        a.steuerfreiEin = (a.steuerfreiEin || 0) + zeile.hilflosenentschaedigung;
 
       // Der Eigenmietwert folgt dem Anteil am Steuerwert der Liegenschaft.
       const hausWert = vermLieg[pid] || 0;
@@ -13247,6 +13588,76 @@ function umstellen(k) {
       if (v.ertrag_steuerbar_anteil == null || v.ertrag_steuerbar_anteil === "")
         v.ertrag_steuerbar_anteil = (v.ertrag_steuerbar === false) ? 0 : 1;
       delete v.ertrag_steuerbar;
+    }
+
+    // ---- Pflege: Heim, Spitex und Hilflosenentschaedigung ---------------
+    //
+    // Die Saetze der Pflegefinanzierung stehen hier an einem Ort, damit sie
+    // nachgeschlagen und geaendert werden koennen. Rechtsgrundlagen:
+    //
+    //   Heim      Art. 25a Abs. 5 KVG: Die versicherte Person traegt
+    //             hoechstens 20 Prozent des hoechsten vom Bundesrat
+    //             festgesetzten Pflegebeitrags. Dieser betraegt 115.20
+    //             Franken je Tag, die Beteiligung also hoechstens 23.00
+    //             Franken je Tag. Art. 8 Abs. 1 des Pflegegesetzes SG
+    //             (sGS 331.1) uebernimmt die Grenze; die Restfinanzierung
+    //             tragen nach Art. 9 Abs. 1 Kanton zu zwei Dritteln und
+    //             politische Gemeinde zu einem Drittel.
+    //   Spitex    Art. 15 Abs. 1 und 2 PflegeG SG: 10 Prozent des der
+    //             Krankenversicherung verrechneten Betrags, je Tag hoechstens
+    //             10 Prozent des hoechsten Stundenbeitrags von 76.90 Franken,
+    //             also 7.69 Franken. St. Gallen schoepft die bundesrechtliche
+    //             Grenze von 20 Prozent hier bewusst nur zur Haelfte aus.
+    //             Restfinanzierung: die politische Gemeinde (Art. 16 Abs. 1).
+    //   Tarife    Hoechstansaetze nach Art. 11 der Verordnung ueber die
+    //             Pflegefinanzierung (sGS 331.21): Grundpflege 69.15,
+    //             Untersuchung und Behandlung 82.85, Abklaerung und Beratung
+    //             101.10 Franken je Stunde. Hauswirtschaft ist keine
+    //             KVG-Leistung und hat keinen amtlichen Tarif.
+    //   HE        Merkblatt 3.01, Stand 1. Januar 2026: 20, 50 und 80 Prozent
+    //             der minimalen Altersrente von 1260 Franken. Die IV zahlt
+    //             zu Hause lebenden Personen mehr; wer vor dem Referenzalter
+    //             eine IV-Entschaedigung bezog, behaelt deren Betrag.
+    k.pflege = Object.assign({
+      beteiligung_heim_pro_tag: 23.00,
+      beteiligung_spitex_anteil: 0.10,
+      beteiligung_spitex_pro_tag: 7.70,
+      pflegebeitrag_bund_pro_tag: 115.20,
+      spitex_tarif_pflege: 69.15,
+      spitex_tarif_haus: 40.00,
+      min_altersrente: 1260,
+      he_anteil_leicht: 0.20, he_anteil_mittel: 0.50, he_anteil_schwer: 0.80,
+      he_iv_leicht: 504, he_iv_mittel: 1260, he_iv_schwer: 2016,
+      he_teuerung: null,
+      // Vorgaben aus der Statistik, fuer den Knopf "Aus der Statistik setzen".
+      // Mittleres Eintrittsalter 82 Jahre, mittlere Aufenthaltsdauer 784 Tage
+      // (Curaviva). Die Verteilung der Dauer ist stark rechtsschief - der
+      // Mittelwert ist ein Startpunkt, kein Planungswert.
+      stat_eintrittsalter: 82,
+      stat_dauer_jahre: 2.1,
+      stat_spitex_jahre: 2,
+    }, k.pflege || {});
+
+    // Felder je Person fuer Heim, Spitex und Hilflosenentschaedigung.
+    for (const p of (k.personen || [])) {
+      if (p.heim_kosten_art == null) p.heim_kosten_art = "gesamt";
+      if (p.heim_pflegetaxe_pro_tag == null) p.heim_pflegetaxe_pro_tag = 0;
+      if (p.heim_betreuung_pro_tag == null) p.heim_betreuung_pro_tag = 0;
+      if (p.heim_sonstige_pro_monat == null) p.heim_sonstige_pro_monat = 0;
+      if (p.heim_sonstige_traeger == null) p.heim_sonstige_traeger = "selbst";
+      if (p.spitex_aktiv == null) p.spitex_aktiv = false;
+      if (p.spitex_ab === undefined) p.spitex_ab = null;
+      if (p.spitex_bis === undefined) p.spitex_bis = null;
+      if (p.spitex_pflege_std_woche == null) p.spitex_pflege_std_woche = 0;
+      if (p.spitex_haus_std_woche == null) p.spitex_haus_std_woche = 0;
+      if (!Array.isArray(p.spitex_stufen)) p.spitex_stufen = [];
+      if (p.spitex_basisjahr === undefined) p.spitex_basisjahr = null;
+      if (p.he_aktiv == null) p.he_aktiv = false;
+      if (p.he_ab === undefined) p.he_ab = null;
+      if (p.he_bis === undefined) p.he_bis = null;
+      if (p.he_grad == null) p.he_grad = "mittel";
+      if (p.he_besitzstand_iv == null) p.he_besitzstand_iv = false;
+      if (p.he_betrag_eigen === undefined) p.he_betrag_eigen = null;
     }
 
     // Ersterwerberabzug je Person; ohne Eintrag wirkt er nicht.
@@ -17913,6 +18324,15 @@ const SZENARIEN = [
       "Massgebend für den Nutzen ist der Anschlusssatz: je höher er ist, desto mehr " +
       "bringt die Rückzahlung; ihr Preis ist die entgangene Anlagerendite des " +
       "eingesetzten Kapitals und der Wegfall des Schuldzinsabzugs." },
+  { id: "pflege", nummer: 8, titel: "Pflegebedürftigkeit",
+    kurz: "Drei Verläufe nebeneinander: kein Pflegefall, ein mittlerer Verlauf nach der " +
+          "Statistik und ein langer Verlauf. Ausgewiesen werden Kapital am Ende, " +
+          "Erschöpfungsjahr und die Summe der selbst getragenen Pflegekosten.",
+    einleitung: "Die mittlere Aufenthaltsdauer im Heim beträgt 784 Tage, also gut zwei " +
+      "Jahre. Dieser Mittelwert taugt aber nicht zur Planung: Die Verteilung ist stark " +
+      "rechtsschief — viele sterben nach wenigen Monaten, eine Minderheit bleibt sieben " +
+      "Jahre und länger, und genau diese Minderheit bestimmt den Kapitalbedarf. Hier " +
+      "werden deshalb drei Verläufe gerechnet, mit allem Übrigen unverändert." },
 ];
 let szenarioWahl = null;
 
@@ -17963,6 +18383,7 @@ function szenarienZeichnen() {
   if (gewaehlt.id === "wohnen") { wohnenSzenarioZeichnen(); return; }
   if (gewaehlt.id === "hypo") { hypoSzenarioZeichnen(); return; }
   if (gewaehlt.id === "rueck") { rueckSzenarioZeichnen(); return; }
+  if (gewaehlt.id === "pflege") { pflegeSzenarioZeichnen(); return; }
 
   // ---- Szenario 1: Ausgangslage ----
   const tb = $("#tabSzenarioBasis"); tb.innerHTML = "";
@@ -18812,6 +19233,485 @@ function rueckSchluessel() {
   return JSON.stringify(rueckPlan) + "|" + (rechnungZeit ? rechnungZeit.getTime() : 0);
 }
 
+// ================================================ Szenario 8: Pflegebedürftigkeit
+// Die mittlere Aufenthaltsdauer im Heim betraegt 784 Tage. Dieser Mittelwert
+// taugt nicht zur Planung: Die Verteilung ist stark rechtsschief - viele
+// sterben nach wenigen Monaten, eine Minderheit bleibt sieben Jahre und
+// laenger. Genau diese Minderheit bestimmt den Kapitalbedarf.
+//
+// Gerechnet werden deshalb drei Verlaeufe auf einer Kopie der Eingaben;
+// veraendert wird nur, was den Pflegefall betrifft. Alles Uebrige - Budget,
+// Hypotheken, Liegenschaft, Steuern - bleibt unberuehrt.
+
+// Eingaben des Szenarios. Sie leben nur in dieser Sitzung.
+const pflegeEingaben = {
+  person_id: null,          // null = die erste Person
+  eintrittsalter: null,     // null = aus der Statistik
+  spitexJahre: null,
+  dauerMittel: null,
+  dauerLang: null,
+  spitexLang: null,
+  heGrad: "mittel",
+  heAktiv: true,
+  dauerBestimmtEnde: true,
+};
+let pflegeLauf = null;
+let pflegeLaeuft = false;
+
+function pflegePerson() {
+  const id = pflegeEingaben.person_id;
+  return (cfg.personen || []).find(p => p.id === id) || (cfg.personen || [])[0] || null;
+}
+function pflegeVorgabe(schluessel, ausStatistik) {
+  const v = pflegeEingaben[schluessel];
+  if (v != null && v !== "") return Number(v);
+  const pf = cfg.pflege || {};
+  return Number(pf[ausStatistik]) || 0;
+}
+
+// Baut eine Kopie der Eingaben mit dem gewuenschten Verlauf. "art" ist
+// "kein", "mittel" oder "lang".
+function pflegeKonfig(art) {
+  const k = structuredClone(cfg);
+  const p = pflegePerson();
+  if (!p) return k;
+  const kp = (k.personen || []).find(x => x.id === p.id);
+  if (!kp) return k;
+  const pf = k.pflege || {};
+  const alter = pflegeVorgabe("eintrittsalter", "stat_eintrittsalter") || 82;
+  const geb = Number(kp.geburtsjahr);
+
+  // Erst alles zuruecksetzen, damit die erfassten Werte den Verlauf nicht
+  // ueberlagern. Die Kostensaetze bleiben: sie sind die Grundlage, nicht
+  // der Verlauf.
+  kp.spitex_aktiv = false;
+  kp.heimeintritt_ab = null;
+  kp.he_aktiv = false;
+
+  if (art === "kein") return k;
+
+  const spitexJahre = art === "lang"
+    ? (pflegeVorgabe("spitexLang", "") || 3)
+    : (pflegeVorgabe("spitexJahre", "stat_spitex_jahre") || 2);
+  const dauer = art === "lang"
+    ? (pflegeVorgabe("dauerLang", "") || 7)
+    : Math.round(pflegeVorgabe("dauerMittel", "stat_dauer_jahre") || 2);
+
+  const eintritt = isFinite(geb) ? geb + Math.round(alter) : Number(cfg.jahr_von) + 20;
+  kp.heimeintritt_ab = eintritt;
+  // Sind keine getrennten Taxen erfasst, bleibt der Gesamtbetrag massgebend.
+  if (kp.heim_kosten_art === "geteilt"
+      && !(Number(kp.heim_pflegetaxe_pro_tag) > 0)) {
+    kp.heim_pflegetaxe_pro_tag = 180;
+    kp.heim_betreuung_pro_tag = 160;
+  }
+  if (kp.heim_kosten_art !== "geteilt" && !(Number(kp.heimkosten_pro_monat) > 0))
+    kp.heimkosten_pro_monat = 10875;   // Mittelwert nach Curaviva
+
+  if (spitexJahre > 0) {
+    kp.spitex_aktiv = true;
+    kp.spitex_ab = eintritt - spitexJahre;
+    kp.spitex_bis = null;
+    if (!(Number(kp.spitex_pflege_std_woche) > 0)) {
+      kp.spitex_pflege_std_woche = art === "lang" ? 8 : 4;
+      kp.spitex_haus_std_woche = art === "lang" ? 5 : 3;
+    }
+  }
+  if (pflegeEingaben.heAktiv) {
+    kp.he_aktiv = true;
+    kp.he_ab = spitexJahre > 0 ? (eintritt - spitexJahre) : eintritt;
+    kp.he_bis = null;
+    kp.he_grad = pflegeEingaben.heGrad || "mittel";
+  }
+  // Das Ende der Rechnung dieser Person. Zwei Wege, je nach Wahl:
+  //
+  //   Dauer bestimmt das Ende   Das Lebensende wird auf Eintritt plus Dauer
+  //                             gesetzt - auch wenn es dadurch frueher liegt
+  //                             als erfasst. Nur so wirkt die eingegebene
+  //                             Dauer ueberhaupt. Sachlich ist das richtig:
+  //                             Der Aufenthalt endet mit dem Tod, und wer
+  //                             laenger im Heim ist, lebt laenger.
+  //   Lebensende bleibt         Das erfasste Jahr gilt; die Dauer ergibt sich
+  //                             aus Eintritt und Lebensende und kann von der
+  //                             Eingabe abweichen.
+  //
+  // In beiden Faellen wird verlaengert, wenn der Verlauf sonst nicht zu Ende
+  // gerechnet werden koennte.
+  // Die Dauer zaehlt Kalenderjahre: Wer 2042 eintritt und zwei Jahre bleibt,
+  // lebt 2042 und 2043 - das Ende ist also Eintritt plus Dauer minus eins.
+  const ende = eintritt + Math.max(0, Math.round(dauer) - 1);
+  if (pflegeEingaben.dauerBestimmtEnde !== false) {
+    kp.lebenserwartung_bis = ende;
+  } else if (Number(kp.lebenserwartung_bis) < ende) {
+    kp.lebenserwartung_bis = ende;
+  }
+  if (Number(k.jahr_bis) < Number(kp.lebenserwartung_bis))
+    k.jahr_bis = Number(kp.lebenserwartung_bis);
+  return k;
+}
+
+function pflegeRechnen() {
+  const t0 = performance.now();
+  const arten = [
+    { id: "kein", titel: "kein Pflegefall" },
+    { id: "mittel", titel: "mittlerer Verlauf" },
+    { id: "lang", titel: "langer Verlauf" },
+  ];
+  const laeufe = [];
+  for (const a of arten) {
+    let e = null;
+    try { e = rechne(pflegeKonfig(a.id), TARIFE); } catch (x) { e = null; }
+    laeufe.push({ art: a.id, titel: a.titel, erg: e });
+  }
+  pflegeLauf = {
+    laeufe, person_id: (pflegePerson() || {}).id,
+    ms: Math.round(performance.now() - t0),
+    zeit: new Date().toLocaleTimeString("de-CH"),
+  };
+}
+
+// Summe der selbst getragenen Pflegekosten ueber alle Jahre und Personen.
+function pflegeSumme(e) {
+  if (!e) return null;
+  let s = 0;
+  for (const p of cfg.personen)
+    for (const z of (e.reihen[p.id] || []))
+      if (z.lebt) s += (Number(z.heimkosten) || 0) + (Number(z.spitexkosten) || 0);
+  return s;
+}
+function pflegeSummeHE(e) {
+  if (!e) return null;
+  let s = 0;
+  for (const p of cfg.personen)
+    for (const z of (e.reihen[p.id] || []))
+      if (z.lebt) s += Number(z.hilflosenentschaedigung) || 0;
+  return s;
+}
+
+function pflegeSzenarioZeichnen() {
+  pflegeEckwerteZeichnen();
+  pflegeTabelleZeichnen();
+}
+
+function pflegeEckwerteZeichnen() {
+  const w = $("#pflegeEckwerte"); if (!w) return;
+  w.innerHTML = "";
+  const pf = cfg.pflege || {};
+  const p = pflegePerson();
+
+  const ke = el("div", "karte");
+  ke.appendChild(el("h3", null, "Eckwerte"));
+
+  const feld = (etikett, kind, einheit) => {
+    const f = el("div", "feld");
+    f.appendChild(el("label", null, etikett)); f.appendChild(kind);
+    f.appendChild(el("span", "einheit", einheit || "")); ke.appendChild(f);
+  };
+
+  feld("Pflegefall bei", wahlFeld(
+    (cfg.personen || []).map(x => [x.id, x.bezeichnung || x.id]),
+    (p || {}).id || "", x => { pflegeEingaben.person_id = x; pflegeEckwerteZeichnen(); }), "");
+  feld("Eintrittsalter ins Heim", zahlFeld(pflegeEingaben.eintrittsalter,
+    x => { pflegeEingaben.eintrittsalter = x; pflegeEckwerteZeichnen(); },
+    { leerErlaubt: true, vorgabe: pf.stat_eintrittsalter ?? 82,
+      vorgabeHinweis: "Leer: der statistische Mittelwert.", klasse: "spalte-schmal" }), "Jahre");
+  feld("Dauer, mittlerer Verlauf", zahlFeld(pflegeEingaben.dauerMittel,
+    x => { pflegeEingaben.dauerMittel = x; pflegeEckwerteZeichnen(); },
+    { dez: true, leerErlaubt: true, vorgabe: pf.stat_dauer_jahre ?? 2.1,
+      vorgabeHinweis: "Leer: 784 Tage nach der Statistik.", klasse: "spalte-schmal" }), "Jahre");
+  feld("Spitex davor, mittlerer Verlauf", zahlFeld(pflegeEingaben.spitexJahre,
+    x => { pflegeEingaben.spitexJahre = x; pflegeEckwerteZeichnen(); },
+    { leerErlaubt: true, vorgabe: pf.stat_spitex_jahre ?? 2,
+      vorgabeHinweis: "Leer: zwei Jahre.", klasse: "spalte-schmal" }), "Jahre");
+  feld("Dauer, langer Verlauf", zahlFeld(pflegeEingaben.dauerLang,
+    x => { pflegeEingaben.dauerLang = x; pflegeEckwerteZeichnen(); },
+    { leerErlaubt: true, vorgabe: 7,
+      vorgabeHinweis: "Leer: sieben Jahre.", klasse: "spalte-schmal" }), "Jahre");
+  feld("Spitex davor, langer Verlauf", zahlFeld(pflegeEingaben.spitexLang,
+    x => { pflegeEingaben.spitexLang = x; pflegeEckwerteZeichnen(); },
+    { leerErlaubt: true, vorgabe: 3,
+      vorgabeHinweis: "Leer: drei Jahre.", klasse: "spalte-schmal" }), "Jahre");
+
+  const schH = el("div", "schalter");
+  const cbH = el("input"); cbH.type = "checkbox"; cbH.checked = !!pflegeEingaben.heAktiv;
+  cbH.addEventListener("change", () => {
+    pflegeEingaben.heAktiv = cbH.checked; pflegeEckwerteZeichnen();
+  });
+  schH.appendChild(cbH);
+  schH.appendChild(el("span", null, "Hilflosenentschädigung der AHV beziehen"));
+  ke.appendChild(schH);
+  if (pflegeEingaben.heAktiv)
+    feld("Grad der Hilflosigkeit", wahlFeld(
+      [["leicht", "leicht"], ["mittel", "mittel"], ["schwer", "schwer"]],
+      pflegeEingaben.heGrad || "mittel",
+      x => { pflegeEingaben.heGrad = x; pflegeEckwerteZeichnen(); }), "");
+
+  const schD = el("div", "schalter");
+  const cbD = el("input"); cbD.type = "checkbox";
+  cbD.checked = pflegeEingaben.dauerBestimmtEnde !== false;
+  cbD.addEventListener("change", () => {
+    pflegeEingaben.dauerBestimmtEnde = cbD.checked; pflegeEckwerteZeichnen();
+  });
+  schD.appendChild(cbD);
+  schD.appendChild(el("span", null,
+    "Die Dauer bestimmt das Lebensende dieser Person"));
+  ke.appendChild(schD);
+  const eD = el("p", "kleintext",
+    pflegeEingaben.dauerBestimmtEnde !== false
+      ? "Ein: Das Lebensende wird auf Eintritt plus Dauer gesetzt — auch wenn es "
+        + "dadurch früher liegt als erfasst. Nur so wirkt die eingegebene Dauer. "
+        + "Sachlich ist das richtig: Der Aufenthalt endet mit dem Tod, und wer länger "
+        + "im Heim bleibt, lebt länger. Der Verlauf «kein Pflegefall» behält das "
+        + "erfasste Lebensende."
+      : "Aus: Das erfasste Lebensende gilt. Die Dauer des Aufenthalts ergibt sich dann "
+        + "aus Eintritt und Lebensende und kann von der Eingabe oben abweichen — die "
+        + "Tabelle weist die tatsächlich gerechnete Dauer aus.");
+  eD.style.cssText = "margin:4px 0 0; color:var(--gedaempft)";
+  ke.appendChild(eD);
+
+  const e1 = el("p");
+  e1.innerHTML =
+    "Gerechnet wird auf einer Kopie der Eingaben; verändert wird nur, was den "
+    + "Pflegefall betrifft. Budget, Hypotheken, Liegenschaft und Steuern bleiben "
+    + "unberührt — ebenso die Taxen und Stundenansätze, die im Reiter Personen und "
+    + "im Reiter Steuern erfasst sind.<br><br>"
+    + "<strong>Die drei Verläufe</strong>"
+    + "<ul style='margin:4px 0;padding-left:20px'>"
+    + "<li><strong>kein Pflegefall:</strong> weder Spitex noch Heim, auch keine "
+      + "Hilflosenentschädigung.</li>"
+    + "<li><strong>mittlerer Verlauf:</strong> Eintritt im statistischen Mittel, davor "
+      + "Spitex, Aufenthalt von mittlerer Dauer.</li>"
+    + "<li><strong>langer Verlauf:</strong> längere Spitex-Phase mit mehr Stunden, "
+      + "danach ein Aufenthalt, wie ihn die Minderheit mit langem Verlauf erlebt.</li>"
+    + "</ul>"
+    + "Reicht die erfasste Lebenserwartung für einen Verlauf nicht aus, wird sie für "
+    + "diesen Lauf verlängert — sonst wäre der Aufenthalt gar nicht zu Ende zu "
+    + "rechnen.";
+  e1.style.cssText = "font-size:12px;color:var(--gedaempft);margin:8px 0 0";
+  ke.appendChild(e1);
+  w.appendChild(ke);
+
+  // ---- rechte Spalte: Ergebnis ----
+  w.appendChild(pflegeErgebniskarte());
+  pflegeLeisteZeichnen();
+}
+
+function pflegeLeisteZeichnen() {
+  const block = $("#szenario-pflege");
+  if (!block) return;
+  let leiste = block.querySelector(".startleiste");
+  if (!leiste) {
+    leiste = el("div", "startleiste");
+    block.insertBefore(leiste, block.querySelector("h2.abschnitt"));
+  }
+  leiste.innerHTML = "";
+  const b = el("button", "knopf gross", pflegeLaeuft ? "rechnet …" : "Berechnung starten");
+  b.type = "button"; b.disabled = pflegeLaeuft;
+  b.title = "Rechnet die drei Verläufe. Je Verlauf ein vollständiger Durchlauf des "
+    + "Rechenkerns über alle Jahre.";
+  b.addEventListener("click", () => {
+    if (pflegeLaeuft) return;
+    pflegeLaeuft = true; pflegeLeisteZeichnen();
+    setTimeout(() => {
+      try { pflegeRechnen(); } finally { pflegeLaeuft = false; }
+      pflegeEckwerteZeichnen();
+      pflegeTabelleZeichnen();
+      szenarioStandSetzen("Pflegeszenario gerechnet — " + pflegeLauf.ms + " ms");
+    }, 20);
+  });
+  leiste.appendChild(b);
+  const chip = el("span", "chip");
+  if (!pflegeLauf) { chip.textContent = "noch nicht gerechnet"; chip.classList.add("offen"); }
+  else chip.textContent = "gerechnet " + pflegeLauf.zeit + " · " + pflegeLauf.ms + " ms";
+  leiste.appendChild(chip);
+}
+
+function pflegeErgebniskarte() {
+  const k = el("div", "karte ergebniskarte");
+  k.appendChild(el("h3", null, "Was der Pflegefall kostet"));
+  if (!pflegeLauf) {
+    k.appendChild(el("p", "ergLeer",
+      "Werte links setzen und «Berechnung starten» klicken. Das Ergebnis erscheint hier."));
+    return k;
+  }
+  const ohne = pflegeLauf.laeufe.find(x => x.art === "kein");
+  const basis = ohne ? pflegeSumme(ohne.erg) : 0;
+  const kapitalOhne = ohne && ohne.erg
+    ? cfg.personen.reduce((a, p) => a + (Number((ohne.erg.kennzahlen[p.id] || {}).kapitalLetztesJahr) || 0), 0)
+    : null;
+
+  for (const l of pflegeLauf.laeufe) {
+    if (l.art === "kein") continue;
+    const d = el("div", "ergZeile");
+    d.appendChild(el("div", "ergName", l.titel + " — selbst getragene Pflegekosten"));
+    const s = pflegeSumme(l.erg);
+    const wert = el("div", "ergWert");
+    if (s == null) { wert.textContent = "nicht rechenbar"; wert.style.fontSize = "20px"; }
+    else { wert.textContent = chf(s - basis); wert.appendChild(el("span", "einh", "CHF")); }
+    d.appendChild(wert);
+    if (l.erg) {
+      const kap = cfg.personen.reduce((a, p) =>
+        a + (Number((l.erg.kennzahlen[p.id] || {}).kapitalLetztesJahr) || 0), 0);
+      const n = el("div", "ergNeben");
+      if (kapitalOhne != null) {
+        const diff = kap - kapitalOhne;
+        const sp = el("span", diff < 0 ? "rot" : "gruen",
+          (diff > 0 ? "+" : "") + chf(diff) + " CHF");
+        sp.style.fontWeight = "600";
+        n.appendChild(sp);
+        n.appendChild(document.createTextNode("  Kapital beider Personen am Ende"));
+      }
+      d.appendChild(n);
+      const he = pflegeSummeHE(l.erg);
+      if (he > 0) {
+        const h = el("div", "ergNeben");
+        h.style.color = "var(--gut)";
+        h.textContent = "davon gedeckt durch Hilflosenentschädigung: " + chf(he) + " CHF";
+        d.appendChild(h);
+      }
+    }
+    k.appendChild(d);
+  }
+  return k;
+}
+
+function pflegeTabelleZeichnen() {
+  const t = $("#tabSzenarioPflege"); if (!t) return;
+  t.innerHTML = "";
+  const kz = t.createTHead().insertRow();
+  ["Verlauf", "Spitex", "Heim", "Dauer im Heim", "Pflegekosten selbst CHF",
+   "Hilflosenentschädigung CHF", "Kapital am Ende CHF", "erschöpft"]
+    .forEach((x, i) => kz.appendChild(el("th", i === 0 ? "links" : null, x)));
+  const kb = t.createTBody();
+  const hw = $("#pflegeHinweis");
+
+  if (!pflegeLauf) {
+    const r = kb.insertRow();
+    const c = el("td", "txt"); c.colSpan = 8; c.style.cssText = "padding:10px;color:var(--gedaempft)";
+    c.textContent = "Noch nicht gerechnet. Der Knopf «Berechnung starten» oberhalb führt den Lauf aus.";
+    r.appendChild(c);
+    if (hw) hw.textContent = "";
+    const tj = $("#tabPflegeJahre"); if (tj) tj.innerHTML = "";
+    return;
+  }
+
+  const p = (cfg.personen || []).find(x => x.id === pflegeLauf.person_id)
+         || (cfg.personen || [])[0];
+  const ohne = pflegeLauf.laeufe.find(x => x.art === "kein");
+  const basis = ohne ? pflegeSumme(ohne.erg) : 0;
+
+  for (const l of pflegeLauf.laeufe) {
+    const r = kb.insertRow();
+    if (l.art === "lang") r.className = "ergebnis";
+    const c0 = el("td", "txt"); c0.textContent = l.titel; r.appendChild(c0);
+    const mono = txt => { const c = el("td", "rechts mono");
+      c.style.padding = "5px 10px"; c.textContent = txt; return c; };
+    // Jahre aus der gerechneten Reihe ablesen
+    const reihe = (l.erg && p) ? (l.erg.reihen[p.id] || []) : [];
+    const sp = reihe.filter(z => (z.spitexkosten || 0) > 0);
+    const he2 = reihe.filter(z => (z.heimkosten || 0) > 0);
+    r.appendChild(mono(sp.length ? sp[0].jahr + "–" + sp[sp.length - 1].jahr : "–"));
+    r.appendChild(mono(he2.length ? he2[0].jahr + "–" + he2[he2.length - 1].jahr : "–"));
+    // Tatsaechlich gerechnete Dauer, nicht die eingegebene: sie kann davon
+    // abweichen, wenn das Lebensende den Aufenthalt vorher beendet.
+    r.appendChild(mono(he2.length ? he2.length + (he2.length === 1 ? " Jahr" : " Jahre") : "–"));
+    const s = pflegeSumme(l.erg);
+    const cS = mono(s == null ? "–" : chf(s));
+    if (l.art !== "kein" && s != null) cS.title = "Gegenüber «kein Pflegefall»: "
+      + chf(s - basis) + " CHF mehr.";
+    r.appendChild(cS);
+    r.appendChild(mono(chf(pflegeSummeHE(l.erg) || 0)));
+    const kap = l.erg ? cfg.personen.reduce((a, q) =>
+      a + (Number((l.erg.kennzahlen[q.id] || {}).kapitalLetztesJahr) || 0), 0) : null;
+    const cK = mono(kap == null ? "–" : chf(kap));
+    if (kap != null && kap < 0) cK.classList.add("rot");
+    r.appendChild(cK);
+    const ersch = l.erg ? cfg.personen.map(q => {
+      const j = (l.erg.kennzahlen[q.id] || {}).erschoepftJahr;
+      return j ? (q.bezeichnung || q.id) + " " + j : null;
+    }).filter(Boolean).join(", ") : "";
+    r.appendChild(mono(ersch || "nein"));
+  }
+
+  // ---- Jahreswerte des langen Verlaufs ----
+  const lang = pflegeLauf.laeufe.find(x => x.art === "lang");
+  const tj = $("#tabPflegeJahre");
+  if (tj && lang && lang.erg && p) {
+    tj.innerHTML = "";
+    const kz2 = tj.createTHead().insertRow();
+    ["Jahr", "Alter", "Spitex selbst CHF", "Heim selbst CHF",
+     "davon Pflege CHF", "davon Betreuung CHF", "davon Sonstiges CHF",
+     "Hilflosenentschädigung CHF", "von Kasse und Gemeinde getragen CHF"]
+      .forEach((x, i) => kz2.appendChild(el("th", i === 0 ? "links" : null, x)));
+    const kb2 = tj.createTBody();
+    for (const z of (lang.erg.reihen[p.id] || [])) {
+      if (!z.lebt) continue;
+      const hat = (z.spitexkosten || 0) > 0 || (z.heimkosten || 0) > 0
+               || (z.hilflosenentschaedigung || 0) > 0;
+      if (!hat) continue;
+      const r = kb2.insertRow();
+      const c0 = el("td", "txt"); c0.textContent = z.jahr; r.appendChild(c0);
+      const mono = txt => { const c = el("td", "rechts mono");
+        c.style.padding = "4px 10px"; c.textContent = txt; return c; };
+      r.appendChild(mono(String(z.alter ?? "–")));
+      r.appendChild(mono(chf(z.spitexkosten || 0)));
+      r.appendChild(mono(chf(z.heimkosten || 0)));
+      r.appendChild(mono(chf((z.heimTeile || {}).pflege || 0)));
+      r.appendChild(mono(chf((z.heimTeile || {}).betreuung || 0)));
+      r.appendChild(mono(chf(z.heimSonstigeSelbst || 0)));
+      const cHe = mono(chf(z.hilflosenentschaedigung || 0));
+      if ((z.hilflosenentschaedigung || 0) > 0) cHe.classList.add("gruen");
+      r.appendChild(cHe);
+      r.appendChild(mono(chf(((z.heimTeile || {}).pflegeGetragen || 0)
+        + ((z.spitexTeile || {}).pflegeGetragen || 0))));
+    }
+  }
+
+  if (!hw) return;
+  const lg = pflegeLauf.laeufe.find(x => x.art === "lang");
+  const mt = pflegeLauf.laeufe.find(x => x.art === "mittel");
+  const sL = pflegeSumme(lg && lg.erg), sM = pflegeSumme(mt && mt.erg);
+  hw.innerHTML =
+    "<strong>Verfahren.</strong> Drei vollständige Durchläufe des Rechenkerns auf je "
+    + "einer Kopie der Eingaben, gerechnet in " + pflegeLauf.ms + " ms. Verändert wird "
+    + "nur der Pflegefall der gewählten Person: Heimeintritt, Spitex-Phase, Dauer und "
+    + "Hilflosenentschädigung. Taxen, Stundenansätze, Beteiligungsgrenzen, Budget, "
+    + "Hypotheken, Liegenschaft und Steuern bleiben, wie sie erfasst sind.<br><br>"
+    + (sL != null && sM != null
+        ? "<strong>Gemessen:</strong> Der lange Verlauf kostet "
+          + chf(sL - sM) + " CHF mehr als der mittlere — das "
+          + ((sM - basisOderNull()) > 0
+              ? (Math.round((sL - basisOderNull()) / Math.max(1, sM - basisOderNull()) * 10) / 10)
+                + "-fache der Mehrkosten"
+              : "Mehrfache")
+          + ". Darin liegt der Grund, weshalb der Mittelwert als Planungswert nicht "
+          + "taugt.<br><br>"
+        : "")
+    + "<strong>Was die Rechnung nicht enthält.</strong> Ergänzungsleistungen werden "
+    + "nicht gerechnet. Ihre Eintrittsschwelle liegt bei 100'000 CHF Vermögen für "
+    + "Alleinstehende und 200'000 CHF für Ehepaare (Stand 1.1.2026); in keinem dieser "
+    + "Verläufe wird sie erreicht. Die selbstbewohnte Liegenschaft wäre bei der "
+    + "Berechnung zudem nur mit ihrem Wert nach Abzug der Hypotheken und eines "
+    + "Freibetrags von 112'500 CHF anzurechnen — 300'000 CHF, sobald eine "
+    + "Hilflosenentschädigung bezogen wird.<br>"
+    + "<strong>Annahmen, die Du prüfen solltest:</strong> der Stundenansatz für "
+    + "Hauswirtschaft, für den es keinen amtlichen Tarif gibt; die Teuerung der "
+    + "Pflegekosten, für die kein publizierter Index besteht; und die Annahme, dass "
+    + "die Beteiligungsgrenze von 23.00 CHF pro Tag im Heim voll ausgeschöpft wird."
+    + ((p && p.heim_kosten_art !== "geteilt")
+        ? "<br><br><strong>Hinweis zur Erfassung.</strong> Bei "
+          + (p.bezeichnung || p.id) + " sind die Heimkosten als <em>ein Gesamtbetrag</em> "
+          + "erfasst. Das Programm führt ihn dann vollständig als selbst zu tragen — "
+          + "die gedeckelte Pflegebeteiligung wirkt nicht, und die Spalte «davon Pflege» "
+          + "bleibt leer. Das ist die ungünstigste Annahme und überschätzt die "
+          + "Belastung erheblich: Von den 10'875 CHF mittleren Monatskosten trägt die "
+          + "bewohnende Person tatsächlich rund 6'000 CHF. Im Reiter Personen lässt sich "
+          + "die Erfassung auf «getrennt nach Pflege, Betreuung und Sonstigem» "
+          + "umstellen."
+        : "");
+
+  function basisOderNull() { return basis || 0; }
+}
 function rueckSzenarioZeichnen() {
   if (rueckPlan == null) {
     const g = cfg.rueckzahlplan || {};
@@ -21610,7 +22510,117 @@ function personenZeichnen() {
       // Wirkung folgt danach. So sehen die Karten beider Personen gleich aus.
       feld("ab Jahr", zahlFeld(p.heimeintritt_ab, x => { p.heimeintritt_ab = x; rechnen(); }, { jahr: true }),
         alterIn(p.heimeintritt_ab), true);
-      feld("Kosten pro Monat", zahlFeld(p.heimkosten_pro_monat || 0, x => { p.heimkosten_pro_monat = x; rechnen(); }, { grenze: { min: 0, max: 200000, weichMax: 50000 } }), "CHF");
+
+      // Eintritt wahlweise ueber das Alter setzen. Die Statistik nennt ein
+      // mittleres Eintrittsalter von 82 Jahren und eine mittlere Dauer von
+      // 784 Tagen, also 2.1 Jahren (Curaviva). Der Knopf traegt beides ein.
+      {
+        const pf = cfg.pflege || {};
+        const leiste = el("div");
+        leiste.style.cssText = "display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 8px";
+        if (p.geburtsjahr != null) {
+          const fa = el("div", "feld");
+          fa.style.margin = "0";
+          fa.appendChild(el("label", null, "oder ab Alter"));
+          fa.appendChild(zahlFeld(Number(p.heimeintritt_ab) - Number(p.geburtsjahr),
+            x => { if (x != null) { p.heimeintritt_ab = Number(p.geburtsjahr) + Math.round(x); rechnen(); } },
+            { klasse: "spalte-schmal" }));
+          fa.appendChild(el("span", "einheit", "Jahre"));
+          leiste.appendChild(fa);
+          const kb = el("button", "knopf weich", "Aus der Statistik setzen");
+          kb.type = "button";
+          kb.title = "Setzt den Eintritt auf das mittlere Eintrittsalter von "
+            + (pf.stat_eintrittsalter ?? 82) + " Jahren und die Lebenserwartung dieser "
+            + "Person auf das Ende der mittleren Aufenthaltsdauer von "
+            + (pf.stat_dauer_jahre ?? 2.1) + " Jahren — sofern sie dadurch nicht "
+            + "verkürzt wird.";
+          kb.addEventListener("click", () => {
+            const ein = Number(p.geburtsjahr) + (Number(pf.stat_eintrittsalter) || 82);
+            p.heimeintritt_ab = ein;
+            const ende = ein + Math.round(Number(pf.stat_dauer_jahre) || 2.1);
+            if (Number(p.lebenserwartung_bis) < ende) p.lebenserwartung_bis = ende;
+            rechnen();
+            melde("Heimeintritt auf " + ein + " gesetzt (Alter "
+              + (Number(pf.stat_eintrittsalter) || 82) + "). Achtung: Der Mittelwert "
+              + "ist ein Startpunkt, kein Planungswert — die Verteilung der "
+              + "Aufenthaltsdauer ist stark rechtsschief. Die Hälfte der Kosten "
+              + "entsteht bei der Minderheit mit langen Aufenthalten.");
+          });
+          leiste.appendChild(kb);
+        }
+        ziel.appendChild(leiste);
+      }
+
+      // ---- Kosten: gesamt oder nach Finanzierung getrennt ----------------
+      const geteilt = p.heim_kosten_art === "geteilt";
+      feld("Erfassung der Kosten", wahlFeld(
+        [["gesamt", "ein Gesamtbetrag pro Monat"],
+         ["geteilt", "getrennt nach Pflege, Betreuung und Sonstigem"]],
+        p.heim_kosten_art || "gesamt", x => {
+          p.heim_kosten_art = x;
+          // Beim Umstellen die Taxen aus dem Gesamtbetrag abschaetzen, damit
+          // die Felder nicht leer dastehen. Aufteilung nach dem Mittel:
+          // rund ein Drittel Pflege, zwei Drittel Betreuung und Hotellerie.
+          if (x === "geteilt" && !(Number(p.heim_pflegetaxe_pro_tag) > 0)) {
+            const tag = (Number(p.heimkosten_pro_monat) || 0) * 12 / 365;
+            p.heim_pflegetaxe_pro_tag = Math.round(tag * 0.35);
+            p.heim_betreuung_pro_tag = Math.round(tag * 0.65);
+          }
+          rechnen();
+        }), "");
+
+      if (!geteilt) {
+        feld("Kosten pro Monat", zahlFeld(p.heimkosten_pro_monat || 0, x => { p.heimkosten_pro_monat = x; rechnen(); }, { grenze: { min: 0, max: 200000, weichMax: 50000 } }), "CHF");
+      } else {
+        const pf = cfg.pflege || {};
+        feld("Pflegetaxe pro Tag", zahlFeld(p.heim_pflegetaxe_pro_tag || 0,
+          x => { p.heim_pflegetaxe_pro_tag = x || 0; rechnen(); },
+          { dez: true, grenze: { min: 0, max: 500, weichMax: 300 } }), "CHF");
+        feld("Betreuung und Hotellerie pro Tag", zahlFeld(p.heim_betreuung_pro_tag || 0,
+          x => { p.heim_betreuung_pro_tag = x || 0; rechnen(); },
+          { dez: true, grenze: { min: 0, max: 500, weichMax: 300 } }), "CHF");
+        feld("Sonstige Ausgaben pro Monat", zahlFeld(p.heim_sonstige_pro_monat || 0,
+          x => { p.heim_sonstige_pro_monat = x || 0; rechnen(); },
+          { grenze: { min: 0, max: 50000, weichMax: 10000 } }), "CHF");
+        const a3 = (cfg.personen || []).find(x => x.id !== p.id);
+        const nameA = a3 ? (a3.bezeichnung || a3.id) : "die andere Person";
+        feld("Sonstige Ausgaben trägt", wahlFeld(
+          [["selbst", p.bezeichnung || p.id],
+           ["andere", nameA],
+           ["beide", "beide je zur Hälfte"]],
+          p.heim_sonstige_traeger || "selbst",
+          x => { p.heim_sonstige_traeger = x; rechnen(); }), "");
+
+        // Was die Aufteilung bewirkt, am gerechneten Jahr gezeigt.
+        const zH = rechenzeilen(p.id).find(z => z.heimTeile && z.heimTeile.total > 0);
+        const pe = el("p", "kleintext");
+        pe.innerHTML =
+          "<strong>Warum getrennt.</strong> Die drei Teile werden ganz verschieden "
+          + "finanziert:<ul style='margin:4px 0;padding-left:20px'>"
+          + "<li><strong>Pflege:</strong> Krankenversicherung und öffentliche Hand tragen "
+            + "den grössten Teil. Die versicherte Person zahlt höchstens "
+            + chf(Number(pf.beteiligung_heim_pro_tag) || 23) + " CHF pro Tag — 20 % des "
+            + "höchsten bundesrechtlichen Pflegebeitrags von "
+            + chf(Number(pf.pflegebeitrag_bund_pro_tag) || 115.2) + " CHF "
+            + "(Art. 25a Abs. 5 KVG, Art. 8 Abs. 1 PflegeG SG). Die Restfinanzierung "
+            + "tragen Kanton zu zwei Dritteln und Gemeinde zu einem Drittel "
+            + "(Art. 9 Abs. 1 PflegeG SG).</li>"
+          + "<li><strong>Betreuung und Hotellerie:</strong> von keiner Versicherung "
+            + "gedeckt, voll selbst zu tragen.</li>"
+          + "<li><strong>Sonstige Ausgaben:</strong> alles Weitere — Coiffeur, Kleider, "
+            + "Telefon, persönliche Anschaffungen. Diese Kosten kann auch die andere "
+            + "Person übernehmen.</li></ul>"
+          + (zH
+              ? "<strong>Gerechnet im Jahr " + zH.jahr + ":</strong> Pflegetaxe "
+                + chf(zH.heimTeile.pflegeVoll) + " CHF im Jahr, davon selbst getragen "
+                + chf(zH.heimTeile.pflege) + " CHF — die öffentliche Hand und die Kasse "
+                + "tragen " + chf(zH.heimTeile.pflegeGetragen) + " CHF. Betreuung und "
+                + "Hotellerie " + chf(zH.heimTeile.betreuung) + " CHF, sonstige Ausgaben "
+                + chf(zH.heimTeile.sonstige) + " CHF."
+              : "");
+        pe.style.cssText = "margin:8px 0 0; color:var(--gedaempft)";
+        ziel.appendChild(pe);
+      }
       // Teuerung der Heimkosten. Bis zu einem Heimeintritt vergehen oft zwanzig
       // Jahre; ein heutiger Heimtarif ist dann kein brauchbarer Wert mehr.
       const fT = zahlFeld(p.heimkosten_teuerung ?? 0,
@@ -21654,9 +22664,186 @@ function personenZeichnen() {
       if (st0) {
         feld("Pflegestufe ab Jahr", zahlFeld(st0.ab_jahr,
           x => { st0.ab_jahr = x; rechnen(); }, { jahr: true }), alterIn(st0.ab_jahr), true);
-        feld("Kosten pro Monat ab dann", zahlFeld(st0.pro_monat || 0,
-          x => { st0.pro_monat = x || 0; rechnen(); },
-          { grenze: { min: 0, max: 200000, weichMax: 50000 } }), "CHF");
+        if (!geteilt) {
+          feld("Kosten pro Monat ab dann", zahlFeld(st0.pro_monat || 0,
+            x => { st0.pro_monat = x || 0; rechnen(); },
+            { grenze: { min: 0, max: 200000, weichMax: 50000 } }), "CHF");
+        } else {
+          feld("Pflegetaxe pro Tag ab dann", zahlFeld(st0.pflegetaxe_pro_tag ?? null,
+            x => { st0.pflegetaxe_pro_tag = x; rechnen(); },
+            { dez: true, leerErlaubt: true, vorgabe: p.heim_pflegetaxe_pro_tag,
+              vorgabeHinweis: "Leer: die Pflegetaxe bleibt unverändert." }), "CHF");
+          feld("Betreuung pro Tag ab dann", zahlFeld(st0.betreuung_pro_tag ?? null,
+            x => { st0.betreuung_pro_tag = x; rechnen(); },
+            { dez: true, leerErlaubt: true, vorgabe: p.heim_betreuung_pro_tag,
+              vorgabeHinweis: "Leer: die Betreuungstaxe bleibt unverändert." }), "CHF");
+          const ps = el("p", "kleintext",
+            "In einer höheren Pflegestufe steigt in der Regel nur die Pflegetaxe; "
+            + "Betreuung und Hotellerie bleiben gleich. Die Beteiligung ist ohnehin "
+            + "gedeckelt — eine höhere Pflegestufe belastet deshalb vor allem die "
+            + "öffentliche Hand, nicht die Bewohnerin oder den Bewohner.");
+          ps.style.cssText = "margin:6px 0 0; color:var(--gedaempft)";
+          ziel.appendChild(ps);
+        }
+      }
+
+      // ---- Pflege zu Hause (Spitex) --------------------------------------
+      // Die haeufige Abfolge ist gesund - Spitex - Heim. 424'000 Personen
+      // nutzen Spitex, nur 155'000 leben im Heim.
+      {
+        const pf = cfg.pflege || {};
+        const schX = el("div", "schalter");
+        schX.style.marginTop = "14px";
+        const cbX = el("input"); cbX.type = "checkbox"; cbX.checked = !!p.spitex_aktiv;
+        cbX.addEventListener("change", () => {
+          p.spitex_aktiv = cbX.checked;
+          if (cbX.checked && p.spitex_ab == null) {
+            const jahre = Number(pf.stat_spitex_jahre) || 2;
+            p.spitex_ab = Number(p.heimeintritt_ab) - jahre;
+            if (!(Number(p.spitex_pflege_std_woche) > 0)) {
+              p.spitex_pflege_std_woche = 4;
+              p.spitex_haus_std_woche = 3;
+            }
+          }
+          rechnen();
+        });
+        schX.appendChild(cbX);
+        schX.appendChild(el("span", null, "Pflege zu Hause (Spitex) vor dem Heimeintritt"));
+        ziel.appendChild(schX);
+
+        if (p.spitex_aktiv) {
+          feld("Spitex ab Jahr", zahlFeld(p.spitex_ab, x => { p.spitex_ab = x; rechnen(); },
+            { jahr: true }), alterIn(p.spitex_ab), true);
+          feld("bis Jahr", zahlFeld(p.spitex_bis ?? null,
+            x => { p.spitex_bis = x; rechnen(); },
+            { jahr: true, leerErlaubt: true,
+              vorgabe: p.heimeintritt_ab != null ? Number(p.heimeintritt_ab) - 1 : null,
+              vorgabeHinweis: "Leer: bis zum Jahr vor dem Heimeintritt." }), "");
+          feld("Pflege, Stunden pro Woche", zahlFeld(p.spitex_pflege_std_woche || 0,
+            x => { p.spitex_pflege_std_woche = x || 0; rechnen(); },
+            { dez: true, grenze: { min: 0, max: 60, weichMax: 25 } }), "h");
+          feld("Hauswirtschaft, Stunden pro Woche", zahlFeld(p.spitex_haus_std_woche || 0,
+            x => { p.spitex_haus_std_woche = x || 0; rechnen(); },
+            { dez: true, grenze: { min: 0, max: 60, weichMax: 25 } }), "h");
+
+          const zS = rechenzeilen(p.id).find(z => z.spitexTeile && z.spitexTeile.total > 0);
+          const px = el("p", "kleintext");
+          px.innerHTML =
+            "<strong>Zwei Arten von Stunden, zwei Finanzierungen.</strong>"
+            + "<ul style='margin:4px 0;padding-left:20px'>"
+            + "<li><strong>Pflege</strong> ist eine Leistung der Krankenversicherung. "
+              + "Die versicherte Person trägt 10 % des verrechneten Betrags, je Tag "
+              + "höchstens " + chf(Number(pf.beteiligung_spitex_pro_tag) || 7.7)
+              + " CHF (Art. 15 Abs. 1 und 2 PflegeG SG). St. Gallen schöpft die "
+              + "bundesrechtliche Grenze von 20 % bewusst nur zur Hälfte aus. Die "
+              + "Restfinanzierung trägt die politische Gemeinde (Art. 16 Abs. 1). "
+              + "Gerechnet wird mit " + chf(Number(pf.spitex_tarif_pflege) || 69.15)
+              + " CHF je Stunde — dem Höchstansatz für Grundpflege nach Art. 11 der "
+              + "Verordnung sGS 331.21.</li>"
+            + "<li><strong>Hauswirtschaft</strong> — Putzen, Waschen, Einkaufen — ist "
+              + "keine Leistung der Krankenversicherung und voll selbst zu tragen. "
+              + "Gerechnet wird mit " + chf(Number(pf.spitex_tarif_haus) || 40)
+              + " CHF je Stunde; dafür gibt es keinen amtlichen Tarif, der Wert ist "
+              + "eine Annahme und im Reiter Steuern einstellbar.</li></ul>"
+            + (zS
+                ? "<strong>Gerechnet im Jahr " + zS.jahr + ":</strong> Pflege "
+                  + chf(zS.spitexTeile.pflegeVoll) + " CHF verrechnet, davon selbst "
+                  + "getragen " + chf(zS.spitexTeile.pflege) + " CHF. Hauswirtschaft "
+                  + chf(zS.spitexTeile.haus) + " CHF, voll selbst. Zusammen "
+                  + chf(zS.spitexTeile.total) + " CHF im Jahr."
+                : "")
+            + "<br>Die Spitex endet von selbst im Jahr des Heimeintritts — beides "
+            + "zugleich gibt es nicht.";
+          px.style.cssText = "margin:8px 0 0; color:var(--gedaempft)";
+          ziel.appendChild(px);
+        }
+      }
+
+      // ---- Hilflosenentschaedigung der AHV -------------------------------
+      {
+        const pf = cfg.pflege || {};
+        const schH = el("div", "schalter");
+        schH.style.marginTop = "14px";
+        const cbH = el("input"); cbH.type = "checkbox"; cbH.checked = !!p.he_aktiv;
+        cbH.addEventListener("change", () => {
+          p.he_aktiv = cbH.checked;
+          if (cbH.checked && p.he_ab == null)
+            p.he_ab = p.spitex_aktiv && p.spitex_ab != null
+              ? Number(p.spitex_ab) : Number(p.heimeintritt_ab);
+          rechnen();
+        });
+        schH.appendChild(cbH);
+        schH.appendChild(el("span", null, "Hilflosenentschädigung der AHV beziehen"));
+        ziel.appendChild(schH);
+
+        if (p.he_aktiv) {
+          feld("ab Jahr", zahlFeld(p.he_ab, x => { p.he_ab = x; rechnen(); },
+            { jahr: true }), alterIn(p.he_ab), true);
+          feld("bis Jahr", zahlFeld(p.he_bis ?? null, x => { p.he_bis = x; rechnen(); },
+            { jahr: true, leerErlaubt: true, vorgabe: p.lebenserwartung_bis,
+              vorgabeHinweis: "Leer: bis zum letzten Rechenjahr." }), "");
+          feld("Grad der Hilflosigkeit", wahlFeld(
+            [["leicht", "leicht"], ["mittel", "mittel"], ["schwer", "schwer"]],
+            p.he_grad || "mittel", x => { p.he_grad = x; rechnen(); }), "");
+          const schB = el("div", "schalter");
+          const cbB = el("input"); cbB.type = "checkbox";
+          cbB.checked = !!p.he_besitzstand_iv;
+          cbB.addEventListener("change", () => {
+            p.he_besitzstand_iv = cbB.checked; rechnen();
+          });
+          schB.appendChild(cbB);
+          schB.appendChild(el("span", null,
+            "Besitzstand: schon vor dem Referenzalter eine Entschädigung der IV"));
+          ziel.appendChild(schB);
+          feld("Betrag pro Monat", zahlFeld(p.he_betrag_eigen ?? null,
+            x => { p.he_betrag_eigen = x; rechnen(); },
+            { leerErlaubt: true,
+              vorgabe: (() => {
+                const g = p.he_grad || "mittel";
+                if (p.he_besitzstand_iv)
+                  return g === "leicht" ? (pf.he_iv_leicht ?? 504)
+                       : g === "schwer" ? (pf.he_iv_schwer ?? 2016)
+                       : (pf.he_iv_mittel ?? 1260);
+                const q = g === "leicht" ? (pf.he_anteil_leicht ?? 0.20)
+                        : g === "schwer" ? (pf.he_anteil_schwer ?? 0.80)
+                        : (pf.he_anteil_mittel ?? 0.50);
+                return Math.round((Number(pf.min_altersrente) || 1260) * q);
+              })(),
+              vorgabeHinweis: "Leer: der gesetzliche Betrag zum gewählten Grad." }), "CHF");
+
+          const zHe = rechenzeilen(p.id).find(z => (z.hilflosenentschaedigung || 0) > 0);
+          const ph = el("p", "kleintext");
+          ph.innerHTML =
+            "<strong>Unabhängig von Einkommen und Vermögen.</strong> Ein Eigenheim "
+            + "spielt keine Rolle — anders als bei den Ergänzungsleistungen. Anspruch "
+            + "besteht, wenn für alltägliche Verrichtungen dauernd Hilfe nötig ist: "
+            + "Ankleiden, Essen, Körperpflege, Fortbewegung.<br>"
+            + "<strong>Beträge der AHV</strong> (Merkblatt 3.01, Stand 1.1.2026): "
+            + chf(Math.round((Number(pf.min_altersrente) || 1260) * (pf.he_anteil_leicht ?? 0.2)))
+            + " / "
+            + chf(Math.round((Number(pf.min_altersrente) || 1260) * (pf.he_anteil_mittel ?? 0.5)))
+            + " / "
+            + chf(Math.round((Number(pf.min_altersrente) || 1260) * (pf.he_anteil_schwer ?? 0.8)))
+            + " CHF im Monat bei leichtem, mittlerem und schwerem Grad — 20, 50 und "
+            + "80 % der minimalen Altersrente von "
+            + chf(Number(pf.min_altersrente) || 1260) + " CHF. Sie folgen der "
+            + "Teuerung der AHV-Renten.<br>"
+            + "<strong>Bei leichtem Grad</strong> besteht der Anspruch nur, solange die "
+            + "Person zu Hause wohnt; ab dem Heimeintritt fällt er weg. Das Programm "
+            + "rechnet das selbsttätig.<br>"
+            + "<strong>Besitzstand:</strong> Wer vor dem Referenzalter eine "
+            + "Entschädigung der IV bezog, behält deren höheren Betrag — zu Hause "
+            + chf(pf.he_iv_leicht ?? 504) + " / " + chf(pf.he_iv_mittel ?? 1260)
+            + " / " + chf(pf.he_iv_schwer ?? 2016) + " CHF im Monat.<br>"
+            + "<strong>Steuerlich</strong> ist sie nach Art. 24 lit. h DBG steuerfrei: "
+            + "Sie erhöht das verfügbare Geld, nicht das steuerbare Einkommen."
+            + (zHe
+                ? "<br><strong>Gerechnet im Jahr " + zHe.jahr + ":</strong> "
+                  + chf(zHe.hilflosenentschaedigung) + " CHF."
+                : "");
+          ph.style.cssText = "margin:8px 0 0; color:var(--gedaempft)";
+          ziel.appendChild(ph);
+        }
       }
       let zielUmlage = null;
       {
@@ -23972,7 +25159,8 @@ const STEUER_KAPITEL = [
     "Wirkung des Systemwechsels, Jahr für Jahr",
     "Liegenschaft in einem anderen Kanton"] },
   { nr: 5, titel: "Übrige Einstellungen", teile: [
-    "Ausgleich der kalten Progression"] },
+    "Ausgleich der kalten Progression",
+    "Pflegefinanzierung — Beteiligung und Tarife"] },
   { nr: 6, titel: "Steuerabschätzung", teile: [
     "Bemessung im Rechenjahr", "Grafische Auswertung"] },
 ];
@@ -24476,6 +25664,126 @@ function steuernZeichnen() {
       kk.appendChild(pk);
     }
     w.appendChild(kk);
+  }
+
+  // ---- Pflegefinanzierung: Sätze und Tarife ----------------------------
+  // Sie gehören nicht zu den Steuern, stehen aber aus demselben Grund hier
+  // wie die Steuersätze: Es sind amtlich gesetzte Grössen, die die Rechnung
+  // steuern und nachvollziehbar sein müssen.
+  {
+    const pf = cfg.pflege || (cfg.pflege = {});
+    const kp = el("div", "karte breit");
+    kp.appendChild(el("h3", null, "Pflegefinanzierung — Beteiligung und Tarife"));
+    const feldP = (etikett, kind, einheit) => {
+      const f = el("div", "feld");
+      f.appendChild(el("label", null, etikett)); f.appendChild(kind);
+      f.appendChild(el("span", "einheit", einheit || "")); kp.appendChild(f);
+    };
+    const zahl = (schluessel, vorgabe, opt) => zahlFeld(pf[schluessel] ?? vorgabe,
+      x => { pf[schluessel] = (x == null) ? vorgabe : Math.max(0, x); rechnen(); },
+      Object.assign({ dez: true, leerErlaubt: true }, opt || {}));
+
+    const p1 = el("p");
+    p1.innerHTML =
+      "<strong>Was die Pflegefinanzierung regelt.</strong> Pflegekosten werden von drei "
+      + "Seiten getragen: der Krankenversicherung, der öffentlichen Hand und der "
+      + "pflegebedürftigen Person. Nur der letzte Teil belastet die Rechnung — und er "
+      + "ist gesetzlich gedeckelt. Betreuung, Hotellerie und Hauswirtschaft sind dagegen "
+      + "von keiner Versicherung gedeckt und voll selbst zu tragen.";
+    p1.style.cssText = "font-size:12px;color:var(--gedaempft);margin:0 0 10px";
+    kp.appendChild(p1);
+
+    kp.appendChild(el("h4", "abschnitt2", "Im Heim"));
+    feldP("Beteiligung pro Tag, höchstens", zahl("beteiligung_heim_pro_tag", 23), "CHF");
+    feldP("Pflegebeitrag des Bundes pro Tag", zahl("pflegebeitrag_bund_pro_tag", 115.2), "CHF");
+    const p2 = el("p");
+    p2.innerHTML =
+      "Nach <strong>Art. 25a Abs. 5 KVG</strong> trägt die versicherte Person höchstens "
+      + "20 % des höchsten vom Bundesrat festgesetzten Pflegebeitrags. Bei "
+      + chf(Number(pf.pflegebeitrag_bund_pro_tag) || 115.2) + " CHF pro Tag sind das "
+      + chf((Number(pf.pflegebeitrag_bund_pro_tag) || 115.2) * 0.2) + " CHF. "
+      + "<strong>Art. 8 Abs. 1 des Pflegegesetzes SG</strong> (sGS 331.1) übernimmt diese "
+      + "Grenze. Die Restfinanzierung tragen nach <strong>Art. 9 Abs. 1</strong> der "
+      + "Kanton zu zwei Dritteln und die politische Gemeinde zu einem Drittel.<br>"
+      + "<em>Zu beachten:</em> Das Gesetz nennt den Höchstbetrag, nicht den tatsächlich "
+      + "erhobenen Satz. Dieser steht in der Verordnung der Regierung. Die Vorgabe von "
+      + chf(Number(pf.beteiligung_heim_pro_tag) || 23) + " CHF unterstellt, dass die "
+      + "Grenze voll ausgeschöpft wird — das ist die ungünstigste Annahme.";
+    p2.style.cssText = "font-size:12px;color:var(--gedaempft);margin:4px 0 12px";
+    kp.appendChild(p2);
+
+    kp.appendChild(el("h4", "abschnitt2", "Bei der Spitex"));
+    feldP("Beteiligung am verrechneten Betrag", zahlFeld(
+      pf.beteiligung_spitex_anteil ?? 0.10,
+      x => { pf.beteiligung_spitex_anteil = (x == null) ? 0.10 : Math.max(0, x); rechnen(); },
+      { proz: true, leerErlaubt: true }), "%");
+    feldP("Beteiligung pro Tag, höchstens", zahl("beteiligung_spitex_pro_tag", 7.70), "CHF");
+    feldP("Tarif Grundpflege pro Stunde", zahl("spitex_tarif_pflege", 69.15), "CHF");
+    feldP("Tarif Hauswirtschaft pro Stunde", zahl("spitex_tarif_haus", 40), "CHF");
+    const p3 = el("p");
+    p3.innerHTML =
+      "Nach <strong>Art. 15 Abs. 1 und 2 des Pflegegesetzes SG</strong> trägt die "
+      + "versicherte Person 10 % des der Krankenversicherung verrechneten Betrags, je Tag "
+      + "höchstens 10 % des höchsten bundesrechtlichen Stundenbeitrags von 76.90 CHF — "
+      + "also 7.69 CHF. <strong>St. Gallen schöpft die bundesrechtliche Grenze von 20 % "
+      + "hier bewusst nur zur Hälfte aus.</strong> Die Restfinanzierung trägt nach "
+      + "Art. 16 Abs. 1 die politische Gemeinde.<br>"
+      + "Der Tarif für die Grundpflege ist der Höchstansatz nach <strong>Art. 11 der "
+      + "Verordnung über die Pflegefinanzierung</strong> (sGS 331.21); dort stehen auch "
+      + "82.85 CHF für Untersuchung und Behandlung und 101.10 CHF für Abklärung und "
+      + "Beratung. Gerechnet wird mit dem Satz für Grundpflege, weil dieser den "
+      + "Hauptteil der Stunden ausmacht.<br>"
+      + "<strong>Hauswirtschaft</strong> ist keine Leistung der Krankenversicherung und "
+      + "hat keinen amtlichen Tarif. Die Vorgabe von "
+      + chf(Number(pf.spitex_tarif_haus) || 40) + " CHF ist eine <em>Annahme</em>; die "
+      + "Ansätze der Spitex-Organisationen liegen je nach Region und Einkommen "
+      + "auseinander.";
+    p3.style.cssText = "font-size:12px;color:var(--gedaempft);margin:4px 0 12px";
+    kp.appendChild(p3);
+
+    kp.appendChild(el("h4", "abschnitt2", "Hilflosenentschädigung der AHV"));
+    feldP("Minimale Altersrente pro Monat", zahlFeld(pf.min_altersrente ?? 1260,
+      x => { pf.min_altersrente = (x == null) ? 1260 : Math.max(0, x); rechnen(); },
+      { leerErlaubt: true }), "CHF");
+    const p4 = el("p");
+    p4.innerHTML =
+      "Die Entschädigung beträgt 20, 50 und 80 % der minimalen Altersrente bei leichtem, "
+      + "mittlerem und schwerem Grad — bei "
+      + chf(Number(pf.min_altersrente) || 1260) + " CHF also "
+      + chf(Math.round((Number(pf.min_altersrente) || 1260) * 0.2)) + " / "
+      + chf(Math.round((Number(pf.min_altersrente) || 1260) * 0.5)) + " / "
+      + chf(Math.round((Number(pf.min_altersrente) || 1260) * 0.8))
+      + " CHF im Monat (Merkblatt 3.01, Stand 1.1.2026). Sie wird <strong>unabhängig von "
+      + "Einkommen und Vermögen</strong> ausgerichtet und ist nach Art. 24 lit. h DBG "
+      + "steuerfrei. Erfasst wird sie je Person im Reiter Personen, Kapitel 2.";
+    p4.style.cssText = "font-size:12px;color:var(--gedaempft);margin:4px 0 12px";
+    kp.appendChild(p4);
+
+    kp.appendChild(el("h4", "abschnitt2", "Vorgaben aus der Statistik"));
+    feldP("Mittleres Eintrittsalter ins Heim", zahlFeld(pf.stat_eintrittsalter ?? 82,
+      x => { pf.stat_eintrittsalter = (x == null) ? 82 : Math.max(0, x); rechnen(); },
+      { leerErlaubt: true }), "Jahre");
+    feldP("Mittlere Aufenthaltsdauer", zahlFeld(pf.stat_dauer_jahre ?? 2.1,
+      x => { pf.stat_dauer_jahre = (x == null) ? 2.1 : Math.max(0, x); rechnen(); },
+      { dez: true, leerErlaubt: true }), "Jahre");
+    feldP("Spitex vor dem Heimeintritt", zahlFeld(pf.stat_spitex_jahre ?? 2,
+      x => { pf.stat_spitex_jahre = (x == null) ? 2 : Math.max(0, x); rechnen(); },
+      { leerErlaubt: true }), "Jahre");
+    const p5 = el("p");
+    p5.innerHTML =
+      "Diese Werte füllen den Knopf «Aus der Statistik setzen» im Reiter Personen. "
+      + "Das mittlere Eintrittsalter beträgt 82 Jahre, die mittlere Aufenthaltsdauer "
+      + "784 Tage, also 2.1 Jahre (Curaviva). Das Eintrittsalter steigt, weil Spitex und "
+      + "betreutes Wohnen den Eintritt hinausschieben.<br>"
+      + "<strong>Achtung — der Mittelwert ist ein schlechter Planungswert.</strong> Die "
+      + "Verteilung der Aufenthaltsdauer ist stark rechtsschief: Viele sterben nach "
+      + "wenigen Monaten, eine Minderheit bleibt sieben Jahre und länger. Genau diese "
+      + "Minderheit bestimmt den Kapitalbedarf. Die Vorgabe ist ein Startpunkt, kein "
+      + "Ergebnis — das Szenario «Pflegebedürftigkeit» rechnet deshalb drei Verläufe.";
+    p5.style.cssText = "font-size:12px;color:var(--gedaempft);margin:4px 0 0";
+    kp.appendChild(p5);
+
+    w.appendChild(kp);
   }
 
   const k2 = el("div", "karte");
