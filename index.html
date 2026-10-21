@@ -1088,7 +1088,7 @@ table.uebersicht tr.klein td.name{padding-left:22px}
 
   <div class="leistenfuss">
     <span>Budget- und Rentenberechnung &middot; Kanton St. Gallen, Gemeinde Gommiswald</span>
-    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v265</span></span>
+    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v266</span></span>
   </div>
   <p class="merker" id="fassungHinweis" style="margin:8px 0 0" hidden></p>
   <!-- Band fuer die Aktualisierung. Es erscheint nur, wenn es etwas zu melden
@@ -2218,6 +2218,68 @@ table.uebersicht tr.klein td.name{padding-left:22px}
           50 000 Franken verschieben; <strong>mittel</strong> zwischen etwa 5 000 und
           50 000 Franken; <strong>klein</strong> darunter. Die Einstufung ist eine
           Abschätzung, keine gerechnete Grösse.</p>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v266 — Besteuerung des Vorsorgekapitals nach Schweizer Recht</h3>
+        <ul class="liste">
+          <li><strong>Ausgangslage.</strong> Die Karte «Steuerliche Behandlung» stellte
+            mit drei Kästchen Fragen zur Wahl, die teilweise gar keine Wahl sind,
+            sondern geltendes Recht. Das konnte die Rechnung verfälschen.</li>
+          <li><strong>Entfallen: «Bezug aus dem Kapital ist steuerbares Einkommen».</strong>
+            Wer eigenes Vermögen aufbraucht, erzielt kein Einkommen — der Verzehr ist eine
+            Vermögensumschichtung und nicht steuerbar. Es gibt bei richtiger Erfassung
+            keinen Fall, in dem dieses Kästchen zu setzen wäre. Ein in bestehenden
+            Eingaben gesetzter Wert wird beim Laden zurückgenommen und gemeldet; die
+            Steuern fallen dadurch tiefer aus.</li>
+          <li><strong>Neu statt «Zinsertrag ist steuerbarer Vermögensertrag»: ein
+            Anteil in Prozent.</strong> Das Recht ist hier nicht ein/aus, sondern geteilt:
+            <ul class="liste">
+              <li>Zinsen und Ausschüttungen sind steuerbarer Vermögensertrag —
+                Art. 20 DBG, Art. 33 StG SG</li>
+              <li>Kursgewinne auf beweglichem Privatvermögen sind steuerfrei —
+                Art. 16 Abs. 3 DBG</li>
+            </ul>
+            Bei einem gemischten Depot ist beides in der erfassten Rendite enthalten;
+            jede der beiden Schalterstellungen lag daneben. Das Feld «davon steuerbarer
+            Ertrag» trägt dem Rechnung — Vorgabe 100 %. Bei 2.25 % Gesamtrendite mit rund
+            1.2 % Ausschüttung sind 55 % einzutragen.</li>
+          <li><strong>Geblieben: die Kapitalleistungssteuer.</strong> Sie ist keine
+            Rechts-, sondern eine Sachfrage — steht oben der Brutto- oder der
+            Nettobetrag? Das weiss nur der Nutzer. Der Text sagt dies nun deutlich.</li>
+          <li><strong>Neuer Abschnitt im Reiter Steuern, Kapitel 1:</strong>
+            «Kapitalleistungen aus Vorsorge — gesonderte Jahressteuer». Dort steht der
+            Satz offen und ist einstellbar:
+            <ul class="liste">
+              <li>Kanton St. Gallen, linearer Satz der einfachen Steuer seit dem
+                1. Januar 2016: <strong>2.0 %</strong> für gemeinsam steuerpflichtige
+                Ehegatten, <strong>2.2 %</strong> für die übrigen Steuerpflichtigen
+                (Art. 52 Abs. 2 und 3 StG SG)</li>
+              <li>Vorgabe ist leer: Das Programm wählt den Satz je Jahr nach dem
+                erfassten Zivilstand. Ein eingetragener Wert geht vor.</li>
+              <li>Bund: ein Fünftel des ordentlichen Tarifs nach Art. 36 DBG
+                (Art. 38 Abs. 2 DBG), ebenfalls einstellbar</li>
+              <li>Eine Tabelle zeigt je Person Jahr, Kapitalleistung, angewendeten Satz
+                und die Steuer von Kanton und Bund</li>
+            </ul></li>
+          <li><strong>Gemessen</strong> — Kapitalleistung 850'000 CHF, Steuerfuss 2.08:
+            einzeln veranlagt 38'896 CHF Kanton, verheiratet 35'360 CHF; Bund in beiden
+            Fällen 19'550 CHF.</li>
+          <li><strong>Hinweis beim Veröffentlichen:</strong> Bisher lag der Satz fest bei
+            2.2 % und war nicht einstellbar. Bestehende Eingaben werden einmalig auf die
+            Wahl nach Zivilstand umgestellt.</li>
+          <li><strong>Rückmeldung beim Speichern.</strong> Der Knopf wechselt kurz auf
+            «Gespeichert ✓» in Grün, bei fehlender gemeinsamer Ablage auf «Nur hier
+            gespeichert ✓». Schlägt das Speichern fehl, steht «Nicht gespeichert» in
+            Warnfarbe und bleibt stehen. Die ausführliche Meldung in der Statuszeile am
+            Seitenfuss bleibt unverändert — sie war dort bisher leicht zu übersehen.</li>
+          <li><strong>Policen Säule 3b neu erklärt</strong> — in vier Abschnitten statt
+            einem Block: wofür die Tabelle da ist und was nicht hineingehört, was das
+            Programm Jahr für Jahr damit rechnet, ob die Auszahlung besteuert wird
+            (periodische Prämien gegenüber Einmalprämie), und die vier Jahreszahlen.</li>
+          <li><strong>Reiter Daten:</strong> Die Zeile «Bezug ist steuerbares Einkommen»
+            entfällt; neu erscheinen «Steuerbarer Anteil der Rendite» und eine
+            ausführlichere Zeile zur Kapitalleistungssteuer mit Jahr, Betrag und Satz.</li>
+        </ul>
       </div>
       <div class="karte breit">
         <h3>Änderungen in v265 — Fassungsabfrage meldete einen veralteten Stand</h3>
@@ -9497,12 +9559,24 @@ function rechneEinmal(cfg, tarife, vorlauf) {
         if (vv && vv.kapitalsteuer_aktiv && klJahr === jahr) {
           const kl = st.kapitalleistung || {};
           const betrag = Number(vv.kapital_start) || 0;
-          const kt = betrag * (kl.satz_kanton != null ? kl.satz_kanton : 0.022) * fussImJahr(jahr);
+          // Satz der einfachen Steuer im Kanton St. Gallen, Art. 52 Abs. 2
+          // und 3 StG SG: 2.0 Prozent fuer gemeinsam steuerpflichtige
+          // Ehegatten, 2.2 Prozent fuer die uebrigen Steuerpflichtigen.
+          // Massgebend ist die Veranlagung im Jahr der Auszahlung. Ist in
+          // den Eingaben ein Satz erfasst, geht dieser vor.
+          const satzKt = (kl.satz_kanton != null && kl.satz_kanton !== "")
+            ? Number(kl.satz_kanton)
+            : (gemeinsamVeranlagt(jahr)
+                ? (kl.satz_kanton_ehe != null ? Number(kl.satz_kanton_ehe) : 0.02)
+                : (kl.satz_kanton_allein != null ? Number(kl.satz_kanton_allein) : 0.022));
+          const kt = betrag * satzKt * fussImJahr(jahr);
           const bd = tarifBd(betrag, jahr) *
                      (kl.faktor_bund != null ? kl.faktor_bund : 0.2);
           kapitalsteuer = kt + bd;
           zeile.kapitalsteuerKanton = kt;
           zeile.kapitalsteuerBund = bd;
+          zeile.kapitalsteuerSatzKanton = satzKt;
+          zeile.kapitalsteuerGemeinsam = gemeinsamVeranlagt(jahr);
         }
       }
       zeile.kapitalsteuer = kapitalsteuer;
@@ -9827,8 +9901,28 @@ function rechneEinmal(cfg, tarife, vorlauf) {
         let brutto = zeile.einnahmen + emw
                    - (a.transferEin || 0) - (a.steuerfreiEin || 0);
         if (vs) {
-          if (vs.v.bezug_steuerbar) brutto += Math.max(0, -letzteEntnahme);
-          if (vs.v.ertrag_steuerbar !== false) vermoegensertrag += Math.max(0, letzterErtrag);
+          // Der Verzehr eigenen Vermoegens ist kein Einkommen: wer Kapital
+          // aufbraucht, schichtet um. Der frueher vorhandene Schalter
+          // "Bezug ist steuerbares Einkommen" stellte eine entschiedene
+          // Rechtsfrage zur Wahl und ist entfallen; ein in alten Eingaben
+          // gesetzter Wert wird beim Laden auf aus gestellt.
+          //
+          // Der Ertrag auf dem Kapital ist dagegen Vermoegensertrag und
+          // steuerbar (Art. 20 DBG, Art. 33 StG SG) - aber nur, soweit er
+          // aus Zinsen und Ausschuettungen stammt. Kursgewinne auf
+          // beweglichem Privatvermoegen sind steuerfrei (Art. 16 Abs. 3
+          // DBG). Welcher Anteil der erfassten Rendite steuerbar ist, sagt
+          // "ertrag_steuerbar_anteil"; fehlt die Angabe, gilt der alte
+          // Schalter, sonst voll steuerbar.
+          const anteil = (vs.v.ertrag_steuerbar_anteil != null
+                          && vs.v.ertrag_steuerbar_anteil !== "")
+            ? Math.min(1, Math.max(0, Number(vs.v.ertrag_steuerbar_anteil)))
+            : (vs.v.ertrag_steuerbar === false ? 0 : 1);
+          const stbErtrag = Math.max(0, letzterErtrag) * anteil;
+          vermoegensertrag += stbErtrag;
+          zeile.ertragSteuerbarAnteil = anteil;
+          zeile.ertragSteuerbar = stbErtrag;
+          zeile.ertragSteuerfrei = Math.max(0, letzterErtrag) - stbErtrag;
         }
         brutto += vermoegensertrag;
         // Pauschale fuer die Verwaltung des beweglichen Privatvermoegens:
@@ -12715,6 +12809,11 @@ function rubrikenUmstellenListe(positionen, k) {
   }
 }
 
+// Personen, deren Schalter "Bezug ist steuerbares Einkommen" beim Laden
+// zurueckgenommen wurde. Die Rechnung faellt dadurch anders aus als zuvor;
+// das ist dem Nutzer zu melden und nicht stillschweigend zu tun.
+let kapitalBezugZurueckgenommen = [];
+
 function umstellen(k) {
   k = frischeKopie(k);
   if (!k || !Array.isArray(k.positionen)) return k;
@@ -13071,9 +13170,29 @@ function umstellen(k) {
       schuldzins_zuschlag: 50000,
       schuldzins_nach_abschaffung: false,
     }, k.steuer.abzuege || {});
-    // Gesonderte Jahressteuer auf Kapitalleistungen aus Vorsorge
+    // Gesonderte Jahressteuer auf Kapitalleistungen aus Vorsorge.
+    //
+    // Kanton St. Gallen, Art. 52 Abs. 2 und 3 StG SG: Die einfache Steuer
+    // betraegt 2.0 Prozent fuer gemeinsam steuerpflichtige Ehegatten und
+    // 2.2 Prozent fuer die uebrigen Steuerpflichtigen. Welcher Satz gilt,
+    // haengt am Zivilstand im Jahr der Auszahlung und wird deshalb nicht
+    // fest hinterlegt: "satz_kanton" bleibt leer, und der Rechenkern waehlt
+    // je Jahr zwischen den beiden Saetzen. Traegt der Nutzer in
+    // "satz_kanton" einen Wert ein, geht dieser vor.
+    //
+    // Bund, Art. 38 Abs. 2 in Verbindung mit Art. 36 DBG: Die Steuer wird
+    // zu einem Fuenftel der ordentlichen Tarife berechnet.
     k.steuer.kapitalleistung = Object.assign(
-      { satz_kanton: 0.022, faktor_bund: 0.2 }, k.steuer.kapitalleistung || {});
+      { satz_kanton: null, satz_kanton_ehe: 0.02, satz_kanton_allein: 0.022,
+        faktor_bund: 0.2 }, k.steuer.kapitalleistung || {});
+    // Frueher lag hier der feste Satz 0.022. Er wird auf die
+    // zivilstandsabhaengige Wahl zurueckgestellt, damit verheiratete
+    // Personen nicht dauerhaft zu hoch gerechnet werden.
+    if (!k.steuer.kapitalleistung_satz_umgestellt) {
+      if (Math.abs(Number(k.steuer.kapitalleistung.satz_kanton) - 0.022) < 1e-9)
+        k.steuer.kapitalleistung.satz_kanton = null;
+      k.steuer.kapitalleistung_satz_umgestellt = true;
+    }
     // Aenderungen des Steuerfusses im Zeitverlauf; leer heisst: der erfasste
     // Satz gilt ueber den ganzen Zeitraum.
     if (!Array.isArray(k.steuer.steuerfuss_stufen)) k.steuer.steuerfuss_stufen = [];
@@ -13103,6 +13222,33 @@ function umstellen(k) {
         { betrag: 0, zins: 0, ab_jahr: null, nach_vorsorge: false,
           zins_gutschrift: true, erbe: "partner" },
         k.bankkapital[p.id] || {});
+    // Steuerliche Behandlung des Vorsorgekapitals.
+    //
+    // Der frueher vorhandene Schalter "Bezug aus dem Kapital ist steuerbares
+    // Einkommen" ist entfallen: Wer eigenes Vermoegen aufbraucht, erzielt
+    // kein Einkommen, sondern schichtet um. Das ist keine Wahl, sondern
+    // geltendes Recht; ein gesetzter Wert wird einmalig zurueckgenommen und
+    // gemeldet, weil die Rechnung dadurch anders ausfaellt.
+    //
+    // An die Stelle des Schalters "Zinsertrag ist steuerbarer
+    // Vermoegensertrag" tritt ein Anteil in Prozent. Grund: Zinsen und
+    // Ausschuettungen sind steuerbar (Art. 20 DBG, Art. 33 StG SG),
+    // Kursgewinne auf beweglichem Privatvermoegen dagegen steuerfrei
+    // (Art. 16 Abs. 3 DBG). Bei einem gemischten Depot ist beides in der
+    // erfassten Rendite enthalten; ein Schalter ein/aus liegt in jeder
+    // Stellung daneben.
+    kapitalBezugZurueckgenommen = [];
+    for (const v of (k.vorsorge || [])) {
+      if (v.bezug_steuerbar) {
+        const p = (k.personen || []).find(x => x.id === v.person_id);
+        kapitalBezugZurueckgenommen.push(p ? (p.bezeichnung || p.id) : v.person_id);
+      }
+      delete v.bezug_steuerbar;
+      if (v.ertrag_steuerbar_anteil == null || v.ertrag_steuerbar_anteil === "")
+        v.ertrag_steuerbar_anteil = (v.ertrag_steuerbar === false) ? 0 : 1;
+      delete v.ertrag_steuerbar;
+    }
+
     // Ersterwerberabzug je Person; ohne Eintrag wirkt er nicht.
     k.steuer.ersterwerber = k.steuer.ersterwerber || {};
     for (const p of (k.personen || []))
@@ -22437,36 +22583,52 @@ function vorsorgeZeichnen() {
 
       const vor = el("p");
       vor.innerHTML =
-        "Es geht um das oben erfasste Kapital, aus dem der Lebensbedarf gedeckt wird. " +
-        "Der <strong>Bezug</strong> ist der Betrag, der dem Kapital im Jahr entnommen " +
-        "wird; der <strong>Ertrag</strong> ist der Zins auf diesem Kapital, hier " +
-        proz(v.zins ?? 0) + " auf dem mittleren Bestand des Jahres.";
-      vor.style.cssText = "font-size:12px;color:var(--gedaempft);margin:2px 0 6px";
+        "Zwei Fragen. Es geht um das oben erfasste Kapital von <strong>"
+        + chf(Number(v.kapital_start) || 0) + " CHF</strong>, aus dem der Lebensbedarf "
+        + "gedeckt wird. <strong>Bezug</strong> ist der Betrag, der dem Kapital im Jahr "
+        + "entnommen wird; <strong>Ertrag</strong> ist die Rendite darauf, hier "
+        + proz(v.zins ?? 0) + " auf dem mittleren Bestand des Jahres. Das Kapital selbst "
+        + "zählt in jedem Fall zum steuerbaren Vermögen — darüber ist hier nicht zu "
+        + "entscheiden.";
+      vor.style.cssText = "font-size:12px;color:var(--gedaempft);margin:2px 0 10px";
       ziel.appendChild(vor);
 
-      const s1 = el("div", "schalter");
-      const c1 = el("input"); c1.type = "checkbox"; c1.checked = !!v.bezug_steuerbar;
-      c1.addEventListener("change", () => { v.bezug_steuerbar = c1.checked; rechnen(); });
-      s1.appendChild(c1);
-      s1.appendChild(el("span", null,
-        "Bezug aus dem Kapital ist steuerbares Einkommen"));
-      ziel.appendChild(s1);
+      // ---- Der Bezug: keine Wahl, sondern geltendes Recht ----------------
+      // Frueher stand hier ein Schalter. Er stellte eine entschiedene
+      // Rechtsfrage zur Wahl und konnte die Rechnung nur verfaelschen.
+      {
+        const t1 = el("p");
+        t1.innerHTML =
+          "<strong>1 — Der Bezug aus dem Kapital ist kein steuerbares Einkommen.</strong>";
+        t1.style.cssText = "font-size:13px;margin:0 0 2px";
+        ziel.appendChild(t1);
+        const e1 = el("p");
+        e1.innerHTML =
+          "Wer eigenes Vermögen aufbraucht, erzielt kein Einkommen: Der Verzehr ist eine "
+          + "Vermögensumschichtung und als solche nicht steuerbar. Das Programm rechnet "
+          + "entsprechend; eine Wahl gibt es hier nicht.<br>"
+          + "Steht im Feld oben in Wahrheit kein Kapital, sondern eine laufende Leistung — "
+          + "etwa eine Rente, die behelfsmässig als Kapital abgebildet wird —, so ist sie "
+          + "im Reiter Budget als Einnahme zu erfassen. Bei einer Leibrente wären zudem "
+          + "nur 40 % steuerbar (Art. 22 Abs. 3 DBG).";
+        e1.style.cssText = "font-size:12px;color:var(--gedaempft);margin:0 0 12px";
+        ziel.appendChild(e1);
+      }
 
+      // ---- Kapitalleistungssteuer: eine Sachfrage, keine Rechtsfrage -----
+      {
+        const t2 = el("p");
+        t2.innerHTML = "<strong>2 — Steht oben der Brutto- oder der Nettobetrag?</strong>";
+        t2.style.cssText = "font-size:13px;margin:0 0 2px";
+        ziel.appendChild(t2);
+      }
       const s3 = el("div", "schalter");
       const c3 = el("input"); c3.type = "checkbox"; c3.checked = !!v.kapitalsteuer_aktiv;
       c3.addEventListener("change", () => { v.kapitalsteuer_aktiv = c3.checked; rechnen(); });
       s3.appendChild(c3);
       s3.appendChild(el("span", null,
-        "Kapitalleistungssteuer im Startjahr abrechnen"));
+        "Kapitalleistungssteuer im Jahr der Auszahlung abrechnen"));
       ziel.appendChild(s3);
-
-      const s2 = el("div", "schalter");
-      const c2 = el("input"); c2.type = "checkbox"; c2.checked = v.ertrag_steuerbar !== false;
-      c2.addEventListener("change", () => { v.ertrag_steuerbar = c2.checked; rechnen(); });
-      s2.appendChild(c2);
-      s2.appendChild(el("span", null,
-        "Zinsertrag auf dem Kapital ist steuerbarer Vermögensertrag"));
-      ziel.appendChild(s2);
 
       if (v.kapitalsteuer_aktiv) {
         const fj = el("div", "feld");
@@ -22482,38 +22644,86 @@ function vorsorgeZeichnen() {
       const klJ = v.kapitalsteuer_jahr != null && v.kapitalsteuer_jahr !== ""
         ? v.kapitalsteuer_jahr : v.jahr_start;
       kls.innerHTML = v.kapitalsteuer_aktiv
-        ? "Einmalige Steuer auf dem Kapitalbezug im Jahr " + (klJ ?? "–") +
-          (zK ? ": Kanton und Gemeinde " + chf(zK.kapitalsteuerKanton) +
-                " CHF, Bund " + chf(zK.kapitalsteuerBund) + " CHF, zusammen " +
-                chf(zK.kapitalsteuer) + " CHF."
+        ? "<strong>Ein — oben steht der Bruttobetrag.</strong> Gesonderte Jahressteuer "
+          + "auf der Kapitalleistung im Jahr " + (klJ ?? "–")
+          + (zK ? ": Kanton und Gemeinde " + chf(zK.kapitalsteuerKanton) +
+                " CHF" + (zK.kapitalsteuerSatzKanton != null
+                  ? " (" + proz(zK.kapitalsteuerSatzKanton) + " einfache Steuer, "
+                    + (zK.kapitalsteuerGemeinsam ? "gemeinsam veranlagt" : "einzeln veranlagt")
+                    + ")" : "")
+                + ", Bund " + chf(zK.kapitalsteuerBund) + " CHF (ein Fünftel des "
+                + "ordentlichen Tarifs), zusammen " + chf(zK.kapitalsteuer) + " CHF."
               : ". Liegt dieses Jahr vor dem Betrachtungszeitraum, ist die Steuer "
                 + "damals fällig geworden und bleibt ausserhalb dieser Rechnung.")
-        : "<strong>Vorgabe: aus.</strong> Das oben erfasste Kapital gilt als Betrag "
-          + "<em>nach</em> der Kapitalleistungssteuer — sie wird bei der Auszahlung "
-          + "abgerechnet und ist damit erledigt. Nur wenn hier ein <em>Bruttobezug</em> "
-          + "aus Pensionskasse oder Säule 3a steht, ist der Schalter zu setzen; sonst "
-          + "würde der Bezug ein zweites Mal besteuert.";
-      kls.style.cssText = "font-size:12px;color:var(--gedaempft);margin:2px 0 6px";
+          + "<br>Rechtsgrundlage: Art. 52 StG SG und Art. 38 in Verbindung mit "
+          + "Art. 36 DBG. Der Kantonssatz steht im Reiter Steuern, Abschnitt "
+          + "«Kapitalleistungen aus Vorsorge»."
+        : "<strong>Vorgabe: aus — oben steht der Nettobetrag.</strong> Das ist der "
+          + "Normalfall: Die Vorsorgeeinrichtung zahlt aus, die gesonderte Jahressteuer "
+          + "wird damals abgerechnet und ist erledigt. Einzuschalten nur, wenn oben der "
+          + "<em>Bruttobetrag</em> aus Pensionskasse, Freizügigkeitskonto oder Säule 3a "
+          + "steht, wie ihn die Vorsorgeeinrichtung ausweist. Beides zugleich wäre eine "
+          + "Doppelbesteuerung.";
+      kls.style.cssText = "font-size:12px;color:var(--gedaempft);margin:2px 0 12px";
       ziel.appendChild(kls);
+
+      // ---- Steuerbarer Anteil der Rendite -------------------------------
+      // Zinsen und Ausschuettungen sind steuerbar, Kursgewinne nicht. Ein
+      // Schalter ein/aus bildet das nicht ab; massgebend ist der Anteil.
+      {
+        const t3 = el("p");
+        t3.innerHTML = "<strong>3 — Wie viel der Rendite ist steuerbarer Ertrag?</strong>";
+        t3.style.cssText = "font-size:13px;margin:0 0 4px";
+        ziel.appendChild(t3);
+      }
+      const anteil = (v.ertrag_steuerbar_anteil != null && v.ertrag_steuerbar_anteil !== "")
+        ? Number(v.ertrag_steuerbar_anteil) : 1;
+      const fa = el("div", "feld");
+      fa.appendChild(el("label", null, "davon steuerbarer Ertrag"));
+      fa.appendChild(zahlFeld(anteil, x => {
+        v.ertrag_steuerbar_anteil = (x == null) ? 1 : Math.min(1, Math.max(0, x));
+        rechnen();
+      }, { proz: true, leerErlaubt: true }));
+      fa.appendChild(el("span", "einheit", "%"));
+      ziel.appendChild(fa);
+
+      const ea2 = el("p");
+      ea2.innerHTML =
+        "<strong>Vorgabe: 100 %.</strong> Zinsen und Ausschüttungen sind steuerbarer "
+        + "Vermögensertrag (Art. 20 DBG, Art. 33 StG SG). <strong>Kursgewinne</strong> auf "
+        + "beweglichem Privatvermögen sind dagegen steuerfrei (Art. 16 Abs. 3 DBG).<br>"
+        + "Bei einem gemischten Depot ist in der oben erfassten Rendite von "
+        + proz(v.zins ?? 0) + " beides enthalten. Massgebend ist, welcher Teil davon "
+        + "ausgeschüttet wird: Wirft das Depot insgesamt 2.25 % ab, davon rund 1.2 % als "
+        + "Zins und Dividende, so sind hier 55 % einzutragen. Besteht die Anlage nur aus "
+        + "Zinsen eines Kontos oder einer Obligation, bleiben es 100 %; besteht sie aus "
+        + "thesaurierenden Fonds ohne Ausschüttung, wären es 0 % — wobei auch "
+        + "thesaurierte Erträge steuerbar bleiben, wenn der Fonds sie ausweist."
+        + "<br><em>Hinweis: Die Einordnung des eigenen Depots ist eine Frage an die "
+        + "Steuererklärung, nicht an dieses Programm; massgebend ist das "
+        + "Wertschriftenverzeichnis.</em>";
+      ea2.style.cssText = "font-size:12px;color:var(--gedaempft);margin:2px 0 6px";
+      ziel.appendChild(ea2);
 
       // Zahlen des ersten Rechenjahrs, damit klar ist, wovon die Rede ist
       const z0 = rechenzeilen(p.id)[0];
       if (z0) {
-        const bsp = el("p", null,
-          "Im Jahr " + z0.jahr + ": Kapital zu Beginn " + chf(z0.kapitalAnfang) +
-          " CHF, Zinsertrag " + chf(z0.zins) + " CHF, Bezug " +
-          chf(Math.abs(z0.entnahme)) + " CHF. In die Einkommenssteuer fliessen davon " +
-          chf((v.ertrag_steuerbar !== false ? Math.max(0, z0.zins) : 0) +
-              (v.bezug_steuerbar ? Math.abs(Math.min(0, z0.entnahme)) : 0)) + " CHF. " +
-          "Das Kapital selbst zählt in jedem Fall zum steuerbaren Vermögen.");
+        const stb = Math.max(0, z0.zins) * anteil;
+        const bsp = el("p");
+        bsp.innerHTML =
+          "<strong>Im Jahr " + z0.jahr + ":</strong> Kapital zu Beginn "
+          + chf(z0.kapitalAnfang) + " CHF, Rendite " + chf(z0.zins) + " CHF, Bezug "
+          + chf(Math.abs(z0.entnahme)) + " CHF. In die Einkommenssteuer fliessen "
+          + chf(stb) + " CHF — " + proz(anteil) + " der Rendite. Steuerfrei bleiben "
+          + chf(Math.max(0, z0.zins) - stb) + " CHF Kursgewinn und der ganze Bezug. "
+          + "Das Kapital selbst zählt in jedem Fall zum steuerbaren Vermögen.";
         bsp.style.cssText = "font-size:12px;color:var(--gedaempft);margin:6px 0 0";
         ziel.appendChild(bsp);
       }
       ziel = zielVorSt;
       ziel.appendChild(vorsorgeUnterpunkt(p.id, "Steuerliche Behandlung",
-        [v.bezug_steuerbar ? "Bezug steuerbar" : "Bezug nicht steuerbar",
-         v.ertrag_steuerbar !== false ? "Ertrag steuerbar" : "Ertrag nicht steuerbar",
-         v.kapitalsteuer_aktiv ? "Kapitalleistungssteuer ein" : null]
+        ["Ertrag " + proz(anteil) + " steuerbar",
+         v.kapitalsteuer_aktiv ? "Kapitalleistungssteuer ein" : "Kapital netto erfasst"]
           .filter(Boolean).join(" · "), unterSt));
 
       // Altes Format einmalig in die Liste ueberfuehren
@@ -22730,21 +22940,38 @@ function policenblock(person) {
   const e = el("p");
   e.style.cssText = "font-size:12px;color:var(--gedaempft);margin:0 0 8px";
   e.innerHTML =
-    "Rückkaufsfähige Lebensversicherungen der freien Vorsorge. <strong>Prämie</strong> "
-    + "ist eine Ausgabe dieser Person und in der Säule 3b nicht abziehbar. Der "
-    + "<strong>Rückkaufswert</strong> gehört zum steuerbaren Vermögen (Art. 54 StG SG); "
-    + "zwischen Stichjahr und Ablaufjahr wird er <strong>geometrisch</strong> "
-    + "interpoliert — der Wert wächst mit der Rendite der Anlage, eine lineare Näherung "
-    + "läge in der Mitte der Laufzeit zu hoch. Der Ertrag innerhalb der "
-    + "Police wird <strong>nicht</strong> jährlich besteuert, und die "
-    + "<strong>Ablaufleistung</strong> fliesst im Ablaufjahr dem Vorsorgekapital zu. Sie ist "
-    + "bei <strong>periodischen Prämien</strong> einkommenssteuerfrei (Art. 24 lit. b DBG); "
-    + "bei <strong>Einmalprämie</strong> nur, wenn die Police der Vorsorge dient "
-    + "(Art. 20 Abs. 1 lit. a DBG): Auszahlung ab dem vollendeten 60. Altersjahr, "
-    + "Vertragsdauer mindestens fünf Jahre und Vertragsbeginn vor dem vollendeten "
-    + "66. Altersjahr. Ist eine dieser Bedingungen nicht erfüllt, ist der Ertragsanteil "
-    + "(Ablaufleistung abzüglich Einmalprämie) im Ablaufjahr steuerbares "
-    + "Vermögenseinkommen.";
+    "<strong>Wofür diese Tabelle da ist.</strong> Für rückkaufsfähige "
+    + "Lebensversicherungen der freien Vorsorge — Säule 3b. Das sind Verträge mit einem "
+    + "Rückkaufswert, die zu einem festen Jahr ablaufen und dann eine Summe auszahlen. "
+    + "<em>Nicht hierher gehören:</em> Säule 3a — die gehört zum Kapital oben —, reine "
+    + "Risikoversicherungen ohne Rückkaufswert und Bankkonten jeder Art."
+    + "<br><br><strong>Was das Programm damit rechnet.</strong>"
+    + "<ul style='margin:6px 0;padding-left:22px'>"
+    + "<li><strong>Jedes Jahr:</strong> Die Prämie ist eine Ausgabe dieser Person und "
+      + "mindert ihr Kapital. In der Säule 3b ist sie <strong>nicht</strong> vom "
+      + "Einkommen abziehbar.</li>"
+    + "<li><strong>Jedes Jahr:</strong> Der Rückkaufswert zählt zum steuerbaren Vermögen "
+      + "(Art. 54 StG SG). Zwischen Stichjahr und Ablaufjahr wird er "
+      + "<strong>geometrisch</strong> interpoliert — der Wert wächst mit der Rendite der "
+      + "Anlage; eine lineare Näherung läge in der Mitte der Laufzeit zu hoch.</li>"
+    + "<li><strong>Jedes Jahr:</strong> Der Wertzuwachs <em>innerhalb</em> der Police wird "
+      + "nicht besteuert — anders als Zinsen auf einem Konto.</li>"
+    + "<li><strong>Im Ablaufjahr:</strong> Die Ablaufleistung fliesst dem Vorsorgekapital "
+      + "zu, und ab diesem Jahr zählt die Police nicht mehr zum Vermögen.</li></ul>"
+    + "<strong>Ob die Auszahlung besteuert wird.</strong>"
+    + "<ul style='margin:6px 0;padding-left:22px'>"
+    + "<li><strong>Periodische Prämien</strong> — jährlich wiederkehrend: Die "
+      + "Ablaufleistung ist einkommenssteuerfrei, ohne weitere Bedingung "
+      + "(Art. 24 lit. b DBG).</li>"
+    + "<li><strong>Einmalprämie:</strong> steuerfrei nur, wenn <em>alle drei</em> "
+      + "Bedingungen erfüllt sind (Art. 20 Abs. 1 lit. a DBG) — Auszahlung ab dem "
+      + "vollendeten 60. Altersjahr, Vertragsdauer mindestens fünf Jahre, Vertragsbeginn "
+      + "vor dem vollendeten 66. Altersjahr. Fehlt eine davon, ist der Ertragsanteil — "
+      + "Ablaufleistung abzüglich Einmalprämie — im Ablaufjahr steuerbares "
+      + "Vermögenseinkommen.</li></ul>"
+    + "Welcher Fall vorliegt, entscheidet das Kästchen <strong>«Einmalprämie»</strong> in "
+    + "der Tabelle. Die Spalte <em>Beurteilung der Kapitalzahlung</em> darunter zeigt das "
+    + "Ergebnis samt Gesetzesstelle.";
   w.appendChild(e);
 
   // Die vier Jahreszahlen der Tabelle einzeln benennen. Ohne das ist nicht zu
@@ -23731,7 +23958,8 @@ function menueFalten(menue) {
 // der hier nicht aufgefuehrt ist, bleibt am Ort, an dem er gezeichnet wurde.
 const STEUER_KAPITEL = [
   { nr: 1, titel: "Steuersatz", teile: [
-    "Steuerfüsse", "Änderungen des Steuerfusses"] },
+    "Steuerfüsse", "Änderungen des Steuerfusses",
+    "Kapitalleistungen aus Vorsorge — gesonderte Jahressteuer"] },
   { nr: 2, titel: "Abzüge vom Einkommen und Sozialabgaben", teile: [
     "Abzüge von den Einnahmen (Einkommenssteuer)", "Übrige Steuerabzüge",
     "Sozialabgaben auf dem Bruttolohn"] },
@@ -24121,6 +24349,133 @@ function steuernZeichnen() {
       + "kennt keinen Steuerfuss und bleibt unberührt.";
     ks.appendChild(ps);
     w.appendChild(ks);
+  }
+
+  // ---- Kapitalleistungen aus Vorsorge ---------------------------------
+  // Gesonderte Jahressteuer. Der Kantonssatz haengt am Zivilstand im Jahr
+  // der Auszahlung und wird deshalb nicht fest hinterlegt: Vorgabe ist der
+  // Satz, der sich aus dem erfassten Zivilstand ergibt.
+  {
+    const kl = st.kapitalleistung || (st.kapitalleistung = {});
+    const kk = el("div", "karte breit");
+    kk.appendChild(el("h3", null, "Kapitalleistungen aus Vorsorge — gesonderte Jahressteuer"));
+
+    const zv = cfg.zivilstand || {};
+    const verheiratet = zv.art === "verheiratet";
+    const ibAb = zv.ib_ab_jahr != null ? Number(zv.ib_ab_jahr) : 2032;
+    const eheAb = verheiratet
+      ? (zv.ab_jahr != null ? Number(zv.ab_jahr) : cfg.jahr_von) : null;
+
+    const pe = el("p");
+    pe.innerHTML =
+      "Wird Vorsorgekapital als Kapital bezogen, wird es <strong>gesondert vom übrigen "
+      + "Einkommen</strong> besteuert, mit einer vollen Jahressteuer ohne Aufteilung "
+      + "nach Monaten.<ul style='margin:6px 0;padding-left:22px'>"
+      + "<li><strong>Kanton St. Gallen:</strong> ein linearer Satz der einfachen Steuer, "
+      + "seit dem 1. Januar 2016 — <strong>2.0 %</strong> für gemeinsam steuerpflichtige "
+      + "Ehegatten, <strong>2.2 %</strong> für die übrigen Steuerpflichtigen "
+      + "(Art. 52 Abs. 2 und 3 StG SG). Der Satz wird mit dem Steuerfuss von Kanton, "
+      + "Gemeinde und Kirche multipliziert.</li>"
+      + "<li><strong>Bund:</strong> der ordentliche Tarif nach Art. 36 DBG auf die volle "
+      + "Leistung, davon ein <strong>Fünftel</strong> (Art. 38 Abs. 2 DBG).</li></ul>"
+      + "Ob die Steuer überhaupt gerechnet wird, steht im Reiter Vorsorge je Person "
+      + "unter «Steuerliche Behandlung». Sie fällt nur an, wenn dort der Bruttobetrag "
+      + "erfasst ist.";
+    pe.style.cssText = "font-size:12px;color:var(--gedaempft);margin:0 0 10px";
+    kk.appendChild(pe);
+
+    const eigen = kl.satz_kanton != null && kl.satz_kanton !== "";
+    const fs = el("div", "feld");
+    fs.appendChild(el("label", null, "Satz der einfachen Steuer, Kanton"));
+    fs.appendChild(zahlFeld(eigen ? Number(kl.satz_kanton) : null, x => {
+      kl.satz_kanton = (x == null) ? null : Math.max(0, x);
+      rechnen();
+    }, { proz: true, leerErlaubt: true,
+         vorgabe: verheiratet ? (kl.satz_kanton_ehe ?? 0.02) : (kl.satz_kanton_allein ?? 0.022),
+         vorgabeHinweis: "Leer: der Satz folgt dem Zivilstand im Jahr der Auszahlung." }));
+    fs.appendChild(el("span", "einheit", "%"));
+    kk.appendChild(fs);
+
+    const pv = el("p");
+    pv.innerHTML =
+      "<strong>Vorgabe: leer.</strong> Dann wählt das Programm den Satz je Jahr nach dem "
+      + "erfassten Zivilstand — hier <strong>"
+      + (verheiratet
+          ? "verheiratet ab " + eheAb + ": " + proz(kl.satz_kanton_ehe ?? 0.02)
+            + " bis und mit " + (ibAb - 1) + ", danach "
+            + proz(kl.satz_kanton_allein ?? 0.022)
+          : "Konkubinat, beide einzeln veranlagt: "
+            + proz(kl.satz_kanton_allein ?? 0.022))
+      + "</strong>."
+      + (verheiratet
+          ? "<br><strong>Achtung — Annahme:</strong> Ab dem Jahr der "
+            + "Individualbesteuerung (" + ibAb + ") werden Ehegatten einzeln veranlagt; "
+            + "der Satz für gemeinsam Steuerpflichtige entfällt damit. Die "
+            + "Individualbesteuerung ist noch nicht in Kraft — Jahr und Wirkung sind "
+            + "eine Annahme und im Abschnitt «Zivilstand» einstellbar."
+          : "<br>Nach Art. 52 Abs. 3 StG SG gilt der Satz von "
+            + proz(kl.satz_kanton_ehe ?? 0.02) + " auch für verwitwete, getrennt "
+            + "lebende, geschiedene und ledige Steuerpflichtige, die mit Kindern oder "
+            + "unterstützungsbedürftigen Personen zusammenleben und deren Unterhalt "
+            + "hauptsächlich bestreiten. Trifft das zu, ist der Satz hier von Hand "
+            + "einzutragen — das Programm erkennt diesen Fall nicht.")
+      + " Ein eingetragener Wert geht der Wahl nach Zivilstand in jedem Fall vor; "
+      + "Feld leeren stellt auf die Wahl zurück.";
+    pv.style.cssText = "font-size:12px;color:var(--gedaempft);margin:6px 0 10px";
+    kk.appendChild(pv);
+
+    const fb = el("div", "feld");
+    fb.appendChild(el("label", null, "Anteil des Bundestarifs"));
+    fb.appendChild(zahlFeld(kl.faktor_bund ?? 0.2, x => {
+      kl.faktor_bund = (x == null) ? 0.2 : Math.max(0, x); rechnen();
+    }, { proz: true, leerErlaubt: true }));
+    fb.appendChild(el("span", "einheit", "%"));
+    kk.appendChild(fb);
+    const pb = el("p", null,
+      "20 % entspricht dem Fünftel nach Art. 38 Abs. 2 DBG. Zu ändern nur, wenn das "
+      + "Bundesrecht ändert.");
+    pb.style.cssText = "font-size:12px;color:var(--gedaempft);margin:4px 0 10px";
+    kk.appendChild(pb);
+
+    // Was die Rechnung daraus macht - je Person, soweit die Steuer anfaellt
+    const zeilen = cfg.personen.map(p => {
+      const z = rechenzeilen(p.id).find(x => x.kapitalsteuer);
+      return z ? { p, z } : null;
+    }).filter(Boolean);
+    if (zeilen.length) {
+      const rahmen = el("div", "tabellenrahmen");
+      const t = document.createElement("table"); t.className = "dicht";
+      const kz = t.createTHead().insertRow();
+      ["Person", "Jahr", "Kapitalleistung CHF", "Satz Kanton", "Kanton CHF",
+       "Bund CHF", "zusammen CHF"]
+        .forEach((x, i) => kz.appendChild(el("th", i === 0 ? "links" : null, x)));
+      const kb = t.createTBody();
+      for (const { p, z } of zeilen) {
+        const v = (cfg.vorsorge || []).find(x => x.person_id === p.id) || {};
+        const r = kb.insertRow();
+        const c0 = el("td", "txt"); c0.textContent = p.bezeichnung; r.appendChild(c0);
+        const mono = txt => { const c = el("td", "rechts mono");
+          c.style.padding = "5px 10px"; c.textContent = txt; return c; };
+        r.appendChild(mono(String(z.jahr)));
+        r.appendChild(mono(chf(Number(v.kapital_start) || 0)));
+        r.appendChild(mono(z.kapitalsteuerSatzKanton != null
+          ? proz(z.kapitalsteuerSatzKanton)
+            + (z.kapitalsteuerGemeinsam ? "  gemeinsam" : "  einzeln") : "–"));
+        r.appendChild(mono(chf(z.kapitalsteuerKanton)));
+        r.appendChild(mono(chf(z.kapitalsteuerBund)));
+        const cs = mono(chf(z.kapitalsteuer)); cs.style.fontWeight = "600";
+        r.appendChild(cs);
+      }
+      rahmen.appendChild(t); kk.appendChild(rahmen);
+    } else {
+      const pk = el("p", null,
+        "Zurzeit fällt keine Kapitalleistungssteuer an: Bei beiden Personen ist das "
+        + "Vorsorgekapital als Nettobetrag erfasst, die Steuer gilt damit als bei der "
+        + "Auszahlung abgerechnet.");
+      pk.style.cssText = "font-size:12px;color:var(--gedaempft);margin:0";
+      kk.appendChild(pk);
+    }
+    w.appendChild(kk);
   }
 
   const k2 = el("div", "karte");
@@ -25299,14 +25654,9 @@ function bemessungZeichnen() {
   zeile("davon Mietzins Einliegerwohnung", z => z.mietzins || 0, true, false, true);
   zeile("Eigenmietwert", z => A(z, "eigenmietwert"));
   zeile("Vermögensertrag", z => z.vermoegensertrag || 0);
-  zeile("Kapitalertrag Vorsorge", (z, p) => {
-    const v = cfg.vorsorge.find(x => x.person_id === p.id);
-    return (v && v.ertrag_steuerbar !== false) ? Math.max(0, z.zins || 0) : 0;
-  });
-  zeile("Bezug Vorsorge, steuerbar", (z, p) => {
-    const v = cfg.vorsorge.find(x => x.person_id === p.id);
-    return (v && v.bezug_steuerbar) ? Math.max(0, -(z.entnahme || 0)) : 0;
-  });
+  zeile("Kapitalertrag Vorsorge, steuerbar", z => z.ertragSteuerbar || 0);
+  zeile("davon steuerfrei (Kursgewinn)", z => z.ertragSteuerfrei || 0,
+        false, false, true);
   zeile("Schuldzinsen, anrechenbar", z => A(z, "schuldzinsAnrechenbar"), true);
   zeile("nicht anrechenbare Schuldzinsen", z => A(z, "schuldzinsGekuerzt"),
         false, false, true);
@@ -25785,6 +26135,17 @@ function rechnen() {
       entsperrt = true;
     }
     ahvSynchronisieren();
+    // Einmalige Meldung zur Umstellung der steuerlichen Behandlung. Sie wird
+    // hier abgesetzt und nicht in der Normalisierung: dort steht die Anzeige
+    // noch nicht.
+    if (kapitalBezugZurueckgenommen.length) {
+      const wer = kapitalBezugZurueckgenommen.join(" und ");
+      kapitalBezugZurueckgenommen = [];
+      setTimeout(() => melde("Steuerliche Behandlung umgestellt: Bei " + wer
+        + " war erfasst, dass der Bezug aus dem Vorsorgekapital steuerbares Einkommen "
+        + "sei. Der Verzehr eigenen Vermögens ist kein Einkommen; die Angabe wurde "
+        + "zurückgenommen. Die Steuern fallen dadurch tiefer aus als bisher."), 400);
+    }
     budget2Abgleichen();
     if (!klickOffen && !feldAktiv()) entnahmenSortieren();
     zivilErgCache = {};
@@ -27490,7 +27851,7 @@ async function jetztSichern(still) {
     ablageZustandSetzen(false);
     melde("Im Browser dieses Geräts gespeichert. Das Konto ist nicht erreichbar, " +
           "andere Geräte sehen diesen Stand nicht.");
-    return false;
+    return "lokal";
   }
   try {
     await dbNs.doc("szenarien/aktuell").set(
@@ -27499,13 +27860,13 @@ async function jetztSichern(still) {
     melde((still ? "Automatisch im Konto gespeichert um " : "Im Konto gespeichert um ") +
       new Date().toLocaleTimeString("de-CH") +
       ". Auf anderen Geräten nach dem Neuladen sichtbar.");
-    return true;
+    return "konto";
   } catch (e) {
     ablageZustandSetzen(true);
     melde("Speichern im Konto nicht möglich: " +
       ((e && e.message) ? e.message : "unbekannter Fehler") +
       ". Der Stand bleibt im Browser dieses Geräts.");
-    return false;
+    return "";
   }
 }
 
@@ -27659,9 +28020,34 @@ function arbeitBeenden(knopf) {
   if (document.activeElement === knopf) knopf.blur();
 }
 
+// Kurze Rueckmeldung am Knopf "Speichern". Die ausfuehrliche Meldung steht in
+// der Statuszeile am Seitenfuss - dort, wo niemand hinschaut, der eben oben
+// geklickt hat. Erfolg verschwindet nach zwei Sekunden von selbst; ein
+// Fehlschlag bleibt stehen, bis erneut geklickt wird.
+let speichernZeichenTimer = null;
+function speichernZeichen(art) {
+  const b = document.getElementById("btnSpeichern");
+  if (!b) return;
+  if (!b.dataset.grundtext) b.dataset.grundtext = b.textContent;
+  clearTimeout(speichernZeichenTimer);
+  if (!art) {
+    b.textContent = "Nicht gespeichert";
+    b.style.background = "var(--warnung)";
+    b.style.borderColor = "var(--warnung)";
+    return;
+  }
+  b.textContent = (art === "lokal") ? "Nur hier gespeichert ✓" : "Gespeichert ✓";
+  b.style.background = "var(--gut)";
+  b.style.borderColor = "var(--gut)";
+  speichernZeichenTimer = setTimeout(() => {
+    b.textContent = b.dataset.grundtext;
+    b.style.background = ""; b.style.borderColor = "";
+  }, 2000);
+}
+
 $("#btnSpeichern").addEventListener("click", mitArbeit($("#btnSpeichern"), async () => {
   melde("Speichern läuft …");
-  await jetztSichern(false);
+  speichernZeichen(await jetztSichern(false));
 }));
 
 // Holt den Stand aus dem Konto auch dann, wenn auf diesem Geraet ein neuerer
@@ -29285,10 +29671,22 @@ function uebersichtZeichnen() {
         const s = l.reduce((a, e) => a + (Number(e.betrag) || 0) * Math.max(1, (Number(e.bis) || Number(e.jahr)) - Number(e.jahr) + 1), 0);
         return l.length ? l.length + " Einträge, zusammen " + chf(s) + " CHF" : "keine"; },
       z: { blatt: "vorsorge", feld: "Betrag CHF/Jahr|Einlagen" } },
-    { t: "Kapitalleistungssteuer im Startjahr", je: p => jn(vorsorge(p.id).kapitalsteuer_aktiv),
+    { t: "Kapitalleistungssteuer im Auszahlungsjahr", je: p => {
+        const v = vorsorge(p.id);
+        if (!v.kapitalsteuer_aktiv) return "nein — Kapital netto erfasst";
+        const j = (v.kapitalsteuer_jahr != null && v.kapitalsteuer_jahr !== "")
+          ? v.kapitalsteuer_jahr : v.jahr_start;
+        const z = rechenzeilen(p.id).find(x => x.kapitalsteuer);
+        return "ja, " + (j ?? "–")
+          + (z ? ": " + chf(z.kapitalsteuer) + " CHF ("
+              + (z.kapitalsteuerSatzKanton != null ? proz(z.kapitalsteuerSatzKanton) : "–")
+              + " Kanton, ein Fünftel Bundestarif)" : ""); },
       z: { blatt: "vorsorge", feld: "Kapitalleistungssteuer" } },
-    { t: "Bezug ist steuerbares Einkommen", je: p => jn(vorsorge(p.id).bezug_steuerbar),
-      z: { blatt: "vorsorge", feld: "Bezug aus dem Kapital" } },
+    { t: "Steuerbarer Anteil der Rendite", je: p => {
+        const a = vorsorge(p.id).ertrag_steuerbar_anteil;
+        return proz(a == null || a === "" ? 1 : Number(a))
+          + (Number(a) < 1 ? " — Rest als Kursgewinn steuerfrei" : ""); },
+      z: { blatt: "vorsorge", feld: "davon steuerbarer Ertrag" } },
     { t: "AHV-Rente pro Jahr", je: p => {
         const a = ahvPosition(p.id, false), a13 = ahvPosition13 ? ahvPosition13(p.id, false) : null;
         if (!a) return null;
