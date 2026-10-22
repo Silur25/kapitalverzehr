@@ -435,6 +435,7 @@ table{border-collapse:separate; border-spacing:0; width:100%; font-size:var(--s-
 table.hafte thead{position:sticky; top:var(--kopf-hoehe,58px); z-index:3}
 .tabellenrahmen.rollt table.hafte thead{top:0}
 
+
 /* T5 - Tabellenkopf: gemischte Schreibweise, ruhiger Grund */
 thead th{
   font-family:Arial,Helvetica,sans-serif; font-size:var(--s-tabelle); font-weight:700;
@@ -1152,6 +1153,12 @@ table.uebersicht tr.klein td.name{padding-left:22px}
           title="Fassung dieser Datei. Daneben muss «version.txt» denselben Wert nennen."></span>
     <button class="knopf" id="btnErlModus" type="button"
             title="Schaltet alle Erläuterungstexte zwischen Kurzfassung und ausführlicher Fassung um.">Erläuterungen: ausführlich</button>
+    <!-- Derselbe Befehl wie oberhalb der Arbeitsfläche, aber in der
+         haftenden Kopfleiste: So ist er von jeder Seite aus erreichbar,
+         ohne an den Seitenanfang zu rollen. -->
+    <button class="knopf" id="btnUebersichtKopf" type="button"
+            aria-expanded="true" aria-controls="uebersichtBlock"
+            title="Blendet Kennzahlen, Kapitalgrafik und den Vergleich der Zivilstände aus oder wieder ein. Die Wahl bleibt beim nächsten Start erhalten.">Übersicht einklappen</button>
     <span class="chip" id="rechenChip" title="Zeigt an, dass nach der letzten Eingabe neu gerechnet wurde."></span>
   </div>
 </header>
@@ -1332,7 +1339,7 @@ table.uebersicht tr.klein td.name{padding-left:22px}
 
   <div class="leistenfuss">
     <span>Budget- und Rentenberechnung &middot; Kanton St. Gallen, Gemeinde Gommiswald</span>
-    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v285</span></span>
+    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v286</span></span>
   </div>
 
   <!-- ===================== Startseite ===================== -->
@@ -2487,6 +2494,43 @@ table.uebersicht tr.klein td.name{padding-left:22px}
           Abschätzung, keine gerechnete Grösse.</p>
       </div>
       <div class="karte breit">
+        <h3>Änderungen in v286 — Vorschlag für die Heimkosten, Schalter in der Kopfleiste, Abschnittstitel</h3>
+        <ul class="liste">
+          <li><strong>Der vorgeschlagene Wert fehlte.</strong> Stand bei den
+            selbst zu tragenden Kosten eine Null, blieb sie stehen — auch wenn
+            ein Heimaufenthalt gerechnet wurde. Die Rechnung lief dann still
+            mit einem kostenlosen Heimaufenthalt; im Ergebnis fällt das nicht
+            auf, es fehlen nur einige hunderttausend Franken. Neu:
+            <ul class="liste">
+              <li>Ein auffälliger Hinweis nennt den Vorschlag aus der Statistik
+                und einen Knopf <strong>«Vorschlag einsetzen»</strong>, der ihn
+                mit einem Klick übernimmt — in beiden Erfassungsarten.</li>
+              <li>Der Knopf bleibt auch danach stehen, als Rückweg.</li>
+              <li>Im Menü «Vorgabe übernehmen» setzt der Eintrag «eigene
+                Eingabe» den Vorschlag, wenn noch nichts erfasst ist — wie im
+                Verlaufsmenü. Ist bereits etwas erfasst, ändert er nichts.</li>
+            </ul>
+            Stillschweigend überschrieben wird eine Null nicht: Wer sie bewusst
+            setzt, weil die Kosten anderswo erfasst sind, soll das können.</li>
+          <li><strong>Schalter «Übersicht einklappen» in der Kopfleiste.</strong>
+            Er stand nur oberhalb der Arbeitsfläche und war von den unteren
+            Seiten aus nicht erreichbar. Neu steht derselbe Befehl auch in der
+            haftenden Kopfleiste, von jeder Seite aus und ohne zu rollen. Beide
+            Schalter sind gleich beschriftet und wirken gleich; die Wahl bleibt
+            über den Neustart hinaus erhalten.</li>
+          <li><strong>Abschnittstitel in Vergleichstabellen.</strong> Der
+            haftende Tabellenkopf legte sich über den Inhalt. Rollte das Band
+            eines Abschnitts — «Person 1» — darunter weg, war bei den folgenden
+            Zeilen nicht mehr zu erkennen, zu wem sie gehören, und die oberste
+            Zeile wurde angeschnitten. Das Band mithaften zu lassen, löst es
+            nicht: Eine Zelle mit <code>position: sticky</code> haftet nur
+            innerhalb ihres eigenen Zeilenbereichs, und eine Bandzeile ist
+            vierzig Punkte hoch. Tabellen mit Abschnittsbändern haben deshalb
+            keinen haftenden Kopf mehr — die Zuordnung zur Person wiegt
+            schwerer als der mitlaufende Spaltenkopf. Jeder Abschnitt steht neu
+            zudem in einem eigenen <code>tbody</code>.</li>
+        </ul>
+
         <h3>Änderungen in v285 — Heimkosten: Aufschlüsselung, persönliche Auslagen, Sackgasse im Verlaufsmenü</h3>
         <ul class="liste">
           <li><strong>Gesamtbetrag blieb beim Umschalten auf null.</strong> Beim
@@ -24383,9 +24427,18 @@ function zivilVergleichZeichnen() {
   const kz = t.createTHead().insertRow();
   ["Kennzahl", "unverheiratet", "verheiratet", "Unterschied"]
     .forEach(x => kz.appendChild(el("th", null, x)));
-  const kb = t.createTBody();
+  let kb = t.createTBody();
 
+  // Jeder Abschnitt bekommt ein EIGENES tbody.
+  //
+  // Grund: Eine Zelle mit «position: sticky» haftet nur innerhalb ihres
+  // eigenen Zeilenbereichs - und eine Bandzeile ist rund vierzig Punkte
+  // hoch. Der Titel «Person 1» rollte deshalb unter den haftenden
+  // Tabellenkopf, und bei den folgenden Zeilen war nicht mehr zu erkennen,
+  // zu wem sie gehören. Mit einem eigenen tbody je Abschnitt haftet das
+  // Band über dessen ganze Höhe.
   const band = txt => {
+    kb = t.createTBody();
     const r = kb.insertRow(); const c = r.insertCell(); c.colSpan = 4;
     c.className = "blockband"; c.style.cssText = "padding:7px var(--innen)";
     c.textContent = txt;
@@ -24885,6 +24938,73 @@ function heimAufschluesselung(p) {
     institutionMt: mt(pflegeTag + hbTag) + sonstMt,
     institutionTag: pflegeTag + hbTag + sonstMt / TAGE_JE_MONAT,
   };
+}
+
+// Warnt, wenn ein Heimaufenthalt gerechnet wird, aber kein Betrag erfasst
+// ist - und setzt den Vorschlag auf Knopfdruck ein.
+//
+// Eine Null ist hier der gefaehrlichste aller Werte: Die Rechnung laeuft
+// dann still mit einem kostenlosen Heimaufenthalt weiter, und im Ergebnis
+// faellt nichts auf - es fehlen schlicht einige hunderttausend Franken.
+// Stillschweigend ueberschrieben wird die Null aber nicht: Wer sie bewusst
+// setzt, etwa weil die Kosten anderswo erfasst sind, soll das koennen.
+function heimBetragFehltBlock(p, ziel) {
+  if (p.heimeintritt_ab == null) return;
+  const geteilt = p.heim_kosten_art === "geteilt";
+  const leer = geteilt
+    ? !(Number(p.heim_pflegetaxe_pro_tag) > 0
+        || Number(p.heim_betreuung_pro_tag) > 0
+        || Number(p.heim_sonstige_pro_monat) > 0)
+    : !(Number(p.heimkosten_pro_monat) > 0);
+  const vg = heimVorgabeAutomatisch();
+  if (!vg) return;
+  const w = el("div");
+  if (leer) {
+    w.style.cssText = "margin:6px 0 10px;padding:9px 11px;border-radius:var(--r);"
+      + "background:var(--warnung-weich,#fef3c7);"
+      + "border-left:4px solid var(--warnung,#b45309)";
+    const t = el("p");
+    t.style.cssText = "margin:0 0 7px";
+    t.innerHTML = "<strong>Kein Betrag erfasst.</strong> Es wird ein "
+      + "Heimaufenthalt ab " + p.heimeintritt_ab + " gerechnet, aber mit "
+      + "<strong>null Franken Kosten</strong> — im Ergebnis fällt das nicht "
+      + "auf, es fehlen nur einige hunderttausend Franken. Vorschlag aus der "
+      + "Statistik: <strong>" + chf(vg.gesamt_monat) + " CHF pro Monat</strong> "
+      + "aus «" + vg.name + "».";
+    w.appendChild(t);
+  } else {
+    w.style.cssText = "margin:4px 0 10px";
+    const t = el("p", "kleintext");
+    t.style.cssText = "margin:0 0 5px;color:var(--gedaempft)";
+    t.innerHTML = "Vorschlag aus der Statistik: <strong>"
+      + chf(vg.gesamt_monat) + " CHF pro Monat</strong> aus «" + vg.name + "».";
+    w.appendChild(t);
+  }
+  const k = el("button", leer ? "knopf" : "knopf weich",
+    "Vorschlag einsetzen (" + chf(vg.gesamt_monat) + " CHF/Monat)");
+  k.type = "button";
+  k.title = "Setzt die selbst zu tragenden Kosten auf den Wert der "
+    + "automatischen Vorgabe. Der Kanton stammt aus dem Reiter Steuern, der "
+    + "Standard aus dem Schalter «Vorgaben auf der sicheren Seite». Jeder "
+    + "Wert bleibt überschreibbar.";
+  k.addEventListener("click", () => {
+    if (geteilt) {
+      const v = heimVorgabeWerte(vg.schluessel);
+      p.heim_pflegetaxe_pro_tag = v.pflegetaxe_tag;
+      p.heim_betreuung_pro_tag = v.betreuung_tag;
+      p.heim_sonstige_pro_monat = v.sonstige_monat;
+      p.heim_kassenbeitrag_pro_tag = null;
+    } else {
+      p.heimkosten_pro_monat = vg.gesamt_monat;
+    }
+    p.heim_vorgabe = vg.schluessel;
+    rechnen();
+    melde("Selbst zu tragende Kosten auf " + chf(vg.gesamt_monat)
+      + " CHF pro Monat gesetzt — aus «" + vg.name + "». Jeder Wert ist "
+      + "überschreibbar.");
+  });
+  w.appendChild(k);
+  ziel.appendChild(w);
 }
 
 // Eingabefeld fuer die persoenlichen Auslagen im Heim.
@@ -25891,6 +26011,22 @@ function personenZeichnen() {
         feld("Vorgabe übernehmen", wahlFeld(HEIM_VORGABEN, p.heim_vorgabe || "",
           x => {
             p.heim_vorgabe = x || "";
+            if (!x) {
+              // «Eigene Eingabe» ist hier dasselbe wie beim Verlaufsmenü:
+              // Zustand UND Weg zum Selbererfassen. Steht noch nichts da,
+              // wird die automatische Vorgabe gesetzt - eine Null rechnet
+              // still mit kostenlosem Heimaufenthalt und ist damit der
+              // gefährlichste aller Vorgabewerte.
+              const w0 = heimkostenVorbelegen(p);
+              rechnen();
+              melde(w0
+                ? "Selbst zu tragende Kosten mit " + chf(w0.gesamt_monat)
+                  + " CHF pro Monat vorbelegt — aus «" + w0.name
+                  + "». Jeder Wert ist überschreibbar."
+                : "Es gilt weiterhin, was erfasst ist — «eigene Eingabe» "
+                  + "beschreibt diesen Zustand und ändert keinen Wert.");
+              return;
+            }
             const w = heimVorgabeWerte(x);
             if (w) {
               // Was selbst zu tragen ist, vorher und nachher. Die BFS-Zahlen
@@ -25956,6 +26092,10 @@ function personenZeichnen() {
               vorgabeLoesen(); rechnen();
             },
             { dez: true, grenze: { min: 0, max: 6600, weichMax: 1650 } }), "CHF/Tag");
+        // Unmittelbar unter das Feld, nicht hinter die Erläuterung: Eine
+        // Warnung, die erst nach zwanzig Zeilen Text kommt, erreicht
+        // niemanden.
+        heimBetragFehltBlock(p, ziel);
         const ph = el("div");
         const eig = chfR(Number((cfg.pflege || {}).beteiligung_heim_pro_tag) || 23);
         ph.innerHTML =
@@ -25988,6 +26128,7 @@ function personenZeichnen() {
         heimAuslagenFeld(p, ziel, feldZwei);
       } else {
         const pf = cfg.pflege || {};
+        heimBetragFehltBlock(p, ziel);
         feldZwei("Pflegetaxe",
           zahlFeld(p.heim_pflegetaxe_pro_tag || 0,
             x => { p.heim_pflegetaxe_pro_tag = x || 0; vorgabeLoesen(); rechnen(); },
@@ -33684,7 +33825,19 @@ function tabellenrahmenPruefen() {
     // Haftender Kopf nur, wo er gebraucht wird: bei Tabellen mit eigenem
     // Rollfeld oder solchen, die laenger sind als das Fenster.
     const rollt = rahmen.classList.contains("rollt") || !!rahmen.dataset.fest;
-    t.classList.toggle("hafte", rollt || t.offsetHeight > window.innerHeight - 220);
+    // Tabellen mit Abschnittsbändern haften NICHT.
+    //
+    // Der haftende Kopf legt sich über den Inhalt. Rollt das Band eines
+    // Abschnitts — etwa «Person 1» — darunter weg, ist bei den folgenden
+    // Zeilen nicht mehr zu erkennen, zu wem sie gehören; zugleich wird die
+    // oberste sichtbare Zeile angeschnitten. Das Band mithaften zu lassen,
+    // löst es nicht: Eine Zelle mit «position: sticky» haftet nur innerhalb
+    // ihres eigenen Zeilenbereichs, und eine Bandzeile ist vierzig Punkte
+    // hoch. Von zwei Übeln ist der weggerollte Spaltenkopf das kleinere —
+    // die Zuordnung zur Person ist die wichtigere Information.
+    const baender = !!t.querySelector("td.blockband");
+    t.classList.toggle("hafte",
+      !baender && (rollt || t.offsetHeight > window.innerHeight - 220));
   });
 }
 window.addEventListener("resize", () => { tabellenrahmenPruefen(); titelAusrichten(); });
@@ -34306,12 +34459,16 @@ document.querySelectorAll(".reiter").forEach(b => {
     try { if (localStorage.getItem(SCHLUESSEL) === "zu") offen = false; }
     catch (e) { /* kein Speicher verfügbar */ }
     const block = document.getElementById("uebersichtBlock");
-    const knopf = document.getElementById("btnUebersicht");
+    // Zwei Schalter mit derselben Wirkung: einer über der Arbeitsfläche,
+    // einer in der haftenden Kopfleiste. Der zweite ist von jeder Seite aus
+    // erreichbar, ohne an den Seitenanfang zu rollen.
+    const knoepfe = ["btnUebersicht", "btnUebersichtKopf"]
+      .map(id => document.getElementById(id)).filter(Boolean);
     const kurz = document.getElementById("uebersichtKurz");
     const setzen = (auf, merken) => {
       offen = !!auf;
       if (block) block.hidden = !offen;
-      if (knopf) {
+      for (const knopf of knoepfe) {
         knopf.textContent = offen ? "Übersicht einklappen" : "Übersicht ausklappen";
         knopf.setAttribute("aria-expanded", offen ? "true" : "false");
       }
@@ -34322,7 +34479,7 @@ document.querySelectorAll(".reiter").forEach(b => {
         catch (e) { /* kein Speicher verfügbar */ }
     };
     setzen(offen, false);
-    if (knopf) knopf.addEventListener("click", () => {
+    for (const knopf of knoepfe) knopf.addEventListener("click", () => {
       setzen(!offen);
       // Beim Ausklappen neu zeichnen: Grafik und Kennzahlen bemessen sich
       // nach der sichtbaren Breite, und die war im eingeklappten Zustand
