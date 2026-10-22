@@ -350,7 +350,12 @@ sup,sub{font-size:var(--s-klein); line-height:0}
    senkrechte Spalte stehen sie untereinander, brechen nie um und sind nach
    Aufgaben gruppiert. Unter 1100 Punkten faellt die Spalte weg und die
    Leiste liegt wieder waagrecht ueber dem Inhalt. */
-.arbeitsflaeche{display:grid; grid-template-columns:232px minmax(0,1fr); gap:0 26px;
+/* Kein selbsttaetiges Nachfuehren der Rollposition: Beim Seitenwechsel wird
+   der Inhalt neu gezeichnet; die Verankerung des Browsers verschob die Seite
+   danach um die Hoehe des neu Gezeichneten, und der Seitenkopf lag nicht mehr
+   oben. Die Rollposition setzt das Programm selbst (blattAnfangZeigen). */
+.arbeitsflaeche{overflow-anchor:none;
+  display:grid; grid-template-columns:232px minmax(0,1fr); gap:0 26px;
   align-items:start; margin-top:30px}
 .seitennav{position:sticky; top:calc(var(--kopf-hoehe,58px) + 10px);
   align-self:start; max-height:calc(100vh - var(--kopf-hoehe,58px) - 24px);
@@ -375,14 +380,27 @@ sup,sub{font-size:var(--s-klein); line-height:0}
    Die Budgettabelle hat fuenfzehn Spalten; bei 390 Punkten Fensterbreite sind
    zweieinhalb davon sichtbar, und das Dokument rollt waagrecht. Eingaben sind
    dort nicht zu treffen. Statt einer Tabelle, die nicht bedienbar ist, wird
-   die Eingabe gesperrt - zurueckzunehmen mit einem Knopf im Band. */
-body.nurLesen .blatt input:not([type=checkbox]),
-body.nurLesen .blatt select,
-body.nurLesen .blatt textarea{
-  pointer-events:none; background:var(--flaeche2); color:var(--gedaempft);
-}
+   die Eingabe gesperrt - zurueckzunehmen mit einem Knopf im Band.
+
+   Die Sperre steht BEWUSST in der Media-Query: Ausserhalb schmaler Geraete
+   darf sie unter keinen Umstaenden greifen. Bis v282 stand sie ohne Abfrage
+   der Fensterbreite hier, waehrend das Band zum Zuruecknehmen nur unter 700
+   Punkten erschien - auf einem grossen Bildschirm waren damit alle
+   Eingabefelder gesperrt, ohne sichtbaren Weg zurueck. */
+/* ---- Leiste über dem Kopfbereich der Startseite ---- */
+.uebersichtLeiste{display:flex; align-items:center; gap:10px;
+  margin:14px 0 0; flex-wrap:wrap}
+.uebersichtLeiste .hinweis{font-size:var(--s-klein); color:var(--gedaempft)}
+
 #leseband{display:none}
-@media (max-width:700px){ body.nurLesen #leseband{display:block} }
+@media (max-width:700px){
+  body.nurLesen .blatt input:not([type=checkbox]),
+  body.nurLesen .blatt select,
+  body.nurLesen .blatt textarea{
+    pointer-events:none; background:var(--flaeche2); color:var(--gedaempft);
+  }
+  body.nurLesen #leseband{display:block}
+}
 
 /* Waagrechtes Rollen der ganzen Seite beseitigen. Gemessen: bei 390 Punkten
    Fensterbreite war das Dokument 445 Punkte breit. Verursacher waren die
@@ -687,13 +705,58 @@ table.zusatzkosten td:nth-child(5) select{min-width:0; width:100%}
   }
   .feld.zweispaltig > label{grid-column:1 / -1}
 }
-.feld label{font-size:var(--s-text); min-width:0; overflow-wrap:anywhere}
+/* Nie buchstabenweise umbrechen. «overflow-wrap:anywhere» erlaubt dem
+   Browser, die kleinstmögliche Breite einer Beschriftung mit EINEM Zeichen
+   anzusetzen; in einer Rasterspalte «minmax(0,1fr)» fällt sie dann auf null
+   und der Text steht senkrecht. Mit «break-word» ist das kleinste Mass das
+   längste Wort, und die Trennung nach Silben fängt lange Wörter ab. */
+.feld label{font-size:var(--s-text); min-width:0;
+  overflow-wrap:break-word; word-break:normal; hyphens:auto}
+
+/* ---- Breite der KARTE, nicht des Fensters ----
+   Eine Personenkarte ist bei 1366 Punkten Fensterbreite nur rund 450 Punkte
+   breit, weil zwei Karten nebeneinander stehen und links die Seitennavigation
+   liegt. Media-Queries fragen aber das Fenster ab und greifen dort nicht:
+   Die Beschriftungsspalte schrumpfte auf null, der Text fiel Buchstabe für
+   Buchstabe untereinander. Container-Queries fragen den Kasten selbst ab.
+   Unterhalb von 620 Punkten Kartenbreite steht die Beschriftung deshalb auf
+   einer eigenen Zeile über den Eingabefeldern. */
+.karte{container-type:inline-size}
+@container (max-width:620px){
+  .feld,
+  .feld.weit,
+  .feld.zweispaltig,
+  .feldblock > .feld,
+  .feldblock > .feld.weit,
+  .feldblock > .feld.zweispaltig{
+    grid-template-columns:minmax(0,1fr) minmax(52px,max-content);
+    gap:4px 10px; justify-content:start;
+  }
+  .feld > label{grid-column:1 / -1; margin-bottom:0}
+  .feld.knopfzeile{display:block}
+  .feld.knopfzeile > label{grid-column:auto}
+}
 .feld input,.feld select{width:100%; min-width:0; border-color:var(--linie-stark)}
 /* Reicht die Spaltenbreite trotz Messung nicht, so endet der Text sichtbar
    mit drei Punkten statt hart abgeschnitten zu werden. */
 .feld select{text-overflow:ellipsis}
 .feld .einheit{font-size:var(--s-klein); color:var(--schwach); white-space:nowrap}
 .feld .einheit.breit{white-space:nowrap}
+/* Zeile mit einem Knopf neben dem Eingabefeld. Die Beschriftung steht auf
+   einer eigenen Zeile darueber. Im dreispaltigen Raster blieb ihr in einer
+   schmalen Karte keine Breite mehr: Der Knopf beansprucht die dritte Spalte
+   mit "max-content", die erste schrumpfte auf null, und der Text fiel
+   Buchstabe fuer Buchstabe untereinander. Zugleich ragte der Knopf ueber den
+   Kartenrand hinaus und wurde dort abgeschnitten. Als Flussreihe mit Umbruch
+   kann beides nicht mehr eintreten. */
+.feld.knopfzeile{display:block; padding:5px 0}
+.feld.knopfzeile > label{display:block; margin-bottom:4px; font-size:var(--s-text);
+  overflow-wrap:normal; word-break:normal; hyphens:auto}
+.feld.knopfzeile > .zeile{display:flex; align-items:center; gap:10px 12px; flex-wrap:wrap}
+.feld.knopfzeile > .zeile > input{flex:0 1 180px; width:auto; min-width:110px}
+.feld.knopfzeile .einheit.breit{display:flex; align-items:center; gap:8px;
+  flex-wrap:wrap; white-space:normal}
+.feld.knopfzeile .einheit.breit > span{white-space:nowrap}
 .schalter{display:flex; align-items:center; gap:9px; padding:4px 0; font-size:var(--s-text)}
 .schalter input{width:auto; flex:0 0 auto}
 
@@ -1200,6 +1263,18 @@ table.uebersicht tr.klein td.name{padding-left:22px}
   })();
   </script>
 
+  <!-- Kopfbereich der Startseite: Kennzahlen, Kapitalgrafik und der Vergleich
+       der Zivilstaende. Er laesst sich einklappen; die Wahl ueberdauert das
+       Schliessen des Programms. -->
+  <div class="uebersichtLeiste">
+    <button class="knopf klein" type="button" id="btnUebersicht"
+            aria-expanded="true" aria-controls="uebersichtBlock"
+            title="Blendet Kennzahlen, Kapitalgrafik und den Vergleich der Zivilstände aus. Die Wahl bleibt beim nächsten Start erhalten.">Übersicht einklappen</button>
+    <span class="hinweis" id="uebersichtKurz"></span>
+  </div>
+
+  <div id="uebersichtBlock">
+
   <section class="befund" id="befund" aria-label="Kennzahlen"></section>
 
   <section class="tafel">
@@ -1215,6 +1290,8 @@ table.uebersicht tr.klein td.name{padding-left:22px}
 
   <div class="gitter" id="zivilstandOben"
        style="grid-template-columns:1fr; margin-top:18px"></div>
+
+  </div><!-- /uebersichtBlock -->
 
   <!-- Band fuer schmale Geraete: dort ist die Eingabe gesperrt. -->
   <div class="merker" id="leseband" style="margin-top:18px">
@@ -1255,7 +1332,7 @@ table.uebersicht tr.klein td.name{padding-left:22px}
 
   <div class="leistenfuss">
     <span>Budget- und Rentenberechnung &middot; Kanton St. Gallen, Gemeinde Gommiswald</span>
-    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v280</span></span>
+    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v284</span></span>
   </div>
 
   <!-- ===================== Startseite ===================== -->
@@ -2410,6 +2487,198 @@ table.uebersicht tr.klein td.name{padding-left:22px}
           Abschätzung, keine gerechnete Grösse.</p>
       </div>
       <div class="karte breit">
+        <h3>Änderungen in v284 — Hervorhebung des Verlaufs, Kartenbreite statt Fensterbreite, Sprung im Kartenteil, Übersicht einklappbar</h3>
+        <ul class="liste">
+          <li><strong>Der übernommene Verlauf steht fett.</strong> In der
+            Vergleichstabelle war der gewählte Vorschlag nur daran zu erkennen,
+            dass die andere Zeile blasser war. Er wird neu fett gesetzt und
+            trägt den Zusatz «— übernommen»; seine Werte stimmen dann mit der
+            fetten Zeile «erfasst» überein.</li>
+          <li><strong>«Eigene Eingabe» ist ein Zustand, kein Befehl.</strong> Der
+            Eintrag liess sich im Menü auswählen, bewirkte aber nichts — er
+            setzt keinen einzigen Wert, und das Menü sprang sofort auf den aus
+            den Werten abgeleiteten Stand zurück. Er ist neu sichtbar, aber
+            nicht wählbar, und heisst «eigene Eingabe — keine Vorgabe
+            übernommen». Ein Hinweis unter dem Menü erklärt, dass er sich
+            ergibt, sobald ein Wert von Hand geändert wird.</li>
+          <li><strong>Senkrechter Text in schmalen Karten.</strong> Betroffen
+            waren «Pflege, Stunden», «Hauswirtschaft, Stunden», «Erfassung der
+            Kosten», «Vorgabe übernehmen» und «Selbst zu tragende Kosten». Die
+            Ursache liegt tiefer als bisher angenommen:
+            <ul class="liste">
+              <li>Eine Personenkarte ist bei 1366 Punkten Fensterbreite nur rund
+                450 Punkte breit — zwei Karten nebeneinander, links die
+                Seitennavigation. Die bisherigen Umbruchregeln fragen aber die
+                <em>Fensterbreite</em> ab und greifen dort nicht.</li>
+              <li>Die Beschriftungsspalte <code>minmax(0,1fr)</code> durfte
+                deshalb auf null schrumpfen, und <code>overflow-wrap: anywhere</code>
+                zerlegte den Text in einzelne Buchstaben.</li>
+            </ul>
+            Neu fragt eine Container-Abfrage die <em>Kartenbreite</em> ab:
+            Unterhalb von 620 Punkten steht die Beschriftung auf einer eigenen
+            Zeile über den Eingabefeldern. Zusätzlich bricht keine Beschriftung
+            mehr buchstabenweise um — das kleinste Mass ist das längste Wort,
+            lange Wörter werden nach Silben getrennt.</li>
+          <li><strong>Sprung an den Anfang eines Kartenteils.</strong> Beim
+            Öffnen eines Teils wurde nur das Fenster gerollt. Der Kopf des Teils
+            liegt aber innerhalb der Karte, die ihren eigenen Rollbalken hat —
+            dort blieb er stehen, wo er war, und der Teil begann mitten im Text.
+            Neu wird zuerst der nächste eigene Rollbereich gerollt; das Fenster
+            wird nur nachgeführt, wenn der Kopf sonst gar nicht zu sehen wäre.
+            Geprüft an 24 Kartenteilen: Der Kopf steht jeweils 6 Punkte unter
+            der Kartenoberkante, zuvor bis zu 1'937 Punkte darüber hinaus
+            gerollt.</li>
+          <li><strong>Zu breite Auswahlfelder.</strong> Die Breite eines
+            Auswahlmenüs wird aus seinem längsten Eintrag gemessen und als
+            Raster unmittelbar am Element gesetzt. Ein solcher Stil schlägt jede
+            Regel im Stilblatt — in einer 447 Punkte breiten Karte blieben so
+            vier Punkte für die Beschriftung. Neu bleibt das Raster ungesetzt,
+            sobald die Zeile schmaler als 620 Punkte ist; darüber bleiben der
+            Beschriftung mindestens 220 Punkte. Bei einer Änderung der
+            Fenstergrösse werden die Breiten nachgeführt.</li>
+          <li><strong>Kopfbereich der Startseite einklappbar.</strong> Kennzahlen,
+            Kapitalgrafik und der Vergleich der Zivilstände stehen über der
+            Arbeitsfläche. Ein Knopf «Übersicht einklappen» blendet sie aus; die
+            Wahl wird im Browser gemerkt und gilt auch nach einem Neustart des
+            Programms, bis sie wieder umgestellt wird. Beim Ausklappen wird neu
+            gerechnet, weil sich die Grafik nach der sichtbaren Breite
+            bemisst.</li>
+          <li><strong>Warum die Prüfläufe das nicht fanden.</strong> Der
+            Durchgang auf senkrechten Text öffnete die Kartenteile nie: Der
+            Selektor zielte auf <code>.kartenteil</code>, die Köpfe heissen aber
+            <code>button.teilkopf</code>. Zudem ist je Karte nur ein Teil offen —
+            alle Köpfe nacheinander anzuklicken schloss jeden vorherigen wieder.
+            Ein neuer Durchgang öffnet jeden der 32 Kartenteile einzeln und misst
+            ihn bei neun Fensterbreiten: 288 Messungen.</li>
+        </ul>
+
+        <h3>Änderungen in v283 — Eingabefelder waren auf jedem Bildschirm gesperrt</h3>
+        <ul class="liste">
+          <li><strong>Der Fehler.</strong> Das Menü «Verlauf übernehmen» liess
+            sich nicht bedienen — und nicht nur dieses: <em>sämtliche</em>
+            Eingabefelder, Auswahlmenüs und Textfelder des Programms nahmen
+            keine Klicks an. Gemessen bei 1920 Punkten Fensterbreite: 186 von
+            286 Bedienelementen waren blockiert.</li>
+          <li><strong>Die Ursache.</strong> Für schmale Geräte gibt es einen
+            Lesemodus: Dort ist die Eingabe gesperrt, weil die Budgettabelle mit
+            ihren fünfzehn Spalten auf einem Telefon nicht zu treffen ist.
+            Gesteuert wird er über die Klasse <code>nurLesen</code> am Dokument,
+            die <code>pointer-events: none</code> auf alle Felder legt. Diese
+            Klasse wurde beim Start jedoch <strong>bedingungslos</strong>
+            gesetzt — ohne Abfrage der Fensterbreite. Das Band «Lesen statt
+            erfassen» mit dem Knopf «Trotzdem erfassen», mit dem die Sperre
+            zurückzunehmen wäre, erscheint dagegen erst unter 700 Punkten. Auf
+            einem grossen Bildschirm war die Eingabe damit gesperrt, ohne dass
+            etwas darauf hinwies und ohne Weg zurück.</li>
+          <li><strong>Die Korrektur,</strong> zweifach abgesichert:
+            <ul class="liste">
+              <li>Die Klasse wird nur noch gesetzt, wenn das Fenster höchstens
+                700 Punkte breit ist; bei jeder Änderung der Fenstergrösse wird
+                neu geprüft. Eine einmal erteilte Freigabe bleibt bestehen.</li>
+              <li>Die Sperre im Stilblatt steht neu <em>innerhalb</em> der
+                Media-Query. Selbst wenn die Klasse irrtümlich gesetzt würde,
+                könnte sie auf einem grossen Bildschirm nicht mehr greifen.</li>
+            </ul></li>
+          <li><strong>Warum es keiner der Prüfläufe fand.</strong> Alle bisherigen
+            Prüfungen setzten die Werte entweder direkt in der Konfiguration oder
+            lösten das Ereignis mit <code>dispatchEvent</code> aus. Beides umgeht
+            <code>pointer-events</code> — eine Sperre, die nur den Klick des
+            Nutzers abfängt, blieb dabei unsichtbar. Neu prüft ein eigener
+            Prüflauf mit <code>elementFromPoint</code>, ob an der Stelle, auf die
+            der Nutzer zielt, auch wirklich das Feld liegt: 1'217 Bedienelemente
+            über sechs Fensterbreiten und acht Seiten.</li>
+        </ul>
+
+        <h3>Änderungen in v282 — Markenzahlen über der Grafik, Verlauf wieder wählbar, Zeitfolge Spitex–Heim</h3>
+        <ul class="liste">
+          <li><strong>Zahlen der Marken stehen über dem Rahmen.</strong> Bisher
+            lagen sie innerhalb der Zeichenfläche und verdeckten die
+            Überlebenskurve. Sie stehen neu in einem Band oberhalb des Rahmens.
+            Zugleich war die Zeilenzuteilung fehlerhaft: Sie wechselte nur im
+            Takt, sodass zwei Zahlen in derselben Zeile landen konnten — im Bild
+            «89.0» und «89.1», die einander überdeckten. Neu kommt jede Zahl in
+            die unterste Zeile, in der sie frei steht (36 Punkte Mindestabstand,
+            bis zu drei Zeilen); die Höhe des Bandes richtet sich danach, wie
+            viele Zeilen tatsächlich gebraucht werden.</li>
+          <li><strong>Der Verlauf liess sich nicht mehr ändern.</strong> Das
+            Auswahlmenü «Verlauf übernehmen» zeigte die zuletzt getroffene Wahl,
+            auch wenn die Werte danach von Hand geändert worden waren. Da ein
+            Auswahlmenü beim erneuten Wählen desselben Eintrags kein Ereignis
+            auslöst, war der Verlauf dann nicht mehr zurückzusetzen. Neu wird der
+            Stand aus den erfassten Werten abgeleitet:
+            <ul class="liste">
+              <li>stimmen Lebensende, Heimeintritt, Spitex-Beginn und die beiden
+                Stundenangaben mit einem Vorschlag überein, steht dieser im Menü;</li>
+              <li>weicht ein Wert ab, steht dort «eigene Eingabe» — und der
+                Vorschlag lässt sich wieder wählen.</li>
+            </ul>
+            Dieselbe Angabe erscheint in der Kopfzeile des Kartenteils und im
+            Reiter «Daten für Berechnung».</li>
+          <li><strong>Der Heimeintritt kann nicht mehr vor dem Spitex-Beginn
+            liegen.</strong> Pflege zu Hause liegt vor dem Heimeintritt; ab dem
+            Eintritt ist die Pflege in den Heimkosten enthalten (Art. 25a Abs. 5
+            KVG, Art. 7a Abs. 3 KLV). Eine gleichzeitig erfasste Spitex wäre eine
+            Doppelzählung und wurde bisher stillschweigend mit null Jahren
+            gerechnet. Neu wird die Zeitfolge beim Erfassen gerichtet, wobei
+            stehen bleibt, was gerade eingegeben wurde:
+            <ul class="liste">
+              <li>wird der <strong>Heimeintritt</strong> vorgezogen, wandert die
+                Spitex-Phase mit und behält ihre Dauer;</li>
+              <li>wird der <strong>Spitex-Beginn</strong> hinter den Eintritt
+                gesetzt, wird er auf das Jahr davor begrenzt;</li>
+              <li>bleibt davor kein Rechenjahr übrig, wird die Pflege zu Hause
+                zurückgenommen.</li>
+            </ul>
+            Jede dieser Korrekturen wird gemeldet. Eine aus einer früheren
+            Fassung geladene Konfiguration wird nicht stillschweigend
+            umgeschrieben: Dort erscheint ein Hinweis mit dem Knopf «Zeitfolge
+            richten».</li>
+          <li><strong>Nebenbefund behoben.</strong> Wurde die Pflege zu Hause
+            eingeschaltet, ohne dass ein Heimaufenthalt gerechnet war, ergab die
+            Vorbelegung des Beginns aus <code>Number(null) − 2</code> das Jahr
+            −2. Neu wird vom letzten Rechenjahr her gerechnet, und der Beginn
+            liegt nie vor dem ersten Rechenjahr.</li>
+        </ul>
+
+        <h3>Änderungen in v281 — Lesbarkeit der Personenkarte, Grafik und Seitensprung</h3>
+        <ul class="liste">
+          <li><strong>Zeile «Betrachtung bis» in der Personenkarte.</strong> Die
+            Beschriftung fiel in schmalen Karten Buchstabe für Buchstabe
+            untereinander, und der Knopf «Grafik ansehen» wurde am Kartenrand
+            abgeschnitten. Ursache war das dreispaltige Raster: Der Knopf
+            beanspruchte die dritte Spalte nach seinem Inhalt, die
+            Beschriftungsspalte schrumpfte dadurch auf null. Die Zeile ist neu
+            aufgebaut:
+            <ul class="liste">
+              <li>die Beschriftung steht auf einer eigenen Zeile darüber;</li>
+              <li>darunter stehen Eingabefeld, Altersangabe und Knopf in einer
+                Reihe, die bei zu wenig Platz umbricht statt abzuschneiden.</li>
+            </ul></li>
+          <li><strong>Grafik der Sterblichkeit auf einer Seite.</strong> Grafik,
+            Legende und Erläuterung standen zusammen höher als der Bildschirm;
+            der Text war nur durch Rollen erreichbar. Neu wird nach dem Öffnen
+            gemessen, wie viel über die Fensterhöhe hinausragt, und die
+            Zeichenfläche um genau diesen Betrag verkleinert — unter Wahrung
+            ihres Seitenverhältnisses. Zusätzlich steht die Erläuterung in der
+            Vollbilddarstellung in Spalten von rund 440 Punkten Breite; einspaltig
+            wäre die Zeile über 200 Zeichen lang gewesen. Bei einer Änderung der
+            Fenstergrösse wird neu eingepasst.</li>
+          <li><strong>Sprung an den Seitenanfang.</strong> Beim Wechsel der Seite
+            blieb die Ansicht mitunter mitten im Text stehen. Grund: Die neue
+            Seite wird erst nach dem Umschalten gezeichnet; wächst der Inhalt
+            während des sanften Rollens, bricht der Browser die Bewegung ab und
+            verankert die Ansicht am zuletzt sichtbaren Inhalt. Neu setzt das
+            Programm die Rollposition selbst — vor dem Zeichnen, nach dem
+            Zeichnen und ein drittes Mal nach 160 Millisekunden für Teile, die
+            sich später aufbauen. Die selbsttätige Verankerung des Browsers ist
+            für die Arbeitsfläche abgeschaltet.</li>
+          <li><strong>Abstand zur Kopfleiste.</strong> Alle Sprünge an einen
+            Anfang — Seite, Kartenteil, Kapitel der Liegenschaft, Katalog,
+            Änderungsliste — halten neu zehn Punkte Abstand unterhalb der festen
+            Kopfleiste. Bisher sprangen sie dahinter, sodass der Titel verdeckt
+            war.</li>
+        </ul>
+
         <h3>Änderungen in v280 — Das Programm nennt, woher es geladen wurde</h3>
         <ul class="liste">
           <li><strong>Anlass.</strong> Es erschien wiederholt eine alte Fassung,
@@ -18936,7 +19205,7 @@ function kontoKnoepfeZeichnen() {
         requestAnimationFrame(() => {
           scrollFreigeben();
           const z = document.getElementById(kap.id);
-          if (z) z.scrollIntoView({ block: "start", behavior: "smooth" });
+          if (z) blattAnfangZeigen(z);
         });
       });
       fuss.appendChild(b);
@@ -18951,7 +19220,7 @@ function kontoKnoepfeZeichnen() {
           if (kontoAnsicht === kap.schluessel) {
             scrollFreigeben();
             const z = document.getElementById(kap.id);
-            if (z) z.scrollIntoView({ block: "start", behavior: "smooth" });
+            if (z) blattAnfangZeigen(z);
           }
         });
       });
@@ -24572,6 +24841,95 @@ function lebenserwartungQuantil(g, alter, jetzt, opt, p) {
   return r.q10;
 }
 
+// Welcher Verlauf passt zu den ERFASSTEN Werten - nicht, welcher zuletzt
+// gewaehlt wurde.
+//
+// Warum das noetig ist: Bisher merkte sich «p.pflege_verlauf» nur die letzte
+// Wahl. Wurde danach ein Wert von Hand geaendert - etwa der Heimeintritt -
+// stand im Menue weiterhin «mittlerer Verlauf», obwohl die Werte laengst
+// abwichen. Ein erneutes Waehlen desselben Eintrags loest in einem
+// Auswahlmenue kein Ereignis aus; der Verlauf liess sich dann nicht mehr
+// zuruecksetzen. Der Stand wird deshalb aus den Werten abgeleitet.
+function pflegeVerlaufStand(p) {
+  if (!p) return "";
+  if (p.heimeintritt_ab == null && !p.spitex_aktiv) return "kein";
+  for (const stufe of ["mittel", "hoch"]) {
+    const v = pflegeVerlaufWerte(p, stufe);
+    if (!v) continue;
+    if (Number(p.lebenserwartung_bis) !== v.endeJahr) continue;
+    if (Number(p.heimeintritt_ab) !== v.heimAb) continue;
+    const sollSpitex = v.spitexDauer > 0;
+    if (!!p.spitex_aktiv !== sollSpitex) continue;
+    if (sollSpitex) {
+      if (Number(p.spitex_ab) !== v.spitexAb) continue;
+      if (Number(p.spitex_pflege_std_woche) !== Number(v.stdPflege)) continue;
+      if (Number(p.spitex_haus_std_woche) !== Number(v.stdHaus)) continue;
+    }
+    return stufe;
+  }
+  return "";
+}
+
+// Name des Verlaufs, wie er in Kopfzeilen und im Bericht erscheint.
+function pflegeVerlaufName(p) {
+  const st = pflegeVerlaufStand(p);
+  return (PFLEGE_VERLAEUFE.find(v => v[0] === st) || [, "eigene Eingabe"])[1];
+}
+
+// Haelt die Reihenfolge Spitex → Heim ein.
+//
+// Fachlich: Pflege zu Hause liegt VOR dem Heimeintritt. Ab dem Eintritt ist
+// die Pflege in den Heimkosten enthalten (Art. 25a Abs. 5 KVG in Verbindung
+// mit Art. 7a Abs. 3 KLV); eine gleichzeitig gerechnete Spitex waere eine
+// Doppelzaehlung. Ein Spitex-Beginn am oder nach dem Heimeintritt ist daher
+// kein zulaessiger Zustand.
+//
+// Geraten die beiden Eingaben in Widerspruch, bleibt stehen, was gerade
+// eingegeben wurde; nachgezogen wird die andere Angabe:
+//   geaendert "heim"    Die Spitex-Phase wandert mit und behaelt ihre Dauer.
+//                       Reicht der Platz bis zum ersten Rechenjahr nicht,
+//                       wird sie kuerzer; bleibt nichts uebrig, entfaellt sie.
+//   geaendert "spitex"  Der Beginn wird auf das Jahr vor dem Eintritt begrenzt.
+// Rueckgabe: null, wenn nichts zu richten war, sonst ein Text fuer die Meldung.
+function pflegeZeitenRichten(p, geaendert, altHeim) {
+  if (!p) return null;
+  const h = (p.heimeintritt_ab == null) ? null : Number(p.heimeintritt_ab);
+  const s = (!p.spitex_aktiv || p.spitex_ab == null) ? null : Number(p.spitex_ab);
+  if (h == null || s == null || !isFinite(h) || !isFinite(s)) return null;
+  if (s < h) return null;                       // Reihenfolge stimmt
+  const frueh = Number(cfg.jahr_von) || new Date().getFullYear();
+  if (geaendert === "heim") {
+    const dauer = (altHeim != null && isFinite(Number(altHeim)))
+      ? Number(altHeim) - s : 0;
+    const neu = h - Math.max(1, Math.round(dauer || 0));
+    if (dauer > 0 && neu >= frueh) {
+      p.spitex_ab = neu;
+      return "Pflege zu Hause mitgezogen: Sie beginnt neu " + neu
+        + " und endet mit dem Heimeintritt " + h
+        + ". Sie kann nicht nach dem Eintritt liegen — im Heim ist die Pflege "
+        + "in den Heimkosten enthalten.";
+    }
+    if (h - 1 >= frueh) {
+      p.spitex_ab = h - 1;
+      return "Pflege zu Hause auf " + (h - 1) + " gesetzt, das Jahr vor dem "
+        + "Heimeintritt " + h + ". Sie kann nicht nach dem Eintritt liegen.";
+    }
+    p.spitex_aktiv = false;
+    return "Pflege zu Hause zurückgenommen: Der Heimeintritt " + h
+      + " lässt davor kein Rechenjahr mehr übrig.";
+  }
+  // Der Spitex-Beginn wurde geaendert
+  if (h - 1 >= frueh) {
+    p.spitex_ab = h - 1;
+    return "Pflege zu Hause auf " + (h - 1) + " begrenzt: Sie liegt vor dem "
+      + "Heimeintritt " + h + "; ab dem Eintritt ist die Pflege in den "
+      + "Heimkosten enthalten.";
+  }
+  p.spitex_aktiv = false;
+  return "Pflege zu Hause zurückgenommen: Vor dem Heimeintritt " + h
+    + " bleibt kein Rechenjahr übrig.";
+}
+
 // Schreibt einen Verlauf in die Felder einer Person.
 function pflegeVerlaufSetzen(p, stufe) {
   p.pflege_verlauf = stufe || "";
@@ -24635,18 +24993,47 @@ function pflegeVerlaufBlock(p, ziel, feld) {
     return;
   }
 
-  feld("Verlauf übernehmen", wahlFeld(PFLEGE_VERLAEUFE, p.pflege_verlauf || "",
-    x => {
-      if (!x) { p.pflege_verlauf = ""; rechnen(); return; }
-      const v = pflegeVerlaufSetzen(p, x);
-      rechnen();
-      if (v && !v.kein)
-        melde("Verlauf «" + v.name + "» übernommen: Spitex ab " + v.spitexAb
-          + ", Heimeintritt " + v.heimAb + ", Lebensende " + v.endeJahr
-          + " (Alter " + v.endeAlter + "). Alle Werte sind überschreibbar.");
-      else if (v) melde("Kein Pflegefall gerechnet: Spitex, Heimaufenthalt und "
-        + "Hilflosenentschädigung sind zurückgenommen.");
-    }), "", true);
+  // Angezeigt wird der aus den Werten abgeleitete Stand, nicht die letzte
+  // Wahl: Sonst steht im Menue ein Verlauf, der gar nicht mehr gilt, und
+  // seine erneute Wahl loest kein Ereignis aus.
+  {
+    const sel = wahlFeld(PFLEGE_VERLAEUFE, pflegeVerlaufStand(p),
+      x => {
+        if (!x) { p.pflege_verlauf = ""; rechnen(); return; }
+        const v = pflegeVerlaufSetzen(p, x);
+        rechnen();
+        if (v && !v.kein)
+          melde("Verlauf «" + v.name + "» übernommen: Spitex ab " + v.spitexAb
+            + ", Heimeintritt " + v.heimAb + ", Lebensende " + v.endeJahr
+            + " (Alter " + v.endeAlter + "). Alle Werte sind überschreibbar.");
+        else if (v) melde("Kein Pflegefall gerechnet: Spitex, Heimaufenthalt und "
+          + "Hilflosenentschädigung sind zurückgenommen.");
+      });
+    // «eigene Eingabe» beschreibt einen ZUSTAND, es ist kein Befehl: Sie
+    // ergibt sich, sobald ein Wert von Hand geändert wird. Als Wahl wäre sie
+    // wirkungslos - sie setzt keinen einzigen Wert, und das Menü spränge
+    // sofort auf den aus den Werten abgeleiteten Stand zurück. Genau das war
+    // zu beobachten («eigene Eingabe akzeptiert das Programm nicht»). Der
+    // Eintrag bleibt deshalb sichtbar, aber nicht wählbar.
+    const oEigen = [...sel.options].find(o => o.value === "");
+    if (oEigen) {
+      oEigen.disabled = true;
+      oEigen.textContent = "eigene Eingabe";
+    }
+    feld("Verlauf übernehmen", sel, "", true);
+    const hw = el("p", "kleintext");
+    hw.style.cssText = "margin:0 0 8px;color:var(--gedaempft)";
+    hw.innerHTML = pflegeVerlaufStand(p)
+      ? "Die erfassten Werte entsprechen diesem Vorschlag; er steht unten "
+        + "fett. Jeder Wert bleibt überschreibbar — sobald einer abweicht, "
+        + "steht hier «eigene Eingabe»."
+      : "<strong>Eigene Eingabe:</strong> Die erfassten Werte stimmen mit "
+        + "keinem der beiden Vorschläge überein. Dieser Eintrag lässt sich "
+        + "nicht wählen — er ergibt sich aus den Werten. Ein Vorschlag im "
+        + "Menü überschreibt sie; von Hand geänderte Werte führen wieder "
+        + "hierher zurück.";
+    ziel.appendChild(hw);
+  }
 
   // ---- Zeitachse: was die beiden Stufen ergeben ------------------------
   const vm = pflegeVerlaufWerte(p, "mittel");
@@ -24708,11 +25095,47 @@ function pflegeVerlaufBlock(p, ziel, feld) {
     }
     // Darunter die beiden Vorschlaege zum Vergleich - blass, weil sie nur
     // zeigen, was das Menue setzen WUERDE.
-    const istM = p.pflege_verlauf === "mittel", istH = p.pflege_verlauf === "hoch";
-    zeile("Vorschlag: mittlerer Verlauf", ausVerlauf(vm), istM ? "" : "blass");
-    zeile("Vorschlag: hoher Verlauf", ausVerlauf(vh), istH ? "" : "blass");
+    const standJetzt = pflegeVerlaufStand(p);
+    const istM = standJetzt === "mittel", istH = standJetzt === "hoch";
+    // Der übernommene Vorschlag wird fett gesetzt und benannt. Bisher stand
+    // er wie die erfasste Zeile in normaler Schrift und war von der nicht
+    // gewählten Zeile nur an deren blasserem Grau zu unterscheiden - zu wenig,
+    // um auf einen Blick zu sehen, welcher Verlauf gilt.
+    zeile("Vorschlag: mittlerer Verlauf" + (istM ? " — übernommen" : ""),
+      ausVerlauf(vm), istM ? "gilt" : "blass");
+    zeile("Vorschlag: hoher Verlauf" + (istH ? " — übernommen" : ""),
+      ausVerlauf(vh), istH ? "gilt" : "blass");
     rahmen.appendChild(t);
     ziel.appendChild(rahmen);
+
+    // Widerspruch sichtbar machen. Neue Eingaben koennen ihn nicht mehr
+    // erzeugen - sie werden beim Erfassen gerichtet -, eine geladene
+    // Konfiguration aus einer frueheren Fassung aber schon. Stillschweigend
+    // umgeschrieben wird sie nicht; der Knopf richtet sie auf Wunsch.
+    if (p.spitex_aktiv && p.spitex_ab != null && p.heimeintritt_ab != null
+        && Number(p.spitex_ab) >= Number(p.heimeintritt_ab)) {
+      const h = el("div", "hinweis warn");
+      h.style.cssText = "margin:0 0 8px;padding:8px 10px;border-radius:var(--r);"
+        + "background:var(--warnung-weich,#fef3c7);border-left:4px solid var(--warnung,#b45309)";
+      const tx = el("p", null);
+      tx.style.cssText = "margin:0 0 6px";
+      tx.innerHTML = "<strong>Widersprüchliche Zeitfolge.</strong> Die Pflege zu "
+        + "Hause beginnt " + p.spitex_ab + ", der Heimeintritt ist aber schon "
+        + p.heimeintritt_ab + ". Spitex liegt <em>vor</em> dem Heimeintritt — ab "
+        + "dem Eintritt ist die Pflege in den Heimkosten enthalten (Art. 25a "
+        + "Abs. 5 KVG, Art. 7a Abs. 3 KLV). Gerechnet werden deshalb null Jahre "
+        + "Spitex; die Eingabe bleibt wirkungslos stehen.";
+      h.appendChild(tx);
+      const kr = el("button", "knopf weich", "Zeitfolge richten");
+      kr.type = "button";
+      kr.addEventListener("click", () => {
+        const m = pflegeZeitenRichten(p, "spitex");
+        rechnen();
+        melde(m || "Nichts zu richten.");
+      });
+      h.appendChild(kr);
+      ziel.appendChild(h);
+    }
     const lg = el("p", "kleintext",
       "Die erste Zeile ist der Stand, mit dem gerechnet wird — sie folgt jeder "
       + "Änderung von Hand. Die beiden darunter zeigen, was das Menü setzen würde. "
@@ -24851,18 +25274,22 @@ function personenZeichnen() {
         diagnoseFeld("Betrachtung bis", x, lebend.lebenserwartung_bis);
         rechnen();
       }, { jahr: true });
-      // Eigene Zeile statt «feld», damit der Knopf in der dritten Spalte
-      // neben der Altersangabe steht: Im Eingabefeld selbst nähme er der
-      // Jahreszahl den Platz weg, und die wäre dann abgeschnitten.
-      const f = el("div", "feld weit");
+      // Eigene Zeile statt «feld»: Der Knopf braucht Platz, den das
+      // dreispaltige Raster der Beschriftung wegnahm. In einer schmalen Karte
+      // schrumpfte die Beschriftungsspalte auf null, der Text fiel Buchstabe
+      // für Buchstabe untereinander, und der Knopf wurde am Kartenrand
+      // abgeschnitten. Darum: Beschriftung auf einer eigenen Zeile, darunter
+      // Eingabefeld, Altersangabe und Knopf in einer Flussreihe mit Umbruch.
+      const f = el("div", "feld knopfzeile");
       f.appendChild(el("label", null,
         "Betrachtung bis, letztes Rechenjahr (Todesjahr)"));
-      f.appendChild(fe);
+      const zl = el("div", "zeile");
+      zl.appendChild(fe);
       const eh = el("span", "einheit breit");
-      eh.style.cssText = "display:inline-flex; align-items:center; gap:8px";
       eh.appendChild(el("span", null, alterIn(p.lebenserwartung_bis)));
       eh.appendChild(sterbeKnopf(p));
-      f.appendChild(eh);
+      zl.appendChild(eh);
+      f.appendChild(zl);
       ziel.appendChild(f);
     }
     // Das Feld hat zwei Aufgaben, und beide sind hier zu benennen: es begrenzt
@@ -24936,8 +25363,7 @@ function personenZeichnen() {
     {
       const jahreHeim = (p.heimeintritt_ab != null && p.lebenserwartung_bis != null)
         ? (Number(p.lebenserwartung_bis) - Number(p.heimeintritt_ab) + 1) : null;
-      const vName = (PFLEGE_VERLAEUFE.find(v => v[0] === p.pflege_verlauf)
-        || [, "eigene Eingabe"])[1];
+      const vName = pflegeVerlaufName(p);
       T.verlauf = kartenteil(kh, p.id + "|1", "1 Verlauf der Pflegebedürftigkeit",
         "Wann Pflege zu Hause und wann ein Heimaufenthalt gerechnet wird. Der "
         + "Vorschlag stammt aus der Sterbetafel und der Pflegestatistik; jeder "
@@ -25022,8 +25448,13 @@ function personenZeichnen() {
     if (p.heimeintritt_ab != null) {
       // Alle drei Eingaben stehen beieinander; die Erlaeuterung samt gemessener
       // Wirkung folgt danach. So sehen die Karten beider Personen gleich aus.
-      feld("ab Jahr", zahlFeld(p.heimeintritt_ab, x => { p.heimeintritt_ab = x; rechnen(); }, { jahr: true }),
-        alterIn(p.heimeintritt_ab), true);
+      feld("ab Jahr", zahlFeld(p.heimeintritt_ab, x => {
+        const alt = p.heimeintritt_ab;
+        p.heimeintritt_ab = x;
+        const m = pflegeZeitenRichten(p, "heim", alt);
+        rechnen();
+        if (m) melde(m);
+      }, { jahr: true }), alterIn(p.heimeintritt_ab), true);
 
       // Eintritt wahlweise ueber das Alter setzen. Die Statistik nennt ein
       // mittleres Eintrittsalter von 82 Jahren und eine mittlere Dauer von
@@ -25037,7 +25468,14 @@ function personenZeichnen() {
           fa.style.margin = "0";
           fa.appendChild(el("label", null, "oder ab Alter"));
           fa.appendChild(zahlFeld(Number(p.heimeintritt_ab) - Number(p.geburtsjahr),
-            x => { if (x != null) { p.heimeintritt_ab = Number(p.geburtsjahr) + Math.round(x); rechnen(); } },
+            x => {
+              if (x == null) return;
+              const alt = p.heimeintritt_ab;
+              p.heimeintritt_ab = Number(p.geburtsjahr) + Math.round(x);
+              const m = pflegeZeitenRichten(p, "heim", alt);
+              rechnen();
+              if (m) melde(m);
+            },
             { klasse: "spalte-schmal" }));
           fa.appendChild(el("span", "einheit", "Jahre"));
           leiste.appendChild(fa);
@@ -25050,10 +25488,13 @@ function personenZeichnen() {
             + "verkürzt wird.";
           kb.addEventListener("click", () => {
             const ein = Number(p.geburtsjahr) + (Number(pf.stat_eintrittsalter) || 82);
+            const altEin = p.heimeintritt_ab;
             p.heimeintritt_ab = ein;
             const ende = ein + Math.round(Number(pf.stat_dauer_jahre) || 2.1);
             if (Number(p.lebenserwartung_bis) < ende) p.lebenserwartung_bis = ende;
+            const mz = pflegeZeitenRichten(p, "heim", altEin);
             rechnen();
+            if (mz) melde(mz);
             melde("Heimeintritt auf " + ein + " gesetzt (Alter "
               + (Number(pf.stat_eintrittsalter) || 82) + "). Achtung: Der Mittelwert "
               + "ist ein Startpunkt, kein Planungswert — die Verteilung der "
@@ -25524,7 +25965,15 @@ function personenZeichnen() {
           p.spitex_aktiv = cbX.checked;
           if (cbX.checked && p.spitex_ab == null) {
             const jahre = Number(pf.stat_spitex_jahre) || 2;
-            p.spitex_ab = Number(p.heimeintritt_ab) - jahre;
+            // Ohne Heimeintritt gibt es keinen Bezugspunkt: Frueher stand
+            // hier «Number(null) - 2», also das Jahr -2. Dann wird vom
+            // letzten Rechenjahr her gerechnet, sonst vom Eintritt.
+            const bezug = (p.heimeintritt_ab != null)
+              ? Number(p.heimeintritt_ab)
+              : (p.lebenserwartung_bis != null ? Number(p.lebenserwartung_bis) + 1 : null);
+            const frueh = Number(cfg.jahr_von) || new Date().getFullYear();
+            p.spitex_ab = (bezug != null && isFinite(bezug))
+              ? Math.max(frueh, bezug - jahre) : frueh;
             if (!(Number(p.spitex_pflege_std_woche) > 0)) {
               p.spitex_pflege_std_woche = 4;
               p.spitex_haus_std_woche = 3;
@@ -25537,8 +25986,12 @@ function personenZeichnen() {
         ziel.appendChild(schX);
 
         if (p.spitex_aktiv) {
-          feld("Spitex ab Jahr", zahlFeld(p.spitex_ab, x => { p.spitex_ab = x; rechnen(); },
-            { jahr: true }), alterIn(p.spitex_ab), true);
+          feld("Spitex ab Jahr", zahlFeld(p.spitex_ab, x => {
+            p.spitex_ab = x;
+            const m = pflegeZeitenRichten(p, "spitex");
+            rechnen();
+            if (m) melde(m);
+          }, { jahr: true }), alterIn(p.spitex_ab), true);
           feld("bis Jahr", zahlFeld(p.spitex_bis ?? null,
             x => { p.spitex_bis = x; rechnen(); },
             { jahr: true, leerErlaubt: true,
@@ -25927,10 +26380,13 @@ function kartenteil(ziel, schluessel, titel, erlaeuterung, kurz) {
     // Beim Oeffnen an den Anfang des Teils springen. Ohne das steht der
     // Kopf oft schon weit oben aus dem Bild gerollt, und der Inhalt beginnt
     // irgendwo in der Mitte - man sucht dann den Anfang.
+    // Der Kopf des geöffneten Teils kommt zuoberst in seinen Rollbereich.
+    // Das Fenster wird nur nachgeführt, wenn der Kopf sonst gar nicht zu
+    // sehen wäre - die Karte selbst soll nicht springen.
     if (auf) requestAnimationFrame(() => {
       nachzeichnen(inh);
-      try { kopf.scrollIntoView({ block: "start", behavior: "smooth" }); }
-      catch (e) { kopf.scrollIntoView(); }
+      blattAnfangZeigen(kopf, true);
+      requestAnimationFrame(() => blattAnfangZeigen(kopf, true));
     });
   });
   w.__zu = () => setzen(false);
@@ -25987,7 +26443,7 @@ function personenKapitelZeichnen() {
         requestAnimationFrame(() => {
           scrollFreigeben();
           const z = document.getElementById(kap.id);
-          if (z) z.scrollIntoView({ block: "start", behavior: "smooth" });
+          if (z) blattAnfangZeigen(z);
         });
       });
       fuss.appendChild(b);
@@ -26002,7 +26458,7 @@ function personenKapitelZeichnen() {
           if (personenKapitel === kap.schluessel) {
             scrollFreigeben();
             const z = document.getElementById(kap.id);
-            if (z) z.scrollIntoView({ block: "start", behavior: "smooth" });
+            if (z) blattAnfangZeigen(z);
           }
         });
       });
@@ -28096,7 +28552,7 @@ function menueOeffnen(menue, teil) {
     const offen = menueOffen[menue.kennung];
     const ziel = offen ? alle.find(x => x.dataset.teil === offen)
                        : (menue.anker ? $(menue.anker) : $("#" + menue.behaelter[0]));
-    if (ziel) { scrollFreigeben(); ziel.scrollIntoView({ block: "start", behavior: "smooth" }); }
+    if (ziel) blattAnfangZeigen(ziel);
   });
 }
 
@@ -29503,7 +29959,7 @@ function steuernZeichnen() {
     katalogZeichnen();
     if (katalogOffen) requestAnimationFrame(() => {
       scrollFreigeben();
-      $("#katalogTeil").scrollIntoView({ block: "start", behavior: "smooth" });
+      blattAnfangZeigen($("#katalogTeil"));
     });
   });
   const stand3 = el("span", "status"); stand3.id = "katalogStand";
@@ -31276,7 +31732,12 @@ document.addEventListener("keydown", e => {
 // der Ueberlebenden ab dem heutigen Alter, die Verteilung des Sterbealters
 // und die Lage der Rechenwerte darin. Massgebend ist das erfasste Geschlecht;
 // das andere wird zum Vergleich blass mitgezeichnet.
-function sterbeGrafik(p, gross) {
+// mass  optional {br, ho}: Breite und Hoehe der Zeichenflaeche in Punkten.
+//       Das Fenster gibt sie vor, damit Grafik, Legende und Erlaeuterung
+//       gemeinsam auf eine Seite passen. Nicht skaliert, sondern neu
+//       gezeichnet: Beim Skalieren schrumpfen Achsenbeschriftung und Zahlen
+//       mit, und die Grafik wird unleserlich.
+function sterbeGrafik(p, gross, mass) {
   const w = el("div");
   const le = cfg.lebenserwartung || {};
   const jetzt = Number(cfg.jahr_von) || new Date().getFullYear();
@@ -31300,13 +31761,66 @@ function sterbeGrafik(p, gross) {
 
   // ---- Zeichenfläche. Bewusst gross: eine Kurve, die man nicht ablesen
   // kann, ist keine Darstellung, sondern eine Verzierung.
-  const BR = gross ? 1560 : 820, HO = gross ? 760 : 460;
-  const L = 58, R = 18, O = 16, U = 46;      // Ränder
-  const HK = gross ? 430 : 236;              // Höhe der Überlebenskurve
-  const HV = gross ? 200 : 112;              // Höhe der Sterbeverteilung
-  const LU = gross ? 42 : 30;                // Luft zwischen beiden
+  const BR = Math.max(520, Math.round((mass && mass.br) || (gross ? 1560 : 820)));
+  const HO = Math.max(300, Math.round((mass && mass.ho) || (gross ? 760 : 460)));
+  const L = 58, R = 18, U = 46;              // Ränder links, rechts, unten
+  const LU = gross ? 42 : 30;                // Luft zwischen beiden Bildern
+  const PU = gross ? 26 : 20;                // Platz für die Achsentexte unten
   const a0 = Math.round(alter), a1 = 106;
   const x = a => L + (a - a0) / (a1 - a0) * (BR - L - R);
+
+  // ---- Marken und ihr Zahlenband ÜBER dem Rahmen -----------------------
+  // Die Zahlen standen bisher innerhalb der Zeichenfläche und lagen damit
+  // auf der Kurve. Sie stehen neu oberhalb des Rahmens, in einem Band aus
+  // bis zu drei Zeilen. Wie hoch das Band ist, hängt davon ab, wie viele
+  // Zeilen die Zahlen brauchen, um einander nicht zu überdecken - deshalb
+  // werden die Marken vor dem Rand berechnet.
+  const endeJahr = Number(p.lebenserwartung_bis);
+  const marken = [
+    { a: rRein.mittelAlter, t: "Mittelwert, reine Tafel", f: "var(--gedaempft)", d: "4 3" },
+    { a: r.mittelAlter, t: "Mittelwert", f: "var(--gedaempft)" },
+    { a: r.median, t: "Median — die Hälfte", f: "var(--akzent)" },
+    { a: r.q25, t: "oberes Viertel", f: "var(--akzent)" },
+    { a: r.q10, t: "oberes Zehntel — Planungsalter", f: "var(--warnung,#b45309)", s: 2.4 },
+  ];
+  if (isFinite(endeJahr) && isFinite(geb))
+    marken.push({ a: endeJahr - geb, t: "erfasst: Betrachtung bis " + endeJahr,
+                  f: "var(--stark,#111)", s: 2.4 });
+  if (p.heimeintritt_ab != null && isFinite(geb))
+    marken.push({ a: Number(p.heimeintritt_ab) - geb, t: "Heimeintritt",
+                  f: "var(--gedaempft)", d: "2 3" });
+  if (p.spitex_aktiv && p.spitex_ab != null && isFinite(geb))
+    marken.push({ a: Number(p.spitex_ab) - geb, t: "Spitex", f: "var(--gedaempft)", d: "2 3" });
+  // Nur die Linien und die nackte Zahl in die Grafik. Die Benennung steht
+  // unten in der Legende: Acht Marken liegen hier auf fünfzehn Jahren
+  // beieinander - ausgeschriebene Beschriftungen an der Linie überdecken
+  // sich und sind dann gar nicht mehr zu lesen.
+  marken.sort((u, v2) => u.a - v2.a);
+  const sichtbar = marken.filter(m => m.a > a0 && m.a < a1);
+  const ZEILE = 14;                          // Zeilenhöhe im Zahlenband
+  const ABST = 36;                           // Mindestabstand zweier Zahlen
+  // Jede Zahl kommt in die unterste Zeile, in der sie frei steht. Bisher
+  // wechselte die Zeile nur im Takt; zwei Zahlen in derselben Zeile konnten
+  // sich dadurch trotzdem überdecken - im Bild «89.0» und «89.1».
+  const letzteJeZeile = [];
+  const markenReihen = sichtbar.map(m => {
+    const X = x(m.a);
+    let reihe = 0;
+    while (reihe < 2 && letzteJeZeile[reihe] != null
+           && X - letzteJeZeile[reihe] < ABST) reihe++;
+    letzteJeZeile[reihe] = X;
+    return { m, X, reihe };
+  });
+  const reihenZahl = markenReihen.reduce((a, z) => Math.max(a, z.reihe + 1), 1);
+  // Oberer Rand: Grundabstand, Zeile für die Überschrift, dann das Zahlenband.
+  const OTITEL = 18;
+  const O = 8 + OTITEL + reihenZahl * ZEILE;
+
+  // Was nach Rändern, Luft und dem Platz für die Achsenbeschriftung bleibt,
+  // teilen sich Überlebenskurve und Sterbeverteilung in festem Verhältnis.
+  const rest = Math.max(150, HO - O - U - LU - PU);
+  const HK = Math.round(rest * (gross ? 430 / 630 : 236 / 348));
+  const HV = rest - HK;
   const yK = s => O + (1 - s) * HK;
   const maxD = Math.max(...r.stufen.map(s => s.l - s.lNach), 1e-9);
   const yV = d => O + HK + LU + HV - (d / maxD) * HV;
@@ -31315,7 +31829,12 @@ function sterbeGrafik(p, gross) {
   const sv = document.createElementNS(ns, "svg");
   sv.setAttribute("viewBox", "0 0 " + BR + " " + HO);
   sv.setAttribute("width", "100%");
-  sv.style.cssText = "display:block;max-width:" + BR + "px;height:auto";
+  sv.setAttribute("preserveAspectRatio", "xMidYMid meet");
+  sv.style.cssText = "display:block;max-width:" + BR + "px;height:auto;margin:0 auto";
+  // Seitenverhältnis der Zeichenfläche. Das Fenster liest es aus, um die
+  // Grafik so zu bemessen, dass Legende und Erläuterung mit auf dieselbe
+  // Seite passen (siehe «einpassen» in sterbeFensterOeffnen).
+  sv.dataset.vb = String(BR); sv.dataset.vh = String(HO);
   const mk = (n, at, txt) => {
     const e = document.createElementNS(ns, n);
     for (const [k2, v] of Object.entries(at)) e.setAttribute(k2, v);
@@ -31364,45 +31883,20 @@ function sterbeGrafik(p, gross) {
   }
 
   // ---- Rechenwerte einzeichnen ----------------------------------------
-  const endeJahr = Number(p.lebenserwartung_bis);
-  const marken = [
-    { a: rRein.mittelAlter, t: "Mittelwert, reine Tafel", f: "var(--gedaempft)", d: "4 3" },
-    { a: r.mittelAlter, t: "Mittelwert", f: "var(--gedaempft)" },
-    { a: r.median, t: "Median — die Hälfte", f: "var(--akzent)" },
-    { a: r.q25, t: "oberes Viertel", f: "var(--akzent)" },
-    { a: r.q10, t: "oberes Zehntel — Planungsalter", f: "var(--warnung,#b45309)", s: 2.4 },
-  ];
-  if (isFinite(endeJahr) && isFinite(geb))
-    marken.push({ a: endeJahr - geb, t: "erfasst: Betrachtung bis " + endeJahr,
-                  f: "var(--stark,#111)", s: 2.4 });
-  if (p.heimeintritt_ab != null && isFinite(geb))
-    marken.push({ a: Number(p.heimeintritt_ab) - geb, t: "Heimeintritt",
-                  f: "var(--gedaempft)", d: "2 3" });
-  if (p.spitex_aktiv && p.spitex_ab != null && isFinite(geb))
-    marken.push({ a: Number(p.spitex_ab) - geb, t: "Spitex", f: "var(--gedaempft)", d: "2 3" });
-
-  // Nur die Linien und die nackte Zahl in die Grafik. Die Benennung steht
-  // unten in der Legende: Sieben Marken liegen hier auf fünfzehn Jahren
-  // beieinander - ausgeschriebene Beschriftungen an der Linie überdecken
-  // sich und sind dann gar nicht mehr zu lesen.
-  marken.sort((u, v2) => u.a - v2.a);
-  const sichtbar = marken.filter(m => m.a > a0 && m.a < a1);
-  let letztesX = -999, reihe = 0;
-  for (const m of sichtbar) {
-    const X = x(m.a);
-    mk("line", { x1: X, x2: X, y1: O, y2: O + HK + LU + HV, stroke: m.f,
-                 "stroke-width": m.s || 1.4, "stroke-dasharray": m.d || "" });
-    // Zwei Zeilen im Wechsel, sobald die Zahlen zu dicht stehen
-    reihe = (X - letztesX < 34) ? (reihe + 1) % 2 : 0;
-    letztesX = X;
-    mk("text", { x: X, y: O + 13 + reihe * 15, "text-anchor": "middle",
-                 "font-size": 11, fill: m.f, "font-weight": 700 },
-       m.a.toFixed(1));
+  // Die Linien selbst; die Zahlen dazu stehen oberhalb des Rahmens (siehe
+  // oben, «Zahlenband»). In der Fläche überdeckten sie die Kurve.
+  for (const z of markenReihen) {
+    mk("line", { x1: z.X, x2: z.X, y1: O, y2: O + HK + LU + HV, stroke: z.m.f,
+                 "stroke-width": z.m.s || 1.4, "stroke-dasharray": z.m.d || "" });
+    mk("text", { x: z.X, y: O - 6 - z.reihe * ZEILE, "text-anchor": "middle",
+                 "font-size": 11, fill: z.m.f, "font-weight": 700 },
+       z.m.a.toFixed(1));
   }
 
   mk("text", { x: L, y: O + HK + LU - 8, "font-size": 12, fill: "var(--gedaempft)" },
      "Verteilung des Sterbealters (Anteil, der in diesem Altersjahr stirbt)");
-  mk("text", { x: L, y: O - 4, "font-size": 12, fill: "var(--gedaempft)" },
+  // Die Überschrift steht über dem Zahlenband, nicht darin.
+  mk("text", { x: L, y: 8 + OTITEL - 5, "font-size": 12, fill: "var(--gedaempft)" },
      "Anteil der heute " + a0 + "-Jährigen, der dieses Alter erreicht");
 
   w.appendChild(sv);
@@ -31433,30 +31927,38 @@ function sterbeGrafik(p, gross) {
   }
 
   // ---- Erklärung -------------------------------------------------------
+  // Auf dem ganzen Bildschirm steht der Text in Spalten. Einspaltig über die
+  // volle Breite wäre die Zeile rund 230 Zeichen lang - zu lang zum Lesen -
+  // und der Block so hoch, dass die Grafik dafür hätte weichen müssen. Jeder
+  // Absatz bleibt dabei in einer Spalte («break-inside»).
   const q = el("div");
-  q.style.cssText = "font-size:12px;color:var(--gedaempft);margin:8px 0 0";
-  q.innerHTML =
+  q.style.cssText = "font-size:12px;color:var(--gedaempft);margin:8px 0 0"
+    + (gross ? ";column-width:440px;column-gap:26px" : "");
+  const absaetze = [
     "<strong>Gerechnet für " + (g === "f" ? "eine Frau" : "einen Mann")
     + " von heute " + a0 + " Jahren</strong> im Jahr " + jetzt + ", auf Grundlage "
     + "der " + STERBETAFEL.quelle + ". Die gestrichelte blasse Linie ist "
     + (andere === "f" ? "eine Frau" : "ein Mann") + " gleichen Alters — zum "
-    + "Vergleich.<br>"
-    + "<strong>Die beiden Bilder zeigen dasselbe von zwei Seiten.</strong> Oben "
+    + "Vergleich.",
+    "<strong>Die beiden Bilder zeigen dasselbe von zwei Seiten.</strong> Oben "
     + "der Anteil, der ein Alter noch erreicht; unten der Anteil, der in genau "
     + "diesem Altersjahr stirbt. Die Marken liegen in beiden an derselben "
-    + "Stelle.<br>"
-    + "<strong>Warum der Median über dem Mittelwert liegt.</strong> Die "
+    + "Stelle.",
+    "<strong>Warum der Median über dem Mittelwert liegt.</strong> Die "
     + "Verteilung ist in diesem Alter linksschief: Wenige sterben früh, die "
     + "meisten in einem schmalen Band. Der Mittelwert wird von den frühen "
-    + "Todesfällen nach unten gezogen, der Median nicht.<br>"
-    + "<strong>Was eingerechnet ist:</strong> Abnahme der Sterblichkeit "
+    + "Todesfällen nach unten gezogen, der Median nicht.",
+    "<strong>Was eingerechnet ist:</strong> Abnahme der Sterblichkeit "
     + proz(Number(le.verbesserung) || 0) + " je Jahr"
     + (faktor !== 1 ? ", Rauchfaktor " + proz(faktor) + " des Durchschnitts" : "")
     + ". Ohne beides läge der Mittelwert bei " + rRein.mittelAlter.toFixed(1)
-    + " statt " + r.mittelAlter.toFixed(1) + " Jahren.<br>"
-    + "<strong>Massgebend für die Planung</strong> ist nicht der Mittelwert, "
+    + " statt " + r.mittelAlter.toFixed(1) + " Jahren.",
+    "<strong>Massgebend für die Planung</strong> ist nicht der Mittelwert, "
     + "sondern das obere Zehntel: Es tritt mit zehn Prozent Wahrscheinlichkeit "
-    + "ein, und genau dieser Fall bestimmt, wie lange das Kapital reichen muss.";
+    + "ein, und genau dieser Fall bestimmt, wie lange das Kapital reichen muss.",
+  ];
+  q.innerHTML = absaetze
+    .map(t => '<p style="margin:0 0 6px;break-inside:avoid">' + t + "</p>").join("");
   w.appendChild(q);
   return w;
 }
@@ -31469,6 +31971,29 @@ let sterbeGross = true;
 function sterbeFensterOeffnen(knopf, p) {
   teuerungFensterSchliessen();
   const huelle = el("div");
+  // Grafik, Legende und Erläuterung gehören auf eine Seite. Wie hoch Legende
+  // und Text ausfallen, hängt von der Zahl der Marken und von der Breite des
+  // Fensters ab - das lässt sich nicht vorausberechnen, also wird gemessen:
+  // Was über die Höhe der Karte hinausragt, wird der Zeichenfläche an Höhe
+  // genommen; die Breite folgt dem festen Seitenverhältnis der Grafik. Eine
+  // Untergrenze von 260 Punkten verhindert, dass sie bei einem sehr flachen
+  // Fenster auf nichts zusammenfällt - dann wird wieder gerollt.
+  const MIN_HOEHE = 300;
+  let mass = null, runden = 0;
+  const einpassen = () => {
+    const k = huelle.firstElementChild;
+    const sv = k && k.querySelector("svg");
+    if (!sv || !sv.dataset.vh || runden >= 4) return;
+    const brIst = Number(sv.dataset.vb) || 1, hoIst = Number(sv.dataset.vh) || 1;
+    const ueber = k.scrollHeight - k.clientHeight;
+    const brSoll = Math.max(520, Math.round(k.clientWidth - 4));
+    const hoSoll = Math.max(MIN_HOEHE, hoIst - ueber);
+    if (ueber <= 1 && Math.abs(brSoll - brIst) <= 2) return;
+    if (Math.abs(brSoll - brIst) <= 2 && Math.abs(hoSoll - hoIst) <= 1) return;
+    runden++;
+    mass = { br: brSoll, ho: hoSoll };
+    bauen();
+  };
   const bauen = () => {
     huelle.innerHTML = "";
     if (sterbeGross) {
@@ -31494,7 +32019,8 @@ function sterbeFensterOeffnen(knopf, p) {
       sterbeGross ? "Kleiner anzeigen" : "Ganzer Bildschirm");
     kl.type = "button"; kl.style.marginLeft = "auto";
     kl.addEventListener("click", e => {
-      e.stopPropagation(); sterbeGross = !sterbeGross; bauen();
+      e.stopPropagation(); sterbeGross = !sterbeGross;
+      mass = null; runden = 0; bauen();
     });
     kopf.appendChild(kl);
     const zu = el("button", "knopf klein", "Schliessen");
@@ -31502,8 +32028,10 @@ function sterbeFensterOeffnen(knopf, p) {
     zu.addEventListener("click", teuerungFensterSchliessen);
     kopf.appendChild(zu);
     k.appendChild(kopf);
-    k.appendChild(sterbeGrafik(p, sterbeGross));
+    k.appendChild(sterbeGrafik(p, sterbeGross, mass));
     huelle.appendChild(k);
+    // Erst messen, wenn die Karte im Dokument steht und gezeichnet ist.
+    if (huelle.isConnected) requestAnimationFrame(einpassen);
   };
   bauen();
   // Ein Klick neben die Karte schliesst das Fenster.
@@ -31512,6 +32040,14 @@ function sterbeFensterOeffnen(knopf, p) {
   });
   document.body.appendChild(huelle);
   teuerungFenster = huelle;
+  requestAnimationFrame(einpassen);
+  // Ändert sich die Fenstergrösse, wird neu aufgebaut und neu eingepasst.
+  // Der Horcher entfernt sich selbst, sobald das Fenster geschlossen ist.
+  const beiGroesse = () => {
+    if (!huelle.isConnected) { window.removeEventListener("resize", beiGroesse); return; }
+    mass = null; runden = 0; bauen();
+  };
+  window.addEventListener("resize", beiGroesse);
 }
 
 // Knopf neben dem Feld «Betrachtung bis». Beschriftet und nicht als Zeichen:
@@ -32698,9 +33234,19 @@ function auswahlbreitenSetzen(wurzel) {
     // tatsaechliche Satzbreite des Browsers nicht auf das Pixel genau, und ein
     // zu knapp bemessenes Feld schneidet den Text ab.
     noetig = Math.ceil(noetig * 1.1) + 46;
-    // Untergrenze ist die übliche Spaltenbreite, Obergrenze lässt der
-    // Beschriftung links genug Platz.
-    const breite = Math.min(380, Math.max(146, noetig));
+    // Unterhalb der Umbruchschwelle der Container-Abfrage (620 Punkte
+    // Kartenbreite) steht die Beschriftung auf einer eigenen Zeile und das
+    // Auswahlfeld darf die ganze Breite nutzen. Ein hier gesetztes Raster
+    // würde das aushebeln: Es ist ein Inline-Stil und schlägt jede Regel im
+    // Stilblatt. Genau so entstand der Fall «4px 371px 52px» — vier Punkte
+    // für die Beschriftung, die dann senkrecht stand.
+    const platz = Math.round(zeile.getBoundingClientRect().width || 0);
+    if (platz && platz < 620) { zeile.style.gridTemplateColumns = ""; return; }
+    // Untergrenze ist die übliche Spaltenbreite. Die Obergrenze richtet sich
+    // nach dem vorhandenen Platz: Der Beschriftung bleiben mindestens 220
+    // Punkte, sonst wird sie zusammengedrückt.
+    const obergrenze = platz ? Math.max(146, Math.min(380, platz - 220)) : 380;
+    const breite = Math.min(obergrenze, Math.max(146, noetig));
     // Im Feldblock steht das Eingabefeld dicht bei seiner Beschriftung; die
     // linke Spalte waechst dort nicht ueber die ganze Breite.
     const links = zeile.parentElement && zeile.parentElement.classList.contains("feldblock")
@@ -33270,8 +33816,7 @@ function exportFeldZeigen(inhalt, name, grund) {
   reihe.appendChild(kop); reihe.appendChild(zu);
   k.appendChild(reihe);
   w.appendChild(k);
-  scrollFreigeben();
-  w.scrollIntoView({ block: "start", behavior: "smooth" });
+  blattAnfangZeigen(w);
   t.focus(); t.select();
 }
 
@@ -33300,6 +33845,43 @@ $("#btnSzenarioNeu").addEventListener("click", mitArbeit($("#btnSzenarioNeu"), (
   szenarienZeichnen();
 }));
 
+// Bringt ein Element an den oberen Rand des sichtbaren Bereichs - und zwar
+// unterhalb der festen Kopfleiste, nicht dahinter.
+//
+// Warum nicht «scrollIntoView» mit sanftem Rollen: Beim Seitenwechsel wird
+// der Inhalt der neuen Seite erst nach dem Umschalten gezeichnet. Wächst er
+// während des Rollens, bricht der Browser die Bewegung ab und verankert die
+// Ansicht am zuletzt sichtbaren Inhalt. Die Seite blieb dann mitten im Text
+// stehen statt am Seitenkopf. Hier wird darum hart gesetzt - und zwar
+// mehrfach, bis die Seite fertig gezeichnet ist.
+// nurWennNoetig  true: Das Fenster wird nur nachgeführt, wenn das Ziel sonst
+//                ausserhalb des sichtbaren Bereichs läge. Für Teile INNERHALB
+//                einer rollenden Karte: Dort genügt es, die Karte zu rollen;
+//                das Fenster zusätzlich zu verschieben risse die ganze Karte
+//                unnötig nach oben.
+function blattAnfangZeigen(ziel, nurWennNoetig) {
+  if (!ziel || !ziel.getBoundingClientRect) return;
+  scrollFreigeben();
+  // Zuerst der nächste eigene Rollbereich. Karten mit zwei Personen haben
+  // einen eigenen Rollbalken; der Kopf eines Kartenteils liegt darin. Nur
+  // das Fenster zu rollen half dort nicht — der Kopf blieb stehen, wo er
+  // war, und der Teil begann mitten im Text.
+  for (let v = ziel.parentElement; v && v !== document.body; v = v.parentElement) {
+    const st = getComputedStyle(v);
+    if (!/(auto|scroll)/.test(st.overflowY)) continue;
+    if (v.scrollHeight <= v.clientHeight + 2) continue;
+    const rz = ziel.getBoundingClientRect(), rv = v.getBoundingClientRect();
+    v.scrollTop = Math.max(0, v.scrollTop + rz.top - rv.top - 6);
+    break;
+  }
+  const kopf = document.querySelector(".kopf");
+  const hoch = kopf ? Math.round(kopf.getBoundingClientRect().height) : 58;
+  const r = ziel.getBoundingClientRect();
+  if (nurWennNoetig && r.top >= hoch + 4 && r.top <= window.innerHeight - 60) return;
+  const y = window.scrollY + r.top - hoch - 10;
+  window.scrollTo({ top: Math.max(0, y), behavior: "auto" });
+}
+
 function blattOeffnen(name) {
   const b = document.querySelector('.reiter[data-blatt="' + name + '"]');
   if (!b) return;
@@ -33316,9 +33898,17 @@ function blattOeffnen(name) {
   kopfzeilenAusrichten(blatt);
   auswahlbreitenSetzen(blatt);
   erlaeuterungenFalten(blatt);
-  requestAnimationFrame(() => { titelAusrichten(blatt); nachzeichnen(); });
-  scrollFreigeben();
-  blatt.scrollIntoView({ block: "start", behavior: "smooth" });
+  // Zuerst sofort, damit die neue Seite nicht erst auf halber Höhe erscheint,
+  // dann nach dem Zeichnen noch einmal: Vorher steht die endgültige Höhe der
+  // Karten nicht fest. Der späte Durchgang fängt Teile auf, die sich erst
+  // nach dem Zeichnen aufbauen (Szenarien, Auswertungen, Tabellen).
+  const kopfZeigen = () => blattAnfangZeigen(blatt);
+  kopfZeigen();
+  requestAnimationFrame(() => {
+    titelAusrichten(blatt); nachzeichnen();
+    requestAnimationFrame(kopfZeigen);
+  });
+  setTimeout(kopfZeigen, 160);
 }
 document.querySelectorAll(".reiter").forEach(b => {
   if (!b.dataset.blatt) return;          // «Was ist neu» hat ein eigenes Ziel
@@ -33332,14 +33922,14 @@ document.querySelectorAll(".reiter").forEach(b => {
   const b = document.getElementById("btnWasNeu");
   if (b) b.addEventListener("click", () => {
     blattOeffnen("grundlagen");
-    requestAnimationFrame(() => {
+    const hin = () => {
       for (const h of document.querySelectorAll("#blatt-grundlagen h3"))
         if (/^Änderungen in v/.test(h.textContent || "")) {
-          scrollFreigeben();
-          h.scrollIntoView({ block: "start", behavior: "smooth" });
-          return;
+          blattAnfangZeigen(h); return;
         }
-    });
+    };
+    requestAnimationFrame(hin);
+    setTimeout(hin, 200);
   });
 }
 
@@ -33357,11 +33947,80 @@ document.querySelectorAll(".reiter").forEach(b => {
     const z = document.getElementById("diagnose");
     if (z) { z.hidden = !z.hidden; if (!z.hidden) diagnoseZeigen(); }
   });
+  // ---- Kopfbereich der Startseite ein- und ausklappen ------------------
+  // Kennzahlen, Kapitalgrafik und der Vergleich der Zivilstände stehen über
+  // der Arbeitsfläche. Wer das Programm zum Erfassen benutzt, braucht sie
+  // nicht bei jedem Blick. Die Wahl wird im Browser gemerkt und überdauert
+  // das Schliessen des Programms; fehlt oder sperrt der Speicher, gilt
+  // einfach die Vorgabe «ausgeklappt».
+  {
+    const SCHLUESSEL = "kapitalverzehr.uebersicht";
+    let offen = true;
+    try { if (localStorage.getItem(SCHLUESSEL) === "zu") offen = false; }
+    catch (e) { /* kein Speicher verfügbar */ }
+    const block = document.getElementById("uebersichtBlock");
+    const knopf = document.getElementById("btnUebersicht");
+    const kurz = document.getElementById("uebersichtKurz");
+    const setzen = (auf, merken) => {
+      offen = !!auf;
+      if (block) block.hidden = !offen;
+      if (knopf) {
+        knopf.textContent = offen ? "Übersicht einklappen" : "Übersicht ausklappen";
+        knopf.setAttribute("aria-expanded", offen ? "true" : "false");
+      }
+      if (kurz) kurz.textContent = offen
+        ? "" : "Kennzahlen, Kapitalgrafik und Vergleich der Zivilstände sind eingeklappt.";
+      if (merken !== false)
+        try { localStorage.setItem(SCHLUESSEL, offen ? "auf" : "zu"); }
+        catch (e) { /* kein Speicher verfügbar */ }
+    };
+    setzen(offen, false);
+    if (knopf) knopf.addEventListener("click", () => {
+      setzen(!offen);
+      // Beim Ausklappen neu zeichnen: Grafik und Kennzahlen bemessen sich
+      // nach der sichtbaren Breite, und die war im eingeklappten Zustand
+      // null. Ohne das bliebe die Kapitalgrafik leer.
+      if (offen) { rechnen(); requestAnimationFrame(() => nachzeichnen()); }
+    });
+  }
+
   // Schmale Geräte: Eingabe gesperrt, bis der Nutzer sie ausdrücklich will.
-  document.body.classList.add("nurLesen");
+  //
+  // Bis v282 wurde die Sperre hier BEDINGUNGSLOS gesetzt — auf jedem Gerät
+  // und bei jeder Fensterbreite. Das Band, mit dem sie zurückzunehmen ist,
+  // erscheint aber erst unter 700 Punkten. Auf einem grossen Bildschirm
+  // waren damit sämtliche Eingabefelder und Auswahlmenüs gesperrt
+  // («pointer-events: none»), ohne sichtbaren Weg zurück: Ein Klick kam gar
+  // nicht am Feld an. Aufgefallen ist es am Menü «Verlauf übernehmen»; es
+  // betraf aber jedes Feld des Programms.
+  //
+  // Neu entscheidet die Fensterbreite, und sie wird bei jeder Änderung neu
+  // geprüft. Zusätzlich greift die Sperre im Stilblatt nur noch innerhalb
+  // der Media-Query — zwei voneinander unabhängige Absicherungen.
+  const LESEN_BIS = 700;
+  let eingabeFreigegeben = false;        // «Trotzdem erfassen» gewählt
+  const lesemodusPruefen = () => {
+    const schmal = (window.innerWidth || 1024) <= LESEN_BIS;
+    document.body.classList.toggle("nurLesen", schmal && !eingabeFreigegeben);
+  };
+  lesemodusPruefen();
+  // Bei einer Änderung der Fenstergrösse ändert sich auch die Kartenbreite.
+  // Die Breiten der Auswahlfelder werden sonst erst beim nächsten Rechnen
+  // nachgeführt - bis dahin stünde ein zu breites Menü in einer schmalen
+  // Karte und drückte die Beschriftung zusammen.
+  let groesseWartet = 0;
+  const beiGroesse = () => {
+    lesemodusPruefen();
+    clearTimeout(groesseWartet);
+    groesseWartet = setTimeout(() => {
+      try { auswahlbreitenSetzen(); } catch (e) { if (window.console) console.warn(e); }
+    }, 120);
+  };
+  window.addEventListener("resize", beiGroesse);
   const t = document.getElementById("btnTrotzdem");
   if (t) t.addEventListener("click", () => {
-    document.body.classList.remove("nurLesen");
+    eingabeFreigegeben = true;
+    lesemodusPruefen();
     melde("Eingabe freigegeben. Die Budgettabelle ist auf diesem Bildschirm "
       + "nur schwer zu treffen — für längere Erfassungen ist der grosse "
       + "Bildschirm der bessere Ort.");
@@ -34683,8 +35342,7 @@ function uebersichtZeichnen() {
             ? " · version.txt: " + versionGelesen
               + (versionGelesen === VERSION ? "" : " ⚠ weicht ab") : ""),
       klein: true },
-    { t: "Pflegeverlauf aus der Statistik", je: p =>
-        (PFLEGE_VERLAEUFE.find(v => v[0] === p.pflege_verlauf) || [, null])[1],
+    { t: "Pflegeverlauf aus der Statistik", je: p => pflegeVerlaufName(p),
       z: { blatt: "personen", feld: "^Verlauf übernehmen" }, klein: true },
     { t: "Heim- oder Spitalaufenthalt", je: p => p.heimeintritt_ab != null
         ? "ab " + p.heimeintritt_ab + ", " + chf(Number(p.heimkosten_pro_monat) || 0) + " CHF/Monat" : "keiner",
