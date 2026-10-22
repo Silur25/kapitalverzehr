@@ -568,6 +568,26 @@ table.zusatzkosten td:nth-child(5) select{min-width:0; width:100%}
 /* Felder mit langem Text im Eingabefeld - etwa ein Gemeindename - brauchen
    mehr Platz, sonst ist der Wert abgeschnitten. */
 .feld.weit{grid-template-columns:minmax(0,1fr) minmax(180px,300px) minmax(52px,max-content)}
+/* Zeilen mit zwei Eingabefeldern fuer dieselbe Groesse in zwei Bezugszeiten
+   (pro Tag und pro Monat, pro Woche und pro Monat). Jedes Feld traegt seine
+   eigene Einheit rechts daneben - eine Kopfzeile waere ueberfluessig. Reicht
+   die Breite nicht, rutschen die beiden Paare untereinander. */
+.feld.zweispaltig{
+  grid-template-columns:minmax(0,1fr) 104px minmax(66px,max-content)
+                                      104px minmax(74px,max-content);
+}
+.feldblock > .feld.zweispaltig{
+  grid-template-columns:minmax(0,200px) 104px minmax(66px,max-content)
+                                        104px minmax(74px,max-content);
+  justify-content:start;
+}
+@media (max-width:1100px){
+  .feld.zweispaltig,.feldblock > .feld.zweispaltig{
+    grid-template-columns:104px minmax(66px,max-content);
+    gap:4px 12px;
+  }
+  .feld.zweispaltig > label{grid-column:1 / -1}
+}
 .feld label{font-size:var(--s-text); min-width:0; overflow-wrap:anywhere}
 .feld input,.feld select{width:100%; min-width:0; border-color:var(--linie-stark)}
 /* Reicht die Spaltenbreite trotz Messung nicht, so endet der Text sichtbar
@@ -1088,7 +1108,7 @@ table.uebersicht tr.klein td.name{padding-left:22px}
 
   <div class="leistenfuss">
     <span>Budget- und Rentenberechnung &middot; Kanton St. Gallen, Gemeinde Gommiswald</span>
-    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v269</span></span>
+    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v272</span></span>
   </div>
   <p class="merker" id="fassungHinweis" style="margin:8px 0 0" hidden></p>
   <!-- Band fuer die Aktualisierung. Es erscheint nur, wenn es etwas zu melden
@@ -2230,6 +2250,142 @@ table.uebersicht tr.klein td.name{padding-left:22px}
           50 000 Franken verschieben; <strong>mittel</strong> zwischen etwa 5 000 und
           50 000 Franken; <strong>klein</strong> darunter. Die Einstufung ist eine
           Abschätzung, keine gerechnete Grösse.</p>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v272 — Heimkosten pro Tag und pro Monat, Vorgaben aus der Statistik</h3>
+        <ul class="liste">
+          <li><strong>Zweite Eingabespalte.</strong> Alle Taxen im Heimblock und die
+            Spitex-Stunden haben neu zwei Eingabefelder nebeneinander. Beide sind
+            beschreibbar; wird eines geändert, rechnet das Programm das andere sofort
+            nach. Betroffen sind:
+            <ul class="liste">
+              <li>Kosten pro Monat ↔ pro Tag (bei Erfassung als Gesamtbetrag)</li>
+              <li>Pflegetaxe pro Tag ↔ pro Monat</li>
+              <li>Beitrag der Krankenkasse pro Tag ↔ pro Monat</li>
+              <li>Betreuung und Hotellerie pro Tag ↔ pro Monat</li>
+              <li>Sonstige Ausgaben pro Monat ↔ pro Tag</li>
+              <li>Spitex, Pflege und Hauswirtschaft: Stunden pro Woche ↔ pro Monat</li>
+            </ul></li>
+          <li><strong>Umgerechnet wird kalendergenau</strong> mit 365 ⁄ 12 = 30.4167 Tagen
+            und 52 ⁄ 12 = 4.3333 Wochen je Monat. Mit dem runden Monat zu 30 Tagen wiche
+            der angezeigte Monatswert um 1.4 % vom gerechneten Jahreswert ab. Gespeichert
+            wird je Position nur <em>ein</em> Wert; der zweite wird daraus berechnet und
+            kann deshalb nicht davon abweichen.</li>
+          <li><strong>Neues Menü «Vorgabe übernehmen»</strong> im Heimblock mit vier
+            Vorgaben: Kanton Zürich und Kanton St. Gallen, je mittlerer und hoher
+            Standard. Die Auswahl schreibt die Felder einmalig; danach bleibt jeder Wert
+            überschreibbar, und jede Änderung von Hand setzt das Menü auf «eigene
+            Eingabe» zurück. Unter dem Menü steht, woher die Zahlen stammen.</li>
+          <li><strong>Grundlage der Vorgaben.</strong> Gesamtkosten je Pflegetag nach der
+            Statistik der sozialmedizinischen Institutionen (SOMED) 2022 des BFS: Zürich
+            386, St. Gallen 286, Schweiz 333 Franken. Aufteilung nach dem
+            Curaviva-Faktenblatt 2022: Pflege 43.07 %, Pension und Hotellerie 40.78 %,
+            Betreuung 14.58 %, Übriges 1.59 %. Sämtliche Werte stehen im Reiter Steuern
+            und sind einstellbar.</li>
+          <li><strong>Drei Annahmen, ausdrücklich gekennzeichnet:</strong>
+            <ul class="liste">
+              <li>Die schweizerischen Kostenanteile werden unverändert auf die kantonalen
+                Totale angewendet — kantonale Aufteilungen publiziert das BFS nicht.</li>
+              <li>Die beiden Quellen haben leicht verschiedene Bezugsgrössen (BFS 333
+                gegenüber Curaviva 343.10 für die Schweiz, rund 3 % Abweichung).</li>
+              <li>Eine amtliche Einteilung in «mittleren» und «hohen» Standard gibt es
+                nicht. «Hoch» ist der kantonale Mittelwert plus einem Zuschlag von 30 %,
+                und dieser wirkt nur auf Betreuung, Hotellerie und Übriges: Die
+                Pflegetaxe richtet sich nach der Pflegestufe und dem kantonalen
+                Höchstansatz (Art. 2 und 11 der Verordnung sGS 331.21), nicht nach der
+                Zimmerausstattung. Der Zuschlag ist im Reiter Steuern einstellbar.</li>
+            </ul></li>
+          <li><strong>Beim Gesamtbetrag steht nur der selbst getragene Teil.</strong> Die
+            BFS-Zahl sind die Betriebskosten der Institution, nicht das, was ein Bewohner
+            bezahlt. Von der Pflegetaxe trägt die pflegebedürftige Person nach Art. 25a
+            Abs. 5 KVG und Art. 7a KLV nur den Eigenanteil von höchstens 23.00 CHF pro
+            Tag. Die Vorgabe setzt deshalb Hotellerie + Betreuung + Übriges +
+            Eigenanteil ein: Zürich 7'386, St. Gallen 5'654 CHF im Monat bei mittlerem
+            Standard. Zum Vergleich: SRF nannte im November 2024 für Zürich rund 7'600
+            Franken an Taxen.</li>
+          <li><strong>Umstellen auf getrennte Erfassung rechnet neu sauber um.</strong>
+            Bisher wurde der Gesamtbetrag im Verhältnis 35 ⁄ 65 aufgeteilt. Das war
+            falsch, weil der Gesamtbetrag den <em>Eigenanteil</em> an der Pflege enthält,
+            das getrennte Feld aber die <em>volle</em> Pflegetaxe verlangt. Neu wird
+            zuerst der Eigenanteil abgezogen und die volle Pflegetaxe aus dem Verhältnis
+            der Kostenanteile geschätzt.</li>
+          <li><strong>Rappenbeträge werden nicht mehr gerundet.</strong> Im
+            Erläuterungstext standen 10 CHF je 20 Minuten und 115 CHF pro Tag statt
+            9.60 und 115.20 — die Zahl stimmte dann nicht mehr mit der zitierten
+            Rechtsgrundlage überein.</li>
+          <li><strong>Hinweis zu bestehenden Eingaben.</strong> Ein Wert von rund 139 CHF
+            bei «Betreuung und Hotellerie pro Tag» entspricht genau der schweizerischen
+            Pension und Hotellerie von 139.93 — die Betreuung von rund 50 CHF fehlt dann.
+            Für St. Gallen sind rund 158 CHF einzusetzen, am einfachsten über das neue
+            Menü.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v271 — Zusatzkosten A und B: wer sie trägt</h3>
+        <ul class="liste">
+          <li><strong>Offene Frage geschlossen.</strong> In der Zusammenstellung der
+            Daten stand bei den Zusatzkosten A und B nur der Betrag — nicht, bei welcher
+            Person sie in die Rechnung eingehen. Das war aus der Anzeige nicht
+            abzuleiten, obwohl es den Kapitalbedarf der beiden Personen verschieden
+            belastet.</li>
+          <li><strong>Neu nennt jede der beiden Zeilen den Träger</strong>, zum Beispiel
+            «trägt Person 2 — Gartenunterhalt 500 CHF/Mt × 12 = 6'000 CHF». Der
+            Hinweistext der Zelle erklärt die Regel dahinter.</li>
+          <li><strong>Die Regel, die schon bisher galt:</strong>
+            <ul class="liste">
+              <li><strong>Block A, ab Heimaufenthalt:</strong> Diese Kosten trägt die
+                Person, die <em>nicht</em> ins Heim geht. Sie führt den Haushalt weiter
+                und muss einkaufen, was die andere bisher selbst besorgt hat.</li>
+              <li><strong>Block B, ab Todesfall:</strong> Diese Kosten trägt die
+                <em>überlebende</em> Person.</li>
+              <li>Ab dem Todesjahr gilt Block B und ersetzt Block A — beide werden nie
+                zugleich gerechnet.</li>
+            </ul></li>
+          <li><strong>Auch im Eingabeblock</strong> im Reiter Personen steht nun der Name
+            statt «die andere Person». Tragen die beiden Blöcke verschiedene Personen,
+            erscheint zusätzlich ein Hinweis darauf — das ist der Fall, sobald die Person
+            im Heim nicht jene ist, die zuerst verstirbt.</li>
+          <li><strong>Keine Änderung der Rechnung.</strong> Die Zuordnung war im
+            Rechenkern bereits so; sie wird nur sichtbar gemacht.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v270 — Aufteilung der Heimkosten direkt bei der Eingabe</h3>
+        <ul class="liste">
+          <li><strong>Neu steht unter den Eingabefeldern eine Tabelle</strong>, die
+            unmittelbar zeigt, was aus den eingegebenen Tagestaxen wird — und zwar
+            <strong>pro Monat und pro Jahr</strong>, mit dem Anteil in Prozent:
+            <ul class="liste">
+              <li>Gesamtkosten des Heims</li>
+              <li>was die Person selbst trägt, aufgeteilt in Pflege, Betreuung und
+                Hotellerie, sonstige Ausgaben und — falls zutreffend — die für die
+                andere Person übernommenen Kosten</li>
+              <li>was die Krankenversicherung zahlt</li>
+              <li>was Gemeinde und Kanton zahlen</li>
+              <li>was die andere Person übernimmt, wenn sie die sonstigen Ausgaben
+                trägt</li>
+              <li>die Hilflosenentschädigung als Einnahme und die verbleibende Belastung
+                nach Abzug</li>
+            </ul></li>
+          <li><strong>Gemessen</strong> bei 75 CHF Pflegetaxe, 139 CHF Betreuung und
+            500 CHF sonstigen Ausgaben:
+            <ul class="liste">
+              <li>Gesamtkosten 7’009 CHF pro Monat</li>
+              <li>davon selbst 5’428 CHF — 700 Pflege, 4’228 Betreuung und
+                Hotellerie, 500 Sonstiges</li>
+              <li>Krankenversicherung 1’168 CHF, Gemeinde und Kanton 414 CHF</li>
+              <li>abzüglich 739 CHF Hilflosenentschädigung bleiben 4’689 CHF</li>
+            </ul>
+            Die Person trägt also 77 % der Gesamtkosten, die Krankenversicherung 17 %,
+            die öffentliche Hand 6 %.</li>
+          <li><strong>Hinweis zur Rechenweise:</strong> Die Monatswerte sind der
+            Jahresbetrag geteilt durch zwölf — die Taxen fallen tagweise an, nicht
+            monatlich. Die Tabelle zeigt das erste Jahr mit Heimkosten; spätere Jahre
+            weichen durch Teuerung und eine höhere Pflegestufe ab. Die ganze Reihe steht
+            im Reiter Kapitalverzehr und im Szenario 8.</li>
+          <li><strong>Keine Änderung der Rechnung.</strong> Betroffen ist allein die
+            Darstellung.</li>
+        </ul>
       </div>
       <div class="karte breit">
         <h3>Änderungen in v269 — Zusatzversicherung, Teuerungsrechner und Prämienteuerung</h3>
@@ -13182,8 +13338,25 @@ const F0 = new Intl.NumberFormat("de-CH", { maximumFractionDigits: 0 });
 const F2 = new Intl.NumberFormat("de-CH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const F1 = new Intl.NumberFormat("de-CH", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 const chf = v => (v == null || !isFinite(v)) ? "–" : F0.format(Math.round(v));
+// Betraege mit Rappen. Tagestaxen und Stundenansaetze der Pflegefinanzierung
+// sind auf den Rappen genau festgelegt (9.60 je 20 Minuten, 115.20 pro Tag,
+// 7.70 Beteiligung, 52.60 Kassenbeitrag). Mit chf() gerundet erschienen sie
+// im Erlaeuterungstext als 10, 115, 8 und 53 - die Zahl stimmte dann nicht
+// mehr mit der zitierten Rechtsgrundlage ueberein.
+const chfR = v => (v == null || !isFinite(v)) ? "–" : F2.format(v);
 // Prozentwerte immer mit zwei Nachkommastellen
 const proz = v => F2.format(v * 100) + " %";
+
+// ---------------------------------------------- Umrechnung Tag/Woche <-> Monat
+// Der Rechenkern multipliziert Tagestaxen mit der effektiven Tageszahl des
+// Jahres. Fuer die Anzeige eines Monatswertes ist deshalb das kalendergenaue
+// Zwoelftel des Jahres massgebend und nicht der runde Monat zu 30 Tagen:
+//   365 / 12 = 30.4167 Tage je Monat
+// Mit 30 Tagen wiche der angezeigte Monatswert um 1.4 Prozent vom gerechneten
+// Jahreswert ab. Curaviva rechnet in seinen Faktenblaettern mit 30 - das ist
+// Darstellung, nicht Rechnung.
+const TAGE_JE_MONAT = 365 / 12;          // 30.416666…
+const WOCHEN_JE_MONAT = 52 / 12;         // 4.333333…
 
 let cfg = null;   // wird beim Start gesetzt, nach der Umstellung
 const TARIFE = DATEN.tarife;
@@ -13929,11 +14102,45 @@ function umstellen(k) {
       stat_eintrittsalter: 82,
       stat_dauer_jahre: 2.1,
       stat_spitex_jahre: 2,
+      // ---- Vorgaben fuer die Heimkosten aus der Statistik ----------------
+      // BFS, Statistik der sozialmedizinischen Institutionen (SOMED) 2022,
+      // Gesamtkosten je Pflegetag: Zuerich 386, St. Gallen 286, Schweiz 333
+      // Franken. Zum Vergleich Glarus 242 (tiefster) und Genf 425 (hoechster
+      // Kanton). Es sind die Betriebskosten der Institution, nicht das, was
+      // ein Bewohner bezahlt.
+      heim_bfs_zh: 386,
+      heim_bfs_sg: 286,
+      // Aufteilung dieser Gesamtkosten nach dem Curaviva-Faktenblatt 2022
+      // (Schweiz, Total 343.10 Franken je Tag): Pension und Hotellerie
+      // 139.93 (40.78 %), Pflege 147.79 (43.07 %), Betreuung 50.03 (14.58 %),
+      // Uebrige 5.35 (1.59 %).
+      // ANNAHME: Die Anteile werden unveraendert auf die kantonalen Totale
+      // angewendet. Das unterstellt, die Kostenstruktur sei in Zuerich und
+      // St. Gallen gleich wie im Landesmittel. Kantonale Aufteilungen
+      // publiziert das BFS nicht. Die Bezugsgroessen weichen zudem um rund
+      // 3 % voneinander ab (BFS 333 gegenueber Curaviva 343.10).
+      heim_anteil_pflege: 0.4307,
+      heim_anteil_hotellerie: 0.4078,
+      heim_anteil_betreuung: 0.1458,
+      heim_anteil_uebrige: 0.0159,
+      // ANNAHME: Eine amtliche Einteilung in "mittleren" und "hohen" Standard
+      // gibt es nicht. "Mittel" ist der kantonale Mittelwert, "hoch" ein
+      // Zuschlag darauf. Der Zuschlag wirkt nur auf Betreuung, Hotellerie und
+      // Uebriges: Die Pflegetaxe richtet sich nach der Pflegestufe und dem
+      // kantonalen Hoechstansatz (Art. 2 und 11 der Verordnung sGS 331.21),
+      // nicht nach der Zimmerausstattung. Anhaltspunkt fuer die Hoehe: Die
+      // Spannweite zwischen den Kantonen betraegt rund 60 %, innerhalb eines
+      // Kantons ist sie kleiner.
+      heim_zuschlag_hoch: 0.30,
     }, k.pflege || {});
 
     // Felder je Person fuer Heim, Spitex und Hilflosenentschaedigung.
     for (const p of (k.personen || [])) {
       if (p.heim_kosten_art == null) p.heim_kosten_art = "gesamt";
+      // Welche Vorgabe aus der Statistik zuletzt uebernommen wurde. Leer
+      // heisst "eigene Eingabe"; der Wert dient nur der Nachvollziehbarkeit
+      // und wirkt nicht auf die Rechnung.
+      if (p.heim_vorgabe == null) p.heim_vorgabe = "";
       if (p.heim_pflegetaxe_pro_tag == null) p.heim_pflegetaxe_pro_tag = 0;
       if (p.heim_betreuung_pro_tag == null) p.heim_betreuung_pro_tag = 0;
       if (p.heim_sonstige_pro_monat == null) p.heim_sonstige_pro_monat = 0;
@@ -22816,6 +23023,60 @@ function lebenserwartungsblock(p, feld) {
   return w;
 }
 
+// ------------------------------------------- Vorgaben fuer die Heimkosten
+// Liefert zu einer Vorgabe (Kanton und Standard) die Werte, die in die
+// Eingabefelder geschrieben werden. Grundlage sind die kantonalen
+// Gesamtkosten je Pflegetag des BFS und die Aufteilung nach Curaviva; beides
+// steht im Reiter Steuern und ist dort ueberschreibbar.
+//
+// Zwei Ergebnisse, weil die Kosten auf zwei Arten erfasst werden koennen:
+//   getrennt   Pflegetaxe, Betreuung und Hotellerie, Sonstiges. Der Kern
+//              zieht davon selbst ab, was Krankenkasse und Gemeinde tragen.
+//   gesamt     Ein Monatsbetrag, den der Kern vollstaendig als selbst
+//              getragen behandelt. Hier darf NICHT der BFS-Wert stehen: Von
+//              der Pflegetaxe traegt die pflegebeduerftige Person nach
+//              Art. 25a Abs. 5 KVG und Art. 7a KLV nur den Eigenanteil, den
+//              Rest tragen Krankenversicherer und Gemeinde. Eingesetzt wird
+//              deshalb Hotellerie + Betreuung + Uebriges + Eigenanteil.
+const HEIM_VORGABEN = [
+  ["", "eigene Eingabe"],
+  ["zh_mittel", "Kanton Zürich, mittlerer Standard"],
+  ["zh_hoch", "Kanton Zürich, hoher Standard"],
+  ["sg_mittel", "Kanton St. Gallen, mittlerer Standard"],
+  ["sg_hoch", "Kanton St. Gallen, hoher Standard"],
+];
+
+function heimVorgabeWerte(schluessel) {
+  const pf = (cfg && cfg.pflege) || {};
+  const teile = String(schluessel || "").split("_");
+  const kanton = teile[0], standard = teile[1];
+  if (kanton !== "zh" && kanton !== "sg") return null;
+  const total = Number(kanton === "zh" ? pf.heim_bfs_zh : pf.heim_bfs_sg)
+    || (kanton === "zh" ? 386 : 286);
+  const aP = Number(pf.heim_anteil_pflege) || 0.4307;
+  const aH = Number(pf.heim_anteil_hotellerie) || 0.4078;
+  const aB = Number(pf.heim_anteil_betreuung) || 0.1458;
+  const aU = Number(pf.heim_anteil_uebrige) || 0.0159;
+  // Der Zuschlag wirkt nur auf die nicht geregelten Teile.
+  const z = (standard === "hoch")
+    ? 1 + (Number(pf.heim_zuschlag_hoch) || 0) : 1;
+  const pflegeTag = total * aP;
+  const betreuungTag = total * (aH + aB) * z;
+  const uebrigeTag = total * aU * z;
+  const eigenTag = Number(pf.beteiligung_heim_pro_tag) || 23;
+  // Auf fuenf Rappen runden: die Felder zeigen zwei Stellen, und eine
+  // Scheingenauigkeit von Zehntelsrappen waere hier nicht ehrlich.
+  const r5 = v => Math.round(v * 20) / 20;
+  return {
+    pflegetaxe_tag: r5(pflegeTag),
+    betreuung_tag: r5(betreuungTag),
+    sonstige_monat: Math.round(uebrigeTag * TAGE_JE_MONAT),
+    gesamt_monat: Math.round((betreuungTag + uebrigeTag + eigenTag) * TAGE_JE_MONAT),
+    total_tag: total,
+    name: (HEIM_VORGABEN.find(v => v[0] === schluessel) || [, schluessel])[1],
+  };
+}
+
 function personenZeichnen() {
   // Zwei Kapitel: die allgemeinen Angaben und der Heim- oder Spitalaufenthalt.
   // Jedes enthaelt je Person eine Karte; die Karten stehen nebeneinander.
@@ -22835,6 +23096,18 @@ function personenZeichnen() {
       const f = el("div", "feld");
       f.appendChild(el("label", null, etikett)); f.appendChild(kind);
       f.appendChild(el("span", "einheit" + (breit ? " breit" : ""), einheit || ""));
+      ziel.appendChild(f);
+    };
+    // Zwei Eingabefelder nebeneinander fuer dieselbe Groesse in zwei
+    // Bezugszeiten - etwa eine Tagestaxe und derselbe Betrag pro Monat.
+    // Gespeichert wird nur einer der beiden Werte; der andere wird bei jedem
+    // Neuzeichnen daraus berechnet. So koennen die beiden nicht auseinander
+    // laufen, und es ist gleichgueltig, in welches Feld geschrieben wird.
+    const feldZwei = (etikett, kind1, einheit1, kind2, einheit2) => {
+      const f = el("div", "feld zweispaltig");
+      f.appendChild(el("label", null, etikett));
+      f.appendChild(kind1); f.appendChild(el("span", "einheit", einheit1 || ""));
+      f.appendChild(kind2); f.appendChild(el("span", "einheit", einheit2 || ""));
       ziel.appendChild(f);
     };
     // Alter der Person im angegebenen Jahr, sofern das Geburtsjahr gesetzt ist
@@ -22982,23 +23255,111 @@ function personenZeichnen() {
         p.heim_kosten_art || "gesamt", x => {
           p.heim_kosten_art = x;
           // Beim Umstellen die Taxen aus dem Gesamtbetrag abschaetzen, damit
-          // die Felder nicht leer dastehen. Aufteilung nach dem Mittel:
-          // rund ein Drittel Pflege, zwei Drittel Betreuung und Hotellerie.
+          // die Felder nicht leer dastehen.
+          //
+          // Die beiden Erfassungsarten messen Verschiedenes, deshalb ist es
+          // keine blosse Aufteilung:
+          //   gesamt    was die Person selbst traegt - Hotellerie, Betreuung,
+          //             Uebriges und der Eigenanteil an der Pflege.
+          //   geteilt   die volle Pflegetaxe, von der Kasse und Gemeinde den
+          //             groesseren Teil tragen.
+          // Zuerst wird der Eigenanteil abgezogen; was bleibt, ist Betreuung
+          // und Hotellerie. Die volle Pflegetaxe wird daraus mit dem
+          // Verhaeltnis der Kostenanteile geschaetzt (Curaviva 2022:
+          // Pflege 43.07 % gegenueber Hotellerie und Betreuung 55.36 %).
           if (x === "geteilt" && !(Number(p.heim_pflegetaxe_pro_tag) > 0)) {
-            const tag = (Number(p.heimkosten_pro_monat) || 0) * 12 / 365;
-            p.heim_pflegetaxe_pro_tag = Math.round(tag * 0.35);
-            p.heim_betreuung_pro_tag = Math.round(tag * 0.65);
+            const pf0 = cfg.pflege || {};
+            const tag = (Number(p.heimkosten_pro_monat) || 0) / TAGE_JE_MONAT;
+            const eigen = Number(pf0.beteiligung_heim_pro_tag) || 23;
+            const bh = Math.max(0, tag - eigen);
+            const aP = Number(pf0.heim_anteil_pflege) || 0.4307;
+            const aHB = (Number(pf0.heim_anteil_hotellerie) || 0.4078)
+                      + (Number(pf0.heim_anteil_betreuung) || 0.1458);
+            p.heim_betreuung_pro_tag = Math.round(bh * 20) / 20;
+            p.heim_pflegetaxe_pro_tag = Math.round(bh * (aP / aHB) * 20) / 20;
           }
           rechnen();
         }), "");
 
+      // ---- Vorgabe aus der Statistik uebernehmen -------------------------
+      // Das Menue schreibt die Felder einmalig und springt danach auf
+      // "eigene Eingabe" zurueck, sobald ein Wert von Hand geaendert wird.
+      // Es ist ein Startpunkt, kein Zwang: jeder Wert bleibt ueberschreibbar.
+      {
+        const vg = heimVorgabeWerte(p.heim_vorgabe);
+        feld("Vorgabe übernehmen", wahlFeld(HEIM_VORGABEN, p.heim_vorgabe || "",
+          x => {
+            p.heim_vorgabe = x || "";
+            const w = heimVorgabeWerte(x);
+            if (w) {
+              if (p.heim_kosten_art === "geteilt") {
+                p.heim_pflegetaxe_pro_tag = w.pflegetaxe_tag;
+                p.heim_betreuung_pro_tag = w.betreuung_tag;
+                p.heim_sonstige_pro_monat = w.sonstige_monat;
+                // Der Kassenbeitrag wird aus der Pflegetaxe geschaetzt;
+                // eine eigene Vorgabe wuerde die Schaetzung ueberdecken.
+                p.heim_kassenbeitrag_pro_tag = null;
+              } else {
+                p.heimkosten_pro_monat = w.gesamt_monat;
+              }
+            }
+            rechnen();
+          }), "", true);
+        if (vg) {
+          const hv = el("p", "kleintext");
+          hv.innerHTML = "Übernommen aus <strong>" + vg.name + "</strong>: "
+            + "Gesamtkosten der Institution " + chfR(vg.total_tag) + " CHF je "
+            + "Pflegetag (BFS, SOMED 2022), aufgeteilt nach den Anteilen des "
+            + "Curaviva-Faktenblatts 2022. Die Werte sind überschreibbar; "
+            + "jede Änderung von Hand setzt das Menü auf «eigene Eingabe» "
+            + "zurück. Die Einteilung in mittleren und hohen Standard ist "
+            + "<em>keine amtliche Kategorie</em>, sondern ein Zuschlag von "
+            + proz(Number((cfg.pflege || {}).heim_zuschlag_hoch) || 0)
+            + " auf Betreuung, Hotellerie und Sonstiges — die Pflegetaxe "
+            + "richtet sich nach der Pflegestufe, nicht nach der Ausstattung.";
+          hv.style.cssText = "margin:2px 0 8px; color:var(--gedaempft)";
+          ziel.appendChild(hv);
+        }
+      }
+      // Jede Eingabe von Hand loest die Bindung an die Vorgabe.
+      const vorgabeLoesen = () => { p.heim_vorgabe = ""; };
+
       if (!geteilt) {
-        feld("Kosten pro Monat", zahlFeld(p.heimkosten_pro_monat || 0, x => { p.heimkosten_pro_monat = x; rechnen(); }, { grenze: { min: 0, max: 200000, weichMax: 50000 } }), "CHF");
+        feldZwei("Kosten",
+          zahlFeld(p.heimkosten_pro_monat || 0,
+            x => { p.heimkosten_pro_monat = x; vorgabeLoesen(); rechnen(); },
+            { grenze: { min: 0, max: 200000, weichMax: 50000 } }), "CHF/Monat",
+          zahlFeld((Number(p.heimkosten_pro_monat) || 0) / TAGE_JE_MONAT,
+            x => {
+              p.heimkosten_pro_monat = Math.round((x || 0) * TAGE_JE_MONAT);
+              vorgabeLoesen(); rechnen();
+            },
+            { dez: true, grenze: { min: 0, max: 6600, weichMax: 1650 } }), "CHF/Tag");
+        const ph = el("p", "kleintext");
+        ph.innerHTML = "Dieser Betrag wird <strong>vollständig als selbst "
+          + "getragen</strong> gerechnet. Er darf deshalb nicht den ganzen "
+          + "Pflegeanteil enthalten: Von der Pflegetaxe trägt die "
+          + "pflegebedürftige Person nach Art. 25a Abs. 5 KVG und Art. 7a KLV "
+          + "nur den Eigenanteil von höchstens "
+          + chfR(Number((cfg.pflege || {}).beteiligung_heim_pro_tag) || 23)
+          + " CHF pro Tag, den Rest tragen Krankenversicherer und Gemeinde. "
+          + "Wer die Aufteilung sehen will, stellt oben auf «getrennt nach "
+          + "Pflege, Betreuung und Sonstigem» um.<br>Umgerechnet wird mit "
+          + "365 ⁄ 12 = " + F2.format(TAGE_JE_MONAT) + " Tagen je Monat.";
+        ph.style.cssText = "margin:4px 0 0; color:var(--gedaempft)";
+        ziel.appendChild(ph);
       } else {
         const pf = cfg.pflege || {};
-        feld("Pflegetaxe pro Tag", zahlFeld(p.heim_pflegetaxe_pro_tag || 0,
-          x => { p.heim_pflegetaxe_pro_tag = x || 0; rechnen(); },
-          { dez: true, grenze: { min: 0, max: 500, weichMax: 300 } }), "CHF");
+        feldZwei("Pflegetaxe",
+          zahlFeld(p.heim_pflegetaxe_pro_tag || 0,
+            x => { p.heim_pflegetaxe_pro_tag = x || 0; vorgabeLoesen(); rechnen(); },
+            { dez: true, grenze: { min: 0, max: 500, weichMax: 300 } }), "CHF/Tag",
+          zahlFeld((Number(p.heim_pflegetaxe_pro_tag) || 0) * TAGE_JE_MONAT,
+            x => {
+              p.heim_pflegetaxe_pro_tag = (x || 0) / TAGE_JE_MONAT;
+              vorgabeLoesen(); rechnen();
+            },
+            { grenze: { min: 0, max: 15200, weichMax: 9125 } }), "CHF/Monat");
         // Beitrag der Krankenversicherung. Er steht auf der Heimrechnung;
         // fehlt die Angabe, wird er aus der Pflegetaxe geschaetzt.
         {
@@ -23012,18 +23373,40 @@ function personenZeichnen() {
               Math.round(1 + (t - u) / Math.max(1, o - u) * (n - 1))));
             return Math.min(t, stufe * (Number(pf.kassenbeitrag_je_stufe) || 9.6));
           })();
-          feld("davon Beitrag der Krankenkasse pro Tag",
+          feldZwei("davon Beitrag der Krankenkasse",
             zahlFeld(p.heim_kassenbeitrag_pro_tag ?? null,
               x => { p.heim_kassenbeitrag_pro_tag = x; rechnen(); },
-              { dez: true, leerErlaubt: true, vorgabe: schaetz,
-                vorgabeHinweis: "Leer: geschätzt aus der Pflegetaxe." }), "CHF");
+              { dez: true, leerErlaubt: true, vorgabe: F2.format(schaetz),
+                vorgabeHinweis: "Leer: geschätzt aus der Pflegetaxe." }), "CHF/Tag",
+            zahlFeld(p.heim_kassenbeitrag_pro_tag == null ? null
+              : Number(p.heim_kassenbeitrag_pro_tag) * TAGE_JE_MONAT,
+              x => {
+                p.heim_kassenbeitrag_pro_tag = (x == null) ? null : x / TAGE_JE_MONAT;
+                rechnen();
+              },
+              { leerErlaubt: true, vorgabe: F0.format(Math.round(schaetz * TAGE_JE_MONAT)),
+                vorgabeHinweis: "Leer: geschätzt aus der Pflegetaxe." }), "CHF/Monat");
         }
-        feld("Betreuung und Hotellerie pro Tag", zahlFeld(p.heim_betreuung_pro_tag || 0,
-          x => { p.heim_betreuung_pro_tag = x || 0; rechnen(); },
-          { dez: true, grenze: { min: 0, max: 500, weichMax: 300 } }), "CHF");
-        feld("Sonstige Ausgaben pro Monat", zahlFeld(p.heim_sonstige_pro_monat || 0,
-          x => { p.heim_sonstige_pro_monat = x || 0; rechnen(); },
-          { grenze: { min: 0, max: 50000, weichMax: 10000 } }), "CHF");
+        feldZwei("Betreuung und Hotellerie",
+          zahlFeld(p.heim_betreuung_pro_tag || 0,
+            x => { p.heim_betreuung_pro_tag = x || 0; vorgabeLoesen(); rechnen(); },
+            { dez: true, grenze: { min: 0, max: 500, weichMax: 300 } }), "CHF/Tag",
+          zahlFeld((Number(p.heim_betreuung_pro_tag) || 0) * TAGE_JE_MONAT,
+            x => {
+              p.heim_betreuung_pro_tag = (x || 0) / TAGE_JE_MONAT;
+              vorgabeLoesen(); rechnen();
+            },
+            { grenze: { min: 0, max: 15200, weichMax: 9125 } }), "CHF/Monat");
+        feldZwei("Sonstige Ausgaben",
+          zahlFeld(p.heim_sonstige_pro_monat || 0,
+            x => { p.heim_sonstige_pro_monat = x || 0; vorgabeLoesen(); rechnen(); },
+            { grenze: { min: 0, max: 50000, weichMax: 10000 } }), "CHF/Monat",
+          zahlFeld((Number(p.heim_sonstige_pro_monat) || 0) / TAGE_JE_MONAT,
+            x => {
+              p.heim_sonstige_pro_monat = (x || 0) * TAGE_JE_MONAT;
+              vorgabeLoesen(); rechnen();
+            },
+            { dez: true, grenze: { min: 0, max: 1650, weichMax: 330 } }), "CHF/Tag");
         const a3 = (cfg.personen || []).find(x => x.id !== p.id);
         const nameA = a3 ? (a3.bezeichnung || a3.id) : "die andere Person";
         feld("Sonstige Ausgaben trägt", wahlFeld(
@@ -23033,6 +23416,85 @@ function personenZeichnen() {
           p.heim_sonstige_traeger || "selbst",
           x => { p.heim_sonstige_traeger = x; rechnen(); }), "");
 
+        // ---- Was daraus wird: monatlich und jährlich, je Träger ---------
+        // Die Eingaben sind Tagestaxen. Was daraus pro Monat wird und wer
+        // welchen Teil traegt, soll nicht erst im Fliesstext stehen - es ist
+        // die Zahl, um die es geht.
+        {
+          const zH2 = rechenzeilen(p.id).find(z => z.heimTeile && z.heimTeile.gesamt > 0);
+          if (zH2) {
+            const t = zH2.heimTeile;
+            const he2 = zH2.hilflosenentschaedigung || 0;
+            const selbst = zH2.heimkosten || 0;
+            const rahmen = el("div", "tabellenrahmen");
+            rahmen.style.margin = "10px 0 0";
+            const tb = document.createElement("table");
+            tb.className = "dicht";
+            const kz = tb.createTHead().insertRow();
+            ["Im Jahr " + zH2.jahr, "CHF pro Monat", "CHF pro Jahr", "Anteil"]
+              .forEach((x, i) => kz.appendChild(el("th", i === 0 ? "links" : null, x)));
+            const kb = tb.createTBody();
+            const zeile2 = (titel, wert, opt) => {
+              const r = kb.insertRow();
+              if (opt && opt.stark) r.className = "ergebnis";
+              const c0 = el("td", "txt"); c0.textContent = titel;
+              if (opt && opt.einzug) c0.style.paddingLeft = "22px";
+              r.appendChild(c0);
+              const mono = (txt, kl) => { const c = el("td", "rechts mono" + (kl ? " " + kl : ""));
+                c.style.padding = "4px 10px";
+                if (opt && opt.stark) c.style.fontWeight = "700";
+                c.textContent = txt; return c; };
+              r.appendChild(mono(chf(wert / 12)));
+              r.appendChild(mono(chf(wert)));
+              r.appendChild(mono(t.gesamt > 0 && !(opt && opt.ohneAnteil)
+                ? proz(wert / t.gesamt) : "", opt && opt.klasse));
+              return r;
+            };
+            zeile2("Gesamtkosten des Heims", t.gesamt, { stark: true });
+            zeile2((p.bezeichnung || p.id) + " trägt selbst", selbst, { stark: true });
+            zeile2("davon Pflege", t.pflege, { einzug: true });
+            zeile2("davon Betreuung und Hotellerie", t.betreuung, { einzug: true });
+            if ((zH2.heimSonstigeSelbst || 0) > 0)
+              zeile2("davon sonstige Ausgaben", zH2.heimSonstigeSelbst, { einzug: true });
+            if ((zH2.heimSonstigeFuerAndere || 0) > 0)
+              zeile2("davon übernommen für die andere Person",
+                zH2.heimSonstigeFuerAndere, { einzug: true });
+            zeile2("Krankenversicherung zahlt", t.pflegeKasse, { klasse: "gruen" });
+            zeile2("Gemeinde und Kanton zahlen", t.pflegeGemeinde, { klasse: "gruen" });
+            if ((zH2.heimSonstigeAndere || 0) > 0)
+              zeile2((nameA || "die andere Person") + " übernimmt",
+                zH2.heimSonstigeAndere, { klasse: "gruen" });
+            if (he2 > 0) {
+              const r = zeile2("Hilflosenentschädigung (Einnahme)", he2, { ohneAnteil: true });
+              r.cells[1].classList.add("gruen");
+              r.cells[2].classList.add("gruen");
+              r.cells[3].textContent = "";
+              r.title = "Keine Kostenbeteiligung, sondern eine Einnahme — sie steht "
+                + "ausserhalb der Verteilung der Kosten.";
+              const rn = kb.insertRow(); rn.className = "ergebnis";
+              const c0 = el("td", "txt");
+              c0.textContent = "verbleibende Belastung nach Entschädigung";
+              rn.appendChild(c0);
+              const mono = txt => { const c = el("td", "rechts mono");
+                c.style.cssText = "padding:4px 10px;font-weight:700";
+                c.textContent = txt; return c; };
+              rn.appendChild(mono(chf((selbst - he2) / 12)));
+              rn.appendChild(mono(chf(selbst - he2)));
+              rn.insertCell();
+            }
+            rahmen.appendChild(tb);
+            ziel.appendChild(rahmen);
+            const hw2 = el("p", "kleintext",
+              "Gerechnet mit " + tageImJahr(zH2.jahr) + " Tagen. Die Monatswerte sind "
+              + "der Jahresbetrag geteilt durch zwölf — die Taxen fallen tagweise an, "
+              + "nicht monatlich. Spätere Jahre weichen durch die Teuerung und eine "
+              + "höhere Pflegestufe ab; die ganze Reihe steht im Reiter Kapitalverzehr "
+              + "und im Szenario 8.");
+            hw2.style.cssText = "margin:5px 0 0; color:var(--gedaempft)";
+            ziel.appendChild(hw2);
+          }
+        }
+
         // Was die Aufteilung bewirkt, am gerechneten Jahr gezeigt.
         const zH = rechenzeilen(p.id).find(z => z.heimTeile && z.heimTeile.gesamt > 0);
         const pe = el("p", "kleintext");
@@ -23041,12 +23503,12 @@ function personenZeichnen() {
           + "finanziert:<ul style='margin:4px 0;padding-left:20px'>"
           + "<li><strong>Pflege</strong> tragen drei Seiten. Die "
             + "<em>Krankenversicherung</em> zahlt ihren Beitrag nach Pflegestufe — "
-            + chf(Number(pf.kassenbeitrag_je_stufe) || 9.6) + " CHF je 20 Minuten "
+            + chfR(Number(pf.kassenbeitrag_je_stufe) || 9.6) + " CHF je 20 Minuten "
             + "Pflegebedarf, höchstens " + (pf.pflegestufen_max ?? 12) + " Stufen und "
-            + "damit " + chf(Number(pf.pflegebeitrag_bund_pro_tag) || 115.2)
+            + "damit " + chfR(Number(pf.pflegebeitrag_bund_pro_tag) || 115.2)
             + " CHF pro Tag (Art. 7a Abs. 3 KLV). Vom Rest trägt die "
             + "<em>versicherte Person</em> höchstens "
-            + chf(Number(pf.beteiligung_heim_pro_tag) || 23) + " CHF pro Tag — 20 % des "
+            + chfR(Number(pf.beteiligung_heim_pro_tag) || 23) + " CHF pro Tag — 20 % des "
             + "höchsten Pflegebeitrags (Art. 25a Abs. 5 KVG, Art. 8 Abs. 1 PflegeG SG). "
             + "Was dann noch offen ist, trägt die <em>öffentliche Hand</em>: Kanton zu "
             + "zwei Dritteln, politische Gemeinde zu einem Drittel "
@@ -23200,12 +23662,23 @@ function personenZeichnen() {
             { jahr: true, leerErlaubt: true,
               vorgabe: p.heimeintritt_ab != null ? Number(p.heimeintritt_ab) - 1 : null,
               vorgabeHinweis: "Leer: bis zum Jahr vor dem Heimeintritt." }), "");
-          feld("Pflege, Stunden pro Woche", zahlFeld(p.spitex_pflege_std_woche || 0,
-            x => { p.spitex_pflege_std_woche = x || 0; rechnen(); },
-            { dez: true, grenze: { min: 0, max: 60, weichMax: 25 } }), "h");
-          feld("Hauswirtschaft, Stunden pro Woche", zahlFeld(p.spitex_haus_std_woche || 0,
-            x => { p.spitex_haus_std_woche = x || 0; rechnen(); },
-            { dez: true, grenze: { min: 0, max: 60, weichMax: 25 } }), "h");
+          // Stunden je Woche und je Monat. Gespeichert wird die Woche;
+          // umgerechnet wird mit 52 / 12 = 4.3333 Wochen je Monat, damit
+          // der Monatswert mit dem gerechneten Jahreswert zusammenpasst.
+          feldZwei("Pflege, Stunden",
+            zahlFeld(p.spitex_pflege_std_woche || 0,
+              x => { p.spitex_pflege_std_woche = x || 0; rechnen(); },
+              { dez: true, grenze: { min: 0, max: 60, weichMax: 25 } }), "h/Woche",
+            zahlFeld((Number(p.spitex_pflege_std_woche) || 0) * WOCHEN_JE_MONAT,
+              x => { p.spitex_pflege_std_woche = (x || 0) / WOCHEN_JE_MONAT; rechnen(); },
+              { dez: true, grenze: { min: 0, max: 260, weichMax: 109 } }), "h/Monat");
+          feldZwei("Hauswirtschaft, Stunden",
+            zahlFeld(p.spitex_haus_std_woche || 0,
+              x => { p.spitex_haus_std_woche = x || 0; rechnen(); },
+              { dez: true, grenze: { min: 0, max: 60, weichMax: 25 } }), "h/Woche",
+            zahlFeld((Number(p.spitex_haus_std_woche) || 0) * WOCHEN_JE_MONAT,
+              x => { p.spitex_haus_std_woche = (x || 0) / WOCHEN_JE_MONAT; rechnen(); },
+              { dez: true, grenze: { min: 0, max: 260, weichMax: 109 } }), "h/Monat");
 
           const zS = rechenzeilen(p.id).find(z => z.spitexTeile && z.spitexTeile.total > 0);
           const px = el("p", "kleintext");
@@ -23214,16 +23687,16 @@ function personenZeichnen() {
             + "<ul style='margin:4px 0;padding-left:20px'>"
             + "<li><strong>Pflege</strong> ist eine Leistung der Krankenversicherung. "
               + "Die versicherte Person trägt 10 % des verrechneten Betrags, je Tag "
-              + "höchstens " + chf(Number(pf.beteiligung_spitex_pro_tag) || 7.7)
+              + "höchstens " + chfR(Number(pf.beteiligung_spitex_pro_tag) || 7.7)
               + " CHF (Art. 15 Abs. 1 und 2 PflegeG SG). St. Gallen schöpft die "
               + "bundesrechtliche Grenze von 20 % bewusst nur zur Hälfte aus. Die "
               + "Restfinanzierung trägt die politische Gemeinde (Art. 16 Abs. 1). "
-              + "Gerechnet wird mit " + chf(Number(pf.spitex_tarif_pflege) || 69.15)
+              + "Gerechnet wird mit " + chfR(Number(pf.spitex_tarif_pflege) || 69.15)
               + " CHF je Stunde — dem Höchstansatz für Grundpflege nach Art. 11 der "
               + "Verordnung sGS 331.21.</li>"
             + "<li><strong>Hauswirtschaft</strong> — Putzen, Waschen, Einkaufen — ist "
               + "keine Leistung der Krankenversicherung und voll selbst zu tragen. "
-              + "Gerechnet wird mit " + chf(Number(pf.spitex_tarif_haus) || 40)
+              + "Gerechnet wird mit " + chfR(Number(pf.spitex_tarif_haus) || 40)
               + " CHF je Stunde; dafür gibt es keinen amtlichen Tarif, der Wert ist "
               + "eine Annahme und im Reiter Steuern einstellbar.</li></ul>"
             + (zS
@@ -23728,22 +24201,46 @@ function zusatzkostenBeide(heimJahr, todJahr) {
     const u = el("p", null, txt);
     u.style.cssText = "font-size:13px;font-weight:700;margin:14px 0 3px";
     w.appendChild(u);
-    const e = el("p", null, erl);
+    const e = el("p");
+    e.innerHTML = erl;
     e.style.cssText = "font-size:12px;color:var(--gedaempft);margin:0 0 6px";
     w.appendChild(e);
   };
+  // Wer die Kosten traegt, haengt am Anlass: Block A traegt die Person, die
+  // NICHT ins Heim geht; Block B die ueberlebende Person. Beides namentlich
+  // zu nennen erspart das Nachdenken darueber, wer gemeint ist.
+  const imHeim = (cfg.personen || []).find(x => x.heimeintritt_ab != null);
+  const traegerA = imHeim
+    ? (cfg.personen || []).find(x => x.id !== imHeim.id) : null;
+  const nameA = traegerA ? (traegerA.bezeichnung || traegerA.id) : null;
+  const tfE = todesfallEff();
+  const lebtP = (tfE.aktiv && tfE.ueberlebt)
+    ? (cfg.personen || []).find(x => x.id === tfE.ueberlebt) : null;
+  const nameB = lebtP ? (lebtP.bezeichnung || lebtP.id) : null;
+
   titel("A — ab Heim- oder Spitalaufenthalt",
-    "Die andere Person lebt, führt den Haushalt aber nicht mehr mit. Vorgabe für den "
-    + "Beginn: " + (heimJahr != null ? "das Jahr des Eintritts, " + heimJahr
+    "<strong>Diese Kosten trägt "
+    + (nameA ? nameA : "die Person, die nicht ins Heim geht") + ".</strong> "
+    + (imHeim ? "Sie lebt zu Hause, führt den Haushalt aber nicht mehr mit "
+                + (imHeim.bezeichnung || imHeim.id) + " — was diese bisher selbst "
+                + "besorgt hat, ist nun einzukaufen. "
+              : "")
+    + "Vorgabe für den Beginn: " + (heimJahr != null ? "das Jahr des Eintritts, " + heimJahr
                                      : "es ist kein Heimeintritt erfasst") + ".");
   w.appendChild(zusatzkostenTabelle("heim_", heimJahr));
   titel("B — ab Todesfall",
-    "Der ganze Haushalt bleibt an der überlebenden Person; der Aufwand ist in der Regel "
+    "<strong>Diese Kosten trägt "
+    + (nameB ? nameB : "die überlebende Person") + ".</strong> "
+    + "Der ganze Haushalt bleibt an ihr; der Aufwand ist in der Regel "
     + "höher als unter A. Vorgabe für den Beginn: "
     + (todJahr != null ? "das Todesjahr, " + todJahr : "es ist kein Todesfall erfasst")
     + ". Ab dem Todesjahr gilt dieser Block; er ersetzt den Block A und wird nicht "
     + "dazugezählt — es ist dieselbe Arbeit, nur aus einem anderen Anlass und in "
-    + "anderem Umfang.");
+    + "anderem Umfang."
+    + (nameA && nameB && nameA !== nameB
+        ? "<br><strong>Achtung:</strong> Block A trägt " + nameA + ", Block B trägt "
+          + nameB + " — die beiden Blöcke belasten also verschiedene Personen."
+        : ""));
   w.appendChild(zusatzkostenTabelle("", todJahr));
   return w;
 }
@@ -26301,13 +26798,13 @@ function steuernZeichnen() {
       "<strong>Drei Träger teilen sich die Pflegekosten.</strong>"
       + "<ul style='margin:4px 0;padding-left:20px'>"
       + "<li><strong>Krankenversicherung:</strong> "
-        + chf(Number(pf.kassenbeitrag_je_stufe) || 9.6) + " CHF je 20 Minuten "
+        + chfR(Number(pf.kassenbeitrag_je_stufe) || 9.6) + " CHF je 20 Minuten "
         + "Pflegebedarf, höchstens " + (pf.pflegestufen_max ?? 12) + " Stufen und damit "
-        + chf(Number(pf.pflegebeitrag_bund_pro_tag) || 115.2) + " CHF pro Tag "
+        + chfR(Number(pf.pflegebeitrag_bund_pro_tag) || 115.2) + " CHF pro Tag "
         + "(Art. 7a Abs. 3 KLV).</li>"
       + "<li><strong>Versicherte Person:</strong> vom Rest höchstens 20 % des höchsten "
         + "Pflegebeitrags, also "
-        + chf((Number(pf.pflegebeitrag_bund_pro_tag) || 115.2) * 0.2) + " CHF pro Tag "
+        + chfR((Number(pf.pflegebeitrag_bund_pro_tag) || 115.2) * 0.2) + " CHF pro Tag "
         + "(Art. 25a Abs. 5 KVG). <strong>Art. 8 Abs. 1 des Pflegegesetzes SG</strong> "
         + "(sGS 331.1) übernimmt diese Grenze.</li>"
       + "<li><strong>Öffentliche Hand:</strong> was dann noch offen ist — nach "
@@ -26316,13 +26813,13 @@ function steuernZeichnen() {
       + "Die <strong>Pflegestufe</strong> steht auf der Heimrechnung. Ist sie nicht "
       + "erfasst, schätzt das Programm sie aus der Pflegetaxe: Die Höchstansätze des "
       + "Kantons nach Art. 2 der Verordnung sGS 331.21 reichen von "
-      + chf(Number(pf.sg_ansatz_stufe1) || 12) + " CHF in Stufe 1 bis "
-      + chf(Number(pf.sg_ansatz_stufe12) || 254) + " CHF in Stufe 12; dazwischen wird "
+      + chfR(Number(pf.sg_ansatz_stufe1) || 12) + " CHF in Stufe 1 bis "
+      + chfR(Number(pf.sg_ansatz_stufe12) || 254) + " CHF in Stufe 12; dazwischen wird "
       + "linear interpoliert. Im Reiter Personen lässt sich der Beitrag je Person "
       + "überschreiben.<br>"
       + "<em>Zu beachten:</em> Das Gesetz nennt den Höchstbetrag der Beteiligung, nicht "
       + "den tatsächlich erhobenen Satz. Dieser steht in der Verordnung der Regierung. "
-      + "Die Vorgabe von " + chf(Number(pf.beteiligung_heim_pro_tag) || 23) + " CHF "
+      + "Die Vorgabe von " + chfR(Number(pf.beteiligung_heim_pro_tag) || 23) + " CHF "
       + "unterstellt, dass die Grenze voll ausgeschöpft wird — das ist die ungünstigste "
       + "Annahme.";
     p2.style.cssText = "font-size:12px;color:var(--gedaempft);margin:4px 0 12px";
@@ -26355,7 +26852,7 @@ function steuernZeichnen() {
       + "Differenz zwischen Tarif und Kassenbeitrag trägt die Gemeinde.<br>"
       + "<strong>Hauswirtschaft</strong> ist keine Leistung der Krankenversicherung und "
       + "hat keinen amtlichen Tarif. Die Vorgabe von "
-      + chf(Number(pf.spitex_tarif_haus) || 40) + " CHF ist eine <em>Annahme</em>; die "
+      + chfR(Number(pf.spitex_tarif_haus) || 40) + " CHF ist eine <em>Annahme</em>; die "
       + "Ansätze der Spitex-Organisationen liegen je nach Region und Einkommen "
       + "auseinander.";
     p3.style.cssText = "font-size:12px;color:var(--gedaempft);margin:4px 0 12px";
@@ -26400,8 +26897,88 @@ function steuernZeichnen() {
       + "wenigen Monaten, eine Minderheit bleibt sieben Jahre und länger. Genau diese "
       + "Minderheit bestimmt den Kapitalbedarf. Die Vorgabe ist ein Startpunkt, kein "
       + "Ergebnis — das Szenario «Pflegebedürftigkeit» rechnet deshalb drei Verläufe.";
-    p5.style.cssText = "font-size:12px;color:var(--gedaempft);margin:4px 0 0";
+    p5.style.cssText = "font-size:12px;color:var(--gedaempft);margin:4px 0 12px";
     kp.appendChild(p5);
+
+    // ---- Vorgaben fuer die Heimkosten ----------------------------------
+    kp.appendChild(el("h4", "abschnitt2", "Vorgaben für die Heimkosten"));
+    feldP("Gesamtkosten je Pflegetag, Kanton Zürich", zahl("heim_bfs_zh", 386), "CHF");
+    feldP("Gesamtkosten je Pflegetag, Kanton St. Gallen", zahl("heim_bfs_sg", 286), "CHF");
+    feldP("Anteil Pflege", zahlFeld(pf.heim_anteil_pflege ?? 0.4307,
+      x => { pf.heim_anteil_pflege = (x == null) ? 0.4307 : Math.max(0, x); rechnen(); },
+      { proz: true, leerErlaubt: true }), "%");
+    feldP("Anteil Pension und Hotellerie", zahlFeld(pf.heim_anteil_hotellerie ?? 0.4078,
+      x => { pf.heim_anteil_hotellerie = (x == null) ? 0.4078 : Math.max(0, x); rechnen(); },
+      { proz: true, leerErlaubt: true }), "%");
+    feldP("Anteil Betreuung", zahlFeld(pf.heim_anteil_betreuung ?? 0.1458,
+      x => { pf.heim_anteil_betreuung = (x == null) ? 0.1458 : Math.max(0, x); rechnen(); },
+      { proz: true, leerErlaubt: true }), "%");
+    feldP("Anteil Übriges", zahlFeld(pf.heim_anteil_uebrige ?? 0.0159,
+      x => { pf.heim_anteil_uebrige = (x == null) ? 0.0159 : Math.max(0, x); rechnen(); },
+      { proz: true, leerErlaubt: true }), "%");
+    feldP("Zuschlag für hohen Standard", zahlFeld(pf.heim_zuschlag_hoch ?? 0.30,
+      x => { pf.heim_zuschlag_hoch = (x == null) ? 0.30 : Math.max(0, x); rechnen(); },
+      { proz: true, leerErlaubt: true }), "%");
+    {
+      const summe = (Number(pf.heim_anteil_pflege) || 0)
+        + (Number(pf.heim_anteil_hotellerie) || 0)
+        + (Number(pf.heim_anteil_betreuung) || 0)
+        + (Number(pf.heim_anteil_uebrige) || 0);
+      // Kleine Vorschau, damit nachvollziehbar ist, was das Menue im Reiter
+      // Personen in die Felder schreibt.
+      const zeilen = ["zh_mittel", "zh_hoch", "sg_mittel", "sg_hoch"]
+        .map(s => { const v = heimVorgabeWerte(s); return v ? "<tr><td>" + v.name
+          + "</td><td style='text-align:right'>" + chfR(v.pflegetaxe_tag)
+          + "</td><td style='text-align:right'>" + chfR(v.betreuung_tag)
+          + "</td><td style='text-align:right'>" + chf(v.sonstige_monat)
+          + "</td><td style='text-align:right'>" + chf(v.gesamt_monat)
+          + "</td></tr>" : ""; }).join("");
+      // Bewusst ein Block und kein Absatz: Der Text enthaelt eine Tabelle,
+      // und eine Tabelle in einem Absatz bricht diesen beim Einlesen auf.
+      const p6 = el("div");
+      p6.innerHTML =
+        "<strong>Woher die Zahlen stammen.</strong> Die Gesamtkosten je Pflegetag "
+        + "sind der <strong>Statistik der sozialmedizinischen Institutionen "
+        + "(SOMED) 2022 des BFS</strong> entnommen: Zürich 386, St. Gallen 286, "
+        + "Schweiz 333 Franken; die Spannweite reicht von Glarus 242 bis Genf 425. "
+        + "Es sind die <em>Betriebskosten der Institution</em>, nicht das, was ein "
+        + "Bewohner bezahlt. Die Aufteilung stammt aus dem "
+        + "<strong>Curaviva-Faktenblatt 2022</strong> (Schweiz, Total 343.10 Franken "
+        + "je Tag): Pension und Hotellerie 139.93, Pflege 147.79, Betreuung 50.03, "
+        + "Übriges 5.35.<br>"
+        + "<em>Annahmen, die zu kennen sind:</em>"
+        + "<ul style='margin:4px 0;padding-left:20px'>"
+        + "<li>Die schweizerischen Anteile werden unverändert auf die kantonalen "
+          + "Totale angewendet. Kantonale Aufteilungen publiziert das BFS nicht.</li>"
+        + "<li>Die beiden Quellen haben leicht verschiedene Bezugsgrössen "
+          + "(BFS 333 gegenüber Curaviva 343.10 für die Schweiz, rund 3 % "
+          + "Abweichung).</li>"
+        + "<li>Eine amtliche Einteilung in mittleren und hohen Standard gibt es "
+          + "nicht. «Mittel» ist der kantonale Mittelwert, «hoch» der Mittelwert "
+          + "plus dem Zuschlag oben. Dieser wirkt nur auf Betreuung, Hotellerie "
+          + "und Übriges: Die Pflegetaxe richtet sich nach der Pflegestufe und dem "
+          + "kantonalen Höchstansatz (Art. 2 und 11 der Verordnung sGS 331.21), "
+          + "nicht nach der Zimmerausstattung.</li></ul>"
+        + (Math.abs(summe - 1) > 0.005
+            ? "<strong style='color:var(--warnung,#b45309)'>Die vier Anteile "
+              + "ergeben " + proz(summe) + " statt 100 %.</strong><br>" : "")
+        + "<strong>Was das Menü im Reiter Personen einsetzt:</strong>"
+        + "<div class='tabellenrahmen' style='margin:4px 0'>"
+        + "<table class='dicht'><thead><tr><th>Vorgabe</th>"
+        + "<th style='text-align:right'>Pflegetaxe<br>CHF/Tag</th>"
+        + "<th style='text-align:right'>Betreuung und<br>Hotellerie CHF/Tag</th>"
+        + "<th style='text-align:right'>Sonstiges<br>CHF/Monat</th>"
+        + "<th style='text-align:right'>Gesamtbetrag<br>CHF/Monat</th></tr></thead>"
+        + "<tbody>" + zeilen + "</tbody></table></div>"
+        + "Die letzte Spalte gilt für die Erfassung als <em>ein Gesamtbetrag</em>. "
+        + "Sie enthält nur den <strong>selbst getragenen</strong> Teil — Hotellerie, "
+        + "Betreuung, Übriges und den Eigenanteil an der Pflege von "
+        + chfR(Number(pf.beteiligung_heim_pro_tag) || 23) + " CHF pro Tag — weil "
+        + "die Rechnung einen Gesamtbetrag vollständig der Person belastet. Den "
+        + "Rest der Pflegekosten tragen Krankenversicherer und Gemeinde.";
+      p6.style.cssText = "font-size:12px;color:var(--gedaempft);margin:4px 0 0";
+      kp.appendChild(p6);
+    }
 
     w.appendChild(kp);
   }
@@ -31647,12 +32224,28 @@ function uebersichtZeichnen() {
       }, z: { blatt: "personen", feld: "Budgetpositionen im Heim" }, klein: true },
     ...(() => {
       // Zusatzkosten für die Person, die den Haushalt weiterführt. Sie stehen
-      // nicht bei einer Person, sondern gelten für den Haushalt.
+      // nicht bei einer Person, sondern gelten für den Haushalt — die Zeile
+      // nennt deshalb ausdrücklich, wer sie trägt. Block A trägt die Person,
+      // die NICHT ins Heim geht; Block B die überlebende Person. Ab dem
+      // Todesjahr gilt B und ersetzt A.
       const tf2 = cfg.todesfall || {};
-      const zeile = (vor, titel) => {
+      const nam = id => {
+        const q = (cfg.personen || []).find(x => x.id === id);
+        return q ? (q.bezeichnung || q.id) : null;
+      };
+      // Träger des Blocks A: die andere Person jener, die ins Heim geht.
+      const imHeim = (cfg.personen || []).find(x => x.heimeintritt_ab != null);
+      const traegerA = imHeim
+        ? (cfg.personen || []).find(x => x.id !== imHeim.id) : null;
+      // Träger des Blocks B: die überlebende Person des Todesfalls.
+      const tfE = todesfallEff();
+      const traegerB = (tfE.aktiv && tfE.ueberlebt) ? nam(tfE.ueberlebt) : null;
+
+      const zeile = (vor, titel, traeger, erl) => {
         const g = Number(tf2[vor + "gaertner_pro_monat"]) || 0;
         const h = Number(tf2[vor + "haushaltshilfe_pro_monat"]) || 0;
         const mg = Number(tf2[vor + "gaertner_monate"]) || 12;
+        const wer = traeger ? traeger : "–";
         if (!g && !h) return { t: titel, alle: "keine erfasst",
           z: { blatt: "personen", feld: "Gartenunterhalt" }, klein: true };
         const teile = [];
@@ -31660,12 +32253,24 @@ function uebersichtZeichnen() {
           + chf(g * mg) + " CHF");
         if (h) teile.push("Haushaltshilfe " + chf(h) + " CHF/Mt × 12 = " + chf(h * 12) + " CHF");
         const ab = tf2[vor + "gaertner_ab_jahr"] || tf2[vor + "haushaltshilfe_ab_jahr"];
-        return { t: titel,
-          alle: teile.join("; ") + (ab ? "; ab " + ab : ""),
+        const zeileObj = { t: titel,
+          alle: { text: "trägt " + wer + " — " + teile.join("; ")
+                    + (ab ? "; ab " + ab : ""),
+                  hinweis: erl },
           z: { blatt: "personen", feld: "Gartenunterhalt" }, klein: true };
+        return zeileObj;
       };
-      return [zeile("heim_", "Zusatzkosten A, ab Heimaufenthalt"),
-              zeile("", "Zusatzkosten B, ab Todesfall")];
+      return [
+        zeile("heim_", "Zusatzkosten A, ab Heimaufenthalt",
+          traegerA ? traegerA.bezeichnung || traegerA.id : null,
+          "Diese Kosten trägt die Person, die NICHT ins Heim geht — sie führt den "
+          + "Haushalt weiter und muss einkaufen, was die andere bisher selbst besorgt "
+          + "hat. Geht niemand ins Heim, fallen sie nicht an."),
+        zeile("", "Zusatzkosten B, ab Todesfall", traegerB,
+          "Diese Kosten trägt die überlebende Person. Ab dem Todesjahr gilt Block B und "
+          + "ersetzt Block A — es ist dieselbe Arbeit, nur aus einem anderen Anlass und "
+          + "in anderem Umfang; beide werden nie zugleich gerechnet."),
+      ];
     })(),
     { t: "Zivilstand", alle: (cfg.zivilstand || {}).art === "verheiratet" ? "verheiratet" : "unverheiratet (Konkubinat)",
       z: { blatt: "personen", feld: "^Zivilstand" }, oben: true },
@@ -31945,6 +32550,14 @@ function uebersichtZeichnen() {
         else { td.textContent = (o.warn ? "⚠ " : "") + o.text; }
         if (o.warn) { td.className = "warn"; td.title = o.warn; }
         if (o.vorgabe) td.className = "vorgabe";
+        // Erlaeuterung ohne Warnfarbe: sie sagt etwas, das man wissen muss,
+        // ohne dass daran etwas zu beanstanden waere.
+        if (o.hinweis && !o.warn) {
+          td.title = o.hinweis;
+          td.style.textDecoration = "underline dotted";
+          td.style.textDecorationColor = "var(--linie-stark)";
+          td.style.cursor = "help";
+        }
         r.appendChild(td);
       };
       r.appendChild(el("td", "name", z.t));
