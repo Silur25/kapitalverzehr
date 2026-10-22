@@ -298,6 +298,105 @@ sup,sub{font-size:var(--s-klein); line-height:0}
 
 .blatt{display:none; padding-top:22px}
 .blatt.aktiv{display:block}
+
+/* ============================ Lesbarkeit ================================
+   Erlaeuterungstexte liefen ueber die ganze Breite der Huelle - gemessen
+   1736 bis 1810 Punkte bei 12 bis 13 Punkt Schrift, also rund 250 bis 300
+   Zeichen je Zeile. Die Lesbarkeitsgrenze liegt bei 65 bis 90 Zeichen: Das
+   Auge findet beim Zeilensprung die naechste Zeile nicht mehr. Die Breite
+   wird deshalb nach dem Zeichnen begrenzt (siehe lesbarkeitSetzen). */
+.erlText{max-width:78ch}
+/* Kurzfassung: die ersten drei Zeilen, der Rest hinter einem Knopf. */
+.erlKurz{
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.mehrKnopf{
+  display:inline-block; margin:2px 0 8px; padding:1px 8px;
+  font-size:var(--s-klein); font-weight:600; line-height:1.6;
+  color:var(--akzent); background:transparent;
+  border:1px solid var(--linie-stark); border-radius:999px; cursor:pointer;
+}
+.mehrKnopf:hover{background:var(--flaeche); border-color:var(--akzent)}
+
+/* ---- Prozentfelder: das Zeichen gehoert ins Feld ----
+   Es stand rechts daneben in grauer Kleinschrift. Neben Frankenbetraegen in
+   derselben Zeile war eine zweistellige Prozentzahl von einem Frankenbetrag
+   kaum zu unterscheiden. */
+.prozFeld{position:relative; display:inline-block; min-width:0}
+.feld > .prozFeld{display:block}
+.feld > .prozFeld > input{width:100%}
+.prozFeld > input{padding-right:22px}
+.prozFeld::after{
+  content:"%"; position:absolute; right:7px; top:50%;
+  transform:translateY(-50%); pointer-events:none;
+  font-size:var(--s-klein); color:var(--gedaempft);
+}
+
+/* ---- Ablagezustand im Kopf ----
+   Er beantwortet die Frage «gehen meine Eingaben verloren?» und stand bisher
+   allein im Seitenfuss, Tausende Punkte von der Stelle entfernt, an der man
+   sie stellt. */
+.ablageKopf{
+  font-size:var(--s-klein); font-weight:700; white-space:nowrap;
+  padding:4px 10px; border-radius:999px; border:1px solid currentColor;
+}
+.ablageKopf.gut{color:var(--gut)}
+.ablageKopf.warn{color:var(--warnung)}
+
+/* ============================ Seitennavigation ==========================
+   Dreizehn Reiter brachen schon bei 1900 Punkten Breite auf zwei Zeilen um,
+   und die Leiste aenderte beim Wechsel ihre Hoehe - die Seite sprang. Als
+   senkrechte Spalte stehen sie untereinander, brechen nie um und sind nach
+   Aufgaben gruppiert. Unter 1100 Punkten faellt die Spalte weg und die
+   Leiste liegt wieder waagrecht ueber dem Inhalt. */
+.arbeitsflaeche{display:grid; grid-template-columns:232px minmax(0,1fr); gap:0 26px;
+  align-items:start; margin-top:30px}
+.seitennav{position:sticky; top:calc(var(--kopf-hoehe,58px) + 10px);
+  align-self:start; max-height:calc(100vh - var(--kopf-hoehe,58px) - 24px);
+  overflow-y:auto; padding:8px 8px 10px;
+  background:var(--kopfband); border:2px solid var(--akzent);
+  border-radius:var(--r); box-shadow:var(--schatten)}
+.navgruppe{font-size:var(--s-klein); font-weight:700; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--gedaempft); padding:10px 10px 4px}
+.navgruppe:first-child{padding-top:2px}
+.seitennav .reiter{display:block; width:100%; text-align:left;
+  font-size:15px; padding:7px 11px; margin:1px 0; white-space:normal}
+.seitennav .reiter[aria-selected="true"]{color:#fff; background:var(--akzent)}
+@media (max-width:1100px){
+  .arbeitsflaeche{grid-template-columns:minmax(0,1fr)}
+  .seitennav{position:static; max-height:none; display:flex; flex-wrap:wrap;
+    gap:4px; padding:8px}
+  .navgruppe{display:none}
+  .seitennav .reiter{display:inline-block; width:auto; font-size:16px}
+}
+
+/* ---- Schmale Geraete: lesen statt erfassen ----
+   Die Budgettabelle hat fuenfzehn Spalten; bei 390 Punkten Fensterbreite sind
+   zweieinhalb davon sichtbar, und das Dokument rollt waagrecht. Eingaben sind
+   dort nicht zu treffen. Statt einer Tabelle, die nicht bedienbar ist, wird
+   die Eingabe gesperrt - zurueckzunehmen mit einem Knopf im Band. */
+body.nurLesen .blatt input:not([type=checkbox]),
+body.nurLesen .blatt select,
+body.nurLesen .blatt textarea{
+  pointer-events:none; background:var(--flaeche2); color:var(--gedaempft);
+}
+#leseband{display:none}
+@media (max-width:700px){ body.nurLesen #leseband{display:block} }
+
+/* Waagrechtes Rollen der ganzen Seite beseitigen. Gemessen: bei 390 Punkten
+   Fensterbreite war das Dokument 445 Punkte breit. Verursacher waren die
+   Kapitalgrafik (feste Zeichenbreite) und die Zeilen der Legende darunter.
+   Beides bekommt seinen eigenen Rollbereich bzw. bricht um. */
+@media (max-width:700px){
+  .grafik{overflow-x:auto}
+  .grafik > svg{display:block}
+  #verzehrHinweis > div,
+  #verzehrHinweis > p,
+  .legende{flex-wrap:wrap; max-width:100%}
+  #verzehrHinweis, #zivilVergleich{overflow-x:auto}
+  .befund, .tafel, .huelle{min-width:0}
+}
 .blatt > p.fuehrung,.fuehrung{
   color:var(--gedaempft); font-size:var(--s-text); max-width:100ch; margin:0 0 18px;
 }
@@ -783,6 +882,23 @@ table.zusatzkosten td:nth-child(5) select{min-width:0; width:100%}
    halbe Seite, und bei schmalem Fenster untereinander. */
 .gitter.paar{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media (max-width:1100px){ .gitter.paar{grid-template-columns:minmax(0,1fr)} }
+/* ---- Eigener Rollbalken je Personenkarte ----
+   Die Karten der beiden Personen stehen nebeneinander. Wird eine davon lang -
+   der Heimblock mit acht Teilen wird es leicht -, so waechst die ganze Seite
+   mit, und die zweite Karte steht als schmaler Streifen daneben. Mit einem
+   eigenen Rollbalken bleibt jede Karte fuer sich bedienbar und beide behalten
+   dieselbe Hoehe. Die Hoehe richtet sich nach dem Fenster; der Kopfbereich der
+   Seite ist abgezogen. Auf schmalen Geraeten faellt die Begrenzung weg - dort
+   stehen die Karten ohnehin untereinander, und zwei verschachtelte Rollbalken
+   waeren auf dem Fingergeraet eine Zumutung. */
+.gitter.paar.rollend > .karte{
+  max-height:calc(100vh - var(--kopf-hoehe,58px) - 96px);
+  overflow-y:auto; overflow-x:hidden;
+  scroll-padding-top:4px;
+}
+@media (max-width:1100px){
+  .gitter.paar.rollend > .karte{max-height:none; overflow:visible}
+}
 
 /* ---- Aufklappbare Unterpunkte in einer Karte ---- */
 .unterpunkt{border:1px solid var(--linie); border-radius:var(--r);
@@ -963,6 +1079,16 @@ table.uebersicht tr.klein td.name{padding-left:22px}
     <button class="knopf" id="btnImport" type="button">Importieren</button>
     <input id="dateiImport" type="file" accept=".json,application/json" hidden>
     <button class="knopf stark" id="btnSpeichern" type="button">Speichern</button>
+    <!-- Der Ablagezustand beantwortet die Frage «gehen meine Eingaben
+         verloren?». Er stand bisher allein im Seitenfuss. -->
+    <span class="ablageKopf" id="ablageKopf"></span>
+    <!-- Die Fassung gehoert sichtbar in den Kopf. Stand sie nur im Fuss,
+         war bei einem Zwischenspeicher-Problem nicht auf einen Blick zu
+         sehen, welche Fassung tatsaechlich laeuft. -->
+    <span class="chip" id="chipVersionKopf"
+          title="Fassung dieser Datei. Daneben muss «version.txt» denselben Wert nennen."></span>
+    <button class="knopf" id="btnErlModus" type="button"
+            title="Schaltet alle Erläuterungstexte zwischen Kurzfassung und ausführlicher Fassung um.">Erläuterungen: ausführlich</button>
     <span class="chip" id="rechenChip" title="Zeigt an, dass nach der letzten Eingabe neu gerechnet wurde."></span>
   </div>
 </header>
@@ -1090,26 +1216,58 @@ table.uebersicht tr.klein td.name{padding-left:22px}
   <div class="gitter" id="zivilstandOben"
        style="grid-template-columns:1fr; margin-top:18px"></div>
 
-  <nav class="reiterleiste" role="tablist" aria-label="Eingabebereiche">
-    <button class="reiter" role="tab" aria-selected="true" data-blatt="personen">Personen</button>
+  <!-- Band fuer schmale Geraete: dort ist die Eingabe gesperrt. -->
+  <div class="merker" id="leseband" style="margin-top:18px">
+    <strong>Lesen statt erfassen.</strong> Auf diesem Bildschirm sind die
+    Eingabefelder gesperrt. Die Budgettabelle hat fünfzehn Spalten; sie lässt
+    sich hier nicht zuverlässig treffen. Alle Zahlen, Grafiken und Auswertungen
+    sind lesbar.
+    <button class="knopf klein" type="button" id="btnTrotzdem"
+            style="margin-left:8px">Trotzdem erfassen</button>
+  </div>
+
+  <div class="arbeitsflaeche">
+  <nav class="seitennav" role="tablist" aria-label="Eingabebereiche">
+    <div class="navgruppe">Übersicht</div>
+    <button class="reiter" role="tab" aria-selected="true" data-blatt="start">Start</button>
+    <div class="navgruppe">Erfassen</div>
+    <button class="reiter" role="tab" aria-selected="false" data-blatt="personen">Personen</button>
     <button class="reiter" role="tab" aria-selected="false" data-blatt="vorsorge">Vorsorge + Vermögen</button>
     <button class="reiter" role="tab" aria-selected="false" data-blatt="positionen">Budget</button>
     <button class="reiter" role="tab" aria-selected="false" data-blatt="hypotheken">Hypotheken</button>
     <button class="reiter" role="tab" aria-selected="false" data-blatt="liegenschaft">Liegenschaft</button>
     <button class="reiter" role="tab" aria-selected="false" data-blatt="steuern">Steuern</button>
+    <div class="navgruppe">Ereignisse</div>
     <button class="reiter" role="tab" aria-selected="false" data-blatt="todesfall">Todesfall</button>
+    <div class="navgruppe">Rechnen</div>
     <button class="reiter" role="tab" aria-selected="false" data-blatt="szenarien">Szenarien</button>
-    <button class="reiter" role="tab" aria-selected="false" data-blatt="daten">Daten für Berechnung</button>
     <button class="reiter" role="tab" aria-selected="false" data-blatt="jahre">Kapitalverzehr</button>
+    <div class="navgruppe">Ergebnis</div>
     <button class="reiter" role="tab" aria-selected="false" data-blatt="auswertungen">Auswertungen</button>
     <button class="reiter" role="tab" aria-selected="false" data-blatt="bericht">Bericht</button>
+    <button class="reiter" role="tab" aria-selected="false" data-blatt="daten">Daten für Berechnung</button>
+    <div class="navgruppe">Nachschlagen</div>
     <button class="reiter" role="tab" aria-selected="false" data-blatt="grundlagen">Grundlagen</button>
+    <button class="reiter" type="button" id="btnWasNeu"
+            title="Springt zu den Änderungen je Fassung im Reiter Grundlagen.">Was ist neu</button>
   </nav>
+  <div>
 
   <div class="leistenfuss">
     <span>Budget- und Rentenberechnung &middot; Kanton St. Gallen, Gemeinde Gommiswald</span>
-    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v276</span></span>
+    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v280</span></span>
   </div>
+
+  <!-- ===================== Startseite ===================== -->
+  <section class="blatt aktiv" id="blatt-start" role="tabpanel">
+    <div class="blattkopf"><h2>Start</h2></div>
+    <p class="fuehrung">Was die Rechnung ergibt, was ihr noch fehlt und in welcher
+      Reihenfolge erfasst wird. Diese Seite rechnet nichts Eigenes — sie fasst
+      zusammen, was auf den übrigen Seiten steht.</p>
+    <div id="startKennzahlen"></div>
+    <div id="startPruefung"></div>
+    <div id="startSchritte"></div>
+  </section>
   <p class="merker" id="fassungHinweis" style="margin:8px 0 0" hidden></p>
   <!-- Band fuer die Aktualisierung. Es erscheint nur, wenn es etwas zu melden
        gibt: beim Anwender eine neue Fassung, beim Entwickler eine noch nicht
@@ -1390,7 +1548,7 @@ table.uebersicht tr.klein td.name{padding-left:22px}
     <div id="kontoKnoepfe" hidden></div>
   </section>
 
-  <section class="blatt aktiv" id="blatt-personen" role="tabpanel">
+  <section class="blatt" id="blatt-personen" role="tabpanel">
     <div class="blattkopf"><h2>Personen</h2></div>
     <p class="fuehrung">Je Person stehen hier <strong>drei Jahreszahlen</strong>, die
       verschiedene Aufgaben haben und sich nicht gegenseitig ersetzen:</p>
@@ -1416,7 +1574,7 @@ table.uebersicht tr.klein td.name{padding-left:22px}
         <span class="k2kurz"></span>
       </button>
       <div class="kapitelinhalt2" hidden>
-        <div class="gitter paar" id="kartenPersonen"></div>
+        <div class="gitter paar rollend" id="kartenPersonen"></div>
         <div class="k2fuss"></div>
       </div>
     </div>
@@ -1434,7 +1592,7 @@ table.uebersicht tr.klein td.name{padding-left:22px}
           und welche Budgetpositionen entfallen. Zuunterst die zusätzlichen Kosten, die
           bei der Person <em>ausserhalb</em> des Heims anfallen — Haushaltshilfe und
           Gartenunterhalt.</p>
-        <div class="gitter paar" id="kartenHeim"></div>
+        <div class="gitter paar rollend" id="kartenHeim"></div>
         <div class="k2fuss"></div>
       </div>
     </div>
@@ -2250,6 +2408,186 @@ table.uebersicht tr.klein td.name{padding-left:22px}
           50 000 Franken verschieben; <strong>mittel</strong> zwischen etwa 5 000 und
           50 000 Franken; <strong>klein</strong> darunter. Die Einstufung ist eine
           Abschätzung, keine gerechnete Grösse.</p>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v280 — Das Programm nennt, woher es geladen wurde</h3>
+        <ul class="liste">
+          <li><strong>Anlass.</strong> Es erschien wiederholt eine alte Fassung,
+            obwohl die neue abgelegt war. Die Suche dauerte lange, weil nirgends
+            stand, <em>welche Datei</em> überhaupt geladen worden war. Die Ursache
+            lag ausserhalb des Programms: Die Verknüpfung auf dem Desktop öffnete
+            <code>/rentenplaner/</code> auf dem NAS, während alle Kopierskripte nach
+            <code>/kapitalverzehr/</code> schreiben — zwei Ablagen nebeneinander, von
+            denen nur eine gepflegt wurde.</li>
+          <li><strong>Neu steht die Herkunft an drei Stellen:</strong>
+            <ul class="liste">
+              <li>auf der <strong>Startseite</strong> als eigener Kasten: «Diese Seite
+                läuft als Fassung vNNN. Geladen von …» samt der Angabe, welche
+                «version.txt» daneben liegt und ob sie übereinstimmt;</li>
+              <li>im <strong>Hinweistext der Fassungsnummer im Kopf</strong> —
+                Fassung, Herkunft und version.txt in einem;</li>
+              <li>in der <strong>Zusammenstellung der Daten</strong> als Zeile
+                «Fassung und Herkunft». Damit ist auch aus einem ausgedruckten
+                Bericht ablesbar, welche Ablage ihm zugrunde lag.</li>
+            </ul></li>
+          <li><strong>Auch das Band bei einer Abweichung</strong> nennt nun beide
+            Adressen: die der geladenen Seite und die der gelesenen
+            «version.txt».</li>
+          <li><strong>Behobener Fehler beim Einbau dieser Änderung.</strong> Die
+            beiden Merker für Herkunft und gelesene Fassung standen zunächst weiter
+            unten im Programm, neben der Funktion, die sie füllt. Der Aufruf im Kopf
+            griff beim Laden darauf zu, bevor sie erzeugt waren — das warf einen
+            ReferenceError, und zwar so früh, dass das ganze Programm stehen blieb.
+            Der Testlauf über einen echten Webserver hat es aufgedeckt: Es wurde
+            weder nachgeladen noch gemeldet. Die Merker stehen jetzt zuoberst.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v279 — Behoben: die neue Fassung sprang auf die alte zurück</h3>
+        <ul class="liste">
+          <li><strong>Der Fehler.</strong> Beim Start erschien kurz die neue Fassung,
+            dann lud das Programm sich selbst neu — und stand danach wieder auf der
+            alten. Ursache war die Selbstprüfung gegen den Zwischenspeicher des
+            Browsers: Sie vergleicht die Fassungsnummer der geladenen Datei mit der
+            Datei «version.txt» in der Ablage und lud bei <em>jeder</em> Abweichung
+            neu, <strong>ohne die Richtung zu prüfen</strong>.</li>
+          <li><strong>Warum das schadet.</strong> Nachladen kann eine <em>zu alte</em>
+            Datei durch die Ablage ersetzen — eine <em>zu neue</em> niemals. Trug die
+            Ablage noch die alte Nummer, so holte das Nachladen folgerichtig die alte
+            Datei. Genau das war zu sehen.</li>
+          <li><strong>Neu wird die Richtung geprüft.</strong>
+            <ul class="liste">
+              <li>Ablage <em>neuer</em> als die Datei → wird nachgeladen, wie bisher.</li>
+              <li>Ablage <em>älter</em> als die Datei → wird <strong>nicht</strong>
+                nachgeladen. Stattdessen erscheint ein Band: «Die Ablage ist nur halb
+                aktualisiert — diese Datei trägt vNNN, die Datei version.txt daneben
+                nennt vMMM.» Mit dem Hinweis, was zu tun ist.</li>
+            </ul></li>
+          <li><strong>Die Fassungsnummer steht neu im Kopf</strong>, neben dem
+            Ablagezustand. Bisher stand sie nur im Seitenfuss; bei genau diesem Fehler
+            war damit nicht auf einen Blick zu sehen, welche Fassung tatsächlich
+            läuft.</li>
+          <li><strong>Zum Mitnehmen:</strong> <code>index.html</code> und
+            <code>version.txt</code> gehören zusammen und müssen stets gemeinsam
+            ersetzt werden. Wird nur die eine kopiert, meldet das Programm es nun.</li>
+          <li><strong>Geprüft</strong> mit einem eigenen Testlauf über einen echten
+            Webserver — über <code>file://</code> greift die Selbstprüfung gar nicht.
+            Nachgestellt sind alle drei Lagen: Datei neuer, Nummern gleich, Ablage
+            neuer. Gegenprobe mit v278: dort lädt das Programm im ersten Fall
+            tatsächlich ein zweites Mal.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v278 — Bedienung: Startseite, Seitennavigation, lesbare Erläuterungen</h3>
+        <p class="kleintext" style="margin:0 0 8px;padding:8px 10px;
+           background:var(--akzent-weich);border-radius:var(--r)">
+          Diese Fassung ändert <strong>keine einzige Zahl</strong>. Die Regression ist
+          unverändert: Person 1 −995'646, Person 2 144'351, Steuern 767'243 Franken.
+          Geändert ist nur, wie das Programm zu bedienen und zu lesen ist.
+        </p>
+        <ul class="liste">
+          <li><strong>Die Erläuterungstexte waren drei- bis viermal zu breit.</strong>
+            Gemessen liefen sie 1'736 bis 1'810 Punkte breit bei 12 bis 13 Punkt
+            Schrift — rund <strong>250 bis 300 Zeichen je Zeile</strong>. Lesbar sind
+            65 bis 90: Darüber findet das Auge beim Zeilensprung die nächste Zeile
+            nicht mehr. Neu sind alle Erläuterungen auf <strong>78 Zeichen</strong>
+            begrenzt und auf 13 Punkt vergrössert; gemessen nach der Änderung: längste
+            Zeile 87 Zeichen. Betroffen sind 1'114 Textblöcke.</li>
+          <li><strong>Neuer Schalter «Erläuterungen: kurz / ausführlich»</strong> im
+            Kopf. In der Kurzfassung stehen die ersten drei Zeilen, der Rest folgt auf
+            «Mehr dazu ▸» — 140 Blöcke werden so gefaltet. Kein Wort geht verloren, nur
+            die Dichte ändert sich. Die Wahl wird im Browser gemerkt.</li>
+          <li><strong>Neue Startseite.</strong> Sie zeigt die Kennzahlen je Person,
+            dann eine <strong>maschinelle Vollständigkeitsprüfung</strong> und zuletzt
+            die sieben Schritte in der Reihenfolge, in der erfasst wird. Geprüft
+            werden Geburtsjahr und Geschlecht, letztes Rechenjahr, Vorsorgekapital,
+            Heimkosten und deren Teuerung, Teuerung und Basisjahr der Ausgaben,
+            Anschlusssätze der Hypotheken und die Steuerfüsse. Jeder Punkt nennt,
+            <em>warum</em> er zählt, und führt mit einem Knopf an die Stelle.
+            Unterschieden wird zwischen «fehlt» — ohne die Angabe rechnet das Programm
+            etwas, das so nicht gemeint sein kann — und «offen»: es rechnet, aber mit
+            einer Annahme, die zu prüfen ist.</li>
+          <li><strong>Die Navigation steht neu links und ist gruppiert.</strong> Die
+            dreizehn Reiter brachen schon bei 1'900 Punkten Breite auf zwei Zeilen um,
+            und die Leiste änderte beim Wechsel ihre Höhe — die Seite sprang. Als
+            senkrechte Spalte stehen sie untereinander, gegliedert in
+            <em>Übersicht · Erfassen · Ereignisse · Rechnen · Ergebnis ·
+            Nachschlagen</em>. Unter 1'100 Punkten fällt die Spalte weg und die Leiste
+            liegt wieder waagrecht.</li>
+          <li><strong>Der Ablagezustand steht neu im Kopf</strong>, neben «Speichern» —
+            dort, wo die Frage «gehen meine Eingaben verloren?» gestellt wird. Bisher
+            stand er allein im Seitenfuss, Tausende Punkte entfernt. Grün bei NAS oder
+            Konto, orange bei «Nur dieser Browser».</li>
+          <li><strong>Auf schmalen Geräten wird gelesen, nicht erfasst.</strong> Die
+            Budgettabelle hat fünfzehn Spalten; bei 390 Punkten Fensterbreite waren
+            zweieinhalb sichtbar und die Seite rollte waagrecht. Unter 700 Punkten sind
+            die Eingabefelder nun gesperrt, mit einem Band darüber und einem Knopf
+            «Trotzdem erfassen». Das <strong>waagrechte Rollen der ganzen Seite ist
+            beseitigt</strong>: gemessen vorher 445 Punkte Dokumentbreite bei 390
+            Punkten Fenster, neu 390 zu 390.</li>
+          <li><strong>Das Prozentzeichen steht neu im Feld.</strong> Es stand rechts
+            daneben in grauer Kleinschrift; neben Frankenbeträgen in derselben Zeile
+            war eine zweistellige Prozentzahl kaum davon zu unterscheiden. Betroffen
+            sind 371 Felder.</li>
+          <li><strong>Knopf «Alle öffnen» je Karte.</strong> Die Regel «je Karte ist
+            nur ein Teil offen» hält die Seite kurz, machte aber den Vergleich zweier
+            Teile unmöglich — und beim Drucken erschien nur der offene.</li>
+          <li><strong>Die Diagnosezeile steht hinter einem Schalter.</strong> «Eingabe­
+            felder: 1450 · zuletzt übernommen …» ist ein Werkzeug für die Fehlersuche,
+            nicht für den Leser.</li>
+          <li><strong>Neuer Eintrag «Was ist neu»</strong> in der Navigation. Er öffnet
+            die Grundlagen und springt zu den Änderungskarten; diese liegen dort seit
+            jeher zwischen den Rechtsgrundlagen und waren praktisch nicht zu finden.</li>
+          <li><strong>Was ausdrücklich nicht geändert wurde:</strong> die Dichte der
+            Fachinformation, die Farbgebung, die eine Datei ohne Fremdabhängigkeiten
+            und die Klappordner als Grundform. Geändert ist die Darbietung, nicht der
+            Inhalt.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v277 — Verlaufstabelle folgt der Eingabe, Kosten vorbelegt, Bedienung</h3>
+        <ul class="liste">
+          <li><strong>Die Verlaufstabelle zeigt neu, was wirklich gilt.</strong> Bisher
+            standen dort nur die beiden Vorschläge — auch bei «kein Pflegefall», wo
+            also ein Verlauf abgebildet war, den es gar nicht gibt. Neu steht zuoberst
+            die Zeile <strong>«erfasst»</strong> mit den Werten, mit denen gerechnet
+            wird; sie folgt jeder Änderung von Hand. Bei «kein Pflegefall» heisst sie
+            «erfasst — kein Pflegefall» und zeigt bei Spitex und Heim einen Strich. Die
+            beiden Vorschläge stehen blass darunter und sind damit als das erkennbar,
+            was sie sind: was das Menü setzen <em>würde</em>.</li>
+          <li><strong>Das Feld «Kosten» heisst neu «Selbst zu tragende Kosten».</strong>
+            Der alte Name liess offen, ob die Gesamtkosten des Heims gemeint sind oder
+            nur der eigene Anteil — und das sind sehr verschiedene Beträge.</li>
+          <li><strong>Das Programm belegt den Betrag vor.</strong> Bisher stand dort
+            eine Null, sobald ein Heimaufenthalt eingeschaltet wurde — das rechnet still
+            mit einem kostenlosen Heim und ist der gefährlichste aller Vorgabewerte. Neu
+            wird ein Wert aus dem <strong>Steuerkanton</strong> (Reiter Steuern) und dem
+            Schalter «Vorgaben auf der sicheren Seite» gesetzt: eingeschaltet der hohe,
+            sonst der mittlere Standard. Für St. Gallen sind das 7'140 bzw. 5'654 CHF im
+            Monat. Ein bereits erfasster Betrag bleibt unangetastet.</li>
+          <li><strong>Die Erläuterung zum Feld ist neu geschrieben.</strong> Sie zählt
+            nun auf, was hineingehört — Hotellerie, Betreuung, Übriges und vom
+            Pflegeanteil nur der Eigenanteil von höchstens 23.00 CHF pro Tag — und was
+            nicht: den übrigen Pflegeanteil, den Krankenversicherer und Gemeinde tragen.
+            Zum Vergleich stehen die Gesamtkosten einer Institution daneben (SG rund
+            286, ZH rund 386 CHF je Pflegetag), damit der Unterschied sichtbar ist.</li>
+          <li><strong>Jede Personenkarte hat einen eigenen Rollbalken.</strong> Die
+            Karten der beiden Personen stehen nebeneinander; wurde eine lang — der
+            Heimblock mit acht Teilen wird das leicht —, wuchs die ganze Seite mit, und
+            die zweite Karte stand als schmaler Streifen daneben. Auf schmalen Geräten
+            fällt die Begrenzung weg: Dort stehen die Karten ohnehin untereinander.</li>
+          <li><strong>Beim Öffnen eines Teils springt die Ansicht an dessen Anfang.</strong>
+            Bisher blieb der Bildausschnitt stehen, und der Inhalt begann irgendwo in
+            der Mitte.</li>
+          <li><strong>Die Grafik der Sterblichkeit füllt neu den Bildschirm.</strong> Sie
+            öffnet sich als Fenster über der ganzen Seite; die Zeichenfläche ist dabei
+            fast doppelt so gross. Ein Knopf «Kleiner anzeigen» schaltet auf die
+            kompakte Darstellung zurück, ein Klick daneben schliesst das Fenster.</li>
+          <li><strong>Der Knopf zur Grafik ist beschriftet.</strong> Er zeigte ein rundes
+            Zeichen, dem nicht anzusehen war, was es tut; neu steht dort
+            <strong>«Grafik ansehen»</strong>. Er steht in der dritten Spalte neben der
+            Altersangabe, damit die Jahreszahl im Eingabefeld nicht beschnitten wird.</li>
+        </ul>
       </div>
       <div class="karte breit">
         <h3>Änderungen in v276 — Fünf Vorgaben einzeln schaltbar, Grafik der Sterblichkeit</h3>
@@ -8229,13 +8567,19 @@ table.uebersicht tr.klein td.name{padding-left:22px}
     </div>
   </section>
 
+  </div><!-- Ende Inhaltsspalte -->
+  </div><!-- Ende Arbeitsflaeche -->
+
   <div class="fuss">
     <span class="status" id="status">Bereit.</span>
     <span style="margin-left:auto"><span id="ablageChip"></span></span>
     <span>Künftige Jahre rechnen mit dem Tarif 2026 unverändert weiter.</span>
   </div>
+
   <div class="fuss" style="margin-top:6px; padding-top:8px">
-    <span class="status" id="diagnose"></span>
+    <button class="knopf klein" type="button" id="btnDiagnose"
+            title="Technische Zeile fuer die Fehlersuche ein- oder ausblenden.">Diagnose</button>
+    <span class="status" id="diagnose" hidden></span>
   </div>
 </div>
 
@@ -13497,6 +13841,41 @@ function hypoBalkenZeichnen() {
 // Aktualisieren vergessen - der Chip zeigte deshalb ueber mehrere Fassungen
 // hinweg "v67", obwohl laengst eine neuere Fassung lief.
 const VERSION = (document.getElementById("chipVersion")?.textContent || "").trim() || "v?";
+// Woher die Seite stammt und woher die Fassungsnummer der Ablage gelesen
+// wurde. Beides gehoert sichtbar ins Programm: Ein Fehler, bei dem eine alte
+// Fassung erschien, liess sich lange nicht finden, weil nirgends stand,
+// welche Datei ueberhaupt geladen worden war - die Verknuepfung auf dem
+// Desktop zeigte auf einen anderen Ordner des NAS als jenen, den die
+// Kopierskripte bedienten.
+//
+// Diese beiden Merker stehen bewusst GANZ OBEN. Sie wurden zuerst weiter
+// unten angelegt, neben der Funktion, die sie fuellt - und herkunftChipSetzen
+// griff beim Laden darauf zu, bevor «let» sie erzeugt hatte. Das warf einen
+// ReferenceError, und zwar so frueh, dass das ganze Programm stehen blieb.
+let versionQuelle = null;      // Adresse der gelesenen version.txt
+let versionGelesen = null;     // ihr Inhalt
+function seitenHerkunft() {
+  try {
+    const u = new URL(window.location.href);
+    if (u.protocol === "file:") return decodeURIComponent(u.pathname);
+    return u.origin + u.pathname;
+  } catch (e) { return String(window.location.href || "unbekannt"); }
+}
+
+// Die Fassungsnummer sichtbar im Kopf, neben dem Ablagezustand. Der
+// Hinweistext nennt zusaetzlich, WOHER die Seite geladen wurde - die
+// entscheidende Angabe, wenn mehrere Ablagen nebeneinander bestehen.
+function herkunftChipSetzen() {
+  const c = document.getElementById("chipVersionKopf");
+  if (!c) return;
+  c.textContent = "Fassung " + VERSION;
+  c.title = "Fassung dieser Datei: " + VERSION
+    + "\nGeladen von: " + seitenHerkunft()
+    + (versionQuelle
+        ? "\nversion.txt: " + versionGelesen + " aus " + versionQuelle
+        : "\nversion.txt: nicht gelesen (nur bei Aufruf über einen Server)");
+}
+herkunftChipSetzen();
 
 // Selbstpruefung gegen den Zwischenspeicher des Browsers.
 //
@@ -13530,7 +13909,12 @@ async function fassungVomServer() {
       const a = await fetch(w + "?t=" + Date.now(), { cache: "no-store" });
       if (!a.ok) continue;
       const t = (await a.text()).trim();
-      if (/^v\d+$/.test(t)) return t;
+      if (/^v\d+$/.test(t)) {
+        try { versionQuelle = new URL(w, window.location.href).href; }
+        catch (e) { versionQuelle = w; }
+        versionGelesen = t;
+        return t;
+      }
     } catch (e) { }
   }
   return null;
@@ -13558,16 +13942,59 @@ function neuLaden() {
 //
 // Der Merker in sessionStorage verhindert eine Schleife: Bleibt die Abweichung
 // nach dem Nachladen bestehen, wird nur gemeldet, nicht erneut geladen.
+// Fassungsnummer als Zahl. "v278" -> 278. Ohne diese Zahl laesst sich nur
+// feststellen DASS etwas abweicht, nicht in welche Richtung - und genau
+// darauf kommt es an.
+function fassungZahl(v) {
+  const m = /^v(\d+)$/.exec(String(v || "").trim());
+  return m ? Number(m[1]) : null;
+}
+
 async function fassungPruefen(beimLaden) {
   if (!/^https?:$/.test(location.protocol)) return;
   const soll = await fassungVomServer();
+  herkunftChipSetzen();
   const f = document.getElementById("fassungHinweis");
   if (!soll || soll === VERSION) { if (f) f.hidden = true; return; }
 
+  const nSoll = fassungZahl(soll), nIst = fassungZahl(VERSION);
   const merker = "fassung_nachgeladen";
   let schon = null;
   try { schon = sessionStorage.getItem(merker); } catch (e) { }
 
+  // ---- Die geladene Datei ist NEUER als version.txt --------------------
+  // Dann ist nicht der Zwischenspeicher veraltet, sondern die Ablage nur
+  // halb aktualisiert: index.html und version.txt gehoeren zusammen.
+  //
+  // Bis v278 wurde hier trotzdem nachgeladen - bei JEDER Abweichung, ohne
+  // die Richtung zu pruefen. Das ist der Fehler, der sich so zeigte: Die
+  // neue Fassung erschien kurz, dann holte das Nachladen die aeltere Datei
+  // aus der Ablage, und das Programm stand wieder auf der alten Fassung.
+  // Nachladen kann eine zu alte Datei nur ersetzen, niemals eine zu neue -
+  // deshalb wird hier nicht mehr geladen, sondern gemeldet.
+  if (nSoll != null && nIst != null && nSoll < nIst) {
+    if (!f) return;
+    f.hidden = false;
+    f.innerHTML = "";
+    const t = document.createElement("span");
+    t.innerHTML = "<strong>Die Ablage ist nur halb aktualisiert.</strong> Diese "
+      + "Datei trägt <strong>" + VERSION + "</strong>, die Datei «version.txt» "
+      + "daneben nennt <strong>" + soll + "</strong>. Beide gehören zusammen. "
+      + "Es wird <em>nicht</em> nachgeladen — das holte die ältere Fassung aus "
+      + "der Ablage. Zu tun: «version.txt» mit dem Inhalt <code>" + VERSION
+      + "</code> neben die Datei legen.<br>Geladen von <code>"
+      + seitenHerkunft() + "</code>, version.txt aus <code>"
+      + (versionQuelle || "—") + "</code>. ";
+    f.appendChild(t);
+    const k2 = document.createElement("button");
+    k2.type = "button"; k2.className = "knopf klein";
+    k2.textContent = "Nochmals prüfen";
+    k2.addEventListener("click", () => fassungPruefen(false));
+    f.appendChild(k2);
+    return;
+  }
+
+  // ---- Die Ablage ist neuer: nachladen ---------------------------------
   if (beimLaden && schon !== soll) {
     try { sessionStorage.setItem(merker, soll); } catch (e) { }
     neuLaden();
@@ -13834,6 +14261,16 @@ function ablageAnzeigen() {
       chip.title = "Gesucht wurde das Skript «speichern.php» an diesen Orten:\n"
                  + (typeof nasOrte === "function" ? nasOrte().join("\n") : "—");
     }
+  }
+  // Kurzfassung im Kopf, neben «Speichern» - dort wird die Frage gestellt.
+  const kk = document.getElementById("ablageKopf");
+  if (kk) {
+    const gut = (ablageArt === "nas" || ablageArt === "konto");
+    kk.textContent = gut
+      ? (ablageArt === "nas" ? "Ablage: NAS" : "Ablage: Konto")
+      : "Nur dieser Browser";
+    kk.className = "ablageKopf " + (gut ? "gut" : "warn");
+    kk.title = chip ? chip.textContent : "";
   }
 }
 
@@ -14648,6 +15085,10 @@ function umstellen(k) {
         p.heimkosten_teuerung = Number(k.pflege.heim_teuerung_vorgabe) || 0;
       if (p.heimkosten_basisjahr == null)
         p.heimkosten_basisjahr = Number(k.jahr_von) || null;
+      // Ist ein Heimaufenthalt gerechnet, aber kein Betrag erfasst, wird eine
+      // Vorgabe gesetzt. Eine Null rechnet still mit kostenlosem Aufenthalt -
+      // das ist der gefaehrlichste aller Vorgabewerte.
+      if (p.heimeintritt_ab != null) heimkostenVorbelegen(p, k);
       if (p.heim_pflegetaxe_pro_tag == null) p.heim_pflegetaxe_pro_tag = 0;
       if (p.heim_betreuung_pro_tag == null) p.heim_betreuung_pro_tag = 0;
       if (p.heim_sonstige_pro_monat == null) p.heim_sonstige_pro_monat = 0;
@@ -15093,7 +15534,29 @@ function zahlFeld(wert, aufAendern, opt = {}) {
   });
   i.addEventListener("change", () => uebertragen(true));
   i.addEventListener("blur", () => uebertragen(true));
+  // Prozentfelder werden nach dem Zeichnen gefasst, damit das Zeichen im Feld
+  // steht (siehe prozFelderFassen). Hier wird nur vermerkt, welche es sind:
+  // Ein Huellelement an dieser Stelle zurueckzugeben waere ein Rueckschritt -
+  // mehrere Aufrufstellen setzen am Rueckgabewert unmittelbar «style.color»
+  // oder «style.borderColor», und das muss am Eingabefeld selbst landen.
+  if (opt.proz) i.dataset.proz = "1";
   return i;
+}
+
+// Legt um jedes Prozentfeld eine Huelle, damit das Zeichen im Feld erscheint.
+// Nach dem Zeichnen und nicht davor: Das Eingabefeld bleibt dasselbe Element,
+// alle zuvor gesetzten Formatangaben bleiben daran haften.
+function prozFelderFassen(wurzel) {
+  const w = wurzel || document;
+  for (const i of w.querySelectorAll("input[data-proz]")) {
+    const el0 = i.parentElement;
+    if (el0 && el0.classList.contains("prozFeld")) continue;
+    if (!el0) continue;
+    const h = document.createElement("span");
+    h.className = "prozFeld";
+    el0.insertBefore(h, i);
+    h.appendChild(i);
+  }
 }
 
 // ------------------------------------------------------------------ Diagnose
@@ -15117,6 +15580,350 @@ function diagnoseFeld(name, getippt, gespeichert) {
   letzteUebernahme = { art: name, wert: getippt, ist: gespeichert, zeit: new Date() };
   diagnoseZeigen();
 }
+// =========================================================== Startseite
+// Drei Dinge: was die Rechnung ergibt, was ihr fehlt, und in welcher
+// Reihenfolge erfasst wird. Die Pruefung ist maschinell - die Tabelle der
+// offenen Punkte im Reiter Grundlagen wird von Hand gepflegt und sagt
+// deshalb nichts darueber, ob die Eingaben vollstaendig sind.
+function startPruefpunkte() {
+  const aus = [];
+  const P = cfg.personen || [];
+  const nenne = p => p.bezeichnung || p.id;
+  const dazu = (art, was, wirkung, ziel) => aus.push({ art, was, wirkung, ziel });
+
+  for (const p of P) {
+    if (p.geburtsjahr == null || !(Number(p.geburtsjahr) > 1900))
+      dazu("fehlt", "Geburtsjahr bei " + nenne(p),
+        "Ohne Geburtsjahr gibt es kein Alter, keine Sterbetafel und keinen "
+        + "Pflegeverlauf.", "personen");
+    if (!p.geschlecht)
+      dazu("fehlt", "Geschlecht bei " + nenne(p),
+        "Die Sterblichkeit von Mann und Frau geht weit auseinander — im Median "
+        + "2.6 Jahre. Ohne die Angabe bleiben die Grafik der Sterblichkeit und "
+        + "das Verlaufsmenü gesperrt.", "personen");
+    else if (!p.rauchen)
+      dazu("offen", "Rauchen bei " + nenne(p) + " nicht erfasst",
+        "Gerechnet wird mit dem Bevölkerungsdurchschnitt, der rund ein Viertel "
+        + "Raucher enthält. Für einen Nichtraucher ist das zu kurz gerechnet.",
+        "personen");
+    if (p.lebenserwartung_bis == null)
+      dazu("fehlt", "Betrachtung bis bei " + nenne(p),
+        "Ohne letztes Rechenjahr ist die Dauer der Rechnung unbestimmt.",
+        "personen");
+    if (p.heimeintritt_ab != null) {
+      if (!(Number(p.heimkosten_pro_monat) > 0) && p.heim_kosten_art !== "geteilt")
+        dazu("fehlt", "Heimkosten bei " + nenne(p) + " stehen auf null",
+          "Das rechnet einen kostenlosen Heimaufenthalt — der gefährlichste "
+          + "aller Vorgabewerte.", "personen");
+      if (!(Number(p.heimkosten_teuerung) > 0))
+        dazu("offen", "Teuerung der Heimkosten bei " + nenne(p) + " ist null",
+          "Bis zum Eintritt vergehen oft zwanzig Jahre und mehr. Ohne Teuerung "
+          + "wird der heutige Tarif als künftiger gerechnet.", "personen");
+    } else if (!p.spitex_aktiv) {
+      dazu("offen", "Kein Pflegefall bei " + nenne(p) + " gerechnet",
+        "Rund 44 % aller Todesfälle ab 65 ereignen sich im Pflegeheim. Das "
+        + "Verlaufsmenü im Reiter Personen setzt einen Verlauf in einem Zug.",
+        "personen");
+    }
+    const v = (cfg.vorsorge || []).find(x => x.person_id === p.id) || {};
+    if (!(Number(v.kapital_start) > 0))
+      dazu("fehlt", "Vorsorgekapital bei " + nenne(p) + " ist null",
+        "Ohne Kapital gibt es nichts zu verzehren; die Rechnung läuft ins Leere.",
+        "vorsorge");
+  }
+
+  // Budget: Ausgaben ohne Teuerung und ohne Basisjahr
+  const ausg = (cfg.positionen || []).filter(x =>
+    (x.fluss || "ausgabe") !== "einnahme" && Number(x.betrag) > 0);
+  const ohneT = ausg.filter(x => !(Number(x.teuerung) > 0));
+  if (ohneT.length)
+    dazu("offen", ohneT.length + " von " + ausg.length
+      + " Ausgaben ohne Teuerung",
+      "Eine Ausgabe ohne Teuerung verliert über zwanzig Jahre rund ein Sechstel "
+      + "ihres Gewichts und schönt das Ergebnis still. Der Knopf «Teuerung aus "
+      + "Statistik setzen» im Reiter Budget füllt alles, wofür eine belegbare "
+      + "Reihe besteht.", "positionen");
+  const ohneB = ausg.filter(x => x.basisjahr == null || x.basisjahr === "");
+  if (ohneB.length && ohneT.length < ausg.length)
+    dazu("offen", ohneB.length + " Positionen ohne Basisjahr",
+      "Ohne Basisjahr gilt der Betrag in Franken des ersten Rechenjahres. Das "
+      + "ist richtig, wenn der Betrag von heute stammt — sonst nicht.",
+      "positionen");
+
+  // Hypotheken ohne Anschluss
+  for (const h of (cfg.hypotheken || [])) {
+    const ablauf = Number(h.ablauf_jahr);
+    const bis = Number(cfg.jahr_bis);
+    const folge = (h.folgeperioden || []).length;
+    if (isFinite(ablauf) && isFinite(bis) && ablauf < bis && !folge)
+      dazu("fehlt", "Hypothek «" + (h.bezeichnung || h.id)
+        + "» hat keinen Anschlusssatz",
+        "Sie läuft " + ablauf + " ab, gerechnet wird bis " + bis
+        + ". Ohne Folgeperiode fehlt der Zinsaufwand danach.", "hypotheken");
+  }
+
+  // Steuern
+  const st = cfg.steuer || {};
+  if (!(Number(st.steuerfuss_gemeinde) > 0))
+    dazu("fehlt", "Steuerfuss der Gemeinde ist null",
+      "Die Gemeindesteuer fällt damit ganz weg.", "steuern");
+  if (!(Number(st.steuerfuss_kanton) > 0))
+    dazu("fehlt", "Steuerfuss des Kantons ist null",
+      "Die Kantonssteuer fällt damit ganz weg.", "steuern");
+
+  // Vorgaben
+  if (typeof sicherGesamtStand === "function" && sicherGesamtStand() === "aus")
+    dazu("offen", "Vorgaben stehen auf den Mittelwerten",
+      "Mittelwerte beschreiben den häufigen Fall, nicht den teuren — und der "
+      + "teure bestimmt den Kapitalbedarf. Der Schalter steht im Reiter Steuern.",
+      "steuern");
+
+  return aus;
+}
+
+function startZeichnen() {
+  const wK = $("#startKennzahlen"), wP = $("#startPruefung"), wS = $("#startSchritte");
+  if (!wK || !wP || !wS || !erg) return;
+  wK.innerHTML = ""; wP.innerHTML = ""; wS.innerHTML = "";
+
+  // ---- Die drei Kennzahlen -------------------------------------------
+  {
+    const g = el("div", "gitter");
+    g.style.cssText = "grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px";
+    for (const p of (cfg.personen || [])) {
+      const k = erg.kennzahlen[p.id] || {};
+      const kar = el("div", "karte");
+      kar.appendChild(el("h3", null, p.bezeichnung || p.id));
+      const zeile = (etikett, wert, farbe) => {
+        const z = el("div");
+        z.style.cssText = "display:flex;gap:10px;align-items:baseline;padding:3px 0";
+        const a = el("span", null, etikett);
+        a.style.cssText = "flex:1 1 auto;font-size:var(--s-text);color:var(--gedaempft)";
+        const b2 = el("span", "mono", wert);
+        b2.style.cssText = "font-weight:700;font-size:17px" + (farbe ? ";color:" + farbe : "");
+        z.appendChild(a); z.appendChild(b2); kar.appendChild(z);
+      };
+      const kap = Math.round(Number(k.kapitalLetztesJahr) || 0);
+      zeile("Kapital im letzten Jahr", chf(kap) + " CHF",
+        kap < 0 ? "var(--warnung)" : "var(--gut)");
+      zeile("Kapital erschöpft", k.erschoepftJahr ? String(k.erschoepftJahr) : "nicht",
+        k.erschoepftJahr ? "var(--warnung)" : "var(--gut)");
+      zeile("Letztes Rechenjahr", String(p.lebenserwartung_bis ?? "–"));
+      g.appendChild(kar);
+    }
+    wK.appendChild(g);
+  }
+
+  // ---- Woher diese Seite stammt --------------------------------------
+  // Sichtbar und nicht nur im Hinweistext: Bestehen mehrere Ablagen
+  // nebeneinander - eine Datei im Downloadordner, eine auf dem NAS, eine im
+  // Programmordner -, so ist sonst nicht zu erkennen, welche gerade läuft.
+  {
+    const kar = el("div", "karte");
+    kar.style.marginTop = "16px";
+    const z = el("div");
+    const datei = /^file:/.test(window.location.protocol);
+    const gleich = versionGelesen && versionGelesen === VERSION;
+    z.innerHTML =
+      "<strong>Diese Seite läuft als Fassung " + VERSION + ".</strong><br>"
+      + "Geladen von <code>" + seitenHerkunft() + "</code>"
+      + (datei
+          ? " — als Datei geöffnet. Eine Prüfung gegen die Ablage findet dabei "
+            + "nicht statt; sie braucht einen Server."
+          : (versionQuelle
+              ? "<br>Die Datei «version.txt» daneben nennt <strong>"
+                + versionGelesen + "</strong>"
+                + (gleich ? " — sie stimmt überein."
+                   : " — <strong style='color:var(--warnung)'>sie weicht ab.</strong>")
+                + " Gelesen aus <code>" + versionQuelle + "</code>."
+              : "<br>Die Datei «version.txt» war nicht erreichbar."))
+      + "<br><span style='color:var(--gedaempft)'>Bestehen mehrere Ablagen "
+      + "nebeneinander, so steht hier, welche gerade läuft. Zeigt eine "
+      + "Verknüpfung auf einen Ordner, den niemand aktualisiert, erscheint "
+      + "hier dessen Adresse — und nicht die erwartete.</span>";
+    z.style.cssText = "font-size:13px;line-height:1.55;max-width:90ch";
+    kar.appendChild(z);
+    wK.appendChild(kar);
+  }
+
+  // ---- Vollständigkeitsprüfung ---------------------------------------
+  {
+    const punkte = startPruefpunkte();
+    const kar = el("div", "karte breit");
+    kar.style.marginTop = "16px";
+    const fehlt = punkte.filter(x => x.art === "fehlt").length;
+    kar.appendChild(el("h3", null, punkte.length
+      ? "Was der Rechnung noch fehlt — " + punkte.length
+        + (punkte.length === 1 ? " Punkt" : " Punkte")
+        + (fehlt ? ", davon " + fehlt + " zwingend" : "")
+      : "Die Eingaben sind vollständig"));
+    if (!punkte.length) {
+      const o = el("p", "kleintext",
+        "Geprüft wurden Geburtsjahr und Geschlecht, letztes Rechenjahr, "
+        + "Vorsorgekapital, Heimkosten und deren Teuerung, Teuerung und Basisjahr "
+        + "der Ausgaben, Anschlusssätze der Hypotheken sowie die Steuerfüsse. "
+        + "Das sagt nichts über die Richtigkeit der Zahlen — nur, dass keine "
+        + "fehlt.");
+      o.style.cssText = "margin:0;color:var(--gedaempft)";
+      kar.appendChild(o);
+    } else {
+      const rahmen = el("div", "tabellenrahmen");
+      const t = document.createElement("table");
+      t.className = "dicht";
+      const kz = t.createTHead().insertRow();
+      ["", "Punkt", "Warum es zählt", ""].forEach((x, i) =>
+        kz.appendChild(el("th", i === 3 ? "rechts" : "links", x)));
+      const tb = t.createTBody();
+      for (const x of punkte) {
+        const r = tb.insertRow();
+        const c0 = el("td");
+        c0.style.cssText = "padding:4px 9px;width:84px";
+        const chip2 = el("span", "chip", x.art === "fehlt" ? "fehlt" : "offen");
+        chip2.style.cssText = "font-size:11px;font-weight:700;color:"
+          + (x.art === "fehlt" ? "var(--warnung)" : "var(--gedaempft)");
+        c0.appendChild(chip2); r.appendChild(c0);
+        const c1 = el("td", null, x.was);
+        c1.style.cssText = "padding:4px 9px;font-weight:600"; r.appendChild(c1);
+        const c2 = el("td", null, x.wirkung);
+        c2.style.cssText = "padding:4px 9px;color:var(--gedaempft);max-width:62ch";
+        r.appendChild(c2);
+        const c3 = el("td"); c3.style.cssText = "padding:3px 9px;text-align:right";
+        const b3 = el("button", "knopf klein", "hingehen");
+        b3.type = "button";
+        b3.addEventListener("click", () => blattOeffnen(x.ziel));
+        c3.appendChild(b3); r.appendChild(c3);
+      }
+      rahmen.appendChild(t); kar.appendChild(rahmen);
+      const h = el("p", "kleintext",
+        "«fehlt» heisst: ohne diese Angabe rechnet das Programm etwas, das so "
+        + "nicht gemeint sein kann. «offen» heisst: es rechnet, aber mit einer "
+        + "Annahme, die zu prüfen ist. Die Prüfung ist maschinell und sagt nichts "
+        + "über die Richtigkeit der erfassten Zahlen.");
+      h.style.cssText = "margin:8px 0 0;color:var(--gedaempft)";
+      kar.appendChild(h);
+    }
+    wP.appendChild(kar);
+  }
+
+  // ---- Reihenfolge ----------------------------------------------------
+  {
+    const kar = el("div", "karte breit");
+    kar.style.marginTop = "16px";
+    kar.appendChild(el("h3", null, "In dieser Reihenfolge erfassen"));
+    const schritte = [
+      ["personen", "Personen", "Geburtsjahr, Geschlecht, Pensionierung, letztes "
+        + "Rechenjahr. Danach den Pflegeverlauf aus der Statistik übernehmen."],
+      ["vorsorge", "Vorsorge und Vermögen", "Kapital je Person, Zins, Einlagen; "
+        + "dazu Liegenschaft und übriges Vermögen."],
+      ["positionen", "Budget", "Alle Ausgaben und Einnahmen mit Teuerung und "
+        + "Basisjahr. Der längste Schritt."],
+      ["hypotheken", "Hypotheken und Liegenschaft", "Tranchen, Abläufe und "
+        + "Anschlusssätze; Nebenkosten und Rückstellungen."],
+      ["steuern", "Steuern und Vorgaben", "Steuerfüsse, Pflegefinanzierung und "
+        + "der Schalter «Vorgaben auf der sicheren Seite»."],
+      ["szenarien", "Rechnen", "Die acht Szenarien zeigen, worauf das Ergebnis "
+        + "empfindlich reagiert."],
+      ["bericht", "Bericht", "Das Ergebnis zum Ausdrucken oder Weitergeben."],
+    ];
+    const ol = el("div");
+    ol.style.cssText = "display:grid;gap:6px;margin-top:4px";
+    schritte.forEach(([ziel, titel, text], i) => {
+      const z = el("div");
+      z.style.cssText = "display:flex;gap:12px;align-items:flex-start;padding:5px 0;"
+        + "border-top:1px solid var(--linie)";
+      const n = el("span", "chip", String(i + 1));
+      n.style.cssText = "flex:0 0 auto;font-weight:700";
+      z.appendChild(n);
+      const m = el("div");
+      m.style.cssText = "flex:1 1 auto;min-width:0";
+      const h4 = el("div", null, titel);
+      h4.style.cssText = "font-weight:700;font-size:var(--s-text)";
+      m.appendChild(h4);
+      const pt = el("div", null, text);
+      pt.style.cssText = "font-size:13px;color:var(--gedaempft);max-width:78ch";
+      m.appendChild(pt);
+      z.appendChild(m);
+      const b4 = el("button", "knopf klein", "öffnen");
+      b4.type = "button"; b4.style.flex = "0 0 auto";
+      b4.addEventListener("click", () => blattOeffnen(ziel));
+      z.appendChild(b4);
+      ol.appendChild(z);
+    });
+    kar.appendChild(ol);
+    wS.appendChild(kar);
+  }
+}
+
+// =========================================================== Lesbarkeit
+// Begrenzt die Zeilenlaenge der Erlaeuterungstexte und faltet sie, wenn die
+// Kurzfassung gewaehlt ist.
+//
+// Warum nach dem Zeichnen und nicht im Stylesheet: Die Erlaeuterungen werden
+// an mehreren hundert Stellen erzeugt, viele mit eigenen Formatangaben direkt
+// am Element. Eine Regel im Stylesheet koennte die Breite zwar setzen, aber
+// nicht unterscheiden, ob ein Block Fliesstext oder ein Eingabefeld enthaelt.
+// Dieser Durchgang prueft das am fertigen Baum.
+//
+// Gemessen vor dieser Aenderung: 1736 bis 1810 Punkte Breite bei 12 bis 13
+// Punkt Schrift, also 250 bis 300 Zeichen je Zeile. Lesbar sind 65 bis 90.
+let erlModus = "lang";          // "kurz" oder "lang"
+try {
+  const g = localStorage.getItem("kv_erlModus");
+  if (g === "kurz" || g === "lang") erlModus = g;
+} catch (e) { /* ohne Speicher gilt die Vorgabe */ }
+
+function lesbarkeitSetzen(wurzel) {
+  const w = wurzel || document;
+  // Alte Knoepfe entfernen; der Baum wurde neu gezeichnet.
+  w.querySelectorAll(".mehrKnopf").forEach(x => x.remove());
+  const kandidaten = w.querySelectorAll(
+    "p, .kleintext, .fuehrung, .erlaeuterung, .karte > div, .teilinhalt2 > div,"
+    + " .teilinhalt > div, li");
+  for (const e of kandidaten) {
+    // Alles, was Bedienelemente oder Tabellen enthaelt, bleibt unberuehrt:
+    // dort ist die Breite durch den Inhalt bestimmt, nicht durch den Text.
+    if (e.querySelector("input,select,textarea,table,svg,button,.feld,.tabellenrahmen,.gitter"))
+      continue;
+    if (e.closest(".berichtBlatt")) continue;      // Bericht hat eigenes Mass
+    const t = (e.textContent || "").trim();
+    if (t.length < 150) continue;                   // kurze Hinweise nicht antasten
+    e.classList.add("erlText");
+    const fs = parseFloat(getComputedStyle(e).fontSize);
+    if (fs && fs < 13) e.style.fontSize = "13px";
+    // Zweistufig: in der Kurzfassung die ersten drei Zeilen, der Rest auf Klick.
+    const lang = t.length > 320 && !e.closest("li");
+    if (erlModus === "kurz" && lang) {
+      e.classList.add("erlKurz");
+      const k = el("button", "mehrKnopf", "Mehr dazu ▸");
+      k.type = "button";
+      k.addEventListener("click", ev => {
+        ev.stopPropagation();
+        const zu = e.classList.toggle("erlKurz");
+        k.textContent = zu ? "Mehr dazu ▸" : "Weniger ▾";
+      });
+      if (e.parentNode) e.parentNode.insertBefore(k, e.nextSibling);
+    } else {
+      e.classList.remove("erlKurz");
+    }
+  }
+}
+
+// Nach jedem Zeichnen, das nicht ueber rendern() laeuft - etwa beim Oeffnen
+// eines Reiters oder eines Kartenteils, deren Inhalt erst dann entsteht.
+function nachzeichnen(wurzel) {
+  try { prozFelderFassen(wurzel); } catch (e) { if (window.console) console.warn(e); }
+  try { lesbarkeitSetzen(wurzel); } catch (e) { if (window.console) console.warn(e); }
+}
+
+function erlModusSetzen(m) {
+  erlModus = (m === "kurz") ? "kurz" : "lang";
+  try { localStorage.setItem("kv_erlModus", erlModus); } catch (e) { /* egal */ }
+  const b = document.getElementById("btnErlModus");
+  if (b) b.textContent = (erlModus === "kurz")
+    ? "Erläuterungen: kurz" : "Erläuterungen: ausführlich";
+  lesbarkeitSetzen();
+}
+
 function diagnoseZeigen() {
   const z = document.getElementById("diagnose");
   if (!z) return;
@@ -18972,7 +19779,7 @@ function szenarioStandSetzen(text) {
 const kapitalVorUebernahme = {};
 // Anschlusssatz fuer Szenario 3. Null bedeutet: der erfasste Satz gilt.
 let szenarioAnschlusssatz = null;
-let aktivesBlatt = "personen";
+let aktivesBlatt = "start";
 // Eckwerte der Zinsreihe, in Anteilen: 1 % ist 0.01
 const zinsreihe = { von: 0.01, bis: 0.05, schritt: 0.005 };
 
@@ -23601,8 +24408,37 @@ const HEIM_VORGABEN = [
   ["sg_hoch", "Kanton St. Gallen, hoher Standard"],
 ];
 
-function heimVorgabeWerte(schluessel) {
-  const pf = (cfg && cfg.pflege) || {};
+// Welche Vorgabe das Programm von sich aus einsetzt, wenn noch nichts erfasst
+// ist. Der Kanton stammt aus dem Reiter Steuern - ist er weder ZH noch SG,
+// wird St. Gallen genommen, weil die Rechnung ohnehin auf dessen
+// Pflegefinanzierung beruht. Der Standard folgt dem Schalter «Vorgaben auf der
+// sicheren Seite»: eingeschaltet der hohe, sonst der mittlere.
+function heimVorgabeAutomatisch(stand) {
+  const q = stand || cfg;
+  const kt = String(((q || {}).steuer || {}).kanton || "").toUpperCase();
+  const k = (kt === "ZH") ? "zh" : "sg";
+  const st = ((q.sichere_seite !== false) ? "hoch" : "mittel");
+  const s = k + "_" + st;
+  const w = heimVorgabeWerte(s, q);
+  return w ? Object.assign({ schluessel: s }, w) : null;
+}
+
+// Setzt den selbst zu tragenden Monatsbetrag, wenn noch keiner erfasst ist.
+// Ein leeres Feld hilft niemandem: Der Nutzer weiss den Heimtarif meist nicht
+// auswendig, und eine Null rechnet still mit kostenlosem Heimaufenthalt.
+function heimkostenVorbelegen(p, stand) {
+  const q = stand || cfg;
+  if (p.heim_kosten_art === "geteilt") return null;
+  if (Number(p.heimkosten_pro_monat) > 0) return null;
+  const w = heimVorgabeAutomatisch(q);
+  if (!w) return null;
+  p.heimkosten_pro_monat = w.gesamt_monat;
+  if (!p.heim_vorgabe) p.heim_vorgabe = w.schluessel;
+  return w;
+}
+
+function heimVorgabeWerte(schluessel, stand) {
+  const pf = ((stand || cfg) && (stand || cfg).pflege) || {};
   const teile = String(schluessel || "").split("_");
   const kanton = teile[0], standard = teile[1];
   if (kanton !== "zh" && kanton !== "sg") return null;
@@ -23824,31 +24660,70 @@ function pflegeVerlaufBlock(p, ziel, feld) {
     ["", "Spitex ab", "Heim ab", "Lebensende", "Jahre Spitex", "Jahre Heim"]
       .forEach((x, i) => kz.appendChild(el("th", i ? "rechts" : "links", x)));
     const tb = t.createTBody();
-    const zeile = (v, stark) => {
+    const jahrAlter = j => (j == null || j === "") ? "–"
+      : j + (isFinite(geb) ? " (" + (Number(j) - geb) + ")" : "");
+    const zeile = (name, werte, art) => {
       const r = tb.insertRow();
-      const c0 = el("td", null, v.name);
+      const c0 = el("td", null, name);
       c0.style.padding = "4px 9px";
-      if (stark) c0.style.fontWeight = "700";
+      if (art === "gilt") c0.style.fontWeight = "700";
+      if (art === "blass") c0.style.color = "var(--gedaempft)";
       r.appendChild(c0);
-      const z = txt => {
+      for (const txt of werte) {
         const c = el("td", "rechts mono", txt);
-        c.style.padding = "4px 9px"; r.appendChild(c);
-      };
-      z(v.spitexDauer > 0 ? v.spitexAb + " (" + v.spitexAlter + ")" : "–");
-      z(v.heimAb + " (" + v.heimAlter + ")");
-      z(v.endeJahr + " (" + v.endeAlter + ")");
-      z(String(v.spitexDauer));
-      z(String(v.heimDauer));
+        c.style.padding = "4px 9px";
+        if (art === "gilt") c.style.fontWeight = "700";
+        if (art === "blass") c.style.color = "var(--gedaempft)";
+        r.appendChild(c);
+      }
+      return r;
     };
-    zeile(vm);
-    zeile(vh, true);
+    const ausVerlauf = v => [
+      v.spitexDauer > 0 ? v.spitexAb + " (" + v.spitexAlter + ")" : "–",
+      v.heimAb + " (" + v.heimAlter + ")",
+      v.endeJahr + " (" + v.endeAlter + ")",
+      String(v.spitexDauer), String(v.heimDauer),
+    ];
+
+    // Zuoberst, was TATSAECHLICH gerechnet wird. Ohne diese Zeile zeigte die
+    // Tabelle zwei Vorschlaege, auch wenn davon gar keiner uebernommen war -
+    // bei «kein Pflegefall» stand dort ein Verlauf, den es nicht gibt.
+    const keinFall = p.pflege_verlauf === "kein"
+      || (p.heimeintritt_ab == null && !p.spitex_aktiv);
+    if (keinFall) {
+      const r = zeile("erfasst — kein Pflegefall", ["–", "–",
+        jahrAlter(p.lebenserwartung_bis), "–", "–"], "gilt");
+      r.title = "Es wird weder Spitex noch ein Heimaufenthalt gerechnet.";
+    } else {
+      zeile("erfasst — gilt für die Rechnung", [
+        p.spitex_aktiv ? jahrAlter(p.spitex_ab) : "–",
+        jahrAlter(p.heimeintritt_ab),
+        jahrAlter(p.lebenserwartung_bis),
+        (p.spitex_aktiv && p.spitex_ab != null && p.heimeintritt_ab != null)
+          ? String(Math.max(0, Number(p.heimeintritt_ab) - Number(p.spitex_ab))) : "–",
+        (p.heimeintritt_ab != null && p.lebenserwartung_bis != null)
+          ? String(Math.max(0, Number(p.lebenserwartung_bis)
+              - Number(p.heimeintritt_ab) + 1)) : "–",
+      ], "gilt");
+    }
+    // Darunter die beiden Vorschlaege zum Vergleich - blass, weil sie nur
+    // zeigen, was das Menue setzen WUERDE.
+    const istM = p.pflege_verlauf === "mittel", istH = p.pflege_verlauf === "hoch";
+    zeile("Vorschlag: mittlerer Verlauf", ausVerlauf(vm), istM ? "" : "blass");
+    zeile("Vorschlag: hoher Verlauf", ausVerlauf(vh), istH ? "" : "blass");
     rahmen.appendChild(t);
     ziel.appendChild(rahmen);
     const lg = el("p", "kleintext",
-      "In Klammern das Alter. Die Stunden je Woche: mittlerer Verlauf "
+      "Die erste Zeile ist der Stand, mit dem gerechnet wird — sie folgt jeder "
+      + "Änderung von Hand. Die beiden darunter zeigen, was das Menü setzen würde. "
+      + "In Klammern das Alter. Die Stunden je Woche: mittlerer Verlauf "
       + F2.format(vm.stdPflege) + " Pflege und " + F2.format(vm.stdHaus)
       + " Hauswirtschaft, hoher Verlauf " + F2.format(vh.stdPflege) + " und "
-      + F2.format(vh.stdHaus) + ".");
+      + F2.format(vh.stdHaus) + "."
+      + (p.spitex_aktiv
+          ? " Erfasst sind zurzeit " + F2.format(Number(p.spitex_pflege_std_woche) || 0)
+            + " und " + F2.format(Number(p.spitex_haus_std_woche) || 0) + "."
+          : ""));
     lg.style.cssText = "margin:0 0 8px;color:var(--gedaempft)";
     ziel.appendChild(lg);
   }
@@ -23976,12 +24851,19 @@ function personenZeichnen() {
         diagnoseFeld("Betrachtung bis", x, lebend.lebenserwartung_bis);
         rechnen();
       }, { jahr: true });
-      const hu = el("span");
-      hu.style.cssText = "display:inline-flex; align-items:center; gap:5px";
-      hu.appendChild(fe);
-      hu.appendChild(sterbeKnopf(p));
-      feld("Betrachtung bis, letztes Rechenjahr (Todesjahr)", hu,
-        alterIn(p.lebenserwartung_bis), true);
+      // Eigene Zeile statt «feld», damit der Knopf in der dritten Spalte
+      // neben der Altersangabe steht: Im Eingabefeld selbst nähme er der
+      // Jahreszahl den Platz weg, und die wäre dann abgeschnitten.
+      const f = el("div", "feld weit");
+      f.appendChild(el("label", null,
+        "Betrachtung bis, letztes Rechenjahr (Todesjahr)"));
+      f.appendChild(fe);
+      const eh = el("span", "einheit breit");
+      eh.style.cssText = "display:inline-flex; align-items:center; gap:8px";
+      eh.appendChild(el("span", null, alterIn(p.lebenserwartung_bis)));
+      eh.appendChild(sterbeKnopf(p));
+      f.appendChild(eh);
+      ziel.appendChild(f);
     }
     // Das Feld hat zwei Aufgaben, und beide sind hier zu benennen: es begrenzt
     // die Rechnung dieser Person, und ohne gesetztes Todesjahr leitet sich das
@@ -24049,6 +24931,7 @@ function personenZeichnen() {
     // eingeschlossen - wer zu Hause gepflegt wird und zu Hause stirbt, konnte
     // deshalb gar nicht erfasst werden. Das war ein Fehler: Rund zwei Drittel
     // der Maenner sterben ausserhalb eines Pflegeheims.
+    kh.appendChild(alleOeffnenKnopf(kh));
     const T = {};
     {
       const jahreHeim = (p.heimeintritt_ab != null && p.lebenserwartung_bis != null)
@@ -24126,6 +25009,12 @@ function personenZeichnen() {
     cb.addEventListener("change", () => {
       p.heimeintritt_ab = cb.checked ? (p.heimeintritt_ab || p.pensionierung + 15) : null;
       if (!cb.checked) p.heimkosten_pro_monat = 0;
+      else {
+        const w0 = heimkostenVorbelegen(p);
+        if (w0) melde("Selbst zu tragende Kosten mit " + chf(w0.gesamt_monat)
+          + " CHF pro Monat vorbelegt — aus «" + w0.name + "». Der Wert ist "
+          + "überschreibbar.");
+      }
       rechnen();
     });
     sch.appendChild(cb); sch.appendChild(el("span", null, "Heim- oder Spitalaufenthalt"));
@@ -24273,7 +25162,8 @@ function personenZeichnen() {
       const vorgabeLoesen = () => { p.heim_vorgabe = ""; };
 
       if (!geteilt) {
-        feldZwei("Kosten",
+        const vg0 = heimVorgabeAutomatisch();
+        feldZwei("Selbst zu tragende Kosten",
           zahlFeld(p.heimkosten_pro_monat || 0,
             x => { p.heimkosten_pro_monat = x; vorgabeLoesen(); rechnen(); },
             { grenze: { min: 0, max: 200000, weichMax: 50000 } }), "CHF/Monat",
@@ -24283,18 +25173,34 @@ function personenZeichnen() {
               vorgabeLoesen(); rechnen();
             },
             { dez: true, grenze: { min: 0, max: 6600, weichMax: 1650 } }), "CHF/Tag");
-        const ph = el("p", "kleintext");
-        ph.innerHTML = "Dieser Betrag wird <strong>vollständig als selbst "
-          + "getragen</strong> gerechnet. Er darf deshalb nicht den ganzen "
-          + "Pflegeanteil enthalten: Von der Pflegetaxe trägt die "
-          + "pflegebedürftige Person nach Art. 25a Abs. 5 KVG und Art. 7a KLV "
-          + "nur den Eigenanteil von höchstens "
-          + chfR(Number((cfg.pflege || {}).beteiligung_heim_pro_tag) || 23)
-          + " CHF pro Tag, den Rest tragen Krankenversicherer und Gemeinde. "
-          + "Wer die Aufteilung sehen will, stellt oben auf «getrennt nach "
-          + "Pflege, Betreuung und Sonstigem» um.<br>Umgerechnet wird mit "
-          + "365 ⁄ 12 = " + F2.format(TAGE_JE_MONAT) + " Tagen je Monat.";
-        ph.style.cssText = "margin:4px 0 0; color:var(--gedaempft)";
+        const ph = el("div");
+        const eig = chfR(Number((cfg.pflege || {}).beteiligung_heim_pro_tag) || 23);
+        ph.innerHTML =
+          "<strong>Was hier hineingehört.</strong> Nur das, was die "
+          + "pflegebedürftige Person <em>selbst bezahlt</em> — nicht die "
+          + "Gesamtkosten des Heims. Also:"
+          + "<ul style='margin:4px 0;padding-left:20px'>"
+          + "<li>die <strong>Hotellerie</strong> — Zimmer, Verpflegung, Reinigung</li>"
+          + "<li>die <strong>Betreuung</strong> — Begleitung im Alltag, Aktivierung</li>"
+          + "<li>das <strong>Übrige</strong> — Coiffeur, Wäsche, persönliche Auslagen</li>"
+          + "<li>vom Pflegeanteil nur den <strong>Eigenanteil</strong> von höchstens "
+            + eig + " CHF pro Tag (Art. 25a Abs. 5 KVG, Art. 7a KLV)</li></ul>"
+          + "<strong>Nicht hinein gehört der übrige Pflegeanteil.</strong> Ihn tragen "
+          + "Krankenversicherer und Gemeinde. Die Gesamtkosten einer Institution "
+          + "liegen deshalb deutlich höher als dieser Betrag — in St. Gallen rund "
+          + "286, in Zürich rund 386 CHF je Pflegetag. Wer die Aufteilung sehen "
+          + "will, stellt oben auf «getrennt nach Pflege, Betreuung und Sonstigem» "
+          + "um; dort rechnet das Programm sie selbst aus."
+          + (vg0
+              ? "<br><strong>Vorbelegt mit " + chf(vg0.gesamt_monat) + " CHF</strong> "
+                + "aus «" + vg0.name + "» — der Kanton stammt aus dem Reiter Steuern, "
+                + "der Standard aus dem Schalter «Vorgaben auf der sicheren Seite». "
+                + "Über das Menü oben lässt sich eine andere Vorgabe wählen, und jeder "
+                + "Wert ist überschreibbar."
+              : "")
+          + "<br>Umgerechnet wird mit 365 ⁄ 12 = " + F2.format(TAGE_JE_MONAT)
+          + " Tagen je Monat.";
+        ph.style.cssText = "font-size:12px;margin:4px 0 0; color:var(--gedaempft)";
         ziel.appendChild(ph);
       } else {
         const pf = cfg.pflege || {};
@@ -24965,6 +25871,36 @@ function personenZeichnen() {
 // wird der Inhalt, in den die folgenden Zeilen geschrieben werden.
 let kartenteilOffen = {};   // Schluessel -> true
 
+// Knopf «Alle öffnen» für eine Karte. Die Regel «je Karte ist nur einer
+// offen» haelt die Seite kurz, macht aber den Vergleich zweier Teile
+// unmoeglich - und beim Drucken erscheint nur der offene.
+function alleOeffnenKnopf(karte) {
+  const b = el("button", "knopf klein", "Alle öffnen");
+  b.type = "button";
+  b.style.cssText = "margin:2px 0 8px";
+  b.title = "Öffnet alle Teile dieser Karte zugleich — zum Vergleichen und "
+    + "zum Drucken. Nochmals angeklickt schliesst sie wieder.";
+  b.addEventListener("click", () => {
+    const teile = [...karte.querySelectorAll(":scope > .teilordner")];
+    const offen = teile.filter(x => x.classList.contains("offen")).length;
+    const auf = offen < teile.length;
+    for (const t of teile) {
+      const inh = t.querySelector(":scope > .teilinhalt2");
+      const pf = t.querySelector(":scope > .teilkopf > .tpfeil");
+      if (!inh) continue;
+      inh.hidden = !auf;
+      if (pf) pf.textContent = auf ? "▾" : "▸";
+      t.classList.toggle("offen", auf);
+      if (t.dataset.schluessel) kartenteilOffen[t.dataset.schluessel] = auf;
+    }
+    b.textContent = auf ? "Alle schliessen" : "Alle öffnen";
+    requestAnimationFrame(() => {
+      tabellenrahmenPruefen(); kopfzeilenAusrichten(); nachzeichnen(karte);
+    });
+  });
+  return b;
+}
+
 function kartenteil(ziel, schluessel, titel, erlaeuterung, kurz) {
   const w = el("div", "teilordner");
   const kopf = el("button", "teilkopf");
@@ -24988,6 +25924,14 @@ function kartenteil(ziel, schluessel, titel, erlaeuterung, kurz) {
       });
     setzen(auf);
     kartenteilOffen[schluessel] = auf;
+    // Beim Oeffnen an den Anfang des Teils springen. Ohne das steht der
+    // Kopf oft schon weit oben aus dem Bild gerollt, und der Inhalt beginnt
+    // irgendwo in der Mitte - man sucht dann den Anfang.
+    if (auf) requestAnimationFrame(() => {
+      nachzeichnen(inh);
+      try { kopf.scrollIntoView({ block: "start", behavior: "smooth" }); }
+      catch (e) { kopf.scrollIntoView(); }
+    });
   });
   w.__zu = () => setzen(false);
   w.dataset.schluessel = schluessel;
@@ -30332,7 +31276,7 @@ document.addEventListener("keydown", e => {
 // der Ueberlebenden ab dem heutigen Alter, die Verteilung des Sterbealters
 // und die Lage der Rechenwerte darin. Massgebend ist das erfasste Geschlecht;
 // das andere wird zum Vergleich blass mitgezeichnet.
-function sterbeGrafik(p) {
+function sterbeGrafik(p, gross) {
   const w = el("div");
   const le = cfg.lebenserwartung || {};
   const jetzt = Number(cfg.jahr_von) || new Date().getFullYear();
@@ -30356,11 +31300,11 @@ function sterbeGrafik(p) {
 
   // ---- Zeichenfläche. Bewusst gross: eine Kurve, die man nicht ablesen
   // kann, ist keine Darstellung, sondern eine Verzierung.
-  const BR = 820, HO = 460;
+  const BR = gross ? 1560 : 820, HO = gross ? 760 : 460;
   const L = 58, R = 18, O = 16, U = 46;      // Ränder
-  const HK = 236;                            // Höhe der Überlebenskurve
-  const HV = 112;                            // Höhe der Sterbeverteilung
-  const LU = 30;                             // Luft zwischen beiden
+  const HK = gross ? 430 : 236;              // Höhe der Überlebenskurve
+  const HV = gross ? 200 : 112;              // Höhe der Sterbeverteilung
+  const LU = gross ? 42 : 30;                // Luft zwischen beiden
   const a0 = Math.round(alter), a1 = 106;
   const x = a => L + (a - a0) / (a1 - a0) * (BR - L - R);
   const yK = s => O + (1 - s) * HK;
@@ -30518,52 +31462,68 @@ function sterbeGrafik(p) {
 }
 
 // Öffnet die Grafik in einem Fenster neben dem Knopf.
+// Das Fenster nimmt den ganzen Bildschirm ein: Eine Kurve mit sieben Marken
+// auf einem Ausschnitt von 880 Punkten ist zu klein, um sie abzulesen.
+// Ein Knopf schaltet auf die kleinere, freistehende Darstellung zurueck.
+let sterbeGross = true;
 function sterbeFensterOeffnen(knopf, p) {
   teuerungFensterSchliessen();
-  const k = el("div", "karte");
-  k.style.cssText = "position:absolute; z-index:60; width:min(880px, 95vw);"
-    + " max-height:84vh; overflow:auto; box-shadow:0 10px 34px rgba(0,0,0,.28);"
-    + " padding:14px 16px";
-  const kopf = el("div");
-  kopf.style.cssText = "display:flex; align-items:flex-start; gap:10px; margin-bottom:8px";
-  const h = el("h3", null, "Sterblichkeit — " + (p.bezeichnung || p.id));
-  h.style.margin = "0";
-  kopf.appendChild(h);
-  const zu = el("button", "knopf klein", "Schliessen");
-  zu.type = "button"; zu.style.marginLeft = "auto";
-  zu.addEventListener("click", teuerungFensterSchliessen);
-  kopf.appendChild(zu);
-  k.appendChild(kopf);
-  k.appendChild(sterbeGrafik(p));
-  document.body.appendChild(k);
-  const rr = knopf.getBoundingClientRect();
-  const br = k.getBoundingClientRect();
-  let links = window.scrollX + rr.left - br.width / 2 + rr.width / 2;
-  links = Math.max(window.scrollX + 8,
-    Math.min(links, window.scrollX + document.documentElement.clientWidth - br.width - 8));
-  let oben = window.scrollY + rr.bottom + 6;
-  if (rr.bottom + br.height + 12 > window.innerHeight)
-    oben = Math.max(window.scrollY + 8, window.scrollY + rr.top - br.height - 6);
-  k.style.left = Math.round(links) + "px";
-  k.style.top = Math.round(oben) + "px";
-  teuerungFenster = k;
-  setTimeout(() => {
-    const weg = e => {
-      if (teuerungFenster && !teuerungFenster.contains(e.target)) {
-        teuerungFensterSchliessen();
-        document.removeEventListener("pointerdown", weg, true);
-      }
-    };
-    document.addEventListener("pointerdown", weg, true);
-  }, 0);
+  const huelle = el("div");
+  const bauen = () => {
+    huelle.innerHTML = "";
+    if (sterbeGross) {
+      huelle.style.cssText = "position:fixed; inset:0; z-index:70;"
+        + " background:rgba(15,23,42,.45); display:flex;"
+        + " align-items:center; justify-content:center; padding:2vh 2vw";
+    } else {
+      huelle.style.cssText = "position:fixed; inset:0; z-index:70;"
+        + " background:rgba(15,23,42,.25); display:flex;"
+        + " align-items:center; justify-content:center; padding:4vh 4vw";
+    }
+    const k = el("div", "karte");
+    k.style.cssText = "width:" + (sterbeGross ? "min(1680px, 96vw)" : "min(900px, 92vw)")
+      + "; max-height:" + (sterbeGross ? "96vh" : "86vh")
+      + "; overflow:auto; box-shadow:0 18px 50px rgba(0,0,0,.35);"
+      + " padding:14px 18px; margin:0";
+    const kopf = el("div");
+    kopf.style.cssText = "display:flex; align-items:center; gap:10px; margin-bottom:8px";
+    const h = el("h3", null, "Sterblichkeit — " + (p.bezeichnung || p.id));
+    h.style.margin = "0";
+    kopf.appendChild(h);
+    const kl = el("button", "knopf klein",
+      sterbeGross ? "Kleiner anzeigen" : "Ganzer Bildschirm");
+    kl.type = "button"; kl.style.marginLeft = "auto";
+    kl.addEventListener("click", e => {
+      e.stopPropagation(); sterbeGross = !sterbeGross; bauen();
+    });
+    kopf.appendChild(kl);
+    const zu = el("button", "knopf klein", "Schliessen");
+    zu.type = "button";
+    zu.addEventListener("click", teuerungFensterSchliessen);
+    kopf.appendChild(zu);
+    k.appendChild(kopf);
+    k.appendChild(sterbeGrafik(p, sterbeGross));
+    huelle.appendChild(k);
+  };
+  bauen();
+  // Ein Klick neben die Karte schliesst das Fenster.
+  huelle.addEventListener("pointerdown", e => {
+    if (e.target === huelle) teuerungFensterSchliessen();
+  });
+  document.body.appendChild(huelle);
+  teuerungFenster = huelle;
 }
 
-// Knopf neben dem Feld «Betrachtung bis».
+// Knopf neben dem Feld «Betrachtung bis». Beschriftet und nicht als Zeichen:
+// Ein runder Kreis mit einem Bogen darin sagt niemandem, was er tut.
 function sterbeKnopf(p) {
-  const b = el("button", "knopf klein rund", "◠");
+  const b = el("button", "knopf klein", "Grafik ansehen");
   b.type = "button";
-  b.title = "Grafik der Sterblichkeit anzeigen: Verlauf der Überlebenden, "
-    + "Verteilung des Sterbealters und die Lage der Rechenwerte darin.";
+  b.style.whiteSpace = "nowrap";
+  b.title = "Grafik der Sterblichkeit: Verlauf der Überlebenden, Verteilung "
+    + "des Sterbealters und die Lage der Rechenwerte darin — für "
+    + (p.geschlecht === "f" ? "eine Frau" : p.geschlecht === "m" ? "einen Mann"
+       : "das erfasste Geschlecht") + ".";
   b.addEventListener("click", e => { e.stopPropagation(); sterbeFensterOeffnen(b, p); });
   return b;
 }
@@ -31579,6 +32539,7 @@ function rendern() {
     const z = document.getElementById("btnTeuerungZurueck");
     if (z) z.hidden = !teuerungVorher;
   });
+  zeichne("Startseite", startZeichnen);
   aenderungOffen = false;
   fehlerZeigen(schlecht.length ? schlecht.join(" | ") : null);
   diagnoseZeigen();
@@ -31588,6 +32549,10 @@ function rendern() {
     textfelderNachfuehren(); tabellenrahmenPruefen(); kopfzeilenAusrichten();
     auswahlbreitenSetzen();
     titelAusrichten();
+    // Nach dem Setzen des Fokus und der Breiten: beides arbeitet mit den
+    // Eingabefeldern, und das Fassen der Prozentfelder haengt sie um.
+    try { prozFelderFassen(); } catch (e) { if (window.console) console.warn(e); }
+    try { lesbarkeitSetzen(); } catch (e) { if (window.console) console.warn(e); }
     bildlageHalten();
   });
 }
@@ -32351,13 +33316,57 @@ function blattOeffnen(name) {
   kopfzeilenAusrichten(blatt);
   auswahlbreitenSetzen(blatt);
   erlaeuterungenFalten(blatt);
-  requestAnimationFrame(() => titelAusrichten(blatt));
+  requestAnimationFrame(() => { titelAusrichten(blatt); nachzeichnen(); });
   scrollFreigeben();
   blatt.scrollIntoView({ block: "start", behavior: "smooth" });
 }
 document.querySelectorAll(".reiter").forEach(b => {
+  if (!b.dataset.blatt) return;          // «Was ist neu» hat ein eigenes Ziel
   b.addEventListener("click", () => blattOeffnen(b.dataset.blatt));
 });
+
+// «Was ist neu» öffnet die Grundlagen und springt zu den Änderungskarten.
+// Sie liegen dort seit jeher; ein eigener Reiter hätte 259 Karten verschoben,
+// ein Sprungziel genügt.
+{
+  const b = document.getElementById("btnWasNeu");
+  if (b) b.addEventListener("click", () => {
+    blattOeffnen("grundlagen");
+    requestAnimationFrame(() => {
+      for (const h of document.querySelectorAll("#blatt-grundlagen h3"))
+        if (/^Änderungen in v/.test(h.textContent || "")) {
+          scrollFreigeben();
+          h.scrollIntoView({ block: "start", behavior: "smooth" });
+          return;
+        }
+    });
+  });
+}
+
+// Schalter für die Erläuterungen, Diagnosezeile und das Leseband.
+{
+  const b = document.getElementById("btnErlModus");
+  if (b) {
+    b.textContent = (erlModus === "kurz")
+      ? "Erläuterungen: kurz" : "Erläuterungen: ausführlich";
+    b.addEventListener("click", () =>
+      erlModusSetzen(erlModus === "kurz" ? "lang" : "kurz"));
+  }
+  const d = document.getElementById("btnDiagnose");
+  if (d) d.addEventListener("click", () => {
+    const z = document.getElementById("diagnose");
+    if (z) { z.hidden = !z.hidden; if (!z.hidden) diagnoseZeigen(); }
+  });
+  // Schmale Geräte: Eingabe gesperrt, bis der Nutzer sie ausdrücklich will.
+  document.body.classList.add("nurLesen");
+  const t = document.getElementById("btnTrotzdem");
+  if (t) t.addEventListener("click", () => {
+    document.body.classList.remove("nurLesen");
+    melde("Eingabe freigegeben. Die Budgettabelle ist auf diesem Bildschirm "
+      + "nur schwer zu treffen — für längere Erfassungen ist der grosse "
+      + "Bildschirm der bessere Ort.");
+  });
+}
 
 // ---------------------------------------------------------- Auswertungen
 // Reicht die erzeugte Datei an den Browser weiter. Der Weg ueber ein Blob
@@ -33666,6 +34675,14 @@ function uebersichtZeichnen() {
     // Bericht hervorgeht, auf welcher Grundlage gerechnet wurde.
     { t: "Vorgaben", alle: sicherStandText(),
       z: { blatt: "steuern", feld: "Vorgaben auf der sicheren Seite" }, klein: true },
+    // Welche Datei gerechnet hat. Ohne diese Zeile ist aus einem
+    // ausgedruckten Bericht nicht zu erkennen, welche Ablage ihm zugrunde lag.
+    { t: "Fassung und Herkunft",
+      alle: VERSION + " · " + seitenHerkunft()
+        + (versionGelesen
+            ? " · version.txt: " + versionGelesen
+              + (versionGelesen === VERSION ? "" : " ⚠ weicht ab") : ""),
+      klein: true },
     { t: "Pflegeverlauf aus der Statistik", je: p =>
         (PFLEGE_VERLAEUFE.find(v => v[0] === p.pflege_verlauf) || [, null])[1],
       z: { blatt: "personen", feld: "^Verlauf übernehmen" }, klein: true },
