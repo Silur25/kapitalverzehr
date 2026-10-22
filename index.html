@@ -1332,7 +1332,7 @@ table.uebersicht tr.klein td.name{padding-left:22px}
 
   <div class="leistenfuss">
     <span>Budget- und Rentenberechnung &middot; Kanton St. Gallen, Gemeinde Gommiswald</span>
-    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v284</span></span>
+    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v285</span></span>
   </div>
 
   <!-- ===================== Startseite ===================== -->
@@ -2487,6 +2487,63 @@ table.uebersicht tr.klein td.name{padding-left:22px}
           Abschätzung, keine gerechnete Grösse.</p>
       </div>
       <div class="karte breit">
+        <h3>Änderungen in v285 — Heimkosten: Aufschlüsselung, persönliche Auslagen, Sackgasse im Verlaufsmenü</h3>
+        <ul class="liste">
+          <li><strong>Gesamtbetrag blieb beim Umschalten auf null.</strong> Beim
+            Wechsel der Erfassungsart von «getrennt nach Pflege, Betreuung und
+            Sonstigem» auf «ein Gesamtbetrag pro Monat» wurde der Betrag nicht
+            aus den getrennten Werten gebildet — nur die Gegenrichtung war
+            behandelt. Das Menü zeigte dann eine Vorgabe und das Feld null; die
+            Rechnung lief mit kostenlosem Heimaufenthalt. Neu wird der Betrag
+            aus dem gebildet, was die Person selbst trägt: Betreuung und
+            Hotellerie, Sonstiges und der Eigenanteil an der Pflege. Sind keine
+            getrennten Werte erfasst, greift die Vorbelegung aus der Statistik.
+            Beides wird gemeldet.</li>
+          <li><strong>Neue Tabelle «Wer trägt was».</strong> Sie erscheint bei
+            beiden Erfassungsarten und rechnet aus den <em>tatsächlich
+            erfassten</em> Werten, nicht aus der Vorgabe:
+            <ul class="liste">
+              <li>Gesamtkosten der Institution;</li>
+              <li>davon Pflegetaxe, abzüglich dessen, was Krankenversicherer
+                und Gemeinde tragen (Art. 25a Abs. 5 KVG, Art. 9 Abs. 1
+                PflegeG SG);</li>
+              <li>Eigenanteil an der Pflege, höchstens 23.00 CHF je Tag
+                (Art. 7a Abs. 3 KLV);</li>
+              <li>Hotellerie und Betreuung, Sonstiges, persönliche Auslagen;</li>
+              <li>Summe «selbst zu tragen» — allein diese geht in die
+                Kapitalrechnung ein.</li>
+            </ul>
+            Beim Gesamtbetrag ist nur bekannt, was selbst zu tragen ist; die
+            volle Pflegetaxe wird daraus mit den Kostenanteilen des
+            Curaviva-Faktenblatts abgeleitet. Diese Zeilen sind als
+            <em>Schätzung</em> bezeichnet.</li>
+          <li><strong>Neues Feld «Persönliche Auslagen».</strong> Coiffeur,
+            Kleidung, Telefon, Zeitung, Ausflüge. Der Betrag kommt zur
+            Heimtaxe <em>hinzu</em> und folgt derselben Teuerung.
+            <strong>Die Vorgabe ist null, und das mit Absicht:</strong> Für
+            diese Ausgaben gibt es keine belastbare schweizerische Statistik.
+            Die Position «Übriges» des Curaviva-Faktenblatts (1.59 % der
+            Betriebskosten) ist ein Kostenanteil der <em>Institution</em> aus
+            deren Betriebsrechnung — nicht eine Ausgabe der Bewohnerin. Ein
+            Vorgabewert wäre eine Annahme ohne Beleg. Ein Hinweis warnt vor der
+            Doppelzählung mit Budgetpositionen, die beim Heimeintritt nicht
+            entfallen.</li>
+          <li><strong>Sackgasse im Verlaufsmenü behoben.</strong> In v284 war
+            «eigene Eingabe» gesperrt, weil die Wahl nichts bewirkte. Wer «kein
+            Pflegefall» gewählt hatte, kam damit über das Menü nicht mehr
+            heraus — die Schalter für Heimaufenthalt und Pflege zu Hause stehen
+            in den Teilen 2 und 3, nicht dort. Der Eintrag heisst neu «eigene
+            Eingabe — selbst erfassen» und ist wieder wählbar:
+            <ul class="liste">
+              <li>Ist nichts erfasst, schaltet er Heimaufenthalt und Pflege zu
+                Hause mit neutralen Startwerten frei — ausdrücklich <em>nicht</em>
+                mit Zeitpunkten aus der Sterbetafel, sonst stünde danach ein
+                Vorschlag im Menü, den niemand gewählt hat.</li>
+              <li>Ist bereits etwas erfasst, ändert er keinen Wert und meldet,
+                wo die Felder stehen.</li>
+            </ul></li>
+        </ul>
+
         <h3>Änderungen in v284 — Hervorhebung des Verlaufs, Kartenbreite statt Fensterbreite, Sprung im Kartenteil, Übersicht einklappbar</h3>
         <ul class="liste">
           <li><strong>Der übernommene Verlauf steht fett.</strong> In der
@@ -9231,17 +9288,49 @@ function kassenbeitragHeim(pflegeTag, pf) {
   return Math.min(pflegeTag, stufe * satz);
 }
 
+// ------------------------------------------- Persoenliche Auslagen im Heim
+// Coiffeur, Kleidung, Telefon, Zeitung, Ausfluege.
+//
+// Sie sind NICHT Teil der Heimtaxe und auch nicht die Position "Uebriges"
+// des Curaviva-Faktenblatts: Jene ist ein Kostenanteil der INSTITUTION aus
+// deren Betriebsrechnung, nicht eine Ausgabe des Bewohners. Was eine Person
+// im Heim fuer sich selbst ausgibt, erscheint in keiner dieser Statistiken.
+// Der Betrag kommt deshalb hinzu und folgt derselben Teuerung wie die
+// uebrigen Heimkosten; die Vorgabe ist null, damit nichts unterstellt wird,
+// was sich nicht belegen laesst.
+//
+// ACHTUNG Doppelzaehlung: Steht im Budget eine Position "Coiffeur" oder
+// "persoenliche Ausgaben", die bei Heimeintritt NICHT entfaellt, zaehlt der
+// Betrag zweimal. Der Reiter "Budgetposten bei Heimaufenthalt" entscheidet
+// darueber.
+function heimAuslagenImJahr(person, jahr) {
+  if (!person || person.heimeintritt_ab == null) return 0;
+  const ab = Number(person.heimeintritt_ab);
+  if (!isFinite(ab) || jahr < ab) return 0;
+  const monat = Number(person.heim_auslagen_pro_monat) || 0;
+  if (!(monat > 0)) return 0;
+  const tau = Number(person.heimkosten_teuerung) || 0;
+  const basis = person.heimkosten_basisjahr != null
+    ? Number(person.heimkosten_basisjahr) : ab;
+  return monat * 12 * Math.pow(1 + tau, Math.max(0, jahr - basis));
+}
+
 function heimTeileImJahr(person, jahr, pf) {
   const leer = { pflege: 0, betreuung: 0, sonstige: 0, sonstigeTraeger: "selbst",
+                 auslagen: 0,
                  pflegeVoll: 0, pflegeKasse: 0, pflegeGemeinde: 0,
                  pflegeGetragen: 0, total: 0, gesamt: 0 };
   if (!person || person.heimeintritt_ab == null) return leer;
   const ab = Number(person.heimeintritt_ab);
   if (!isFinite(ab) || jahr < ab) return leer;
   if (person.heim_kosten_art !== "geteilt") {
-    // Alte Erfassung: ein Gesamtbetrag, voll selbst getragen.
+    // Ein Gesamtbetrag, voll selbst getragen. Die persoenlichen Auslagen
+    // kommen hinzu - sie sind nicht Teil der Heimtaxe (siehe
+    // heimAuslagenImJahr).
     const t = heimkostenImJahr(person, jahr);
-    return Object.assign({}, leer, { betreuung: t, total: t, gesamt: t });
+    const a = heimAuslagenImJahr(person, jahr);
+    return Object.assign({}, leer,
+      { betreuung: t, auslagen: a, total: t + a, gesamt: t + a });
   }
   // Pflegestufe: die letzte erreichte Stufe gilt, wie beim Gesamtbetrag.
   let pflegeTag = Number(person.heim_pflegetaxe_pro_tag) || 0;
@@ -9282,11 +9371,13 @@ function heimTeileImJahr(person, jahr, pf) {
   const sonstMonat = Number(person.heim_sonstige_pro_monat) || 0;
   const sonstige = sonstMonat * 12 * f;
   const betreuung = betreuTag * f * tage;
+  const auslagen = heimAuslagenImJahr(person, jahr);
 
   return {
     pflege: eigenTag * tage,
     betreuung,
     sonstige,
+    auslagen,
     sonstigeTraeger: person.heim_sonstige_traeger || "selbst",
     pflegeVoll: pflegeTagJ * tage,
     pflegeKasse: kasseTag * tage,
@@ -9294,8 +9385,8 @@ function heimTeileImJahr(person, jahr, pf) {
     pflegeGetragen: (kasseTag + gemeindeTag) * tage,
     pflegetaxeTag: pflegeTagJ,
     kassenbeitragTag: kasseTag,
-    total: eigenTag * tage + betreuung + sonstige,
-    gesamt: pflegeTagJ * tage + betreuung + sonstige,
+    total: eigenTag * tage + betreuung + sonstige + auslagen,
+    gesamt: pflegeTagJ * tage + betreuung + sonstige + auslagen,
   };
 }
 
@@ -11071,7 +11162,8 @@ function rechneEinmal(cfg, tarife, vorlauf) {
       // auf sie selbst zurueck, weil die andere nicht mehr lebt, ist der
       // Betrag hier bereits enthalten und darf oben nicht doppelt zaehlen.
       zeile.heimSonstigeFuerAndere = heimSonstFremd[pid] || 0;
-      zeile.heimkosten = hT.pflege + hT.betreuung + zeile.heimSonstigeSelbst
+      zeile.heimkosten = hT.pflege + hT.betreuung + hT.auslagen
+                       + zeile.heimSonstigeSelbst
                        + zeile.heimSonstigeFuerAndere;
       zeile.spitexkosten = sT.total;
       // Leistungen der Zusatzversicherung an die Pflege zu Hause. Sie
@@ -15362,6 +15454,10 @@ function umstellen(k) {
       if (p.heim_betreuung_pro_tag == null) p.heim_betreuung_pro_tag = 0;
       if (p.heim_sonstige_pro_monat == null) p.heim_sonstige_pro_monat = 0;
       if (p.heim_sonstige_traeger == null) p.heim_sonstige_traeger = "selbst";
+      // Persoenliche Auslagen im Heim - Coiffeur, Kleidung, Telefon. Vorgabe
+      // null: Fuer diesen Betrag gibt es keine belastbare Statistik, also
+      // wird nichts unterstellt.
+      if (p.heim_auslagen_pro_monat == null) p.heim_auslagen_pro_monat = 0;
       if (p.heim_kassenbeitrag_pro_tag === undefined) p.heim_kassenbeitrag_pro_tag = null;
       if (p.spitex_aktiv == null) p.spitex_aktiv = false;
       if (p.spitex_ab === undefined) p.spitex_ab = null;
@@ -24737,6 +24833,182 @@ function heimVorgabeWerte(schluessel, stand) {
   };
 }
 
+// --------------------------------- Aufschluesselung der Heimkosten je Monat
+// Was die INSTITUTION kostet, was Krankenversicherer und Gemeinde tragen und
+// was die Person SELBST bezahlt - gerechnet aus den tatsaechlich erfassten
+// Werten, nicht aus der Vorgabe. So stimmt die Tabelle auch dann, wenn ein
+// Wert von Hand ueberschrieben wurde.
+//
+// Rechtsgrundlage der Aufteilung: Art. 25a Abs. 5 KVG und Art. 7a Abs. 3 KLV
+// (Eigenanteil hoechstens 20 Prozent des hoechsten Pflegebeitrags, also
+// 23.00 CHF je Tag), Art. 9 Abs. 1 PflegeG SG (Restfinanzierung durch Kanton
+// und Gemeinde).
+//
+// Rueckgabe null, wenn kein Heimaufenthalt gerechnet wird.
+function heimAufschluesselung(p) {
+  if (!p || p.heimeintritt_ab == null) return null;
+  const pf = cfg.pflege || {};
+  const eigenTag = Number(pf.beteiligung_heim_pro_tag) || 23;
+  const auslagenMt = Number(p.heim_auslagen_pro_monat) || 0;
+  const geteilt = p.heim_kosten_art === "geteilt";
+  let pflegeTag, hbTag, sonstMt;
+  if (geteilt) {
+    pflegeTag = Number(p.heim_pflegetaxe_pro_tag) || 0;
+    hbTag = Number(p.heim_betreuung_pro_tag) || 0;
+    sonstMt = Number(p.heim_sonstige_pro_monat) || 0;
+  } else {
+    // Beim Gesamtbetrag ist nur bekannt, was die Person selbst traegt. Die
+    // volle Pflegetaxe wird daraus geschaetzt - mit dem Verhaeltnis der
+    // Kostenanteile des Curaviva-Faktenblatts. Das ist eine SCHAETZUNG und
+    // wird in der Tabelle auch so bezeichnet.
+    const selbstTag = (Number(p.heimkosten_pro_monat) || 0) / TAGE_JE_MONAT;
+    hbTag = Math.max(0, selbstTag - eigenTag);
+    const aP = Number(pf.heim_anteil_pflege) || 0.4307;
+    const aHB = (Number(pf.heim_anteil_hotellerie) || 0.4078)
+              + (Number(pf.heim_anteil_betreuung) || 0.1458);
+    pflegeTag = aHB > 0 ? hbTag * (aP / aHB) : 0;
+    sonstMt = 0;
+  }
+  const eigenAnteilTag = Math.min(pflegeTag, eigenTag);
+  const andereTag = Math.max(0, pflegeTag - eigenAnteilTag);
+  const mt = v => Math.round(v * TAGE_JE_MONAT);
+  const selbstMt = mt(hbTag + eigenAnteilTag) + sonstMt + auslagenMt;
+  const andereMt = mt(andereTag);
+  return {
+    geteilt, geschaetzt: !geteilt,
+    pflegeTag, pflegeMt: mt(pflegeTag),
+    andereTag, andereMt,
+    eigenAnteilTag, eigenAnteilMt: mt(eigenAnteilTag),
+    hbTag, hbMt: mt(hbTag),
+    sonstMt, auslagenMt,
+    selbstMt, selbstTag: (selbstMt / TAGE_JE_MONAT),
+    institutionMt: mt(pflegeTag + hbTag) + sonstMt,
+    institutionTag: pflegeTag + hbTag + sonstMt / TAGE_JE_MONAT,
+  };
+}
+
+// Eingabefeld fuer die persoenlichen Auslagen im Heim.
+//
+// Warum ein eigenes Feld: Die Position "Uebriges" des Curaviva-Faktenblatts
+// (1.59 Prozent der Betriebskosten) ist ein Kostenanteil der INSTITUTION,
+// nicht eine Ausgabe des Bewohners. Was eine Person im Heim fuer Coiffeur,
+// Kleidung, Telefon oder Ausfluege ausgibt, steht in keiner dieser
+// Statistiken. Die Vorgabe ist deshalb null: Ein Wert waere eine Annahme
+// ohne Beleg. Die Groessenordnung nennt der Hinweis, schaetzen muss der
+// Nutzer selbst.
+function heimAuslagenFeld(p, ziel, feldZwei) {
+  feldZwei("Persönliche Auslagen",
+    zahlFeld(p.heim_auslagen_pro_monat || 0,
+      x => { p.heim_auslagen_pro_monat = x || 0; rechnen(); },
+      { grenze: { min: 0, max: 20000, weichMax: 2000 } }), "CHF/Monat",
+    zahlFeld((Number(p.heim_auslagen_pro_monat) || 0) / TAGE_JE_MONAT,
+      x => {
+        p.heim_auslagen_pro_monat = Math.round((x || 0) * TAGE_JE_MONAT);
+        rechnen();
+      },
+      { dez: true, grenze: { min: 0, max: 660, weichMax: 66 } }), "CHF/Tag");
+  const h = el("div");
+  h.style.cssText = "font-size:12px;margin:2px 0 8px;color:var(--gedaempft)";
+  h.innerHTML =
+    "<strong>Was die Person im Heim selbst ausgibt</strong> — Coiffeur, "
+    + "Kleidung, Telefon, Zeitung, Ausflüge, Geschenke. Diese Beträge "
+    + "kommen zur Heimtaxe <em>hinzu</em>; sie folgen derselben Teuerung."
+    + "<br><strong>Vorgabe null, und das mit Absicht:</strong> Für diese "
+    + "Ausgaben gibt es keine belastbare schweizerische Statistik. Die "
+    + "Position «Übriges» des Curaviva-Faktenblatts ist ein Kostenanteil der "
+    + "<em>Institution</em> aus deren Betriebsrechnung, nicht eine Ausgabe "
+    + "der Bewohnerin. Ein Vorgabewert wäre eine Annahme ohne Beleg — "
+    + "geschätzt wird dieser Betrag besser selbst."
+    + "<br><strong>Achtung Doppelzählung:</strong> Stehen im Budget "
+    + "Positionen wie Coiffeur oder persönliche Ausgaben, die beim "
+    + "Heimeintritt <em>nicht</em> entfallen, zählt der Betrag zweimal. Was "
+    + "entfällt, wird im Teil «Budgetposten bei Heimaufenthalt» festgelegt.";
+  ziel.appendChild(h);
+}
+
+// Zeichnet die Aufschluesselung als Tabelle.
+function heimAufschluesselungBlock(p, ziel) {
+  const a = heimAufschluesselung(p);
+  if (!a) return;
+  const rahmen = el("div", "tabellenrahmen");
+  rahmen.style.margin = "8px 0";
+  const t = document.createElement("table");
+  t.className = "dicht";
+  const kz = t.createTHead().insertRow();
+  ["Wer trägt was", "CHF/Tag", "CHF/Monat"]
+    .forEach((x, i) => kz.appendChild(el("th", i ? "rechts" : "links", x)));
+  const tb = t.createTBody();
+  const zeile = (name, tag, monat, art) => {
+    const r = tb.insertRow();
+    const c0 = el("td", null, name);
+    c0.style.padding = "4px 9px";
+    if (art === "stark") c0.style.fontWeight = "700";
+    if (art === "ein") c0.style.paddingLeft = "26px";
+    if (art === "ein") c0.style.color = "var(--gedaempft)";
+    r.appendChild(c0);
+    for (const v of [tag, monat]) {
+      const c = el("td", "rechts mono", v);
+      c.style.padding = "4px 9px";
+      if (art === "stark") c.style.fontWeight = "700";
+      if (art === "ein") c.style.color = "var(--gedaempft)";
+      r.appendChild(c);
+    }
+    return r;
+  };
+  zeile("Gesamtkosten der Institution", chfR(a.institutionTag),
+    chf(a.institutionMt), "stark");
+  zeile("davon Pflegetaxe", chfR(a.pflegeTag), chf(a.pflegeMt), "ein");
+  const rA = zeile("Krankenversicherer und Gemeinde", "− " + chfR(a.andereTag),
+    "− " + chf(a.andereMt));
+  rA.title = "Restfinanzierung nach Art. 25a Abs. 5 KVG; im Kanton St. Gallen "
+    + "tragen Kanton und politische Gemeinde sie zu zwei Dritteln bzw. einem "
+    + "Drittel (Art. 9 Abs. 1 PflegeG SG).";
+  zeile("Eigenanteil an der Pflege", chfR(a.eigenAnteilTag),
+    chf(a.eigenAnteilMt), "ein");
+  zeile("Hotellerie und Betreuung", chfR(a.hbTag), chf(a.hbMt), "ein");
+  if (a.sonstMt > 0)
+    zeile("Sonstiges der Institution", chfR(a.sonstMt / TAGE_JE_MONAT),
+      chf(a.sonstMt), "ein");
+  // Die persönlichen Auslagen stehen AUSSERHALB der Institutionskosten: Sie
+  // erscheinen in keiner Betriebsrechnung eines Heims. Ohne diese Trennung
+  // ginge die Summenprobe nicht auf — Institution = andere + selbst gilt nur
+  // für die Heimtaxe.
+  if (a.auslagenMt > 0) {
+    const taxeMt = a.selbstMt - a.auslagenMt;
+    zeile("Heimtaxe, selbst zu tragen", chfR(taxeMt / TAGE_JE_MONAT),
+      chf(taxeMt), "stark");
+    const rP = zeile("Persönliche Auslagen",
+      "+ " + chfR(a.auslagenMt / TAGE_JE_MONAT), "+ " + chf(a.auslagenMt));
+    rP.title = "Coiffeur, Kleidung, Telefon, Ausflüge. Nicht Teil der "
+      + "Heimtaxe und in keiner Betriebsrechnung einer Institution enthalten.";
+    zeile("Selbst zu tragen insgesamt", chfR(a.selbstTag), chf(a.selbstMt), "stark");
+  } else {
+    zeile("Selbst zu tragen", chfR(a.selbstTag), chf(a.selbstMt), "stark");
+  }
+  rahmen.appendChild(t);
+  ziel.appendChild(rahmen);
+  const h = el("p", "kleintext");
+  h.style.cssText = "margin:2px 0 10px;color:var(--gedaempft)";
+  h.innerHTML = a.geschaetzt
+    ? "<strong>Die oberen drei Zeilen sind geschätzt.</strong> Beim "
+      + "Gesamtbetrag ist nur bekannt, was selbst zu tragen ist. Die volle "
+      + "Pflegetaxe wird daraus mit dem Verhältnis der Kostenanteile des "
+      + "Curaviva-Faktenblatts 2022 abgeleitet (Pflege 43.07 % gegenüber "
+      + "Hotellerie und Betreuung 55.36 %). <strong>Nur die Zeile «Selbst zu "
+      + "tragen» geht in die Rechnung ein</strong> — die übrigen dienen der "
+      + "Einordnung. Für die genaue Aufteilung ist oben auf «getrennt nach "
+      + "Pflege, Betreuung und Sonstigem» umzustellen."
+    : "Gerechnet aus den erfassten Werten. In die Kapitalrechnung geht allein "
+      + "ein, was selbst zu tragen ist; was Krankenversicherer und Gemeinde "
+      + "tragen, belastet das Kapital nicht.";
+  if (a.auslagenMt > 0)
+    h.innerHTML += " <strong>Die Summenprobe gilt für die Heimtaxe:</strong> "
+      + "Gesamtkosten der Institution = Krankenversicherer und Gemeinde + "
+      + "Heimtaxe selbst zu tragen. Die persönlichen Auslagen stehen "
+      + "ausserhalb — sie erscheinen in keiner Betriebsrechnung eines Heims.";
+  ziel.appendChild(h);
+}
+
 // --------------------------------------------- Pflegeverlauf aus der Statistik
 // Leitet aus Geschlecht, heutigem Alter, Rauchverhalten und den beiden
 // Stellschrauben der Sterbetafel die Zeitachse der Pflegebeduerftigkeit ab.
@@ -24999,7 +25271,45 @@ function pflegeVerlaufBlock(p, ziel, feld) {
   {
     const sel = wahlFeld(PFLEGE_VERLAEUFE, pflegeVerlaufStand(p),
       x => {
-        if (!x) { p.pflege_verlauf = ""; rechnen(); return; }
+        if (!x) {
+          p.pflege_verlauf = "";
+          const nichts = p.heimeintritt_ab == null && !p.spitex_aktiv;
+          if (!nichts) {
+            rechnen();
+            melde("Es gilt weiterhin, was erfasst ist — «eigene Eingabe» "
+              + "beschreibt diesen Zustand, sie ändert keinen Wert. Die "
+              + "Felder stehen in den Teilen 2 «Pflege zu Hause» und "
+              + "3 «Heimaufenthalt».");
+            return;
+          }
+          // Nichts erfasst: Beides einschalten, damit die Felder sichtbar
+          // werden. Neutrale Zeitpunkte, kein Verlauf aus der Statistik.
+          const pf1 = cfg.pflege || {};
+          const frueh = Number(cfg.jahr_von) || new Date().getFullYear();
+          const ende = Number(p.lebenserwartung_bis);
+          const eintritt = (p.pensionierung != null)
+            ? Number(p.pensionierung) + 15
+            : (isFinite(ende) ? ende - 2 : frueh + 15);
+          p.heimeintritt_ab = Math.max(frueh, Math.round(eintritt));
+          const w0 = heimkostenVorbelegen(p);
+          const jahre = Number(pf1.stat_spitex_jahre) || 2;
+          p.spitex_aktiv = true;
+          p.spitex_ab = Math.max(frueh, Number(p.heimeintritt_ab) - jahre);
+          p.spitex_bis = null;
+          if (!(Number(p.spitex_pflege_std_woche) > 0)) {
+            p.spitex_pflege_std_woche = 4;
+            p.spitex_haus_std_woche = 3;
+          }
+          pflegeZeitenRichten(p, "heim", null);
+          rechnen();
+          melde("Zum Selbererfassen freigeschaltet: Heimaufenthalt ab "
+            + p.heimeintritt_ab + ", Pflege zu Hause ab " + p.spitex_ab
+            + (w0 ? ", selbst zu tragende Kosten " + chf(w0.gesamt_monat)
+                    + " CHF pro Monat aus «" + w0.name + "»" : "")
+            + ". Das sind Startwerte, keine Vorschläge aus der Sterbetafel — "
+            + "jeder Wert ist in den Teilen 2 und 3 zu überschreiben.");
+          return;
+        }
         const v = pflegeVerlaufSetzen(p, x);
         rechnen();
         if (v && !v.kein)
@@ -25009,17 +25319,19 @@ function pflegeVerlaufBlock(p, ziel, feld) {
         else if (v) melde("Kein Pflegefall gerechnet: Spitex, Heimaufenthalt und "
           + "Hilflosenentschädigung sind zurückgenommen.");
       });
-    // «eigene Eingabe» beschreibt einen ZUSTAND, es ist kein Befehl: Sie
-    // ergibt sich, sobald ein Wert von Hand geändert wird. Als Wahl wäre sie
-    // wirkungslos - sie setzt keinen einzigen Wert, und das Menü spränge
-    // sofort auf den aus den Werten abgeleiteten Stand zurück. Genau das war
-    // zu beobachten («eigene Eingabe akzeptiert das Programm nicht»). Der
-    // Eintrag bleibt deshalb sichtbar, aber nicht wählbar.
+    // «eigene Eingabe» ist beides: der Zustand, wenn die Werte von keinem
+    // Vorschlag stammen, UND der Weg, selbst zu erfassen.
+    //
+    // In v284 war der Eintrag gesperrt, weil er als Wahl nichts bewirkte.
+    // Das führte in eine Sackgasse: Wer «kein Pflegefall» gewählt hatte, kam
+    // über das Menü nicht mehr heraus — die Schalter für Heimaufenthalt und
+    // Pflege zu Hause stehen in den Teilen 2 und 3, nicht hier. Der Eintrag
+    // ist deshalb wieder wählbar und schaltet beides ein, wenn nichts
+    // erfasst ist. Die Zeitpunkte stammen dabei NICHT aus der Sterbetafel,
+    // sondern sind neutrale Startwerte — sonst stünde danach ein Vorschlag
+    // im Menü, den niemand gewählt hat.
     const oEigen = [...sel.options].find(o => o.value === "");
-    if (oEigen) {
-      oEigen.disabled = true;
-      oEigen.textContent = "eigene Eingabe";
-    }
+    if (oEigen) oEigen.textContent = "eigene Eingabe — selbst erfassen";
     feld("Verlauf übernehmen", sel, "", true);
     const hw = el("p", "kleintext");
     hw.style.cssText = "margin:0 0 8px;color:var(--gedaempft)";
@@ -25028,10 +25340,10 @@ function pflegeVerlaufBlock(p, ziel, feld) {
         + "fett. Jeder Wert bleibt überschreibbar — sobald einer abweicht, "
         + "steht hier «eigene Eingabe»."
       : "<strong>Eigene Eingabe:</strong> Die erfassten Werte stimmen mit "
-        + "keinem der beiden Vorschläge überein. Dieser Eintrag lässt sich "
-        + "nicht wählen — er ergibt sich aus den Werten. Ein Vorschlag im "
-        + "Menü überschreibt sie; von Hand geänderte Werte führen wieder "
-        + "hierher zurück.";
+        + "keinem der beiden Vorschläge überein. Ein Vorschlag im Menü "
+        + "überschreibt sie; von Hand geänderte Werte führen wieder hierher "
+        + "zurück. Ist noch gar nichts erfasst, schaltet dieser Eintrag "
+        + "Heimaufenthalt und Pflege zu Hause mit neutralen Startwerten frei.";
     ziel.appendChild(hw);
   }
 
@@ -25537,6 +25849,36 @@ function personenZeichnen() {
             p.heim_betreuung_pro_tag = Math.round(bh * 20) / 20;
             p.heim_pflegetaxe_pro_tag = Math.round(bh * (aP / aHB) * 20) / 20;
           }
+          // Die Gegenrichtung fehlte: Beim Umstellen auf den Gesamtbetrag
+          // blieb das Feld auf null stehen, obwohl die getrennten Werte
+          // erfasst waren. Das Menü zeigte dann eine Vorgabe und das Feld
+          // null - die Rechnung lief mit kostenlosem Heimaufenthalt.
+          // Gebildet wird der Betrag aus dem, was die Person SELBST trägt:
+          // Betreuung und Hotellerie, Sonstiges und der Eigenanteil an der
+          // Pflege (Art. 25a Abs. 5 KVG, Art. 7a Abs. 3 KLV).
+          if (x !== "geteilt" && !(Number(p.heimkosten_pro_monat) > 0)) {
+            const pf1 = cfg.pflege || {};
+            const eigen = Number(pf1.beteiligung_heim_pro_tag) || 23;
+            const betreu = Number(p.heim_betreuung_pro_tag) || 0;
+            const pflege = Number(p.heim_pflegetaxe_pro_tag) || 0;
+            const sonst = Number(p.heim_sonstige_pro_monat) || 0;
+            if (betreu > 0 || pflege > 0 || sonst > 0) {
+              const selbstTag = betreu + Math.min(pflege, eigen);
+              p.heimkosten_pro_monat =
+                Math.round(selbstTag * TAGE_JE_MONAT + sonst);
+              setTimeout(() => melde("Gesamtbetrag aus den getrennten Werten "
+                + "gebildet: " + chf(p.heimkosten_pro_monat) + " CHF pro Monat "
+                + "— Betreuung und Hotellerie, Sonstiges und der Eigenanteil "
+                + "an der Pflege von höchstens " + chfR(eigen) + " CHF je Tag. "
+                + "Was Krankenversicherer und Gemeinde tragen, ist nicht "
+                + "enthalten."), 300);
+            } else {
+              const w1 = heimkostenVorbelegen(p);
+              if (w1) setTimeout(() => melde("Selbst zu tragende Kosten mit "
+                + chf(w1.gesamt_monat) + " CHF pro Monat vorbelegt — aus «"
+                + w1.name + "». Der Wert ist überschreibbar."), 300);
+            }
+          }
           rechnen();
         }), "");
 
@@ -25643,6 +25985,7 @@ function personenZeichnen() {
           + " Tagen je Monat.";
         ph.style.cssText = "font-size:12px;margin:4px 0 0; color:var(--gedaempft)";
         ziel.appendChild(ph);
+        heimAuslagenFeld(p, ziel, feldZwei);
       } else {
         const pf = cfg.pflege || {};
         feldZwei("Pflegetaxe",
@@ -25825,7 +26168,11 @@ function personenZeichnen() {
               : "");
         pe.style.cssText = "margin:8px 0 0; color:var(--gedaempft)";
         ziel.appendChild(pe);
+        heimAuslagenFeld(p, ziel, feldZwei);
       }
+
+      // ---- Wer was trägt -------------------------------------------------
+      heimAufschluesselungBlock(p, ziel);
 
       // ---- Bis wann die Heimkosten laufen --------------------------------
       // Ohne diese Angabe bleibt offen, ueber wie viele Jahre gerechnet wird -
@@ -35347,6 +35694,11 @@ function uebersichtZeichnen() {
     { t: "Heim- oder Spitalaufenthalt", je: p => p.heimeintritt_ab != null
         ? "ab " + p.heimeintritt_ab + ", " + chf(Number(p.heimkosten_pro_monat) || 0) + " CHF/Monat" : "keiner",
       z: { blatt: "personen", feld: "^Heim- oder Spitalaufenthalt" } },
+    { t: "Persönliche Auslagen im Heim", je: p => p.heimeintritt_ab == null ? null
+        : (Number(p.heim_auslagen_pro_monat) > 0
+            ? chf(Number(p.heim_auslagen_pro_monat)) + " CHF/Monat, zusätzlich zur Heimtaxe"
+            : "keine erfasst"),
+      z: { blatt: "personen", feld: "Persönliche Auslagen" }, klein: true },
     { t: "Teuerung der Heimkosten", je: p => p.heimeintritt_ab == null ? null
         : warn(pr(p.heimkosten_teuerung ?? 0) + ", Basisjahr "
             + (p.heimkosten_basisjahr ?? p.heimeintritt_ab),
