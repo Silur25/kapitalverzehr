@@ -1108,7 +1108,7 @@ table.uebersicht tr.klein td.name{padding-left:22px}
 
   <div class="leistenfuss">
     <span>Budget- und Rentenberechnung &middot; Kanton St. Gallen, Gemeinde Gommiswald</span>
-    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v272</span></span>
+    <span class="rechtsbuendig"><button type="button" id="updateHinweis" hidden></button>Fassung <span class="chip" id="chipVersion">v276</span></span>
   </div>
   <p class="merker" id="fassungHinweis" style="margin:8px 0 0" hidden></p>
   <!-- Band fuer die Aktualisierung. Es erscheint nur, wenn es etwas zu melden
@@ -2250,6 +2250,270 @@ table.uebersicht tr.klein td.name{padding-left:22px}
           50 000 Franken verschieben; <strong>mittel</strong> zwischen etwa 5 000 und
           50 000 Franken; <strong>klein</strong> darunter. Die Einstufung ist eine
           Abschätzung, keine gerechnete Grösse.</p>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v276 — Fünf Vorgaben einzeln schaltbar, Grafik der Sterblichkeit</h3>
+        <ul class="liste">
+          <li><strong>Der Sammelschalter aus v274 ist in fünf Einzelschalter
+            aufgeteilt.</strong> Die Annahmen haben verschiedene Beweiskraft — ein
+            Schalter über alle war zu grob. Jeder Hebel lässt sich nun für sich
+            setzen, und die Tabelle im Reiter Steuern nennt zu jedem beide Werte und
+            die Beweiskraft:
+            <ul class="liste">
+              <li>Dauer im Heim, hoher Verlauf — 7 J / 8 J gegen 5 J / 6 J — <em>geschätzt</em></li>
+              <li>Spitex-Umfang, hoher Verlauf — 8 + 5 gegen 6 + 4 h/Woche — <em>gemessen</em></li>
+              <li>Hilflosenentschädigung — aus gegen ein — <em>Rechtsanspruch, aber bedingt</em></li>
+              <li>Teuerung der Heimkosten — 3.00 % gegen 0.00 % — <em>Annahme</em></li>
+              <li>Teuerung neuer Budgetpositionen — 0.75 % gegen 0.00 % — <em>gemessen</em></li>
+            </ul></li>
+          <li><strong>Geprüft auf Abhängigkeiten: es gibt keine.</strong> Jeder Hebel
+            wirkt auf einen anderen Kostenblock — die beiden Teuerungen auf
+            verschiedene Positionen, Heimdauer und Spitex-Umfang auf verschiedene
+            Phasen, die Hilflosenentschädigung ist eine Einnahme. Ein Test legt jeden
+            Hebel einzeln um und prüft, dass er genau seine eigenen Felder ändert und
+            keine fremden. Heimdauer und Teuerung <em>verstärken</em> sich zwar, weil
+            beide multiplikativ auf dieselben Kosten wirken; das ist aber keine
+            Abhängigkeit, sondern genau das, was die Rechnung zeigen soll.</li>
+          <li><strong>Der Sammelschalter bleibt darüber stehen</strong> und kennt drei
+            Zustände: ein, aus und <em>teilweise</em> — dann steht daneben, wie viele
+            der fünf auf der sicheren Seite stehen.</li>
+          <li><strong>Ein selbst gesetzter Wert wird als solcher ausgewiesen.</strong>
+            Die Zahlenfelder bleiben frei. Steht dort weder der eine noch der andere
+            Vorgabewert, zeigt die Zeile «eigener Wert» statt ein oder aus — damit nie
+            der Eindruck entsteht, es gelte eine Vorgabe, die gar nicht mehr
+            drinsteht.</li>
+          <li><strong>In der Zusammenstellung der Daten</strong> steht neu die genaue
+            Lage statt nur «auf der sicheren Seite», etwa: <em>«teilweise — sicher:
+            Dauer im Heim, Spitex-Umfang; Mittelwert: Teuerung der Heimkosten»</em>.
+            Damit ist aus einem Bericht ablesbar, worauf gerechnet wurde.</li>
+          <li><strong>Kein Hebel sind</strong> das <em>Quantil des hohen Verlaufs</em>
+            und der <em>Rauchfaktor</em>. Das Quantil unterscheidet den hohen vom
+            mittleren Verlauf — auf 50 % gesetzt wären beide gleich. Das ist die
+            Begriffsbestimmung des Szenarios, kein «sicher oder nicht». Beide bleiben
+            freie Felder.</li>
+          <li><strong>Neu: Grafik der Sterblichkeit.</strong> Neben dem Feld
+            «Betrachtung bis, letztes Rechenjahr» steht ein Knopf, der ein Fenster mit
+            zwei Bildern öffnet:
+            <ul class="liste">
+              <li><strong>oben</strong> der Anteil der heute Gleichaltrigen, der ein
+                Alter noch erreicht;</li>
+              <li><strong>unten</strong> der Anteil, der in genau diesem Altersjahr
+                stirbt — die Verteilung des Sterbealters.</li>
+            </ul>
+            Eingezeichnet sind Mittelwert, Median, oberes Viertel, oberes Zehntel, das
+            erfasste Jahr «Betrachtung bis» sowie Heimeintritt und Spitexbeginn.
+            Darunter steht eine Legende mit Alter und Kalenderjahr zu jeder Marke.</li>
+          <li><strong>Die Grafik beachtet das erfasste Geschlecht.</strong> Gerechnet
+            wird für Mann oder Frau; das jeweils andere Geschlecht ist zum Vergleich
+            blass gestrichelt mitgezeichnet. Einbezogen sind auch die Abnahme der
+            Sterblichkeit je Jahr und der Rauchfaktor; der Text nennt, was ohne beides
+            herauskäme. Fehlen Geburtsjahr oder Geschlecht, steht statt der Grafik ein
+            Hinweis darauf.</li>
+          <li><strong>Warum der Median über dem Mittelwert liegt</strong>, wird in der
+            Grafik erklärt: Die Verteilung ist in diesem Alter linksschief — wenige
+            sterben früh, die meisten in einem schmalen Band. Der Mittelwert wird von
+            den frühen Todesfällen nach unten gezogen, der Median nicht.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v275 — Hilflosenentschädigung auch in Szenario 8 standardmässig aus</h3>
+        <ul class="liste">
+          <li><strong>Eine Lücke aus v274 geschlossen.</strong> Das Verlaufsmenü im
+            Reiter Personen schaltete die Hilflosenentschädigung seit v274 nicht mehr
+            ein — das Szenario 8 «Pflegebedürftigkeit» rechnete sie aber weiterhin mit.
+            Dieselbe Frage wurde damit an zwei Orten verschieden beantwortet.</li>
+          <li><strong>Neu folgt Szenario 8 demselben Schalter</strong> «Vorgaben auf der
+            sicheren Seite» im Reiter Steuern. Standardmässig ist die Entschädigung
+            damit <strong>aus</strong>. Der Schalter in den Eckwerten des Szenarios geht
+            weiterhin vor: Wird er von Hand gesetzt, gilt diese Wahl.</li>
+          <li><strong>Warum.</strong> Die Hilflosenentschädigung ist eine
+            <em>Einnahme</em> und senkt den Kapitalbedarf. Sie wird erst nach einem Jahr
+            Hilflosigkeit ausgerichtet, muss bei der Ausgleichskasse angemeldet werden
+            und setzt einen bestimmten Grad der Pflegebedürftigkeit voraus. Auf der
+            sicheren Seite wird sie nicht unterstellt. Bei einem Heimaufenthalt mit
+            Pflegebedarf ist der Anspruch allerdings die Regel — wer damit rechnet,
+            schaltet sie ein.</li>
+          <li><strong>Wirkung.</strong> Die ausgewiesenen Pflegekosten bleiben gleich;
+            es fällt die Zeile «davon gedeckt durch Hilflosenentschädigung» weg, und das
+            Kapital am Ende sinkt entsprechend.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v274 — Vorgaben auf der sicheren Seite</h3>
+        <p class="kleintext" style="margin:0 0 8px;padding:8px 10px;
+           background:var(--akzent-weich);border-radius:var(--r)">
+          <strong>Diese Fassung verschiebt die Ergebnisse spürbar.</strong> Gemessen am
+          Beispielhaushalt sinkt das Endkapital von Person 1 von −511'558 auf
+          −995'646 Franken. Ursache ist allein die Korrektur beim Basisjahr der
+          Heimkosten (siehe unten). Die Steuern bleiben nahezu unverändert
+          (768'181 auf 767'243).
+        </p>
+        <ul class="liste">
+          <li><strong>Behobener Fehler: die Teuerung bis zum Heimeintritt fiel weg.</strong>
+            Das Feld «Basisjahr des Betrags» war leer vorbelegt, und leer bedeutete:
+            <em>der Betrag gilt in Franken des Eintrittsjahres</em>. Wer den heutigen
+            Heimtarif von 10'000 Franken eintrug, bekam ihn als Tarif des Jahres 2054
+            gerechnet — die 29 Jahre Teuerung dazwischen fielen ersatzlos weg. Zusammen
+            mit der Vorgabe von 0.00 % Teuerung war das der mit Abstand grösste
+            Rechenfehler in den Vorgaben.
+            <ul class="liste">
+              <li>Neu wird das <strong>erste Rechenjahr</strong> vorbelegt.</li>
+              <li>Die <strong>Teuerung der Heimkosten</strong> ist mit 3.00 %
+                vorbelegt statt mit null.</li>
+              <li>Unter dem Feld steht neu, mit welchem Faktor der erfasste Betrag
+                bis zum Eintritt vervielfacht wird.</li>
+              <li>Ein leeres Feld bedeutet weiterhin das Eintrittsjahr — das ist dann
+                richtig, wenn der Betrag bereits ein <em>künftiger</em> Tarif ist.</li>
+            </ul>
+            Gemessen am Beispielhaushalt, hoher Verlauf: Die selbst getragenen
+            Pflegekosten steigen von 641'910 auf 1'585'489 Franken.</li>
+          <li><strong>Neuer Schalter «Vorgaben auf der sicheren Seite»</strong> im Reiter
+            Steuern, <strong>standardmässig eingeschaltet</strong>. Er setzt sieben
+            Vorgaben in einem Zug; jeder Wert bleibt danach einzeln überschreibbar, und
+            das Ausschalten nimmt ihn zurück:
+            <ul class="liste">
+              <li>Dauer im Heim, hoher Verlauf: 7 Jahre (Mann) und 8 Jahre (Frau)
+                statt 5 und 6</li>
+              <li>Spitex im hohen Verlauf: 8 + 5 statt 6 + 4 Stunden je Woche</li>
+              <li>Hilflosenentschädigung: vom Verlaufsmenü <strong>nicht</strong>
+                mehr eingeschaltet</li>
+              <li>Teuerung der Heimkosten: 3.00 % statt 0.00 %</li>
+              <li>Teuerung neu erfasster Budgetpositionen: 0.75 % statt 0.00 %</li>
+            </ul></li>
+          <li><strong>Warum die Hilflosenentschädigung nicht mehr unterstellt wird.</strong>
+            Sie ist eine <em>Einnahme</em> und senkt den Kapitalbedarf — am
+            Beispielhaushalt um 48'010 Franken. Sie wird erst nach einem Jahr
+            Hilflosigkeit ausgerichtet, muss bei der Ausgleichskasse angemeldet werden
+            und setzt einen bestimmten Grad voraus. Im Teil 5 der Heimkarte bleibt sie
+            von Hand einschaltbar.</li>
+          <li><strong>Neue Budgetpositionen tragen eine Teuerung.</strong> Bisher wurden
+            sie mit 0.00 % angelegt. Eine Ausgabe ohne Teuerung verliert über zwanzig
+            Jahre rund ein Sechstel ihres Gewichts und schönt das Ergebnis still.
+            Vorgabe ist neu der Gesamtindex der Konsumentenpreise (0.75 %). Einnahmen
+            bleiben bei null: Sie steigen nicht von selbst.</li>
+          <li><strong>Das Kostenmenü warnt neu, wenn es den Betrag senkt.</strong> Die
+            BFS-Zahlen sind kantonale <em>Mittelwerte</em>, kein oberer Rand. Am
+            Beispielhaushalt senkt «St. Gallen, hoher Standard» die selbst getragenen
+            Pflegekosten von 641'910 auf 470'590 Franken, weil der erfasste Wert von
+            10'000 Franken bereits über dem kantonalen Mittel liegt. Wer die Statistik
+            zur Verschärfung heranzieht, sieht das nun.</li>
+          <li><strong>Was gemessen und was geschätzt ist:</strong>
+            <ul class="liste">
+              <li><strong>Teuerung 3.00 % — Annahme.</strong> Einen publizierten Index
+                der Pflegeheimtarife gibt es nicht. Belegt ist, dass die Gesamtkosten
+                für Heime und Spitex 2023 um 5 % stiegen; der Landesindex der
+                Konsumentenpreise liegt bei 0.75 %.</li>
+              <li><strong>Dauer 7 und 8 Jahre — Schätzung des oberen Zehntels.</strong>
+                Gemessen sind der Mittelwert (Männer 2.2, Frauen 3.3 Jahre) und der
+                Median (Männer unter einem Jahr). Die am Stichtag Anwesenden kommen
+                auf 3.5 Jahre im Mittel bei einem Median von 2.3 — die Verteilung hat
+                einen langen Schwanz.</li>
+            </ul></li>
+          <li><strong>Der Einwand, der dazugehört.</strong> Eine zu vorsichtige Planung
+            ist ebenso falsch wie eine zu knappe. Der eingeschaltete Stand lässt vier
+            konservative Annahmen zusammenwirken — oberes Zehntel der Lebensdauer,
+            oberes Zehntel der Aufenthaltsdauer, Teuerung weit über dem Landesindex und
+            keine Hilflosenentschädigung. Am Beispielhaushalt ergibt das 2'139'585
+            statt 641'910 Franken selbst getragener Pflegekosten. Jede einzelne Annahme
+            ist vertretbar; alle zusammen beschreiben einen Fall, der sehr selten
+            eintritt. Deshalb steht der Schalter sichtbar im Reiter Steuern und nicht
+            als stille Annahme im Rechenkern. In der Zusammenstellung der Daten steht,
+            welcher Stand gilt.</li>
+          <li><strong>Beim Laden eines älteren Stands</strong> werden die Vorgaben
+            einmalig auf die sichere Seite gesetzt. Selbst erfasste Werte bleiben
+            stehen; das Umlegen des Schalters zieht nur jene Werte nach, die noch auf
+            der bisherigen Vorgabe stehen.</li>
+        </ul>
+      </div>
+      <div class="karte breit">
+        <h3>Änderungen in v273 — Pflegeverlauf aus der Statistik, Seite Heimaufenthalt neu gegliedert</h3>
+        <ul class="liste">
+          <li><strong>Die Seite «Heim- und Spitalaufenthalt» ist neu aufgebaut.</strong>
+            Bisher stand fast alles in einem einzigen Teil «1 Aufenthalt und Kosten» —
+            Zeitpunkt, Kosten, Teuerung, Spitex, Zusatzversicherung und
+            Hilflosenentschädigung hintereinander. Neu sind es acht Teile in
+            <em>zeitlicher</em> Reihenfolge:
+            <ul class="liste">
+              <li>1 Verlauf der Pflegebedürftigkeit <em>(neu)</em></li>
+              <li>2 Pflege zu Hause (Spitex), samt Zusatzversicherung</li>
+              <li>3 Heimaufenthalt — Zeitpunkt und Kosten</li>
+              <li>4 Teuerung und höhere Pflegestufe</li>
+              <li>5 Hilflosenentschädigung der AHV</li>
+              <li>6 Übernahme durch die andere Person</li>
+              <li>7 Budgetposten bei Heimaufenthalt</li>
+              <li>8 Zusätzliche Kosten für die andere Person</li>
+            </ul>
+            Jeder Teil nennt im Kopf seinen Stand, auch wenn er geschlossen ist.</li>
+          <li><strong>Behobener Fehler: Spitex war ohne Heimaufenthalt nicht
+            erfassbar.</strong> Pflege zu Hause und Hilflosenentschädigung lagen
+            innerhalb der Bedingung «Heimaufenthalt wird gerechnet». Wer zu Hause
+            gepflegt wird und zu Hause stirbt, konnte deshalb gar nicht abgebildet
+            werden — und das ist der häufigere Fall: Rund zwei Drittel der Männer
+            sterben ausserhalb eines Pflegeheims. Beide Teile stehen nun für sich.</li>
+          <li><strong>Neues Menü «Verlauf übernehmen»</strong> im Teil 1 mit vier
+            Einträgen: eigene Eingabe, kein Pflegefall, mittlerer Verlauf, hoher
+            Verlauf. Es setzt Lebensende, Heimeintritt, Spitexbeginn, Spitex-Stunden
+            und die Hilflosenentschädigung in einem Zug. Voraussetzung sind
+            <strong>Geburtsjahr und Geschlecht</strong>; fehlen sie, steht ein
+            Hinweis statt des Menüs.</li>
+          <li><strong>Abgeleitet wird vom Lebensende her, nicht von einem mittleren
+            Eintrittsalter.</strong> Begründung: Das publizierte Eintrittsalter —
+            Männer 79 bis 81, Frauen 83 bis 84 — gilt für <em>alle</em>, die
+            eintreten, einschliesslich jener, die früh erkranken und früh sterben.
+            Wer heute gesund ist und den Median erreicht, tritt später ein; als
+            Vorgabe für eine bestimmte Person ist dieses Alter systematisch zu früh.
+            Gegenprobe: Für Männer, die 2017 im Heim verstorben sind, betrug der
+            Aufenthalt im Mittel 2.2 Jahre — ein Mann, der mit 89 stirbt, tritt
+            demnach mit rund 87 ein. Die Kette ist mit der gemessenen
+            Aufenthaltsdauer konsistent.</li>
+          <li><strong>Sterbetafel auf 2024 aktualisiert.</strong> Bisher lag die
+            Periodensterbetafel 2022 zugrunde — ein von der Pandemie beeinflusstes
+            Jahr; sie lag rund 0.7 Jahre zu tief. Gegenprobe gegen die
+            veröffentlichten Werte, gerechnet ab Alter 67:
+            <ul class="liste">
+              <li>Männer: Restlebensdauer 18.8 Jahre, Median 86.7, oberes Zehntel 95.6</li>
+              <li>Frauen: Restlebensdauer 21.2 Jahre, Median 89.3, oberes Zehntel 97.5</li>
+            </ul>
+            Alle Werte werden auf das Zehnteljahr genau getroffen.</li>
+          <li><strong>Im hohen Verlauf bleibt der Rauchfaktor weg.</strong> Er
+            beschreibt den Erwartungswert, nicht den Rand der Verteilung; beides
+            zugleich zählt dieselbe Annahme doppelt und führte auf Endalter von 99
+            und mehr Jahren. Umstellbar im Reiter Steuern. Ebenfalls dort: das
+            <strong>Quantil des hohen Verlaufs</strong>, Vorgabe oberes Zehntel.</li>
+          <li><strong>Neue Vorgaben im Reiter Steuern</strong>, alle einstellbar:
+            Dauer im Heim und Dauer der Spitex davor, je Geschlecht und je Stufe,
+            sowie die Stunden je Woche. Eine Vorschautabelle zeigt, was für eine
+            Person von 67 Jahren herauskommt.</li>
+          <li><strong>Was gemessen und was gesetzt ist — ausdrücklich getrennt:</strong>
+            <ul class="liste">
+              <li><strong>Gemessen:</strong> Dauer im Heim im mittleren Verlauf (BFS
+                2017: Männer 2.2, Frauen 3.3 Jahre) und die Stunden je Woche
+                (LUSTAT 2023: 3.4 h Pflege und 2.5 h Hauswirtschaft während eines
+                laufenden Bezugs).</li>
+              <li><strong>Geschätzt:</strong> Dauer im Heim im hohen Verlauf (5 und
+                6 Jahre). Anhaltspunkt: Im Kanton Zürich lagen die mit 90 oder mehr
+                Eingetretenen bei 655 Tagen gegenüber 284 Tagen bei den 80- bis
+                84-Jährigen.</li>
+              <li><strong>Gesetzt:</strong> die Dauer der Spitex-Phase. Ein Alter
+                beim ersten Spitex-Bezug ist nicht publiziert; belegt ist nur der
+                Sprung der Bezugsquote zwischen den Altersgruppen 65 bis 79 (4.8 %)
+                und 80 und mehr (20.3 %).</li>
+            </ul></li>
+          <li><strong>Der mittlere Verlauf ist nicht der Median-Fall.</strong> Rund
+            44 % aller Todesfälle ab 65 Jahren ereignen sich im Pflegeheim, bei den
+            Männern deutlich weniger. Der mittlere Verlauf heisst: mittlere
+            Lebensdauer <em>und</em> Pflegebedarf im üblichen Umfang, falls er
+            eintritt. Das steht nun im Erläuterungstext.</li>
+          <li><strong>Szenario 8 «Pflegebedürftigkeit» nutzt dieselbe Ableitung.</strong>
+            Bisher rechnete es mit einem festen Eintrittsalter von 82 Jahren für
+            alle. Ist das Geschlecht erfasst, stammen Eintrittsalter und Dauern nun
+            aus der Sterbetafel; eine eigene Eingabe in den Eckwerten geht nach wie
+            vor vor. <strong>Ohne Angabe des Geschlechts ändert sich nichts</strong> —
+            die bisherigen Ergebnisse bleiben erhalten.</li>
+          <li><strong>Kleinere Korrekturen:</strong> Der Kopf des Teils 3 zeigt bei
+            getrennter Erfassung den gerechneten Monatsbetrag statt einer Null; der
+            Grad der Hilflosigkeit wird sprachlich richtig gebeugt.</li>
+        </ul>
       </div>
       <div class="karte breit">
         <h3>Änderungen in v272 — Heimkosten pro Tag und pro Monat, Vorgaben aus der Statistik</h3>
@@ -8145,18 +8409,26 @@ function policePraemie(po, jahr) {
 }
 
 // --------------------------------------------------------------- Sterbetafel
-// Stuetzwerte der Sterbewahrscheinlichkeit qx aus der Periodensterbetafel der
-// Schweiz 2022 (Bundesamt fuer Statistik). Zwischen den Stuetzalters wird
-// logarithmisch interpoliert - qx waechst in diesem Bereich naeherungsweise
-// exponentiell (Gompertz). Die so erzeugte Tafel gibt die veroeffentlichten
-// Werte der restlichen Lebenserwartung auf ein Zehnteljahr genau wieder.
+// Stuetzwerte der Sterbewahrscheinlichkeit qx aus der vollstaendigen
+// jaehrlichen Sterbetafel der Schweiz 2024 (Bundesamt fuer Statistik).
+// Abgeleitet aus der Zahl der Ueberlebenden lx: qx = (lx - lx+1) / lx.
+// Zwischen den Stuetzalters wird logarithmisch interpoliert - qx waechst in
+// diesem Bereich naeherungsweise exponentiell (Gompertz).
+//
+// Gegenprobe gegen die veroeffentlichten Werte, gerechnet ab Alter 67:
+//   Maenner  Restlebensdauer 18.8 Jahre, Median 86.7, oberes Zehntel 95.6
+//   Frauen   Restlebensdauer 21.2 Jahre, Median 89.3, oberes Zehntel 97.5
+// Die Tafel gibt diese Werte auf ein Zehnteljahr genau wieder.
+//
+// Bis v272 lag hier die Tafel 2022. Jenes Jahr war von der Pandemie
+// beeinflusst; die Tafel lag rund 0.7 Jahre zu tief.
 const STERBETAFEL = {
-  jahr: 2022,
-  quelle: 'Periodensterbetafel Schweiz 2022, Bundesamt für Statistik',
-  m: { 60: 0.005773, 65: 0.009423, 70: 0.015091, 75: 0.025179, 80: 0.045046,
-       85: 0.085002, 90: 0.162068, 95: 0.290013, 99: 0.415613 },
-  f: { 60: 0.003311, 65: 0.005449, 70: 0.009103, 75: 0.015850, 80: 0.029587,
-       85: 0.060852, 90: 0.129457, 95: 0.238531, 99: 0.336874 },
+  jahr: 2024,
+  quelle: 'Vollständige jährliche Sterbetafel Schweiz 2024, Bundesamt für Statistik',
+  m: { 60: 0.005140, 65: 0.008724, 70: 0.014316, 75: 0.023631, 80: 0.040821,
+       85: 0.076338, 90: 0.148127, 95: 0.260030, 98: 0.342416 },
+  f: { 60: 0.003120, 65: 0.005135, 70: 0.008706, 75: 0.015220, 80: 0.027952,
+       85: 0.056093, 90: 0.117910, 95: 0.223260, 98: 0.297418 },
 };
 const STERBE_ENDALTER = 110;
 
@@ -8218,6 +8490,10 @@ function lebenserwartung(geschlecht, alter, jahrJetzt, opt) {
   return {
     rest: e, mittelAlter: Math.round(alter) + e,
     median: quantil(0.5), q25: quantil(0.25), q10: quantil(0.10), q05: quantil(0.05),
+    // Der ganze Verlauf, fuer die grafische Darstellung: je Altersjahr der
+    // Anteil der Gleichaltrigen, der es erreicht (l) und der es ueberlebt
+    // (lNach). Die Differenz ist der Anteil, der in diesem Jahr stirbt.
+    stufen,
   };
 }
 
@@ -13358,6 +13634,147 @@ const proz = v => F2.format(v * 100) + " %";
 const TAGE_JE_MONAT = 365 / 12;          // 30.416666…
 const WOCHEN_JE_MONAT = 52 / 12;         // 4.333333…
 
+// ------------------------------------- Vorgaben auf der sicheren Seite
+// Zwei Saetze von Vorgaben. Der Schalter im Reiter Steuern setzt den einen
+// oder den anderen; danach ist jeder Wert einzeln ueberschreibbar.
+//
+//   ein   Planungswerte. Die Dauern liegen am oberen Rand der Verteilung,
+//         die Teuerung der Heimkosten deutlich ueber dem Landesindex, und
+//         die Hilflosenentschaedigung wird nicht unterstellt.
+//   aus   Mittelwerte der Statistik. Sie beschreiben den haeufigen Fall,
+//         nicht den teuren - und der teure bestimmt den Kapitalbedarf.
+//
+// Nicht Teil des Schalters ist das BASISJAHR der Heimkosten. Dessen Vorgabe
+// (erstes Rechenjahr) ist keine Vorsichtsmassnahme, sondern eine Korrektur:
+// Wer einen heutigen Heimtarif eintraegt, meint heutige Franken. Bis v273
+// galt ein leeres Feld als "Franken des Eintrittsjahres" - die Teuerung von
+// heute bis zum Eintritt fiel damit ersatzlos weg.
+// Fuenf Hebel, jeder fuer sich schaltbar. Geprueft auf Abhaengigkeiten: Es
+// gibt keine - jeder wirkt auf einen anderen Kostenblock. Die beiden
+// Teuerungen betreffen verschiedene Positionen, Heimdauer und Spitex-Umfang
+// verschiedene Phasen, die Hilflosenentschaedigung ist eine Einnahme.
+// Heimdauer und Teuerung VERSTAERKEN sich zwar (beide wirken multiplikativ
+// auf dieselben Kosten), das ist aber keine Abhaengigkeit, sondern genau
+// das, was die Rechnung zeigen soll.
+//
+// Kein Hebel sind das Quantil des hohen Verlaufs und der Rauchfaktor: Das
+// Quantil unterscheidet den hohen vom mittleren Verlauf - auf 50 Prozent
+// gesetzt waeren beide gleich. Das ist die Begriffsbestimmung des Szenarios,
+// kein "sicher oder nicht". Beide bleiben freie Felder.
+const SICHER_HEBEL = [
+  { id: "heimdauer", titel: "Dauer im Heim, hoher Verlauf",
+    felder: ["verlauf_heim_hoch_m", "verlauf_heim_hoch_f"],
+    zeig: w => w.verlauf_heim_hoch_m + " J / " + w.verlauf_heim_hoch_f + " J",
+    beweis: "geschätzt",
+    grund: "Gemessen sind der Mittelwert (Männer 2.2, Frauen 3.3 Jahre bei den "
+      + "2017 Verstorbenen) und der Median (Männer unter einem Jahr). Sieben und "
+      + "acht Jahre sind eine Schätzung des oberen Zehntels — nicht belegt." },
+  { id: "spitex", titel: "Spitex-Umfang, hoher Verlauf",
+    felder: ["verlauf_std_pflege_hoch", "verlauf_std_haus_hoch"],
+    zeig: w => w.verlauf_std_pflege_hoch + " + " + w.verlauf_std_haus_hoch + " h/Wo",
+    beweis: "gemessen",
+    grund: "Während eines laufenden Bezugs erhalten die über 80-Jährigen 3.4 h "
+      + "Pflege und 2.5 h Hauswirtschaft je Woche (LUSTAT 2023)." },
+  { id: "he", titel: "Hilflosenentschädigung",
+    felder: ["verlauf_he_im_verlauf"],
+    zeig: w => w.verlauf_he_im_verlauf ? "ein" : "aus",
+    beweis: "Rechtsanspruch, aber bedingt",
+    grund: "Sie ist eine Einnahme und senkt den Kapitalbedarf. Sie wird erst nach "
+      + "einem Jahr Hilflosigkeit ausgerichtet, muss bei der Ausgleichskasse "
+      + "angemeldet werden und setzt einen bestimmten Grad voraus." },
+  { id: "heimteuerung", titel: "Teuerung der Heimkosten",
+    felder: ["heim_teuerung_vorgabe"],
+    zeig: w => proz(w.heim_teuerung_vorgabe),
+    beweis: "Annahme",
+    grund: "Einen publizierten Index der Pflegeheimtarife gibt es nicht. Belegt "
+      + "ist, dass die Gesamtkosten für Heime und Spitex 2023 um 5 % stiegen; der "
+      + "Landesindex der Konsumentenpreise liegt bei 0.75 %." },
+  { id: "posteuerung", titel: "Teuerung neuer Budgetpositionen",
+    felder: ["pos_teuerung_vorgabe"],
+    zeig: w => proz(w.pos_teuerung_vorgabe),
+    beweis: "gemessen",
+    grund: "Gesamtindex der Konsumentenpreise. Eine Ausgabe ohne Teuerung "
+      + "verliert über zwanzig Jahre rund ein Sechstel ihres Gewichts." },
+];
+
+const SICHER_WERTE = {
+  ein: {
+    verlauf_heim_hoch_m: 7, verlauf_heim_hoch_f: 8,
+    verlauf_std_pflege_hoch: 8, verlauf_std_haus_hoch: 5,
+    verlauf_he_im_verlauf: false,
+    heim_teuerung_vorgabe: 0.03,
+    pos_teuerung_vorgabe: 0.0075,
+  },
+  aus: {
+    verlauf_heim_hoch_m: 5, verlauf_heim_hoch_f: 6,
+    verlauf_std_pflege_hoch: 6, verlauf_std_haus_hoch: 4,
+    verlauf_he_im_verlauf: true,
+    heim_teuerung_vorgabe: 0,
+    pos_teuerung_vorgabe: 0,
+  },
+};
+
+// Zustand eines Hebels: "ein", "aus" oder "eigen" (ein selbst gesetzter Wert,
+// der weder dem einen noch dem anderen Satz entspricht).
+function sicherHebelStand(hebel) {
+  const pf = (cfg && cfg.pflege) || {};
+  const gleich = (satz) => hebel.felder.every(f => {
+    const a = pf[f], b = SICHER_WERTE[satz][f];
+    if (typeof b === "boolean") return !!a === b;
+    return Math.abs((Number(a) || 0) - Number(b)) < 1e-9;
+  });
+  if (gleich("ein")) return "ein";
+  if (gleich("aus")) return "aus";
+  return "eigen";
+}
+
+// Einen einzelnen Hebel setzen.
+function sicherHebelSetzen(hebel, auf) {
+  const pf = cfg.pflege || (cfg.pflege = {});
+  const satz = auf ? "ein" : "aus";
+  for (const f of hebel.felder) pf[f] = SICHER_WERTE[satz][f];
+  // Die Teuerung der Heimkosten steht je Person. Nachgezogen wird nur dort,
+  // wo sie noch auf der bisherigen Vorgabe steht - ein selbst gesetzter Wert
+  // bleibt stehen.
+  if (hebel.id === "heimteuerung") {
+    const alt = Number(SICHER_WERTE[auf ? "aus" : "ein"].heim_teuerung_vorgabe);
+    const neu = Number(pf.heim_teuerung_vorgabe) || 0;
+    for (const q of (cfg.personen || []))
+      if (Math.abs((Number(q.heimkosten_teuerung) || 0) - alt) < 1e-9)
+        q.heimkosten_teuerung = neu;
+  }
+}
+
+// Gesamtstand: "ein", "aus" oder "teilweise".
+function sicherGesamtStand() {
+  const stand = SICHER_HEBEL.map(sicherHebelStand);
+  if (stand.every(s => s === "ein")) return "ein";
+  if (stand.every(s => s === "aus")) return "aus";
+  return "teilweise";
+}
+
+// Kurzfassung fuer die Zusammenstellung der Daten. Aus einem Bericht soll
+// hervorgehen, worauf gerechnet wurde - "teilweise" allein genuegt nicht.
+function sicherStandText() {
+  const g = sicherGesamtStand();
+  if (g === "ein") return "auf der sicheren Seite (alle fünf Vorgaben)";
+  if (g === "aus") return "Mittelwerte der Statistik (alle fünf Vorgaben)";
+  const ein = SICHER_HEBEL.filter(h => sicherHebelStand(h) === "ein").map(h => h.titel);
+  const eigen = SICHER_HEBEL.filter(h => sicherHebelStand(h) === "eigen").map(h => h.titel);
+  const teile = [];
+  if (ein.length) teile.push("sicher: " + ein.join(", "));
+  if (eigen.length) teile.push("eigener Wert: " + eigen.join(", "));
+  const aus = SICHER_HEBEL.filter(h => sicherHebelStand(h) === "aus").map(h => h.titel);
+  if (aus.length) teile.push("Mittelwert: " + aus.join(", "));
+  return "teilweise — " + teile.join("; ");
+}
+
+// Teuerung, mit der eine neu erfasste Ausgabe vorbelegt wird.
+function teuerungVorgabeNeu() {
+  const pf = (typeof cfg !== "undefined" && cfg && cfg.pflege) || {};
+  return Number(pf.pos_teuerung_vorgabe) || 0;
+}
+
 let cfg = null;   // wird beim Start gesetzt, nach der Umstellung
 const TARIFE = DATEN.tarife;
 let erg = null;
@@ -14132,7 +14549,82 @@ function umstellen(k) {
       // Spannweite zwischen den Kantonen betraegt rund 60 %, innerhalb eines
       // Kantons ist sie kleiner.
       heim_zuschlag_hoch: 0.30,
+      // ---- Vorgaben fuer den Pflegeverlauf -------------------------------
+      // Der Verlauf wird vom Lebensende her gerechnet, nicht von einem
+      // mittleren Eintrittsalter her. Grund: Das publizierte Eintrittsalter
+      // (Maenner 79 bis 81, Frauen 83 bis 84) gilt fuer ALLE, die eintreten,
+      // einschliesslich jener, die frueh erkranken und frueh sterben. Wer mit
+      // 67 gesund ist und 89 wird, tritt nicht mit 79 ein. Als Vorgabe fuer
+      // eine bestimmte Person ist dieses Alter systematisch zu frueh.
+      //
+      //   Lebensende  aus der Sterbetafel, Median bzw. oberes Zehntel
+      //        minus Dauer im Heim      -> Heimeintritt
+      //        minus Dauer Spitex davor -> Spitexbeginn
+      //
+      // Dauer im Heim: gemessen. Fuer die 2017 Verstorbenen betrug der
+      // Aufenthalt im Mittel 2.2 Jahre bei den Maennern und 3.3 Jahre bei den
+      // Frauen (BFS). Die Werte des hohen Verlaufs (5 und 6 Jahre) sind
+      // geschaetzt: Im Kanton Zuerich lagen die mit 90 oder mehr Eingetretenen
+      // bei 655 Tagen gegenueber 284 Tagen bei den 80- bis 84-Jaehrigen.
+      verlauf_heim_mittel_m: 2.0,
+      verlauf_heim_hoch_m: 5.0,
+      verlauf_heim_mittel_f: 3.0,
+      verlauf_heim_hoch_f: 6.0,
+      // Dauer der Spitex davor: ABGELEITET, nicht gemessen. Ein Alter beim
+      // ersten Spitex-Bezug ist nicht publiziert. Belegt ist nur der Sprung
+      // der Bezugsquote zwischen den Altersgruppen 65 bis 79 (4.8 Prozent)
+      // und 80 und mehr (20.3 Prozent), also um das Vierfache.
+      verlauf_spitex_mittel_m: 3,
+      verlauf_spitex_hoch_m: 4,
+      verlauf_spitex_mittel_f: 3,
+      verlauf_spitex_hoch_f: 5,
+      // Stunden je Woche. Gemessen: Waehrend eines laufenden Bezugs erhalten
+      // die ueber 80-Jaehrigen 89 Stunden Pflege und 65 Stunden Hauswirtschaft
+      // ueber eine mittlere Bezugsdauer von sechs Monaten (LUSTAT 2023), also
+      // 3.4 und 2.5 Stunden je Woche. Nicht nach Geschlecht unterschieden:
+      // Frauen beziehen haeufiger Spitex, die Intensitaet je Bezug ist aber
+      // nicht nach Geschlecht publiziert.
+      verlauf_std_pflege_mittel: 4,
+      verlauf_std_haus_mittel: 3,
+      verlauf_std_pflege_hoch: 6,
+      verlauf_std_haus_hoch: 4,
+      // Welcher Anteil der Gleichaltrigen das Alter des hohen Verlaufs noch
+      // erreicht. 0.10 = oberes Zehntel.
+      verlauf_quantil_hoch: 0.10,
+      // Im hohen Verlauf wird OHNE den Rauchfaktor gerechnet. Begruendung:
+      // Der Faktor beschreibt den Erwartungswert, nicht den Rand der
+      // Verteilung. Beides zugleich zaehlt dieselbe Annahme doppelt und
+      // fuehrt auf Endalter von 99 und mehr Jahren.
+      verlauf_hoch_ohne_rauchfaktor: true,
+      // Ob die Hilflosenentschaedigung vom Verlaufsmenue eingeschaltet wird.
+      // Auf der sicheren Seite nicht: Sie ist eine EINNAHME und senkt den
+      // Kapitalbedarf. Sie wird erst nach einem Jahr Hilflosigkeit
+      // ausgerichtet, muss angemeldet werden und setzt einen bestimmten Grad
+      // der Pflegebeduerftigkeit voraus. Von Hand bleibt sie einschaltbar.
+      verlauf_he_im_verlauf: false,
+      // Vorgabe fuer die Teuerung der Heimkosten und fuer die Teuerung neu
+      // erfasster Budgetpositionen.
+      heim_teuerung_vorgabe: 0.03,
+      pos_teuerung_vorgabe: 0.0075,
     }, k.pflege || {});
+
+    // ---- Vorgaben auf der sicheren Seite --------------------------------
+    // Ein sichtbarer Schalter, kein stiller Zuschlag. Er setzt die Vorgaben
+    // in einem Zug; jeder Wert bleibt danach ueberschreibbar, und das
+    // Ausschalten nimmt sie zurueck. In der Zusammenstellung der Daten steht,
+    // welcher Stand gilt - damit aus einem Bericht hervorgeht, auf welcher
+    // Grundlage gerechnet wurde.
+    //
+    // ZU BEACHTEN: Eine zu vorsichtige Planung ist ebenfalls falsch. Die
+    // Werte des eingeschalteten Standes beschreiben einen Fall, in dem sich
+    // vier konservative Annahmen multiplizieren - oberes Zehntel der
+    // Lebensdauer, oberes Zehntel der Aufenthaltsdauer, Teuerung deutlich
+    // ueber dem Landesindex und keine Hilflosenentschaedigung. Jede einzelne
+    // ist vertretbar; alle zusammen treten sehr selten ein.
+    if (k.sichere_seite == null) {
+      k.sichere_seite = true;
+      Object.assign(k.pflege, SICHER_WERTE.ein);   // einmalige Umstellung
+    }
 
     // Felder je Person fuer Heim, Spitex und Hilflosenentschaedigung.
     for (const p of (k.personen || [])) {
@@ -14141,6 +14633,21 @@ function umstellen(k) {
       // heisst "eigene Eingabe"; der Wert dient nur der Nachvollziehbarkeit
       // und wirkt nicht auf die Rechnung.
       if (p.heim_vorgabe == null) p.heim_vorgabe = "";
+      // Welcher Pflegeverlauf zuletzt uebernommen wurde: "" (eigene Eingabe),
+      // "kein", "mittel" oder "hoch". Dient der Nachvollziehbarkeit und
+      // wirkt nicht unmittelbar auf die Rechnung.
+      if (p.pflege_verlauf == null) p.pflege_verlauf = "";
+      // Teuerung und Basisjahr der Heimkosten. Beide waren bis v273 leer, und
+      // leer hiess: keine Teuerung, und der Betrag gilt in Franken des
+      // Eintrittsjahres. Wer einen heutigen Heimtarif eintrug, bekam ihn als
+      // Tarif des Eintrittsjahres gerechnet - zwanzig bis dreissig Jahre
+      // Teuerung fielen ersatzlos weg. Gemessen am Beispielhaushalt machte
+      // das den Unterschied zwischen 642'000 und 1'585'000 Franken selbst
+      // getragener Pflegekosten aus.
+      if (p.heimkosten_teuerung == null)
+        p.heimkosten_teuerung = Number(k.pflege.heim_teuerung_vorgabe) || 0;
+      if (p.heimkosten_basisjahr == null)
+        p.heimkosten_basisjahr = Number(k.jahr_von) || null;
       if (p.heim_pflegetaxe_pro_tag == null) p.heim_pflegetaxe_pro_tag = 0;
       if (p.heim_betreuung_pro_tag == null) p.heim_betreuung_pro_tag = 0;
       if (p.heim_sonstige_pro_monat == null) p.heim_sonstige_pro_monat = 0;
@@ -16418,7 +16925,13 @@ function neuePosition(gruppe) {
   return {
     id, eigen: true, bezeichnung: "Neue Position", gruppe,
     fluss: gruppe.startsWith("Einnahmen") ? "einnahme" : "ausgabe",
-    betrag: 0, teuerung: 0, basisjahr: null, von: null, bis: null,
+    // Eine neue Ausgabe wird mit der Teuerung des Landesindex vorbelegt, nicht
+    // mit null: Eine Position ohne Teuerung verliert ueber zwanzig Jahre rund
+    // ein Sechstel ihres Gewichts und schoent das Ergebnis still.
+    // Einnahmen bleiben bei null - sie steigen nicht von selbst.
+    betrag: 0,
+    teuerung: gruppe.startsWith("Einnahmen") ? 0 : teuerungVorgabeNeu(),
+    basisjahr: null, von: null, bis: null,
     abzugsart: "keine", entfaellt_bei_heim: false, anteile,
   };
 }
@@ -19802,9 +20315,22 @@ const pflegeEingaben = {
   dauerLang: null,
   spitexLang: null,
   heGrad: "mittel",
-  heAktiv: true,
+  // null = dem Schalter «Vorgaben auf der sicheren Seite» folgen. Auf der
+  // sicheren Seite wird die Hilflosenentschaedigung nicht unterstellt: Sie
+  // ist eine EINNAHME und senkt den Kapitalbedarf. Sie wird erst nach einem
+  // Jahr Hilflosigkeit ausgerichtet, muss bei der Ausgleichskasse angemeldet
+  // werden und setzt einen bestimmten Grad voraus. Ein Klick auf den Schalter
+  // in den Eckwerten setzt true oder false und geht dann vor.
+  heAktiv: null,
   dauerBestimmtEnde: true,
 };
+
+// Ob Szenario 8 die Hilflosenentschaedigung rechnet.
+function pflegeHeAktiv() {
+  if (pflegeEingaben.heAktiv != null) return !!pflegeEingaben.heAktiv;
+  return ((typeof cfg !== "undefined" && cfg && cfg.pflege) || {})
+    .verlauf_he_im_verlauf === true;
+}
 let pflegeLauf = null;
 let pflegeLaeuft = false;
 
@@ -19828,8 +20354,19 @@ function pflegeKonfig(art) {
   const kp = (k.personen || []).find(x => x.id === p.id);
   if (!kp) return k;
   const pf = k.pflege || {};
-  const alter = pflegeVorgabe("eintrittsalter", "stat_eintrittsalter") || 82;
   const geb = Number(kp.geburtsjahr);
+  // Ab v273 stammen Eintrittsalter und Dauern aus derselben Ableitung wie das
+  // Verlaufsmenue im Reiter Personen - geschlechts- und altersabhaengig, vom
+  // Lebensende her gerechnet. Bis v272 stand hier ein festes Eintrittsalter
+  // von 82 Jahren fuer alle. Eine eigene Eingabe in den Eckwerten geht nach
+  // wie vor vor; fehlt das Geschlecht, bleibt der alte statistische
+  // Mittelwert die Rueckfallebene.
+  const vS = pflegeVerlaufWerte(p, art === "lang" ? "hoch" : "mittel");
+  // Eigene Eingabe in den Eckwerten; sonst die Ableitung; sonst die Statistik.
+  const eigen = s => (pflegeEingaben[s] != null && pflegeEingaben[s] !== "")
+    ? Number(pflegeEingaben[s]) : null;
+  const alter = eigen("eintrittsalter")
+    ?? (vS ? vS.heimAlter : (Number(pf.stat_eintrittsalter) || 82));
 
   // Erst alles zuruecksetzen, damit die erfassten Werte den Verlauf nicht
   // ueberlagern. Die Kostensaetze bleiben: sie sind die Grundlage, nicht
@@ -19841,11 +20378,13 @@ function pflegeKonfig(art) {
   if (art === "kein") return k;
 
   const spitexJahre = art === "lang"
-    ? (pflegeVorgabe("spitexLang", "") || 3)
-    : (pflegeVorgabe("spitexJahre", "stat_spitex_jahre") || 2);
+    ? (eigen("spitexLang") ?? (vS ? vS.spitexDauer : 3))
+    : (eigen("spitexJahre") ?? (vS ? vS.spitexDauer
+        : (Number(pf.stat_spitex_jahre) || 2)));
   const dauer = art === "lang"
-    ? (pflegeVorgabe("dauerLang", "") || 7)
-    : Math.round(pflegeVorgabe("dauerMittel", "stat_dauer_jahre") || 2);
+    ? (eigen("dauerLang") ?? (vS ? vS.heimDauer : 7))
+    : Math.round(eigen("dauerMittel") ?? (vS ? vS.heimDauer
+        : (Number(pf.stat_dauer_jahre) || 2)));
 
   const eintritt = isFinite(geb) ? geb + Math.round(alter) : Number(cfg.jahr_von) + 20;
   kp.heimeintritt_ab = eintritt;
@@ -19863,11 +20402,11 @@ function pflegeKonfig(art) {
     kp.spitex_ab = eintritt - spitexJahre;
     kp.spitex_bis = null;
     if (!(Number(kp.spitex_pflege_std_woche) > 0)) {
-      kp.spitex_pflege_std_woche = art === "lang" ? 8 : 4;
-      kp.spitex_haus_std_woche = art === "lang" ? 5 : 3;
+      kp.spitex_pflege_std_woche = vS ? vS.stdPflege : (art === "lang" ? 8 : 4);
+      kp.spitex_haus_std_woche = vS ? vS.stdHaus : (art === "lang" ? 5 : 3);
     }
   }
-  if (pflegeEingaben.heAktiv) {
+  if (pflegeHeAktiv()) {
     kp.he_aktiv = true;
     kp.he_ab = spitexJahre > 0 ? (eintritt - spitexJahre) : eintritt;
     kp.he_bis = null;
@@ -19961,29 +20500,42 @@ function pflegeEckwerteZeichnen() {
   feld("Pflegefall bei", wahlFeld(
     (cfg.personen || []).map(x => [x.id, x.bezeichnung || x.id]),
     (p || {}).id || "", x => { pflegeEingaben.person_id = x; pflegeEckwerteZeichnen(); }), "");
+  // Die Vorgaben der leeren Felder kommen aus derselben Ableitung wie das
+  // Verlaufsmenue im Reiter Personen. Fehlt das Geschlecht, bleibt der alte
+  // statistische Mittelwert stehen - dann steht es auch im Hinweis.
+  const vSm = pflegeVerlaufWerte(p, "mittel");
+  const vSh = pflegeVerlaufWerte(p, "hoch");
+  const hinwAb = vSm
+    ? "Leer: abgeleitet aus der Sterbetafel für "
+      + ((p || {}).geschlecht === "f" ? "eine Frau" : "einen Mann")
+      + " von heute " + vSm.alterHeute + " Jahren."
+    : "Leer: der statistische Mittelwert. Mit Geburtsjahr und Geschlecht im "
+      + "Reiter Personen wird der Wert abgeleitet.";
   feld("Eintrittsalter ins Heim", zahlFeld(pflegeEingaben.eintrittsalter,
     x => { pflegeEingaben.eintrittsalter = x; pflegeEckwerteZeichnen(); },
-    { leerErlaubt: true, vorgabe: pf.stat_eintrittsalter ?? 82,
-      vorgabeHinweis: "Leer: der statistische Mittelwert.", klasse: "spalte-schmal" }), "Jahre");
+    { leerErlaubt: true, vorgabe: vSm ? vSm.heimAlter : (pf.stat_eintrittsalter ?? 82),
+      vorgabeHinweis: hinwAb, klasse: "spalte-schmal" }), "Jahre");
   feld("Dauer, mittlerer Verlauf", zahlFeld(pflegeEingaben.dauerMittel,
     x => { pflegeEingaben.dauerMittel = x; pflegeEckwerteZeichnen(); },
-    { dez: true, leerErlaubt: true, vorgabe: pf.stat_dauer_jahre ?? 2.1,
-      vorgabeHinweis: "Leer: 784 Tage nach der Statistik.", klasse: "spalte-schmal" }), "Jahre");
+    { dez: true, leerErlaubt: true,
+      vorgabe: vSm ? vSm.heimDauer : (pf.stat_dauer_jahre ?? 2.1),
+      vorgabeHinweis: hinwAb, klasse: "spalte-schmal" }), "Jahre");
   feld("Spitex davor, mittlerer Verlauf", zahlFeld(pflegeEingaben.spitexJahre,
     x => { pflegeEingaben.spitexJahre = x; pflegeEckwerteZeichnen(); },
-    { leerErlaubt: true, vorgabe: pf.stat_spitex_jahre ?? 2,
-      vorgabeHinweis: "Leer: zwei Jahre.", klasse: "spalte-schmal" }), "Jahre");
+    { leerErlaubt: true,
+      vorgabe: vSm ? vSm.spitexDauer : (pf.stat_spitex_jahre ?? 2),
+      vorgabeHinweis: hinwAb, klasse: "spalte-schmal" }), "Jahre");
   feld("Dauer, langer Verlauf", zahlFeld(pflegeEingaben.dauerLang,
     x => { pflegeEingaben.dauerLang = x; pflegeEckwerteZeichnen(); },
-    { leerErlaubt: true, vorgabe: 7,
-      vorgabeHinweis: "Leer: sieben Jahre.", klasse: "spalte-schmal" }), "Jahre");
+    { leerErlaubt: true, vorgabe: vSh ? vSh.heimDauer : 7,
+      vorgabeHinweis: hinwAb, klasse: "spalte-schmal" }), "Jahre");
   feld("Spitex davor, langer Verlauf", zahlFeld(pflegeEingaben.spitexLang,
     x => { pflegeEingaben.spitexLang = x; pflegeEckwerteZeichnen(); },
-    { leerErlaubt: true, vorgabe: 3,
-      vorgabeHinweis: "Leer: drei Jahre.", klasse: "spalte-schmal" }), "Jahre");
+    { leerErlaubt: true, vorgabe: vSh ? vSh.spitexDauer : 3,
+      vorgabeHinweis: hinwAb, klasse: "spalte-schmal" }), "Jahre");
 
   const schH = el("div", "schalter");
-  const cbH = el("input"); cbH.type = "checkbox"; cbH.checked = !!pflegeEingaben.heAktiv;
+  const cbH = el("input"); cbH.type = "checkbox"; cbH.checked = pflegeHeAktiv();
   cbH.addEventListener("change", () => {
     pflegeEingaben.heAktiv = cbH.checked; pflegeEckwerteZeichnen();
   });
@@ -19991,13 +20543,13 @@ function pflegeEckwerteZeichnen() {
   schH.appendChild(el("span", null,
     "Hilflosenentschädigung der AHV berücksichtigen"));
   ke.appendChild(schH);
-  if (pflegeEingaben.heAktiv)
+  if (pflegeHeAktiv())
     feld("Grad der Hilflosigkeit", wahlFeld(
       [["leicht", "leicht"], ["mittel", "mittel"], ["schwer", "schwer"]],
       pflegeEingaben.heGrad || "mittel",
       x => { pflegeEingaben.heGrad = x; pflegeEckwerteZeichnen(); }), "");
   const eH = el("p", "kleintext");
-  eH.innerHTML = pflegeEingaben.heAktiv
+  eH.innerHTML = pflegeHeAktiv()
     ? "<strong>Ein.</strong> Die Entschädigung wird in beiden Pflegeverläufen gerechnet, "
       + "ab Beginn der Spitex-Phase. Anspruch besteht, wenn eine Person für alltägliche "
       + "Verrichtungen dauernd auf Hilfe angewiesen ist; sie wird <strong>unabhängig von "
@@ -20005,8 +20557,11 @@ function pflegeEckwerteZeichnen() {
       + "steuerfrei. Zu beachten: Sie wird erst nach einem Jahr Hilflosigkeit "
       + "ausgerichtet und muss bei der Ausgleichskasse angemeldet werden."
     : "<strong>Aus.</strong> Die Entschädigung wird nicht gerechnet — die vorsichtige "
-      + "Annahme. Einschalten, wenn mit einem Anspruch zu rechnen ist; bei einem "
-      + "Heimaufenthalt mit Pflegebedarf ist er die Regel.";
+      + "Annahme, und die Vorgabe des Schalters «Vorgaben auf der sicheren Seite» im "
+      + "Reiter Steuern. Sie ist eine <em>Einnahme</em> und senkt den Kapitalbedarf; "
+      + "sie wird erst nach einem Jahr Hilflosigkeit ausgerichtet und muss bei der "
+      + "Ausgleichskasse angemeldet werden. Einschalten, wenn mit einem Anspruch zu "
+      + "rechnen ist; bei einem Heimaufenthalt mit Pflegebedarf ist er die Regel.";
   eH.style.cssText = "margin:4px 0 0; color:var(--gedaempft)";
   ke.appendChild(eH);
 
@@ -23077,6 +23632,282 @@ function heimVorgabeWerte(schluessel) {
   };
 }
 
+// --------------------------------------------- Pflegeverlauf aus der Statistik
+// Leitet aus Geschlecht, heutigem Alter, Rauchverhalten und den beiden
+// Stellschrauben der Sterbetafel die Zeitachse der Pflegebeduerftigkeit ab.
+//
+// Zwei Stufen:
+//   "mittel"  Lebensende = Median der Verteilung, Pflegebedarf im ueblichen
+//             Umfang. ACHTUNG: Das ist NICHT der Median-Fall. Rund 44 Prozent
+//             aller Todesfaelle ab 65 ereignen sich im Pflegeheim, bei den
+//             Maennern deutlich weniger. Der mittlere Verlauf heisst:
+//             mittlere Lebensdauer UND Pflegebedarf, falls er eintritt.
+//   "hoch"    Lebensende = oberes Zehntel (einstellbar), lange Dauer. Seine
+//             Eintretenswahrscheinlichkeit ist deutlich tiefer als zehn
+//             Prozent, aber hoeher als das Produkt der Einzelwahrschein-
+//             lichkeiten: Wer 95 wird, braucht haeufiger ein Heim als der
+//             Durchschnitt. Dieser Verlauf bestimmt den Kapitalbedarf.
+//
+// Rueckgabe null, wenn Geburtsjahr oder Geschlecht fehlen.
+const PFLEGE_VERLAEUFE = [
+  ["", "eigene Eingabe"],
+  ["kein", "kein Pflegefall"],
+  ["mittel", "mittlerer Verlauf"],
+  ["hoch", "hoher Verlauf"],
+];
+
+function pflegeVerlaufWerte(p, stufe) {
+  if (!p || (stufe !== "mittel" && stufe !== "hoch")) return null;
+  const pf = (cfg && cfg.pflege) || {};
+  const le = (cfg && cfg.lebenserwartung) || {};
+  const jetzt = Number(cfg.jahr_von) || new Date().getFullYear();
+  const geb = Number(p.geburtsjahr);
+  const alter = isFinite(geb) ? jetzt - geb : null;
+  if (!p.geschlecht || alter == null || alter < 20 || alter > 105) return null;
+  const g = p.geschlecht === "f" ? "f" : "m";
+
+  // Rauchfaktor wie beim Vorschlag der Lebenserwartung. Im hohen Verlauf
+  // bleibt er auf Wunsch weg - siehe Vermerk bei den Vorgaben.
+  const faktorVoll = p.rauchen === "nicht" ? (Number(le.faktor_nichtraucher) || 1)
+                   : p.rauchen === "ja" ? (Number(le.faktor_raucher) || 1) : 1;
+  const ohne = pf.verlauf_hoch_ohne_rauchfaktor !== false;
+  const faktor = (stufe === "hoch" && ohne) ? 1 : faktorVoll;
+  const verb = Number(le.verbesserung) || 0;
+  const r = lebenserwartung(g, alter, jetzt, { verbesserung: verb, faktor });
+
+  const quantil = Math.min(0.5, Math.max(0.01,
+    Number(pf.verlauf_quantil_hoch) > 0 ? Number(pf.verlauf_quantil_hoch) : 0.10));
+  // Der Rueckgabewert kennt nur feste Quantile. Fuer einen frei gesetzten
+  // Anteil wird derselbe Lauf noch einmal ausgewertet.
+  const endeRoh = (stufe === "mittel") ? r.median
+    : (Math.abs(quantil - 0.10) < 1e-9 ? r.q10
+      : Math.abs(quantil - 0.25) < 1e-9 ? r.q25
+      : Math.abs(quantil - 0.05) < 1e-9 ? r.q05
+      : lebenserwartungQuantil(g, alter, jetzt, { verbesserung: verb, faktor }, quantil));
+
+  const z = (s, m, f2) => Number(pf[s + (g === "f" ? "_f" : "_m")])
+    || (g === "f" ? f2 : m);
+  const heimDauer = (stufe === "mittel")
+    ? z("verlauf_heim_mittel", 2, 3) : z("verlauf_heim_hoch", 5, 6);
+  const spitexDauer = (stufe === "mittel")
+    ? z("verlauf_spitex_mittel", 3, 3) : z("verlauf_spitex_hoch", 4, 5);
+  const stdP = Number(pf["verlauf_std_pflege_" + stufe])
+    || (stufe === "mittel" ? 4 : 6);
+  const stdH = Number(pf["verlauf_std_haus_" + stufe])
+    || (stufe === "mittel" ? 3 : 4);
+
+  const endeJahr = geb + Math.round(endeRoh);
+  let heimAb = endeJahr - Math.round(heimDauer) + 1;
+  let spitexAb = heimAb - Math.round(spitexDauer);
+  // Nichts in die Vergangenheit legen: beginnt die Rechnung spaeter, als der
+  // abgeleitete Zeitpunkt liegt, wird dieser auf das erste Rechenjahr gesetzt.
+  const frueh = Math.max(jetzt, Number(cfg.jahr_von) || jetzt);
+  if (spitexAb < frueh) spitexAb = frueh;
+  if (heimAb < spitexAb) heimAb = spitexAb;
+  if (heimAb > endeJahr) heimAb = endeJahr;
+
+  return {
+    stufe,
+    name: (PFLEGE_VERLAEUFE.find(v => v[0] === stufe) || [, stufe])[1],
+    alterHeute: alter, geschlecht: g,
+    endeAlter: Math.round(endeRoh), endeJahr,
+    heimAb, heimAlter: heimAb - geb, heimDauer: endeJahr - heimAb + 1,
+    spitexAb, spitexAlter: spitexAb - geb, spitexDauer: heimAb - spitexAb,
+    stdPflege: stdP, stdHaus: stdH,
+    quantil: stufe === "hoch" ? quantil : 0.5,
+    rauchfaktorWeggelassen: (stufe === "hoch" && ohne && faktorVoll !== 1),
+    faktorVoll, verbesserung: verb,
+  };
+}
+
+// Freies Quantil der Ueberlebensverteilung. Der Rechenkern liefert nur die
+// vier gebraeuchlichen; fuer einen selbst gesetzten Anteil wird hier
+// zwischen den beiden naechstliegenden linear eingeschaltet.
+function lebenserwartungQuantil(g, alter, jetzt, opt, p) {
+  const r = lebenserwartung(g, alter, jetzt, opt);
+  const stuetz = [[0.05, r.q05], [0.10, r.q10], [0.25, r.q25], [0.50, r.median]];
+  if (p <= 0.05) return r.q05;
+  if (p >= 0.50) return r.median;
+  for (let i = 0; i < stuetz.length - 1; i++) {
+    const [p0, a0] = stuetz[i], [p1, a1] = stuetz[i + 1];
+    if (p >= p0 && p <= p1)
+      return a0 + (a1 - a0) * (p1 > p0 ? (p - p0) / (p1 - p0) : 0);
+  }
+  return r.q10;
+}
+
+// Schreibt einen Verlauf in die Felder einer Person.
+function pflegeVerlaufSetzen(p, stufe) {
+  p.pflege_verlauf = stufe || "";
+  if (stufe === "kein") {
+    p.spitex_aktiv = false;
+    p.heimeintritt_ab = null;
+    p.heimkosten_pro_monat = 0;
+    p.he_aktiv = false;
+    return { kein: true };
+  }
+  const v = pflegeVerlaufWerte(p, stufe);
+  if (!v) return null;
+  p.lebenserwartung_bis = v.endeJahr;
+  p.heimeintritt_ab = v.heimAb;
+  if (v.spitexDauer > 0) {
+    p.spitex_aktiv = true;
+    p.spitex_ab = v.spitexAb;
+    p.spitex_bis = null;
+    p.spitex_pflege_std_woche = v.stdPflege;
+    p.spitex_haus_std_woche = v.stdHaus;
+  } else {
+    p.spitex_aktiv = false;
+  }
+  // Hilflosenentschaedigung: ab dem Heimeintritt, mittlerer Grad. Im Heim
+  // besteht der Anspruch bei mittlerem und schwerem Grad; der leichte Grad
+  // gilt nur zu Hause. Ob sie mitgesetzt wird, haengt am Schalter
+  // «Vorgaben auf der sicheren Seite». Sie ist eine Einnahme und senkt den
+  // Kapitalbedarf; auf der sicheren Seite wird sie nicht unterstellt.
+  if (((cfg.pflege || {}).verlauf_he_im_verlauf) === true) {
+    p.he_aktiv = true;
+    p.he_ab = v.heimAb;
+    p.he_bis = null;
+    if (!p.he_grad) p.he_grad = "mittel";
+  } else {
+    p.he_aktiv = false;
+  }
+  return v;
+}
+
+// Teil 1 der Karte: das Menue, die abgeleitete Zeitachse und die Erklaerung,
+// worauf sie beruht. «feld» ist der Zeilenbauer der aufrufenden Karte.
+function pflegeVerlaufBlock(p, ziel, feld) {
+  const pf = cfg.pflege || {};
+  const le = cfg.lebenserwartung || {};
+  const jetzt = Number(cfg.jahr_von) || new Date().getFullYear();
+  const geb = Number(p.geburtsjahr);
+  const alter = isFinite(geb) ? jetzt - geb : null;
+  const bereit = !!p.geschlecht && alter != null && alter >= 20 && alter <= 105;
+
+  if (!bereit) {
+    const h = el("p", "kleintext");
+    h.innerHTML = "<strong>Für den Vorschlag fehlen Angaben.</strong> Gebraucht "
+      + "werden <strong>Geburtsjahr</strong> und <strong>Geschlecht</strong>; "
+      + "beide stehen im Kapitel 1 «Personen». Die Sterblichkeit von Mann und "
+      + "Frau geht zu weit auseinander, als dass ohne diese Angabe ein "
+      + "brauchbarer Verlauf abzuleiten wäre: Eine Frau lebt ab 67 im Median "
+      + "rund 2.6 Jahre länger als ein Mann.";
+    h.style.cssText = "margin:0 0 8px;padding:8px 10px;background:var(--akzent-weich);"
+      + "border-radius:var(--r);color:var(--gedaempft)";
+    ziel.appendChild(h);
+    return;
+  }
+
+  feld("Verlauf übernehmen", wahlFeld(PFLEGE_VERLAEUFE, p.pflege_verlauf || "",
+    x => {
+      if (!x) { p.pflege_verlauf = ""; rechnen(); return; }
+      const v = pflegeVerlaufSetzen(p, x);
+      rechnen();
+      if (v && !v.kein)
+        melde("Verlauf «" + v.name + "» übernommen: Spitex ab " + v.spitexAb
+          + ", Heimeintritt " + v.heimAb + ", Lebensende " + v.endeJahr
+          + " (Alter " + v.endeAlter + "). Alle Werte sind überschreibbar.");
+      else if (v) melde("Kein Pflegefall gerechnet: Spitex, Heimaufenthalt und "
+        + "Hilflosenentschädigung sind zurückgenommen.");
+    }), "", true);
+
+  // ---- Zeitachse: was die beiden Stufen ergeben ------------------------
+  const vm = pflegeVerlaufWerte(p, "mittel");
+  const vh = pflegeVerlaufWerte(p, "hoch");
+  if (vm && vh) {
+    const rahmen = el("div", "tabellenrahmen");
+    rahmen.style.margin = "6px 0 8px";
+    const t = document.createElement("table");
+    t.className = "dicht";
+    const kz = t.createTHead().insertRow();
+    ["", "Spitex ab", "Heim ab", "Lebensende", "Jahre Spitex", "Jahre Heim"]
+      .forEach((x, i) => kz.appendChild(el("th", i ? "rechts" : "links", x)));
+    const tb = t.createTBody();
+    const zeile = (v, stark) => {
+      const r = tb.insertRow();
+      const c0 = el("td", null, v.name);
+      c0.style.padding = "4px 9px";
+      if (stark) c0.style.fontWeight = "700";
+      r.appendChild(c0);
+      const z = txt => {
+        const c = el("td", "rechts mono", txt);
+        c.style.padding = "4px 9px"; r.appendChild(c);
+      };
+      z(v.spitexDauer > 0 ? v.spitexAb + " (" + v.spitexAlter + ")" : "–");
+      z(v.heimAb + " (" + v.heimAlter + ")");
+      z(v.endeJahr + " (" + v.endeAlter + ")");
+      z(String(v.spitexDauer));
+      z(String(v.heimDauer));
+    };
+    zeile(vm);
+    zeile(vh, true);
+    rahmen.appendChild(t);
+    ziel.appendChild(rahmen);
+    const lg = el("p", "kleintext",
+      "In Klammern das Alter. Die Stunden je Woche: mittlerer Verlauf "
+      + F2.format(vm.stdPflege) + " Pflege und " + F2.format(vm.stdHaus)
+      + " Hauswirtschaft, hoher Verlauf " + F2.format(vh.stdPflege) + " und "
+      + F2.format(vh.stdHaus) + ".");
+    lg.style.cssText = "margin:0 0 8px;color:var(--gedaempft)";
+    ziel.appendChild(lg);
+  }
+
+  // ---- Woher die Werte stammen -----------------------------------------
+  const q = el("div");
+  q.style.cssText = "font-size:12px;color:var(--gedaempft);margin:4px 0 0";
+  const prozT = x => F2.format(x * 100) + " %";
+  q.innerHTML =
+    "<strong>Wie der Verlauf abgeleitet wird.</strong> Nicht von einem mittleren "
+    + "Eintrittsalter her, sondern <strong>vom Lebensende her</strong>:"
+    + "<ul style='margin:4px 0;padding-left:20px'>"
+    + "<li>Das <strong>Lebensende</strong> kommt aus der " + STERBETAFEL.quelle
+      + ", gerechnet ab Alter " + alter + " im Jahr " + jetzt + " für "
+      + (p.geschlecht === "f" ? "eine Frau" : "einen Mann") + ". Mittlerer "
+      + "Verlauf: der Median. Hoher Verlauf: das Alter, das noch "
+      + prozT(Number(pf.verlauf_quantil_hoch) || 0.10) + " der Gleichaltrigen "
+      + "erreichen.</li>"
+    + "<li>Davon abgezogen wird die <strong>Dauer im Heim</strong> — das ergibt "
+      + "den Eintritt. Gemessen: Für die 2017 Verstorbenen betrug der Aufenthalt "
+      + "im Mittel 2.2 Jahre bei den Männern und 3.3 Jahre bei den Frauen "
+      + "(BFS).</li>"
+    + "<li>Davor liegt die <strong>Spitex-Phase</strong>. Ein Alter beim ersten "
+      + "Spitex-Bezug ist <em>nicht publiziert</em>; die Dauer ist eine Setzung. "
+      + "Belegt ist nur, dass die Bezugsquote zwischen den Altersgruppen 65 bis "
+      + "79 (4.8 %) und 80 und mehr (20.3 %) um das Vierfache springt.</li>"
+    + "</ul>"
+    + "<strong>Warum nicht vom Eintrittsalter her.</strong> Das publizierte "
+    + "mittlere Eintrittsalter — Männer 79 bis 81, Frauen 83 bis 84 — gilt für "
+    + "<em>alle</em>, die eintreten, einschliesslich jener, die früh erkranken "
+    + "und früh sterben. Wer heute gesund ist und den Median erreicht, tritt "
+    + "später ein. Als Vorgabe für eine bestimmte Person ist dieses Alter "
+    + "systematisch zu früh.<br>"
+    + "<strong>Der mittlere Verlauf ist nicht der Median-Fall.</strong> Rund "
+    + "44 % aller Todesfälle ab 65 Jahren ereignen sich im Pflegeheim, bei den "
+    + "Männern deutlich weniger — eine Quote eigens für Männer ist nicht "
+    + "publiziert, geschätzt rund ein Drittel. Der mittlere Verlauf heisst "
+    + "deshalb: mittlere Lebensdauer <em>und</em> Pflegebedarf im üblichen "
+    + "Umfang, falls er eintritt. Wer ohne Pflege rechnen will, wählt oben "
+    + "«kein Pflegefall».<br>"
+    + "<strong>Der hohe Verlauf</strong> tritt deutlich seltener ein als "
+    + prozT(Number(pf.verlauf_quantil_hoch) || 0.10) + ", aber häufiger, als das "
+    + "Produkt der Einzelwahrscheinlichkeiten vermuten liesse: Wer 95 wird, "
+    + "braucht häufiger ein Heim als der Durchschnitt. Eine belastbare Zahl "
+    + "dafür gibt es nicht. Dieser Verlauf bestimmt den Kapitalbedarf."
+    + ((vh && vh.rauchfaktorWeggelassen)
+        ? "<br><strong>Im hohen Verlauf bleibt der Rauchfaktor weg.</strong> Er "
+          + "beschreibt den Erwartungswert, nicht den Rand der Verteilung; "
+          + "beides zugleich zählt dieselbe Annahme doppelt. Umstellbar im "
+          + "Reiter Steuern."
+        : "")
+    + "<br>Die Stellschrauben — Abnahme der Sterblichkeit je Jahr ("
+    + prozT(Number(le.verbesserung) || 0) + "), Rauchfaktor und das Quantil des "
+    + "hohen Verlaufs — stehen im Kapitel 1 «Personen» und im Reiter Steuern. "
+    + "<strong>Jeder abgeleitete Wert lässt sich in den Teilen 2 und 3 von Hand "
+    + "überschreiben.</strong>";
+  ziel.appendChild(q);
+}
+
 function personenZeichnen() {
   // Zwei Kapitel: die allgemeinen Angaben und der Heim- oder Spitalaufenthalt.
   // Jedes enthaelt je Person eine Karte; die Karten stehen nebeneinander.
@@ -23135,7 +23966,23 @@ function personenZeichnen() {
     // Das letzte Rechenjahr ist zugleich das Todesjahr dieser Person - bei
     // beiden. Nur wessen Tod im Szenario Kosten und Erbgang auf die andere
     // Person verschiebt, entscheidet der Reiter Todesfall.
-    jahrFeld("Betrachtung bis, letztes Rechenjahr (Todesjahr)", "lebenserwartung_bis");
+    // Neben dem Feld steht der Knopf zur Grafik der Sterblichkeit: Er zeigt,
+    // worauf die eingetragene Jahreszahl beruht und wo sie in der Verteilung
+    // liegt. Massgebend ist das erfasste Geschlecht.
+    {
+      const fe = zahlFeld(p.lebenserwartung_bis, x => {
+        p.lebenserwartung_bis = x;
+        const lebend = (cfg.personen || []).find(q => q.id === p.id) || {};
+        diagnoseFeld("Betrachtung bis", x, lebend.lebenserwartung_bis);
+        rechnen();
+      }, { jahr: true });
+      const hu = el("span");
+      hu.style.cssText = "display:inline-flex; align-items:center; gap:5px";
+      hu.appendChild(fe);
+      hu.appendChild(sterbeKnopf(p));
+      feld("Betrachtung bis, letztes Rechenjahr (Todesjahr)", hu,
+        alterIn(p.lebenserwartung_bis), true);
+    }
     // Das Feld hat zwei Aufgaben, und beide sind hier zu benennen: es begrenzt
     // die Rechnung dieser Person, und ohne gesetztes Todesjahr leitet sich das
     // Todesjahr daraus ab. Zusaetzlich wird das tatsaechlich gerechnete letzte
@@ -23186,12 +24033,94 @@ function personenZeichnen() {
     }
 
     ziel = kh;
-    ziel = kartenteil(kh, p.id + "|1", "1 Aufenthalt und Kosten",
-      "Ab wann ein Heim- oder Spitalaufenthalt gerechnet wird, was er kostet und wie "
-      + "sich die Kosten entwickeln.",
-      p.heimeintritt_ab != null
-        ? "ab " + p.heimeintritt_ab + ", " + chf(Number(p.heimkosten_pro_monat) || 0) + " CHF/Mt"
-        : "nicht gerechnet");
+
+    // ================= Aufbau der Karte «Heim- und Spitalaufenthalt» =======
+    // Die acht Teile werden hier ALLE und in der gewuenschten Reihenfolge
+    // angelegt; erst danach wird hineingeschrieben. Der Grund: Die Reihenfolge
+    // auf dem Bildschirm soll der zeitlichen Abfolge folgen -
+    //   Verlauf -> Spitex -> Heim -> Teuerung -> Entschaedigung -> Haushalt -
+    // waehrend der Code weiterhin in der Reihenfolge steht, in der er
+    // gewachsen ist. Wuerde man die Teile erst beim Schreiben anlegen, muesste
+    // man den Code verschieben; so genuegt es, den Schreibzeiger «ziel» auf
+    // den richtigen Teil zu setzen.
+    //
+    // Spitex und Hilflosenentschaedigung stehen bewusst AUSSERHALB der Frage,
+    // ob ein Heimaufenthalt gerechnet wird. Bis v272 waren sie darin
+    // eingeschlossen - wer zu Hause gepflegt wird und zu Hause stirbt, konnte
+    // deshalb gar nicht erfasst werden. Das war ein Fehler: Rund zwei Drittel
+    // der Maenner sterben ausserhalb eines Pflegeheims.
+    const T = {};
+    {
+      const jahreHeim = (p.heimeintritt_ab != null && p.lebenserwartung_bis != null)
+        ? (Number(p.lebenserwartung_bis) - Number(p.heimeintritt_ab) + 1) : null;
+      const vName = (PFLEGE_VERLAEUFE.find(v => v[0] === p.pflege_verlauf)
+        || [, "eigene Eingabe"])[1];
+      T.verlauf = kartenteil(kh, p.id + "|1", "1 Verlauf der Pflegebedürftigkeit",
+        "Wann Pflege zu Hause und wann ein Heimaufenthalt gerechnet wird. Der "
+        + "Vorschlag stammt aus der Sterbetafel und der Pflegestatistik; jeder "
+        + "Wert bleibt überschreibbar.", vName);
+      T.spitex = kartenteil(kh, p.id + "|2", "2 Pflege zu Hause (Spitex)",
+        "Pflege und Hauswirtschaft zu Hause, vor einem allfälligen Heimeintritt, "
+        + "samt Leistungen einer Zusatzversicherung.",
+        p.spitex_aktiv
+          ? "ab " + (p.spitex_ab != null ? p.spitex_ab : "–") + ", "
+            + F2.format(Number(p.spitex_pflege_std_woche) || 0) + " + "
+            + F2.format(Number(p.spitex_haus_std_woche) || 0) + " h/Woche"
+          : "nicht gerechnet");
+      // Im Kopf steht der Gesamtbetrag pro Monat. Bei getrennter Erfassung
+      // gibt es kein solches Feld - dort wird der gerechnete Monatswert des
+      // ersten Heimjahres gezeigt, sonst stuende dort eine Null.
+      let monat = Number(p.heimkosten_pro_monat) || 0;
+      if (p.heim_kosten_art === "geteilt") {
+        const zK = rechenzeilen(p.id).find(z => z.heimTeile && z.heimTeile.gesamt > 0);
+        monat = zK ? zK.heimTeile.gesamt / 12 : 0;
+      }
+      T.heim = kartenteil(kh, p.id + "|3", "3 Heimaufenthalt — Zeitpunkt und Kosten",
+        "Ab wann ein Heim- oder Spitalaufenthalt gerechnet wird, was er kostet und "
+        + "wer welchen Teil davon trägt.",
+        p.heimeintritt_ab != null
+          ? "ab " + p.heimeintritt_ab + ", " + chf(monat) + " CHF/Mt"
+            + (p.heim_kosten_art === "geteilt" ? " gesamt" : "")
+            + (jahreHeim != null ? " · " + jahreHeim
+                + (jahreHeim === 1 ? " Jahr" : " Jahre") : "")
+          : "nicht gerechnet");
+      T.teuer = kartenteil(kh, p.id + "|4", "4 Teuerung und höhere Pflegestufe",
+        "Wie sich die Heimkosten bis zum Eintritt und während des Aufenthalts "
+        + "entwickeln.",
+        p.heimeintritt_ab != null
+          ? proz(Number(p.heimkosten_teuerung) || 0)
+            + ((p.heim_stufen && p.heim_stufen[0])
+                ? " · zweite Stufe ab " + p.heim_stufen[0].ab_jahr : "")
+          : "nicht gerechnet");
+      T.he = kartenteil(kh, p.id + "|5", "5 Hilflosenentschädigung der AHV",
+        "Eine steuerfreie Einnahme, die unabhängig von Einkommen und Vermögen "
+        + "ausgerichtet wird.",
+        p.he_aktiv ? "ab " + (p.he_ab != null ? p.he_ab : "–") + ", "
+          + ({ leicht: "leichter", mittel: "mittlerer", schwer: "schwerer" }[
+              p.he_grad || "mittel"] || "mittlerer") + " Grad"
+          : "nicht gerechnet");
+      const a2n = ((cfg.personen || []).find(x => x.id !== p.id) || {});
+      const a2N = a2n.bezeichnung || a2n.id || "die andere Person";
+      const q2 = Number(p.heim_umlage_anteil) || 0;
+      T.umlage = kartenteil(kh, p.id + "|6", "6 Übernahme durch " + a2N,
+        "Anteil der Liegenschaftskosten, den die andere Person zusätzlich trägt, "
+        + "und ab welchem Jahr.",
+        q2 > 0 ? proz(q2) + " ab " + ((p.heim_umlage_ab != null && p.heim_umlage_ab !== "")
+            ? p.heim_umlage_ab : p.heimeintritt_ab)
+          : "keine Übernahme");
+      T.budget = kartenteil(kh, p.id + "|7", "7 Budgetposten bei Heimaufenthalt",
+        "Welche Ausgaben dieser Person wegfallen und welche die andere Person ganz "
+        + "übernimmt.");
+      T.zusatz = kartenteil(kh, p.id + "|8", "8 Zusätzliche Kosten für " + a2N,
+        null, zusatzkostenKurz());
+    }
+
+    // ---------------------------------------------- Teil 1: Verlauf --------
+    ziel = T.verlauf;
+    pflegeVerlaufBlock(p, ziel, feld);
+
+    // ---------------------------------------------- Teil 3: Heim -----------
+    ziel = T.heim;
     const sch = el("div", "schalter");
     const cb = el("input"); cb.type = "checkbox"; cb.checked = p.heimeintritt_ab != null;
     cb.addEventListener("change", () => {
@@ -23292,6 +24221,16 @@ function personenZeichnen() {
             p.heim_vorgabe = x || "";
             const w = heimVorgabeWerte(x);
             if (w) {
+              // Was selbst zu tragen ist, vorher und nachher. Die BFS-Zahlen
+              // sind kantonale MITTELWERTE, kein oberer Rand: Ein erfasster
+              // Wert kann hoeher liegen, und dann senkt das Menue ihn. Wer
+              // die Statistik zur Verschaerfung heranzieht, soll das sehen.
+              const vorher = (p.heim_kosten_art === "geteilt")
+                ? ((Number(p.heim_betreuung_pro_tag) || 0) * TAGE_JE_MONAT
+                   + (Number(p.heim_sonstige_pro_monat) || 0)
+                   + (Number((cfg.pflege || {}).beteiligung_heim_pro_tag) || 23)
+                     * TAGE_JE_MONAT)
+                : (Number(p.heimkosten_pro_monat) || 0);
               if (p.heim_kosten_art === "geteilt") {
                 p.heim_pflegetaxe_pro_tag = w.pflegetaxe_tag;
                 p.heim_betreuung_pro_tag = w.betreuung_tag;
@@ -23302,6 +24241,15 @@ function personenZeichnen() {
               } else {
                 p.heimkosten_pro_monat = w.gesamt_monat;
               }
+              const nachher = w.gesamt_monat;
+              if (vorher > 0 && nachher < vorher * 0.98)
+                setTimeout(() => melde("Achtung: Die Vorgabe «" + w.name
+                  + "» senkt den selbst getragenen Betrag von rund "
+                  + chf(vorher) + " auf " + chf(nachher)
+                  + " CHF pro Monat. Die BFS-Zahlen sind kantonale Mittelwerte, "
+                  + "kein oberer Rand — der bisher erfasste Wert war "
+                  + "vorsichtiger. Mit «eigene Eingabe» lässt sich das "
+                  + "zurücknehmen."), 300);
             }
             rechnen();
           }), "", true);
@@ -23564,6 +24512,8 @@ function personenZeichnen() {
           + "background:var(--akzent-weich);border-radius:var(--r)";
         ziel.appendChild(pl);
       }
+      // ------------------------------------------ Teil 4: Teuerung --------
+      ziel = T.teuer;
       // Teuerung der Heimkosten. Bis zu einem Heimeintritt vergehen oft zwanzig
       // Jahre; ein heutiger Heimtarif ist dann kein brauchbarer Wert mehr.
       const fT = zahlFeld(p.heimkosten_teuerung ?? 0,
@@ -23579,14 +24529,37 @@ function personenZeichnen() {
         { jahr: true, leerErlaubt: true, vorgabe: p.heimeintritt_ab,
           vorgabeHinweis: "Leer: der Betrag gilt in Franken des Eintrittsjahres." }), "");
       {
-        const e = el("p", "kleintext",
-          "Der Monatsbetrag gilt in Franken des Basisjahres und wird mit der Teuerung "
-          + "aufgezinst. Für Heim- und Pflegekosten besteht kein publizierter Index — "
-          + "das «i» sagt das ausdrücklich. Belegt ist nur, dass die Gesamtkosten für Heime "
-          + "und Spitex 2023 um 5 Prozent gegenüber dem Vorjahr stiegen. Ein Satz deutlich "
-          + "über der allgemeinen Teuerung ist deshalb zu erwägen; die Höhe ist eine "
-          + "Annahme, die Du treffen musst.");
-        e.style.cssText = "margin:8px 0 0; color:var(--gedaempft)";
+        const bj = Number(p.heimkosten_basisjahr);
+        const ein2 = Number(p.heimeintritt_ab);
+        const tz = Number(p.heimkosten_teuerung) || 0;
+        const faktor = (isFinite(bj) && isFinite(ein2) && ein2 > bj)
+          ? Math.pow(1 + tz, ein2 - bj) : 1;
+        const e = el("div");
+        e.innerHTML =
+          "<strong>Der Monatsbetrag gilt in Franken des Basisjahres</strong> und wird "
+          + "mit der Teuerung aufgezinst."
+          + ((isFinite(bj) && isFinite(ein2) && ein2 > bj)
+              ? " Vom Basisjahr " + bj + " bis zum Eintritt " + ein2 + " sind das "
+                + (ein2 - bj) + " Jahre; der erfasste Betrag wird dadurch mit "
+                + F2.format(faktor) + " vervielfacht."
+              : "")
+          + "<br><strong>Zu beachten.</strong> Bis v273 war das Feld leer vorbelegt, "
+          + "und leer hiess: der Betrag gilt in Franken des <em>Eintrittsjahres</em>. "
+          + "Wer einen heutigen Heimtarif eintrug, bekam ihn als Tarif des "
+          + "Eintrittsjahres gerechnet — zwanzig bis dreissig Jahre Teuerung fielen "
+          + "ersatzlos weg. Neu wird das erste Rechenjahr vorbelegt. Ein leeres Feld "
+          + "bedeutet weiterhin das Eintrittsjahr; das ist dann richtig, wenn der "
+          + "Betrag bereits ein <em>künftiger</em> Tarif ist."
+          + "<br>Für Heim- und Pflegekosten besteht <strong>kein publizierter "
+          + "Index</strong> — das «i» sagt das ausdrücklich. Belegt ist nur, dass die "
+          + "Gesamtkosten für Heime und Spitex 2023 um 5 Prozent gegenüber dem Vorjahr "
+          + "stiegen; der Landesindex der Konsumentenpreise liegt bei 0.75 Prozent. "
+          + "Die Vorgabe von "
+          + proz(Number((cfg.pflege || {}).heim_teuerung_vorgabe) || 0)
+          + " liegt dazwischen und ist eine <em>Annahme</em>, die Du verantworten "
+          + "musst. Sie stammt aus dem Schalter «Vorgaben auf der sicheren Seite» im "
+          + "Reiter Steuern.";
+        e.style.cssText = "font-size:12px;margin:8px 0 0; color:var(--gedaempft)";
         ziel.appendChild(e);
       }
       // Eine zweite Pflegestufe. Mehr Stufen sind im Rechenkern moeglich
@@ -23629,11 +24602,14 @@ function personenZeichnen() {
           ziel.appendChild(ps);
         }
       }
+    }   // Ende der Teile, die einen Heimaufenthalt voraussetzen
 
-      // ---- Pflege zu Hause (Spitex) --------------------------------------
-      // Die haeufige Abfolge ist gesund - Spitex - Heim. 424'000 Personen
-      // nutzen Spitex, nur 155'000 leben im Heim.
-      {
+    // ---------------------------------------------- Teil 2: Spitex --------
+    // Spitex steht ausserhalb der Bedingung «Heimaufenthalt gerechnet»:
+    // Pflege zu Hause gibt es auch ohne Heim, und das ist der haeufigere
+    // Fall. 424'000 Personen nutzen Spitex, nur 155'000 leben im Heim.
+    ziel = T.spitex;
+    {
         const pf = cfg.pflege || {};
         const schX = el("div", "schalter");
         schX.style.marginTop = "14px";
@@ -23787,10 +24763,13 @@ function personenZeichnen() {
             ziel.appendChild(pz);
           }
         }
-      }
+    }
 
-      // ---- Hilflosenentschaedigung der AHV -------------------------------
-      {
+    // ------------------------------- Teil 5: Hilflosenentschädigung -------
+    // Ebenfalls ausserhalb der Heim-Bedingung: Der leichte Grad besteht
+    // ueberhaupt nur fuer Personen, die zu Hause leben.
+    ziel = T.he;
+    {
         const pf = cfg.pflege || {};
         const schH = el("div", "schalter");
         schH.style.marginTop = "14px";
@@ -23911,19 +24890,14 @@ function personenZeichnen() {
           ph.style.cssText = "margin:8px 0 0; color:var(--gedaempft)";
           ziel.appendChild(ph);
         }
-      }
-      let zielUmlage = null;
-      {
-        const a2 = (cfg.personen || []).find(x => x.id !== p.id);
-        const q = Number(p.heim_umlage_anteil) || 0;
-        ziel = zielUmlage = kartenteil(kh, p.id + "|2", "2 Übernahme durch "
-          + (a2 ? (a2.bezeichnung || a2.id) : "die andere Person"),
-          "Anteil der Liegenschaftskosten, den die andere Person zusätzlich trägt, und "
-          + "ab welchem Jahr.",
-          q > 0 ? proz(q) + " ab " + ((p.heim_umlage_ab != null && p.heim_umlage_ab !== "")
-              ? p.heim_umlage_ab : p.heimeintritt_ab)
-            : "keine Übernahme");
-      }
+    }
+
+    // ------------------- Teile 6 bis 8: Wirkung auf den Haushalt ----------
+    // Sie setzen einen Heimaufenthalt voraus: Ohne Eintritt gibt es weder
+    // eine Uebernahme noch wegfallende Budgetposten.
+    if (p.heimeintritt_ab != null) {
+      const zielUmlage = T.umlage;
+      ziel = zielUmlage;
       feld("andere Person übernimmt", zahlFeld(p.heim_umlage_anteil ?? 0,
         x => { p.heim_umlage_anteil = x || 0; rechnen(); }, { proz: true }), "%");
       // Das Jahr der Uebernahme ist eigens einstellbar. Ohne Eingabe gilt das
@@ -23957,15 +24931,21 @@ function personenZeichnen() {
         hu.style.cssText = "font-size:12px;color:var(--gedaempft);margin:2px 0 8px";
         ziel.appendChild(hu);
       }
-      ziel = kartenteil(kh, p.id + "|3", "3 Budgetposten bei Heimaufenthalt",
-        "Welche Ausgaben dieser Person wegfallen und welche die andere Person ganz "
-        + "übernimmt.");
+      ziel = T.budget;
       ziel.appendChild(heimEntfallBlock(p));
       heimUmlageErklaerung(zielUmlage, p);
-      kartenteil(kh, p.id + "|4", "4 Zusätzliche Kosten für "
-        + ((cfg.personen.find(x => x.id !== p.id) || {}).bezeichnung || "die andere Person"),
-        null, zusatzkostenKurz())
-        .appendChild(heimZusatzBlock(p));
+      T.zusatz.appendChild(heimZusatzBlock(p));
+    } else {
+      // Ohne Heimaufenthalt bleiben die drei Teile leer. Ein leerer Ordner
+      // ohne Erklaerung waere ein Raetsel - deshalb steht hier, woran es
+      // liegt und wo es einzuschalten ist.
+      for (const t of [T.umlage, T.budget, T.zusatz]) {
+        const h = el("p", "kleintext",
+          "Diese Angaben gelten erst, wenn im Teil 3 ein Heim- oder "
+          + "Spitalaufenthalt eingeschaltet ist.");
+        h.style.cssText = "margin:0; color:var(--gedaempft)";
+        t.appendChild(h);
+      }
     }
 
     if (w) w.appendChild(k);
@@ -26976,8 +27956,259 @@ function steuernZeichnen() {
         + chfR(Number(pf.beteiligung_heim_pro_tag) || 23) + " CHF pro Tag — weil "
         + "die Rechnung einen Gesamtbetrag vollständig der Person belastet. Den "
         + "Rest der Pflegekosten tragen Krankenversicherer und Gemeinde.";
-      p6.style.cssText = "font-size:12px;color:var(--gedaempft);margin:4px 0 0";
+      p6.style.cssText = "font-size:12px;color:var(--gedaempft);margin:4px 0 12px";
       kp.appendChild(p6);
+    }
+
+    // ---- Vorgaben auf der sicheren Seite --------------------------------
+    kp.appendChild(el("h4", "abschnitt2", "Vorgaben auf der sicheren Seite"));
+    {
+      // ---- Sammelschalter ----------------------------------------------
+      const gesamt = sicherGesamtStand();
+      const s = el("div", "schalter");
+      const cbs = el("input"); cbs.type = "checkbox";
+      cbs.checked = gesamt === "ein";
+      cbs.indeterminate = gesamt === "teilweise";
+      cbs.addEventListener("change", () => {
+        const auf = cbs.checked;
+        cfg.sichere_seite = auf;
+        for (const h of SICHER_HEBEL) sicherHebelSetzen(h, auf);
+        rechnen();
+        melde("Alle fünf Vorgaben " + (auf ? "auf die sichere Seite" : "auf die Mittelwerte")
+          + " gesetzt. Ein bereits übernommener Pflegeverlauf wird nicht "
+          + "nachgerechnet — dafür ist er im Reiter Personen neu zu wählen.");
+      });
+      s.appendChild(cbs);
+      s.appendChild(el("span", null, "Alle Vorgaben auf der sicheren Seite"
+        + (gesamt === "teilweise"
+            ? " — zurzeit teilweise ("
+              + SICHER_HEBEL.filter(h => sicherHebelStand(h) === "ein").length
+              + " von " + SICHER_HEBEL.length + " sicher)"
+            : "")));
+      kp.appendChild(s);
+
+      // ---- Die fünf Hebel einzeln ---------------------------------------
+      // Jeder für sich schaltbar: Die Annahmen haben verschiedene Beweiskraft,
+      // und ein Sammelschalter über alle wäre zu grob.
+      {
+        const rahmen = el("div", "tabellenrahmen");
+        rahmen.style.cssText = "margin:6px 0 8px;max-width:760px";
+        const t = document.createElement("table");
+        t.className = "dicht";
+        const kz = t.createTHead().insertRow();
+        ["", "Vorgabe", "sichere Seite", "Mittelwerte", "gilt", "Beweiskraft"]
+          .forEach((x, i) => kz.appendChild(
+            el("th", (i >= 2 && i <= 4) ? "rechts" : "links", x)));
+        const tb = t.createTBody();
+        for (const h of SICHER_HEBEL) {
+          const stand = sicherHebelStand(h);
+          const r = tb.insertRow();
+          const c0 = el("td"); c0.style.padding = "3px 9px";
+          const cb = el("input"); cb.type = "checkbox";
+          cb.checked = stand === "ein";
+          cb.indeterminate = stand === "eigen";
+          cb.title = h.grund;
+          cb.addEventListener("change", () => {
+            sicherHebelSetzen(h, cb.checked);
+            rechnen();
+            melde(h.titel + (cb.checked ? " auf die sichere Seite" : " auf den Mittelwert")
+              + " gesetzt: " + h.zeig(SICHER_WERTE[cb.checked ? "ein" : "aus"]) + ".");
+          });
+          c0.appendChild(cb); r.appendChild(c0);
+          const c1 = el("td", null, h.titel); c1.style.padding = "3px 9px";
+          c1.title = h.grund; r.appendChild(c1);
+          const z = (txt, stark) => {
+            const c = el("td", "rechts mono", txt);
+            c.style.padding = "3px 9px";
+            if (stark) c.style.fontWeight = "700";
+            r.appendChild(c);
+          };
+          z(h.zeig(SICHER_WERTE.ein), stand === "ein");
+          z(h.zeig(SICHER_WERTE.aus), stand === "aus");
+          z(stand === "eigen" ? h.zeig(cfg.pflege) : "", stand === "eigen");
+          const c5 = el("td", null, stand === "eigen" ? "eigener Wert" : h.beweis);
+          c5.style.cssText = "padding:3px 9px;font-size:var(--s-klein);color:var(--gedaempft)";
+          r.appendChild(c5);
+        }
+        rahmen.appendChild(t);
+        kp.appendChild(rahmen);
+      }
+
+      const ps = el("div");
+      ps.innerHTML =
+        "<strong>Jeder Hebel für sich.</strong> Die fünf Vorgaben sind "
+        + "<em>voneinander unabhängig</em>: Jede wirkt auf einen anderen "
+        + "Kostenblock — die beiden Teuerungen auf verschiedene Positionen, "
+        + "Heimdauer und Spitex-Umfang auf verschiedene Phasen, die "
+        + "Hilflosenentschädigung ist eine Einnahme. Heimdauer und Teuerung "
+        + "<em>verstärken</em> sich zwar, weil beide multiplikativ auf dieselben "
+        + "Kosten wirken; das ist aber keine Abhängigkeit, sondern genau das, was "
+        + "die Rechnung zeigen soll.<br>"
+        + "Die Zahlenfelder weiter unten bleiben frei: Steht dort ein selbst "
+        + "gesetzter Wert, zeigt die Zeile «eigener Wert» statt ein oder aus — "
+        + "damit nie der Eindruck entsteht, es gelte eine Vorgabe, die gar nicht "
+        + "mehr drinsteht. In der Zusammenstellung der Daten steht die genaue "
+        + "Lage.<br>"
+        + "<strong>Kein Hebel sind</strong> das <em>Quantil des hohen Verlaufs</em> "
+        + "und der <em>Rauchfaktor</em>. Das Quantil unterscheidet den hohen vom "
+        + "mittleren Verlauf — auf 50 % gesetzt wären beide gleich. Das ist die "
+        + "Begriffsbestimmung des Szenarios, kein «sicher oder nicht». Beide "
+        + "bleiben freie Felder."
+        + "<br><br><strong>Woher die Werte kommen.</strong>"
+        + "<ul style='margin:4px 0;padding-left:20px'>"
+        + "<li><strong>Dauer im Heim, hoher Verlauf — geschätzt.</strong> "
+          + "Gemessen sind der Mittelwert (Männer 2.2, Frauen 3.3 Jahre bei den "
+          + "2017 Verstorbenen) und der Median (Männer unter einem Jahr). Die "
+          + "Verteilung hat einen langen Schwanz: Die am Stichtag Anwesenden "
+          + "kommen auf 3.5 Jahre im Mittel bei einem Median von 2.3. Sieben und "
+          + "acht Jahre sind eine Schätzung des oberen Zehntels — <em>nicht "
+          + "belegt</em>. Sie gehören an denselben Rand der Verteilung wie das "
+          + "Lebensalter des hohen Verlaufs.</li>"
+        + "<li><strong>Teuerung der Heimkosten — Annahme.</strong> Einen "
+          + "publizierten Index der Pflegeheimtarife gibt es nicht. Belegt ist, "
+          + "dass die Gesamtkosten für Heime und Spitex 2023 um 5 % gegenüber dem "
+          + "Vorjahr stiegen. Der Landesindex der Konsumentenpreise liegt bei "
+          + "0.75 %. Die Vorgabe von " + proz(SICHER_WERTE.ein.heim_teuerung_vorgabe)
+          + " liegt deutlich darüber und unter dem einen gemessenen Jahr.</li>"
+        + "<li><strong>Hilflosenentschädigung — bewusst nicht unterstellt.</strong> "
+          + "Sie ist eine <em>Einnahme</em> und senkt den Kapitalbedarf. Sie wird "
+          + "erst nach einem Jahr Hilflosigkeit ausgerichtet, muss bei der "
+          + "Ausgleichskasse angemeldet werden und setzt einen bestimmten Grad "
+          + "voraus. Im Teil 5 der Heimkarte bleibt sie von Hand einschaltbar.</li>"
+        + "<li><strong>Teuerung neuer Budgetpositionen</strong> — der Gesamtindex "
+          + "der Konsumentenpreise. Eine Ausgabe ohne Teuerung verliert über "
+          + "zwanzig Jahre rund ein Sechstel ihres Gewichts und schönt das "
+          + "Ergebnis still. Einnahmen bleiben bei null: Sie steigen nicht von "
+          + "selbst.</li></ul>"
+        + "<strong>Der Einwand dazu.</strong> Eine zu vorsichtige Planung ist "
+        + "ebenso falsch wie eine zu knappe. Der eingeschaltete Stand lässt vier "
+        + "konservative Annahmen zusammenwirken — oberes Zehntel der Lebensdauer, "
+        + "oberes Zehntel der Aufenthaltsdauer, Teuerung weit über dem "
+        + "Landesindex und keine Hilflosenentschädigung. Jede einzelne ist "
+        + "vertretbar; alle zusammen beschreiben einen Fall, der sehr selten "
+        + "eintritt. Wer danach plant, verzichtet heute auf Mittel, die er mit "
+        + "hoher Wahrscheinlichkeit nie braucht. Deshalb steht der Schalter hier "
+        + "sichtbar und nicht als stille Annahme im Rechenkern.<br>"
+        + "<strong>Nicht Teil des Schalters:</strong> Das <em>Basisjahr</em> der "
+        + "Heimkosten wird in jedem Fall auf das erste Rechenjahr vorbelegt. Das "
+        + "ist keine Vorsichtsmassnahme, sondern eine Korrektur — wer einen "
+        + "heutigen Heimtarif einträgt, meint heutige Franken.";
+      ps.style.cssText = "font-size:12px;color:var(--gedaempft);margin:4px 0 12px";
+      kp.appendChild(ps);
+    }
+
+    // ---- Vorgaben für den Pflegeverlauf ---------------------------------
+    kp.appendChild(el("h4", "abschnitt2", "Vorgaben für den Pflegeverlauf"));
+    const jahrF = (schluessel, vorgabe) => zahlFeld(pf[schluessel] ?? vorgabe,
+      x => { pf[schluessel] = (x == null) ? vorgabe : Math.max(0, x); rechnen(); },
+      { dez: true, leerErlaubt: true, grenze: { min: 0, max: 20, weichMax: 10 } });
+    feldP("Dauer im Heim, Mann, mittlerer Verlauf", jahrF("verlauf_heim_mittel_m", 2), "Jahre");
+    feldP("Dauer im Heim, Mann, hoher Verlauf", jahrF("verlauf_heim_hoch_m", 5), "Jahre");
+    feldP("Dauer im Heim, Frau, mittlerer Verlauf", jahrF("verlauf_heim_mittel_f", 3), "Jahre");
+    feldP("Dauer im Heim, Frau, hoher Verlauf", jahrF("verlauf_heim_hoch_f", 6), "Jahre");
+    feldP("Spitex davor, Mann, mittlerer Verlauf", jahrF("verlauf_spitex_mittel_m", 3), "Jahre");
+    feldP("Spitex davor, Mann, hoher Verlauf", jahrF("verlauf_spitex_hoch_m", 4), "Jahre");
+    feldP("Spitex davor, Frau, mittlerer Verlauf", jahrF("verlauf_spitex_mittel_f", 3), "Jahre");
+    feldP("Spitex davor, Frau, hoher Verlauf", jahrF("verlauf_spitex_hoch_f", 5), "Jahre");
+    feldP("Spitex-Pflege, mittlerer Verlauf", jahrF("verlauf_std_pflege_mittel", 4), "h/Woche");
+    feldP("Spitex-Hauswirtschaft, mittlerer Verlauf", jahrF("verlauf_std_haus_mittel", 3), "h/Woche");
+    feldP("Spitex-Pflege, hoher Verlauf", jahrF("verlauf_std_pflege_hoch", 6), "h/Woche");
+    feldP("Spitex-Hauswirtschaft, hoher Verlauf", jahrF("verlauf_std_haus_hoch", 4), "h/Woche");
+    feldP("Quantil für den hohen Verlauf", zahlFeld(pf.verlauf_quantil_hoch ?? 0.10,
+      x => { pf.verlauf_quantil_hoch = (x == null) ? 0.10
+        : Math.min(0.5, Math.max(0.01, x)); rechnen(); },
+      { proz: true, leerErlaubt: true }), "%");
+    feldP("Teuerung der Heimkosten, Vorgabe", zahlFeld(pf.heim_teuerung_vorgabe ?? 0.03,
+      x => { pf.heim_teuerung_vorgabe = (x == null) ? 0.03 : Math.max(0, x); rechnen(); },
+      { proz: true, leerErlaubt: true }), "%");
+    feldP("Teuerung neuer Budgetpositionen", zahlFeld(pf.pos_teuerung_vorgabe ?? 0.0075,
+      x => { pf.pos_teuerung_vorgabe = (x == null) ? 0.0075 : Math.max(0, x); rechnen(); },
+      { proz: true, leerErlaubt: true }), "%");
+    {
+      const s2 = el("div", "schalter");
+      const cbh = el("input"); cbh.type = "checkbox";
+      cbh.checked = pf.verlauf_he_im_verlauf === true;
+      cbh.addEventListener("change", () => {
+        pf.verlauf_he_im_verlauf = cbh.checked; rechnen();
+      });
+      s2.appendChild(cbh);
+      s2.appendChild(el("span", null,
+        "Hilflosenentschädigung vom Verlaufsmenü einschalten lassen"));
+      kp.appendChild(s2);
+    }
+    {
+      const s = el("div", "schalter");
+      const cbv = el("input"); cbv.type = "checkbox";
+      cbv.checked = pf.verlauf_hoch_ohne_rauchfaktor !== false;
+      cbv.addEventListener("change", () => {
+        pf.verlauf_hoch_ohne_rauchfaktor = cbv.checked; rechnen();
+      });
+      s.appendChild(cbv);
+      s.appendChild(el("span", null,
+        "Im hohen Verlauf ohne den Rauchfaktor rechnen"));
+      kp.appendChild(s);
+    }
+    {
+      // Vorschau: was die beiden Stufen für eine 67-jährige Person ergeben.
+      // So ist die Wirkung der Felder oben ablesbar, ohne den Reiter zu
+      // wechseln. Gerechnet mit einem Musteralter, nicht mit den Personen
+      // des Haushalts — deren Werte stehen im Reiter Personen.
+      const jetzt = Number(cfg.jahr_von) || new Date().getFullYear();
+      const muster = { geburtsjahr: jetzt - 67, rauchen: null };
+      const zeilen = [];
+      for (const g of ["m", "f"])
+        for (const st of ["mittel", "hoch"]) {
+          const v = pflegeVerlaufWerte(Object.assign({}, muster, { geschlecht: g }), st);
+          if (!v) continue;
+          zeilen.push("<tr><td>" + (g === "m" ? "Mann" : "Frau") + ", " + v.name
+            + "</td><td style='text-align:right'>" + v.spitexAlter
+            + "</td><td style='text-align:right'>" + v.heimAlter
+            + "</td><td style='text-align:right'>" + v.endeAlter
+            + "</td><td style='text-align:right'>" + v.spitexDauer
+            + "</td><td style='text-align:right'>" + v.heimDauer + "</td></tr>");
+        }
+      const p7 = el("div");
+      p7.innerHTML =
+        "<strong>Vom Lebensende her gerechnet.</strong> Das Lebensende stammt aus "
+        + "der <strong>" + STERBETAFEL.quelle + "</strong>; davon abgezogen werden "
+        + "die Dauer im Heim und davor die Spitex-Phase. Das publizierte mittlere "
+        + "Eintrittsalter (Männer 79 bis 81, Frauen 83 bis 84) wird <em>nicht</em> "
+        + "verwendet: Es gilt für alle, die eintreten, einschliesslich jener, die "
+        + "früh erkranken und früh sterben, und ist als Vorgabe für eine bestimmte "
+        + "Person systematisch zu früh.<br>"
+        + "<em>Was gemessen und was gesetzt ist:</em>"
+        + "<ul style='margin:4px 0;padding-left:20px'>"
+        + "<li><strong>Dauer im Heim, mittlerer Verlauf — gemessen.</strong> "
+          + "Für die 2017 Verstorbenen 2.2 Jahre bei den Männern und 3.3 Jahre bei "
+          + "den Frauen (BFS). Der Median liegt bei den Männern unter einem Jahr; "
+          + "die Verteilung ist stark rechtsschief.</li>"
+        + "<li><strong>Dauer im Heim, hoher Verlauf — geschätzt.</strong> Im Kanton "
+          + "Zürich lagen die mit 90 oder mehr Eingetretenen bei 655 Tagen gegenüber "
+          + "284 Tagen bei den 80- bis 84-Jährigen (2022).</li>"
+        + "<li><strong>Stunden je Woche — gemessen.</strong> Während eines laufenden "
+          + "Bezugs erhalten die über 80-Jährigen 89 Stunden Pflege und 65 Stunden "
+          + "Hauswirtschaft über eine mittlere Bezugsdauer von sechs Monaten "
+          + "(LUSTAT 2023), also 3.4 und 2.5 Stunden je Woche. Nicht nach Geschlecht "
+          + "unterschieden: Frauen beziehen häufiger Spitex, die Intensität je Bezug "
+          + "ist aber nicht nach Geschlecht publiziert.</li>"
+        + "<li><strong>Spitex-Dauer — gesetzt.</strong> Ein Alter beim ersten "
+          + "Spitex-Bezug ist nicht publiziert. Belegt ist nur der Sprung der "
+          + "Bezugsquote zwischen den Altersgruppen 65 bis 79 (4.8 %) und 80 und "
+          + "mehr (20.3 %).</li></ul>"
+        + "<strong>Für eine Person von 67 Jahren ergibt das (Alter):</strong>"
+        + "<div class='tabellenrahmen' style='margin:4px 0'>"
+        + "<table class='dicht'><thead><tr><th>Verlauf</th>"
+        + "<th style='text-align:right'>Spitex ab</th>"
+        + "<th style='text-align:right'>Heim ab</th>"
+        + "<th style='text-align:right'>Lebensende</th>"
+        + "<th style='text-align:right'>Jahre Spitex</th>"
+        + "<th style='text-align:right'>Jahre Heim</th></tr></thead>"
+        + "<tbody>" + zeilen.join("") + "</tbody></table></div>"
+        + "Gerechnet ohne Angabe zum Rauchen. Die Abnahme der Sterblichkeit je Jahr "
+        + "und der Rauchfaktor stehen im Reiter Personen beim Vorschlag der "
+        + "Lebenserwartung.";
+      p7.style.cssText = "font-size:12px;color:var(--gedaempft);margin:4px 0 0";
+      kp.appendChild(p7);
     }
 
     w.appendChild(kp);
@@ -29095,6 +30326,247 @@ function teuerungFensterOeffnen(knopf, pos) {
 document.addEventListener("keydown", e => {
   if (e.key === "Escape") teuerungFensterSchliessen();
 });
+
+// ------------------------------------------- Grafik der Sterblichkeit
+// Zeigt, worauf die Jahreszahl im Feld «Betrachtung bis» beruht: den Verlauf
+// der Ueberlebenden ab dem heutigen Alter, die Verteilung des Sterbealters
+// und die Lage der Rechenwerte darin. Massgebend ist das erfasste Geschlecht;
+// das andere wird zum Vergleich blass mitgezeichnet.
+function sterbeGrafik(p) {
+  const w = el("div");
+  const le = cfg.lebenserwartung || {};
+  const jetzt = Number(cfg.jahr_von) || new Date().getFullYear();
+  const geb = Number(p.geburtsjahr);
+  const alter = isFinite(geb) ? jetzt - geb : null;
+  if (!p.geschlecht || alter == null || alter < 20 || alter > 105) {
+    const h = el("p", "kleintext",
+      "Für die Grafik braucht es Geburtsjahr und Geschlecht. Beides steht im "
+      + "Kapitel 1 «Personen».");
+    h.style.cssText = "margin:0;color:var(--warnung)";
+    w.appendChild(h); return w;
+  }
+  const g = p.geschlecht === "f" ? "f" : "m";
+  const andere = g === "f" ? "m" : "f";
+  const faktor = p.rauchen === "nicht" ? (Number(le.faktor_nichtraucher) || 1)
+               : p.rauchen === "ja" ? (Number(le.faktor_raucher) || 1) : 1;
+  const opt = { verbesserung: Number(le.verbesserung) || 0, faktor };
+  const r = lebenserwartung(g, alter, jetzt, opt);
+  const rA = lebenserwartung(andere, alter, jetzt, opt);
+  const rRein = lebenserwartung(g, alter, jetzt, { verbesserung: 0, faktor: 1 });
+
+  // ---- Zeichenfläche. Bewusst gross: eine Kurve, die man nicht ablesen
+  // kann, ist keine Darstellung, sondern eine Verzierung.
+  const BR = 820, HO = 460;
+  const L = 58, R = 18, O = 16, U = 46;      // Ränder
+  const HK = 236;                            // Höhe der Überlebenskurve
+  const HV = 112;                            // Höhe der Sterbeverteilung
+  const LU = 30;                             // Luft zwischen beiden
+  const a0 = Math.round(alter), a1 = 106;
+  const x = a => L + (a - a0) / (a1 - a0) * (BR - L - R);
+  const yK = s => O + (1 - s) * HK;
+  const maxD = Math.max(...r.stufen.map(s => s.l - s.lNach), 1e-9);
+  const yV = d => O + HK + LU + HV - (d / maxD) * HV;
+
+  const ns = "http://www.w3.org/2000/svg";
+  const sv = document.createElementNS(ns, "svg");
+  sv.setAttribute("viewBox", "0 0 " + BR + " " + HO);
+  sv.setAttribute("width", "100%");
+  sv.style.cssText = "display:block;max-width:" + BR + "px;height:auto";
+  const mk = (n, at, txt) => {
+    const e = document.createElementNS(ns, n);
+    for (const [k2, v] of Object.entries(at)) e.setAttribute(k2, v);
+    if (txt != null) e.textContent = txt;
+    sv.appendChild(e); return e;
+  };
+  const pfad = (d, at) => mk("path", Object.assign({ d, fill: "none" }, at));
+
+  // Hintergrund und Raster
+  mk("rect", { x: L, y: O, width: BR - L - R, height: HK,
+               fill: "var(--flaeche2)", stroke: "var(--linie)" });
+  mk("rect", { x: L, y: O + HK + LU, width: BR - L - R, height: HV,
+               fill: "var(--flaeche2)", stroke: "var(--linie)" });
+  for (let s = 0; s <= 1.0001; s += 0.25) {
+    mk("line", { x1: L, x2: BR - R, y1: yK(s), y2: yK(s),
+                 stroke: "var(--linie)", "stroke-dasharray": s === 0 || s === 1 ? "" : "3 3" });
+    mk("text", { x: L - 8, y: yK(s) + 4, "text-anchor": "end",
+                 "font-size": 12, fill: "var(--gedaempft)" }, Math.round(s * 100) + " %");
+  }
+  for (let a = Math.ceil(a0 / 5) * 5; a <= a1; a += 5) {
+    mk("line", { x1: x(a), x2: x(a), y1: O, y2: O + HK,
+                 stroke: "var(--linie)", "stroke-dasharray": "3 3" });
+    mk("line", { x1: x(a), x2: x(a), y1: O + HK + LU, y2: O + HK + LU + HV,
+                 stroke: "var(--linie)", "stroke-dasharray": "3 3" });
+    mk("text", { x: x(a), y: O + HK + LU + HV + 16, "text-anchor": "middle",
+                 "font-size": 12, fill: "var(--gedaempft)" }, String(a));
+  }
+  mk("text", { x: x((a0 + a1) / 2), y: O + HK + LU + HV + 34, "text-anchor": "middle",
+               "font-size": 12, fill: "var(--gedaempft)" }, "Alter in Jahren");
+
+  // Überlebenskurve des anderen Geschlechts, blass
+  const kurve = st => "M" + st.map(s => x(s.alter) + "," + yK(s.l)).join(" L");
+  pfad(kurve(rA.stufen), { stroke: "var(--gedaempft)", "stroke-width": 1.5,
+                           "stroke-dasharray": "5 4", opacity: 0.55 });
+  // Eigene Überlebenskurve
+  pfad(kurve(r.stufen), { stroke: "var(--akzent)", "stroke-width": 2.6 });
+
+  // Verteilung des Sterbealters als Säulen
+  const bw = Math.max(2, (BR - L - R) / (a1 - a0) - 1.6);
+  for (const s of r.stufen) {
+    const d = s.l - s.lNach;
+    if (!(d > 0) || s.alter > a1) continue;
+    mk("rect", { x: x(s.alter) - bw / 2, y: yV(d), width: bw,
+                 height: Math.max(0, O + HK + LU + HV - yV(d)),
+                 fill: "var(--akzent)", opacity: 0.45 });
+  }
+
+  // ---- Rechenwerte einzeichnen ----------------------------------------
+  const endeJahr = Number(p.lebenserwartung_bis);
+  const marken = [
+    { a: rRein.mittelAlter, t: "Mittelwert, reine Tafel", f: "var(--gedaempft)", d: "4 3" },
+    { a: r.mittelAlter, t: "Mittelwert", f: "var(--gedaempft)" },
+    { a: r.median, t: "Median — die Hälfte", f: "var(--akzent)" },
+    { a: r.q25, t: "oberes Viertel", f: "var(--akzent)" },
+    { a: r.q10, t: "oberes Zehntel — Planungsalter", f: "var(--warnung,#b45309)", s: 2.4 },
+  ];
+  if (isFinite(endeJahr) && isFinite(geb))
+    marken.push({ a: endeJahr - geb, t: "erfasst: Betrachtung bis " + endeJahr,
+                  f: "var(--stark,#111)", s: 2.4 });
+  if (p.heimeintritt_ab != null && isFinite(geb))
+    marken.push({ a: Number(p.heimeintritt_ab) - geb, t: "Heimeintritt",
+                  f: "var(--gedaempft)", d: "2 3" });
+  if (p.spitex_aktiv && p.spitex_ab != null && isFinite(geb))
+    marken.push({ a: Number(p.spitex_ab) - geb, t: "Spitex", f: "var(--gedaempft)", d: "2 3" });
+
+  // Nur die Linien und die nackte Zahl in die Grafik. Die Benennung steht
+  // unten in der Legende: Sieben Marken liegen hier auf fünfzehn Jahren
+  // beieinander - ausgeschriebene Beschriftungen an der Linie überdecken
+  // sich und sind dann gar nicht mehr zu lesen.
+  marken.sort((u, v2) => u.a - v2.a);
+  const sichtbar = marken.filter(m => m.a > a0 && m.a < a1);
+  let letztesX = -999, reihe = 0;
+  for (const m of sichtbar) {
+    const X = x(m.a);
+    mk("line", { x1: X, x2: X, y1: O, y2: O + HK + LU + HV, stroke: m.f,
+                 "stroke-width": m.s || 1.4, "stroke-dasharray": m.d || "" });
+    // Zwei Zeilen im Wechsel, sobald die Zahlen zu dicht stehen
+    reihe = (X - letztesX < 34) ? (reihe + 1) % 2 : 0;
+    letztesX = X;
+    mk("text", { x: X, y: O + 13 + reihe * 15, "text-anchor": "middle",
+                 "font-size": 11, fill: m.f, "font-weight": 700 },
+       m.a.toFixed(1));
+  }
+
+  mk("text", { x: L, y: O + HK + LU - 8, "font-size": 12, fill: "var(--gedaempft)" },
+     "Verteilung des Sterbealters (Anteil, der in diesem Altersjahr stirbt)");
+  mk("text", { x: L, y: O - 4, "font-size": 12, fill: "var(--gedaempft)" },
+     "Anteil der heute " + a0 + "-Jährigen, der dieses Alter erreicht");
+
+  w.appendChild(sv);
+
+  // ---- Legende: Farbe, Name, Alter, Jahr --------------------------------
+  {
+    const lg = el("div");
+    lg.style.cssText = "display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));"
+      + "gap:2px 18px;margin:8px 0 0;font-size:12px";
+    for (const m of sichtbar) {
+      const z = el("div");
+      z.style.cssText = "display:flex;align-items:center;gap:7px";
+      const str = el("span");
+      str.style.cssText = "flex:0 0 22px;height:0;border-top:"
+        + (m.s && m.s > 2 ? "3px" : "2px") + " "
+        + (m.d ? "dashed" : "solid") + " " + m.f;
+      z.appendChild(str);
+      const t2 = el("span", null, m.t);
+      t2.style.cssText = "flex:1 1 auto;min-width:0";
+      z.appendChild(t2);
+      const wert = el("span", "mono", "Alter " + m.a.toFixed(1)
+        + (isFinite(geb) ? " · " + Math.round(geb + m.a) : ""));
+      wert.style.cssText = "flex:0 0 auto;color:var(--gedaempft)";
+      z.appendChild(wert);
+      lg.appendChild(z);
+    }
+    w.appendChild(lg);
+  }
+
+  // ---- Erklärung -------------------------------------------------------
+  const q = el("div");
+  q.style.cssText = "font-size:12px;color:var(--gedaempft);margin:8px 0 0";
+  q.innerHTML =
+    "<strong>Gerechnet für " + (g === "f" ? "eine Frau" : "einen Mann")
+    + " von heute " + a0 + " Jahren</strong> im Jahr " + jetzt + ", auf Grundlage "
+    + "der " + STERBETAFEL.quelle + ". Die gestrichelte blasse Linie ist "
+    + (andere === "f" ? "eine Frau" : "ein Mann") + " gleichen Alters — zum "
+    + "Vergleich.<br>"
+    + "<strong>Die beiden Bilder zeigen dasselbe von zwei Seiten.</strong> Oben "
+    + "der Anteil, der ein Alter noch erreicht; unten der Anteil, der in genau "
+    + "diesem Altersjahr stirbt. Die Marken liegen in beiden an derselben "
+    + "Stelle.<br>"
+    + "<strong>Warum der Median über dem Mittelwert liegt.</strong> Die "
+    + "Verteilung ist in diesem Alter linksschief: Wenige sterben früh, die "
+    + "meisten in einem schmalen Band. Der Mittelwert wird von den frühen "
+    + "Todesfällen nach unten gezogen, der Median nicht.<br>"
+    + "<strong>Was eingerechnet ist:</strong> Abnahme der Sterblichkeit "
+    + proz(Number(le.verbesserung) || 0) + " je Jahr"
+    + (faktor !== 1 ? ", Rauchfaktor " + proz(faktor) + " des Durchschnitts" : "")
+    + ". Ohne beides läge der Mittelwert bei " + rRein.mittelAlter.toFixed(1)
+    + " statt " + r.mittelAlter.toFixed(1) + " Jahren.<br>"
+    + "<strong>Massgebend für die Planung</strong> ist nicht der Mittelwert, "
+    + "sondern das obere Zehntel: Es tritt mit zehn Prozent Wahrscheinlichkeit "
+    + "ein, und genau dieser Fall bestimmt, wie lange das Kapital reichen muss.";
+  w.appendChild(q);
+  return w;
+}
+
+// Öffnet die Grafik in einem Fenster neben dem Knopf.
+function sterbeFensterOeffnen(knopf, p) {
+  teuerungFensterSchliessen();
+  const k = el("div", "karte");
+  k.style.cssText = "position:absolute; z-index:60; width:min(880px, 95vw);"
+    + " max-height:84vh; overflow:auto; box-shadow:0 10px 34px rgba(0,0,0,.28);"
+    + " padding:14px 16px";
+  const kopf = el("div");
+  kopf.style.cssText = "display:flex; align-items:flex-start; gap:10px; margin-bottom:8px";
+  const h = el("h3", null, "Sterblichkeit — " + (p.bezeichnung || p.id));
+  h.style.margin = "0";
+  kopf.appendChild(h);
+  const zu = el("button", "knopf klein", "Schliessen");
+  zu.type = "button"; zu.style.marginLeft = "auto";
+  zu.addEventListener("click", teuerungFensterSchliessen);
+  kopf.appendChild(zu);
+  k.appendChild(kopf);
+  k.appendChild(sterbeGrafik(p));
+  document.body.appendChild(k);
+  const rr = knopf.getBoundingClientRect();
+  const br = k.getBoundingClientRect();
+  let links = window.scrollX + rr.left - br.width / 2 + rr.width / 2;
+  links = Math.max(window.scrollX + 8,
+    Math.min(links, window.scrollX + document.documentElement.clientWidth - br.width - 8));
+  let oben = window.scrollY + rr.bottom + 6;
+  if (rr.bottom + br.height + 12 > window.innerHeight)
+    oben = Math.max(window.scrollY + 8, window.scrollY + rr.top - br.height - 6);
+  k.style.left = Math.round(links) + "px";
+  k.style.top = Math.round(oben) + "px";
+  teuerungFenster = k;
+  setTimeout(() => {
+    const weg = e => {
+      if (teuerungFenster && !teuerungFenster.contains(e.target)) {
+        teuerungFensterSchliessen();
+        document.removeEventListener("pointerdown", weg, true);
+      }
+    };
+    document.addEventListener("pointerdown", weg, true);
+  }, 0);
+}
+
+// Knopf neben dem Feld «Betrachtung bis».
+function sterbeKnopf(p) {
+  const b = el("button", "knopf klein rund", "◠");
+  b.type = "button";
+  b.title = "Grafik der Sterblichkeit anzeigen: Verlauf der Überlebenden, "
+    + "Verteilung des Sterbealters und die Lage der Rechenwerte darin.";
+  b.addEventListener("click", e => { e.stopPropagation(); sterbeFensterOeffnen(b, p); });
+  return b;
+}
 
 // Kleines "i" neben dem Teuerungsfeld.
 function teuerungKnopf(pos) {
@@ -32190,6 +33662,13 @@ function uebersichtZeichnen() {
       z: { blatt: "personen", feld: "^Betrachtung bis" } },
     { t: "Geschlecht", je: p => p.geschlecht === "f" ? "weiblich" : p.geschlecht === "m" ? "männlich" : (p.geschlecht || null),
       z: { blatt: "personen", feld: "^Geschlecht" } },
+    // Welcher Stand der Vorgaben gilt. Er gehoert hierher, damit aus einem
+    // Bericht hervorgeht, auf welcher Grundlage gerechnet wurde.
+    { t: "Vorgaben", alle: sicherStandText(),
+      z: { blatt: "steuern", feld: "Vorgaben auf der sicheren Seite" }, klein: true },
+    { t: "Pflegeverlauf aus der Statistik", je: p =>
+        (PFLEGE_VERLAEUFE.find(v => v[0] === p.pflege_verlauf) || [, null])[1],
+      z: { blatt: "personen", feld: "^Verlauf übernehmen" }, klein: true },
     { t: "Heim- oder Spitalaufenthalt", je: p => p.heimeintritt_ab != null
         ? "ab " + p.heimeintritt_ab + ", " + chf(Number(p.heimkosten_pro_monat) || 0) + " CHF/Monat" : "keiner",
       z: { blatt: "personen", feld: "^Heim- oder Spitalaufenthalt" } },
